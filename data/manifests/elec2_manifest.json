@@ -22,16 +22,31 @@
   "1": 19237
  },
  "time_semantics": "file order = chronological market intervals (MUST hold for replay)",
- "files": [],
- "verification": {
-  "date": "2026-09-28",
-  "result": "CORRECT variant",
-  "checks": [
-   "45,312 rows matches River Elec2/DataHub electricity",
-   "schema nswprice/nswdemand/vicprice/vicdemand/transfer/day/period/date/class matches elecNormNew",
-   "task binary price up/down matches River spec (SPLICE-2 NSW market, 5-min)",
-   "file order chronological except 5 documented out-of-order rows [25488,34896,35232,36240,40704]",
-   "date column normalized 0-1, excluded from feature universe (identifier-like)"
-  ]
- }
+ "files": [
+  {
+   "path": "data\\raw\\openml\\openml.org\\api\\v1\\json\\data\\151.gz",
+   "bytes": 1543,
+   "sha256": "a16fdd515434c0b52c692fc4897bf2e4d2e5a504f3ba9fac31fe6d6aa5c73159"
+  },
+  {
+   "path": "data\\raw\\openml\\openml.org\\api\\v1\\json\\data\\features\\151.gz",
+   "bytes": 272,
+   "sha256": "39594b81d3210cc96e4ca02370ae385d39f7dbc8191a4e9cbfe6d0663b943bef"
+  },
+  {
+   "path": "data\\raw\\openml\\openml.org\\api\\v1\\json\\data\\list\\data_name\\electricity\\limit\\2\\data_version\\1.gz",
+   "bytes": 316,
+   "sha256": "7f5848af8340bdca48e219f6fdaf27a6ff9a22196befb37e6e820a109a2e4266"
+  },
+  {
+   "path": "data\\raw\\openml\\openml.org\\api\\v1\\json\\data\\qualities\\151.gz",
+   "bytes": 1369,
+   "sha256": "d7f3d0b29baa7933536d3eb51223151556179ebdd976d4e6b675730c1568e812"
+  },
+  {
+   "path": "data\\raw\\openml\\openml.org\\data\\v1\\download\\2419\\electricity.arff.gz",
+   "bytes": 714838,
+   "sha256": "60df61719ff2065ae144ae7788a2a1fca603e6c5bc83c5bd82bb3b63b0d28c74"
+  }
+ ]
 }

@@ -47,7 +47,7 @@ def main():
     # 3) detection stats per template over seeds
     det_rows = []
     for tid in TIDS:
-        dets, delays, fals = [], [], []
+        dets, delays, pre, bur = [], [], [], []
         for s in SEEDS:
             ev = pd.read_csv(MS / f"MS-{tid}-s{s}.evidence.csv")
             truth = json.loads((MS / f"MS-{tid}-s{s}.truth.json").read_text())
@@ -59,14 +59,16 @@ def main():
             m = match_events(alerts, on, end)
             dets.append(float(m["detected"]))
             delays.append(np.nan if m["delay_windows"] is None else float(m["delay_windows"]))
-            fals.append(float(m["false_alerts"]))
+            pre.append(float(m["false_pre"]))
+            bur.append(float(m["burden"]))
         lo, hi = paired_ci(np.array(dets), seed=0)
         det_rows.append({"template": tid, "threshold": round(thr, 4),
                          "detect_rate": round(float(np.mean(dets)), 2),
                          "detect_rate_ci95": f"[{lo:.2f},{hi:.2f}]",
                          "mean_delay_w": round(float(np.nanmean(delays)), 2)
                          if not all(np.isnan(delays)) else "NaN",
-                         "mean_false_alerts": round(float(np.mean(fals)), 2)})
+                         "mean_false_pre": round(float(np.mean(pre)), 2),
+                         "mean_burden": round(float(np.mean(bur)), 2)})
         print(det_rows[-1])
     pd.DataFrame(det_rows).to_csv(AGG / "multiseed_detection.csv", index=False)
     # 4) localization means over seeds (drifted window 6, same as E2)
