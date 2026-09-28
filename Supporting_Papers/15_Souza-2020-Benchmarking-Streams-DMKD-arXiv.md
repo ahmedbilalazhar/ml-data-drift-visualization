@@ -1,6 +1,6 @@
 # Benchmarking Stream Learning: On the (In)ability to Evaluate Streaming Algorithms
 
-**Authors:** Souza et al.
+**Authors:** Vinicius M. A. Souza, Denis M. dos Reis, Andre G. Maletzke, Gustavo E. A. P. A. Batista
 
 **Venue:** Data Mining and Knowledge Discovery (2020), arXiv version — Benchmark methodology reference
 

@@ -1,6 +1,6 @@
 # ConceptExplorer: Visual Analysis of Concept Drift in Multi-Source Time-Series Data
 
-**Authors:** Wang et al.
+**Authors:** Xumeng Wang, Wei Chen, Jiazhi Xia, Zexian Chen, Dongshi Xu, Xiangyang Wu, Mingliang Xu, Tobias Schreck
 
 **Venue:** IEEE VAST (2020), arXiv version — Visual analytics prior art
 

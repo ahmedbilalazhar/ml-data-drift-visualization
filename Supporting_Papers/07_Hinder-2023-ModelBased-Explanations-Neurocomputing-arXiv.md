@@ -1,6 +1,6 @@
 # Model Based Explanations of Concept Drift
 
-**Authors:** Fabian Hinder et al. (incl. Brinkrolf)
+**Authors:** Fabian Hinder, Valerie Vaquet, Johannes Brinkrolf, Barbara Hammer
 
 **Venue:** Neurocomputing (2023), arXiv version — Supplement, NOT 2025-2026 countable
 
