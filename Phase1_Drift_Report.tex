@@ -1,0 +1,83 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype,array,booktabs,longtable,pdflscape}
+\usepackage[table]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.1}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\definecolor{headgray}{HTML}{E9EEF2}
+\begin{document}
+\begin{center}
+{\small DATA ANALYSIS \& VISUALIZATION --- RESEARCH PROJECT}\par
+{\Large\bfseries Phase 1: Literature Review and Research Gap Identification}\par
+Explainable Visualization and Monitoring of Machine Learning Data Drift in Dynamic Environments\par
+{\small Saneedullah (23I-2568) \quad | \quad Ahmed Bilal (23I-2581)}
+\end{center}
+\vspace{-5pt}
+\section*{Critical literature review}
+\textbf{Selection and scope.} The three core papers are original journal research articles in the requested 2025--2026 interval: Greco et al.\ (2025), Sz\H{u}cs and N\'emeth (2025), and Guerrero Cano et al.\ (2026 volume; published online December 2025) \cite{greco,szucs,guerrero}. They study detection in deep representations, feature-level drift prediction, and proactive adaptation, respectively. We distinguish change in $P(X)$ from change in $P(Y\mid X)$; an unlabeled detector cannot alone establish the latter. Q1 below means a 2025 SCImago/SJR category. Knowledge and Information Systems is Q1 in Information Systems by SJR but Q2 in 2025 JCR \cite{ranking}.
+
+\textbf{Greco et al.: representation drift.} DriftLens extracts text, image, and audio classifier embeddings, reduces them with PCA, fits Gaussian reference distributions, and compares streaming windows using Fr\'echet Drift Distance (FDD). Its per-window and predicted-label curves characterize change, while K-means prototypes illustrate flagged windows. Seventeen use cases span eight datasets including AG News, MNIST, FairFace, and Common Voice. The authors report better detection in 15 of 17 use cases, at least fivefold faster execution than their baselines, and correlations of at least 0.85 between score and injected drift severity \cite{greco}. \emph{Author-stated limits:} Gaussian mean and covariance omit higher-order structure; small or imbalanced windows distort estimates; unbounded FDD is hard to interpret. \emph{Our assessment:} many shifts are injected rather than natural time-stamped changes, leaving long-run false alarms uncertain. Grouping by predicted label can misattribute change when the classifier is wrong. Prototype purity and example plots do not show whether analysts can identify causes or take sound action. Tabular streams, delayed labels, and the relation between FDD and subsequent model loss remain missing experiments. Future work should align score, known changes, and delayed performance on identical windows and evaluate analyst decisions.
+
+\textbf{Sz\H{u}cs and N\'emeth: feature localization.} The Domino Drift Effect (DDE) estimates drift probabilities for unmonitored features from correlated, co-drifting monitored features. An initial drift fits a lift curve; subsequent Pearson correlations and Jensen--Shannon, ADWIN, Wasserstein, or KS tests on a subset score the rest. The study uses Covertype (16 selected features), CICIDS (19), Insects (200), and Heartbeats (280); feature prediction concentrates on the last two. It evaluates feature recall, precision, F1, AUC, and runtime as the monitoring fraction varies \cite{szucs}. \emph{Author-stated limits:} an initial drift is required to fit the curve; subset predictions cannot equal full monitoring; independent induced shifts in Covertype produce a flat lift curve. \emph{Our assessment:} Pearson correlation misses nonlinear or lagged dependence, and an isolated drift outside the monitored subset can be missed. Natural-stream feature labels come from detector outputs rather than independent ground truth, so reported agreement is not necessarily true localization accuracy. Fewer detector calls explain much of the runtime saving, but curve maintenance also costs resources. No operator display or link to predictive impact is tested. Controlled injections into known features, budget sensitivity, and false alarms over time are needed.
+
+\newpage
+\subsection*{Critical review continued}
+\textbf{Guerrero Cano et al.: predictive impact.} Four Proactive Hoeffding Tree variants modify a VFDT tree by moving a threshold, changing a split feature, creating a subtree, or training a shadow tree from recent trajectories. Experiments include RBF cluster movements and seven real binary streams. They assess rolling prequential accuracy (window 500), degradation episodes, and recovery. In the aggregate incremental-drift comparison, PHT-MC obtains 0.9574 accuracy versus 0.9406 for reactive VFDT \cite{guerrero}. \emph{Author-stated limits:} anticipation requires a predictable trajectory and offers little benefit under abrupt or complex change; the study emphasizes incremental drift and leaves recurrence for future work. \emph{Our assessment:} controlled cluster motion favours geometric boundary adjustments; binary, balanced data limit generalization to multiclass and imbalanced streams. A 1,000-sample adaptation window and available labels may not transfer to deployment. Performance measures show model effects, but there is no separate drift score or operator-facing explanation. Tests with delayed labels, mixed abrupt/gradual change, adaptation cost, and class-sensitive metrics are missing.
+
+\textbf{Comparison.} The headline scores address different tasks: window detection, feature-drift prediction, and classifier adaptation. Their datasets, labels, windows, and baselines differ, so numerical ranking across papers would be invalid. Earlier visual systems such as DriftVis and ConceptExplorer already exist; the open question is whether a combined detection, localization, impact, and visual decision workflow improves results \cite{driftvis,conceptexplorer}.
+
+\subsection*{Cross-cutting appraisal}
+\textbf{Dataset limitations and generalizability.} DriftLens covers several data modalities, which strengthens breadth, but it does not supply a long natural stream with verified event times. DDE includes natural tabular streams, yet their feature-level change points are detector-derived; Covertype supplies induced changes that do not exhibit the paper's desired correlation pattern. The proactive-tree paper adds real streams to its synthetic study, but its clearest gains arise under incremental, geometric changes. Thus, none alone establishes behaviour across naturally occurring abrupt, gradual, recurrent, and mixed shifts with independent ground truth. The three methods also target distinct representations: deep embeddings, individual numeric features, and decision-tree boundaries. A result for one representation cannot be assumed to transfer to another. Missingness, class imbalance, and delayed labels are particularly important operational conditions that the combined evidence does not settle.
+
+\textbf{Methodological limitations across the papers.} DriftLens compresses data to a Gaussian summary after PCA; this can conceal minority subpopulations even if the global distance changes little. DDE uses pairwise Pearson dependence to infer untested feature events, so dependence strength and the monitored-feature choice become part of the detector's validity. Proactive trees estimate future boundary movement; extrapolation may cause unnecessary changes when a trajectory reverses. These assumptions produce different failure modes. A combined monitor should retain the raw feature evidence and its uncertainty alongside any aggregate score. It should also separate an alert about $P(X)$ from evidence about $P(Y\mid X)$; otherwise a harmless covariate change could be mistaken for a model failure. Fixed windows and thresholds should be selected on earlier data only, because using the eventual test drift to tune them would leak outcome information.
+
+\textbf{Evaluation limitations and missing experiments.} Greco et al.\ assess window-level detection and prototype quality, Sz\H{u}cs and N\'emeth assess feature-detector agreement and compute cost, and Guerrero Cano et al.\ assess predictive accuracy after adaptation. None applies all three evaluation levels to the same stream. For a fair comparison, known-change synthetic data should provide event and feature labels, while natural streams should test external validity without pretending that every change point is known. Report detection delay, false alarms per 1,000 windows, feature precision/recall, prequential F1 or AUC after labels arrive, and cost at a fixed resource budget. Ablate the effect of window length, reference refresh, correlation threshold, and delayed labels. A visualization study should use concrete tasks such as finding the affected feature and deciding whether to retrain, measuring both correctness and time. This would test whether the added explanation changes decisions rather than merely producing plausible plots.
+
+\textbf{Research direction.} A Phase 2 prototype can align statistical scores, feature evidence, and observed model loss on a time axis, with uncertainty and label availability visible. Such a design could be evaluated on Electricity/Weather and Covertype plus a synthetic stream with known feature changes. It should be judged against simple baselines under the same windows and budgets. The proposed interface is a hypothesis to test, not a capability demonstrated by the three core papers.
+
+\clearpage
+\begin{landscape}
+\section*{Cross-paper comparison table}
+\noindent\footnotesize The entries synthesize distinct experimental tasks; results are not a common leaderboard.
+\vspace{3pt}
+\small
+\renewcommand{\arraystretch}{1.1}
+\begin{longtable}{L{0.45cm}L{3.05cm}L{1.15cm}L{2.95cm}L{3.05cm}L{2.95cm}L{2.95cm}L{3.0cm}L{3.95cm}}
+\toprule
+\rowcolor{headgray}\textbf{\#} & \textbf{Title} & \textbf{Year} & \textbf{Dataset used} & \textbf{Preprocessing} & \textbf{Models / techniques} & \textbf{Evaluation metrics} & \textbf{Results} & \textbf{Limitations / research gap}\\
+\midrule\endfirsthead
+\rowcolor{headgray}\textbf{\#} & \textbf{Title} & \textbf{Year} & \textbf{Dataset used} & \textbf{Preprocessing} & \textbf{Models / techniques} & \textbf{Evaluation metrics} & \textbf{Results} & \textbf{Limitations / research gap}\\
+\midrule\endhead
+\bottomrule\endfoot
+1 & Unsupervised Concept Drift Detection From Deep Learning Representations in Real-Time (DriftLens) & 2025 & 17 use cases on eight text, image, and audio datasets; controlled shifts. & Embeddings; PCA; reference and incoming windows; predicted-label grouping. & Gaussian models, FDD, thresholds, drift curves, K-means prototypes. & Window detection accuracy by severity; runtime; score--injection correlation; prototype purity. & Better detection in 15/17 tested use cases; at least fivefold faster in reported comparisons. & Gaussian moments and injected shifts limit inference; no score--performance or analyst-task test.\\[5pt]
+2 & Domino drift effect approach for probability estimation of feature drift in high-dimensional data & 2025 & Covertype, CICIDS, Insects, Heartbeats; prediction mainly on Insects and Heartbeats. & Reference/analysis windows; correlations; monitored subset; initial lift curve. & Four feature-detector options plus DDE probabilities for other features. & Feature recall, precision, F1, AUC, runtime versus monitored fraction. & Saves detector calls where co-drift lift increases; Covertype induced shifts show flat lift. & Needs initial drift and correlated features; detector-derived targets; no impact or visual-task evaluation.\\[5pt]
+3 & Anticipating to Change: A Proactive Approach for Concept Drift Adaptation in Data Streams & 2026 volume (online 2025) & RBF synthetic movements and seven real binary streams. & 1,000-sample adaptation window; boundary and cluster trajectories. & VFDT-based threshold, feature, subtree, or shadow-tree changes. & Rolling prequential accuracy (500); degradation episodes; recovery. & PHT-MC 0.9574 versus VFDT 0.9406 in aggregate incremental-drift accuracy. & Limited benefit on abrupt or complex drift; binary/balanced focus; no separate detector or operator explanation.\\
+\end{longtable}
+\end{landscape}
+
+\section*{Research gap synthesis}
+\textbf{Gap 1: a joint evidence view.} DriftLens shows representation scores and prototypes; DDE scores likely drifting features; proactive trees quantify performance effects. None evaluates a joint view on identical windows. A timeline should align alarms, ranked features, classifier performance, and label availability. The gap is empirical integration, given existing visual-analytics systems \cite{driftvis,conceptexplorer}.
+
+\textbf{Gap 2: performance relevance of alarms.} DriftLens relates FDD to injected severity, DDE predicts detector outputs, and proactive trees report accuracy. These do not show whether one unlabeled score predicts later model loss. Test score versus $\Delta$F1 or $\Delta$AUC on aligned windows, lead time, false alarms, and retraining utility. Correlation alone does not establish causality.
+
+\textbf{Gap 3: credible, usable explanations.} Injected shifts, restricted drift regimes, proxy feature labels, and absent analyst-task evidence limit the conclusions. Test known-feature injections for localization ground truth and natural streams for external validity; include abrupt and gradual shifts, imbalance, delayed labels, and analyst time and decision accuracy.
+
+\textbf{Next-stage protocol.} Use time-ordered holdout windows and tune thresholds only on calibration data. Compare methods on identical streams and budgets. Report detection delay, false alarms per 1,000 windows, localization precision/recall where ground truth exists, prequential F1/AUC after labels arrive, runtime, and uncertainty across seeds. Electricity/Weather and Covertype can provide natural context; a synthetic stream can provide exact change and feature labels. These are proposed tests, not reviewed findings.
+
+\textbf{Rubric status.} Only the three specified papers are counted. The brief requires 8--10, so that requirement remains unmet. Other papers are background only. If the course defines Q1 by JCR instead of 2025 SJR, the KAIS paper is Q2 \cite{ranking}.
+
+\begin{thebibliography}{9}\small
+\bibitem{greco} S. Greco, B. Vacchetti, D. Apiletti, and T. Cerquitelli, Unsupervised Concept Drift Detection From Deep Learning Representations in Real-Time, \emph{IEEE TKDE}, 37(10), 6232--6245, 2025. \url{https://doi.org/10.1109/TKDE.2025.3593123}.
+\bibitem{szucs} G. Sz\H{u}cs and M. N\'emeth, Domino drift effect approach for probability estimation of feature drift in high-dimensional data, \emph{Knowledge and Information Systems}, 67, 4597--4621, 2025. \url{https://doi.org/10.1007/s10115-025-02362-0}.
+\bibitem{guerrero} J. V. Guerrero Cano, G. J. Aguiar, and A. Cano, Anticipating to Change: A Proactive Approach for Concept Drift Adaptation in Data Streams, \emph{Machine Learning}, 115, article 3, 2026. \url{https://doi.org/10.1007/s10994-025-06945-4}.
+\bibitem{driftvis} W. Yang et al., Diagnosing Concept Drift with Visual Analytics (DriftVis), 2020. \url{https://arxiv.org/abs/2007.14372}. Supporting background.
+\bibitem{conceptexplorer} X. Wang et al., ConceptExplorer: Visual Analysis of Concept Drifts in Multi-source Time-series Data, 2020. \url{https://arxiv.org/abs/2007.15272}. Supporting background.
+\bibitem{ranking} 2025 SJR and JCR comparison for Knowledge and Information Systems. \url{https://www.akaturk.com/journals/15703?lang=en}. Accessed 28 September 2026.
+\end{thebibliography}
+\end{document}

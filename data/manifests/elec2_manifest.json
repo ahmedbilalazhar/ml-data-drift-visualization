@@ -1,0 +1,37 @@
+{
+ "dataset": "elec2",
+ "source": "OpenML 'electricity' v1 (NSW market, normalized)",
+ "url": "https://www.openml.org/d/151",
+ "acquired": "2026-09-28",
+ "license": "OpenML terms (original: Harvill et al. electricity pricing)",
+ "n_rows": 45312,
+ "columns": [
+  "event_id",
+  "date",
+  "day",
+  "period",
+  "nswprice",
+  "nswdemand",
+  "vicprice",
+  "vicdemand",
+  "transfer",
+  "label"
+ ],
+ "class_counts": {
+  "0": 26075,
+  "1": 19237
+ },
+ "time_semantics": "file order = chronological market intervals (MUST hold for replay)",
+ "files": [],
+ "verification": {
+  "date": "2026-09-28",
+  "result": "CORRECT variant",
+  "checks": [
+   "45,312 rows matches River Elec2/DataHub electricity",
+   "schema nswprice/nswdemand/vicprice/vicdemand/transfer/day/period/date/class matches elecNormNew",
+   "task binary price up/down matches River spec (SPLICE-2 NSW market, 5-min)",
+   "file order chronological except 5 documented out-of-order rows [25488,34896,35232,36240,40704]",
+   "date column normalized 0-1, excluded from feature universe (identifier-like)"
+  ]
+ }
+}

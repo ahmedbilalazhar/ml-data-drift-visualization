@@ -1,0 +1,9 @@
+run_id,config_hash,status,n_windows_done
+E0-S0-s0,e0-pilot,complete,12
+E0-S1-s0,e0-pilot,complete,12
+E0-S2-s0,e0-pilot,complete,12
+E0-S3-s0,e0-pilot,complete,12
+E0-S4-s0,e0-pilot,complete,12
+E0-S5-s0,e0-pilot,complete,12
+E0-S6-s0,e0-pilot,complete,12
+E0-S7-s0,e0-pilot,complete,12

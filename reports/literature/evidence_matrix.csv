@@ -1,0 +1,6 @@
+paper_id,task,modality,reference_policy,drift_truth,metrics,resource_notes,relevance
+greco2025-driftlens,window detection,text/image/audio embeddings,reference vs stream windows,injected severity,accuracy/runtime/correlation/prototype-purity,CPU-untested here,RQ1 baseline family + viz comparison (NOT exact replication on tabular)
+szucs2025-dde,feature localization,tabular numeric,reference/analysis windows + monitored subset,detector-derived on natural + induced on Covertype,feature P/R/F1/AUC/runtime,subset-size tradeoff,RQ2 selective-monitoring extension only (E5)
+guerrero2026-pht,adaptation under drift,synthetic RBF + binary streams,1000-sample adaptation window,controlled cluster motion,prequential acc/episodes/recovery,adaptation overhead,RQ3 impact context; adaptation stays FROZEN-model extension
+driftvis2020,visual analytics,multivariate time series,n/a,case studies,task walkthroughs,n/a,closest viz prior art — rules out 'viz is new' claim
+conceptexplorer2020,visual analytics,multi-source time series,n/a,case studies,task walkthroughs,n/a,closest viz prior art — comparison required

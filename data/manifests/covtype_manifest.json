@@ -1,0 +1,25 @@
+{
+ "dataset": "covertype",
+ "source": "UCI direct download (figshare mirror 403)",
+ "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/covtype/covtype.data.gz",
+ "acquired": "2026-09-28",
+ "license": "CC-BY-4.0 (UCI record terms apply)",
+ "n_rows": 581012,
+ "n_features": 54,
+ "classes": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "files": [
+  {
+   "path": "data\\raw\\covtype\\covtype.data.gz",
+   "bytes": 11240707,
+   "sha256": "614360d0257557dd1792834a85a1cdebfadc3c4f30b011d56afee7ffb5b15771"
+  }
+ ]
+}

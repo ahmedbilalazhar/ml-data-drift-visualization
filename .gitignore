@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+# Data / artifacts (immutable raw + large caches stay out of git)
+data/raw/
+data/interim/
+data/processed/
+artifacts/
+results/runs/
+results/aggregates/
+results/figures/
+# Secrets / identities
+studies/anonymized/
+*.env
+# OS
+.DS_Store
+Thumbs.db

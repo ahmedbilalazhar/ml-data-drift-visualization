@@ -1,0 +1,8 @@
+# Detector configs (roadmap Sec. 8.1): same universe/reference/windows for all.
+detectors: [ks, wasserstein]
+ks:
+  correction: holm
+  operating_point: 10-per-1000-stationary
+wasserstein:
+  normalized: pooled-std
+models: [tree-d6, logreg-C1]

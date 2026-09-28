@@ -1,0 +1,7 @@
+# E0 scenario cards: templates S0-S7 (roadmap Sec. 7.6). Pilot seeds 0,1.
+templates: [S0, S1, S2, S3, S4, S5, S6, S7]
+seeds: [0, 1]
+n_features: 12
+test_onset: 0.4
+transition_rows: 2000
+shift_std: 1.0

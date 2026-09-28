@@ -1,0 +1,16 @@
+{
+ "seed": 0,
+ "n": 83665,
+ "strategy": "stratified-balanced ~14.3k/class",
+ "replay_order": "event_id ascending = subsample-sorted source order (EXPLICITLY constructed, not natural time)",
+ "class_counts": {
+  "1": 14285,
+  "2": 14285,
+  "3": 14285,
+  "4": 2747,
+  "5": 9493,
+  "6": 14285,
+  "7": 14285
+ },
+ "file": "data/processed/covtype_subset100k.parquet"
+}

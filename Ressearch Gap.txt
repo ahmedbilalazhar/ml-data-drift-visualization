@@ -1,0 +1,86 @@
+DATA ANALYSIS & VISUALIZATION
+
+PHASE 1 — LITERATURE REVIEW AND RESEARCH GAP IDENTIFICATION
+The purpose of this phase is to develop the ability to cri4cally read and analyze recent research
+literature related to your proposed research topic. You need to iden4fy established
+methodologies, datasets, models, evalua4on strategies, reported findings, limita4ons, and
+poten4al research gaps.
+1. PAPER SELECTION
+Each group must iden4fy and cri4cally study (8-10 papers) Q1 journal research papers published
+in 2026 and 2025 that are directly related to your proposed research topic.
+PAPER SELECTION REQUIREMENTS
+Each selected paper must:
+• Be published in 2026 or 2025.
+• Be a research ar4cle or A* or A Conference, not merely an editorial, opinion ar4cle, book
+chapter, conference paper, news ar4cle, or general webpage.
+• Be directly relevant to your proposed research topic.
+• Present an iden4fiable research methodology, experimental setup, or analy4cal
+framework.
+• Include sufficient informa4on about the dataset/data source, methods, and evalua4on
+to allow cri4cal analysis.
+• Preferably be from a reputable publisher/journal such as Springer Nature, Elsevier, IEEE,
+Wiley, ACM, Taylor & Francis, or another recognized academic publisher.
+REQUIRED DELIVERABLE:
+TWO-PAGES CRITICAL SUMMARY THAT COVERS:
+Write your Literature sec4on of research paper with following details:
+• Limita4ons explicitly men4oned by the authors.
+• Limita4ons that you iden4fy yourself.
+
+RESEARCH PROJECT
+
+• Dataset limita4ons.
+• Methodological limita4ons.
+• Evalua4on limita4ons.
+• Generalizability issues.
+• Missing experiments.
+• Poten4al direc4ons for future research.
+
+CROSS-PAPER COMPARISON TABLE:
+# Title Year of
+Publication
+Dataset
+Used
+Preprocessing
+Techniques
+
+Models /
+Techniques
+Used
+
+Evaluation
+Metrics
+Used
+Results Limitations /
+Research
+Gap
+
+1 Paper
+1
+2026
+2 Paper
+2
+2026
+3 Paper
+3
+2026
+
+IMPORTANT REQUIREMENT
+The table should not simply copy sentences from the papers. Students must synthesize the
+informa8on and make the differences between the studies clear.
+
+RESEARCH GAP SYNTHESIS:
+Based on the analysis of the selected papers, you need iden4fy at least 3 poten4al research
+gaps.
+
+SUGGESTED RESEARCH AREAS:
+• Visualiza4on Bias & Misleading Charts
+• Temporal Data Dri` & Distribu4on Shi`s
+• Explainable Data Visualiza4on
+• Fairness in Data Visualiza4on
+• Interac4ve Visualiza4on for Decision Making
+• AI-Assisted Visualiza4on & Hallucina4on
+• Data Storytelling vs. Sta4s4cal Accuracy
+• Uncertainty Visualiza4on
+• Correla4on vs. Causa4on Visualiza4on
+• ML Data Dri` Visualiza4on
+• Data Aggrega4on Bias

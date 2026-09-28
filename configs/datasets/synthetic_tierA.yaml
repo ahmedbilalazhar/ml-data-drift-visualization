@@ -1,0 +1,16 @@
+dataset:
+  family: synthetic-tierA
+  n_train: 10000
+  n_calib: 10000
+  n_test: 30000
+  n_features: 12
+reference:
+  rows: 5000
+  policy: fixed
+windows:
+  size: 500
+  stride: 500
+  sensitivity: [250, 1000]
+delays:
+  main: 2
+  sensitivity: [0, 5]
