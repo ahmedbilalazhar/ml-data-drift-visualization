@@ -92,7 +92,8 @@ def main():
     X.columns = [str(c) for c in X.columns]
     X["label"] = (el.target.astype(str).str.upper().isin(["UP", "1"])).astype(int)
     X.insert(0, "event_id", np.arange(len(X)))
-    el_files = sorted((RAW / "scikit_learn_data").rglob("*electricity*"))
+    el_files = sorted((RAW / "openml").rglob("*")) 
+    el_files = [p for p in el_files if p.is_file()]
     el_man = {"dataset": "elec2", "source": "OpenML 'electricity' v1 (NSW market, normalized)",
               "url": "https://www.openml.org/d/151", "acquired": today,
               "license": "OpenML terms (original: Harvill et al. electricity pricing)",
