@@ -15,6 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from drift_monitoring.simulation.generator import ScenarioSpec, generate_stream
 from drift_monitoring.models.frozen_models import fit_frozen
 from drift_monitoring.orchestration.runner import run_stream_experiment
+from drift_monitoring.orchestration.runner import Registry, config_hash
 from drift_monitoring.detectors.drift_detectors import calibrate_threshold
 from drift_monitoring.evaluation.metrics import match_events, paired_ci
 from drift_monitoring.detectors.drift_detectors import ks_window_score

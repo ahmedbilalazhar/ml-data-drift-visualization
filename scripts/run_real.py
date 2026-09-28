@@ -30,6 +30,9 @@ AGG = ROOT / "results" / "aggregates"
 
 def load_split(name: str, drop_like: tuple = ("date",)):
     df = pd.read_parquet(PROC / name).sort_values("event_id").reset_index(drop=True)
+    for c in df.columns:  # categoricals (e.g. Elec2 day-of-week) as codes, never dropped silently
+        if isinstance(df[c].dtype, pd.CategoricalDtype):
+            df[c] = df[c].cat.codes.astype(float)
     feats = [c for c in df.columns if c not in ("event_id", "label")
              and not any(d in c.lower() for d in drop_like)]
     num = [c for c in feats if pd.api.types.is_numeric_dtype(df[c])]

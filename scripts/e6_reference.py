@@ -46,6 +46,9 @@ def main():
     for name, drop in [("elec2_ordered.parquet", ("date",)),
                        ("covtype_subset100k.parquet", ())]:
         df = pd.read_parquet(PROC / name).sort_values("event_id").reset_index(drop=True)
+        for c in df.columns:
+            if isinstance(df[c].dtype, pd.CategoricalDtype):
+                df[c] = df[c].cat.codes.astype(float)
         num = [c for c in df.columns if c not in ("event_id", "label")
                and not any(d in c.lower() for d in drop)
                and pd.api.types.is_numeric_dtype(df[c])]
