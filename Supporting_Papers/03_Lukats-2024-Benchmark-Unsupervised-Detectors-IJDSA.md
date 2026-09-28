@@ -1,6 +1,6 @@
 # A benchmark and survey of fully unsupervised concept drift detectors on real-world data streams
 
-**Authors:** Lukats et al.
+**Authors:** Daniel Lukats, Oliver Zielinski, Axel Hahn, Frederic Stahl
 
 **Venue:** International Journal of Data Science and Analytics (2024) — Background / methods reference, NOT 2025-2026 countable
 

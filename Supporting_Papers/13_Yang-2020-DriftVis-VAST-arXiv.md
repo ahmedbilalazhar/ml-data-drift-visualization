@@ -1,6 +1,6 @@
 # Diagnosing Concept Drift with Visual Analytics (DriftVis)
 
-**Authors:** Yang et al.
+**Authors:** Weikai Yang, Zhen Li, Mengchen Liu, Yafeng Lu, Kelei Cao, Ross Maciejewski, Shixia Liu
 
 **Venue:** IEEE VAST (2020), arXiv version — Foundational visualisation prior art
 

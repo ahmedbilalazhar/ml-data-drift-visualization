@@ -1,6 +1,6 @@
 # ADWIN-U: adaptive windowing for unsupervised drift detection on data streams
 
-**Authors:** Assis & de Souza
+**Authors:** Daniel Nowak Assis, Vinicius M. A. Souza
 
 **Venue:** Knowledge and Information Systems (2025), author copy — Needs final Q1/year verification
 
