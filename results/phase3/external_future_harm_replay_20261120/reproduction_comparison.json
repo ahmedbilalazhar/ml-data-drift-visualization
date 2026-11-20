@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "csvs_byte_identical": true,
+  "output_sha256": {
+    "evaluator_targets.csv": "a6cf3f634c580d797846b9dc1cf9bfc187e06d6e26f9cff35b5be41dc6df4a55",
+    "online_forecasts.csv": "e5a9357de386b3dbedca3a1b85567aa460ee6e879c35a6b33f96f3b3b5cc7330",
+    "summary.csv": "e8d93b4a1cee9f178e9a02cb223b9544ca38655643ccbc6cd7567644e76e46c3"
+  },
+  "forecast_rows": 1824,
+  "target_origins": 152,
+  "explicit_cohort_clock_checks": 1824,
+  "unreleased_outcome_perturbation_checks": 456
+}

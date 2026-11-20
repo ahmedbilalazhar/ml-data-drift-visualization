@@ -99,6 +99,10 @@ For every run being summarized, make a row with: experiment question; protocol p
 | Unseen-family harm forecasting | Time-only AUC was 0.998 in the aligned-onset pilot and 0.875 in the balanced-onset follow-up. Monitor features improved Brier score over time alone in the follow-up. Released labels had no clear Brier improvement. | [Unseen-family protocol](../docs/phase3/FUTURE_HARM_UNSEEN_FAMILY_PROTOCOL_20261116.md), [weakness register](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md) |
 | Seasonal stress | 90 of 90 cells completed in both the canonical evaluation and clean reproduction, with exact equality of compared outcome fields. In three synthetic families, excess input alarm rates were 0.744–0.768 and paired accuracy deltas stayed within 0.000025 of zero. | [Aggregate results](../results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv), [reconciliation](../docs/phase3/SCIENTIFIC_EXTENSION_RECONCILIATION_20261118.json) |
 
+## Ordered external follow-up
+
+Use the [external replay report](../reports/phase3/external_future_harm_replay_20261120/REPORT.md) for five-cohort accuracy forecasting on ELEC2, NOAA and UCI224. Treat it as reuse of existing streams. UCI224 had four five-cohort origins and zero with released labels at delay 5, so report the availability limit separately from error.
+
 ## Open work to assess first
 
 Read the [20 November forecast stress and replay report](../reports/phase3/six_hour_strengthening_20261120/REPORT.md) before updating any future-harm claims. Fresh synthetic results include a conditional-reversal gain (+0.0453 Brier) and a boundary-concentration failure (−0.3337). Conditional-only inputs produced exactly the stationary control's unlabeled probabilities on matched seeds, so the score gains cannot establish discrimination of conditional shift. The report also records the UCI224 and ELEC2 replay checks.

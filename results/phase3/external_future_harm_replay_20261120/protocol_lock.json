@@ -1,0 +1,58 @@
+{
+  "status": "complete",
+  "python": "3.14.0",
+  "delays": [
+    0,
+    2,
+    5
+  ],
+  "horizons": [
+    1,
+    5
+  ],
+  "source_rows_by_stream": {
+    "ELEC2": [
+      "elec2_temporal_20261116_v2/online_batches.csv",
+      "elec2_temporal_20261116_v2/evaluation/evaluator_batches.csv",
+      "estimate",
+      "historical_reference_accuracy",
+      "n",
+      1,
+      55
+    ],
+    "NOAA": [
+      "noaa_weather_1949_1999_v1/online/batch_scores.csv",
+      "noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv",
+      "cal_estimate",
+      "reference_accuracy",
+      "n",
+      1,
+      21
+    ],
+    "UCI224": [
+      "external_uci224_day2_v2/cohort_metrics.csv",
+      "external_uci224_day2_v2/cohort_metrics.csv",
+      "estimated_accuracy",
+      "historical_reference_accuracy",
+      "cohort_rows",
+      2,
+      9
+    ]
+  },
+  "source_sha256": {
+    "docs/phase3/EXTERNAL_FUTURE_HARM_REPLAY_20261120.md": "9825ff88e5f63fca4b86af98c49ad3b9ab3557aa1c2b760a508279e3d11ca266",
+    "results/phase3/elec2_temporal_20261116_v2/evaluation/evaluator_batches.csv": "d46ca3951702d9035117c0fd1ef35f2d627d7a0015b7b67eae2958a314afd6f1",
+    "results/phase3/elec2_temporal_20261116_v2/online_batches.csv": "ae7b02e2080f3238a0fc0ec160bcc39dcb19572067c9700e00616b591affd281",
+    "results/phase3/external_uci224_day2_v2/cohort_metrics.csv": "b5ee0320fa1b356c0b6f93ef61261ec252e5056770892c7435328a56689e6556",
+    "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv": "fe869ec985fbdd9fc19a0a7cd235b51cdc4f3e26c161ba9d9ac0818ee704208b",
+    "results/phase3/noaa_weather_1949_1999_v1/online/batch_scores.csv": "74d316dbf42e3434afe241b6fe381a53a866bee75e44319670080000fca968c4",
+    "scripts/run_external_future_harm_replay.py": "8672ecfdd6dbd993ea11f77168c5e8b8398bc74bedf36b8305276cf2f4565c71"
+  },
+  "forecast_rows": 1824,
+  "unavailable_outcome_checks": 456,
+  "output_sha256": {
+    "evaluator_targets.csv": "a6cf3f634c580d797846b9dc1cf9bfc187e06d6e26f9cff35b5be41dc6df4a55",
+    "online_forecasts.csv": "e5a9357de386b3dbedca3a1b85567aa460ee6e879c35a6b33f96f3b3b5cc7330",
+    "summary.csv": "e8d93b4a1cee9f178e9a02cb223b9544ca38655643ccbc6cd7567644e76e46c3"
+  }
+}

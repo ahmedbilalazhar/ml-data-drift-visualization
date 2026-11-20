@@ -61,5 +61,6 @@ Each row identifies an experiment run represented in the published snapshot. Dra
 | --- | --- | ---: |
 | six_hour_forecast_20261120 | [Report](../reports/phase3/six_hour_strengthening_20261120/REPORT.md), [metrics](../results/phase3/six_hour_forecast_20261120/metrics_by_family_delay.csv), [contrasts](../results/phase3/six_hour_forecast_20261120/simultaneous_contrasts.csv), [validation](../results/phase3/six_hour_forecast_20261120/validation.json) | 6 / 3 |
 | six_hour_replay_audit_20261120 | [UCI224 and ELEC2 comparison receipt](../results/phase3/six_hour_replay_audit_20261120/replay_audit.json), [UCI224 refit differences](../results/phase3/six_hour_replay_audit_20261120/uci224_refit_differences.csv) | 2 / 0 |
+| external_future_harm_replay_20261120 | [Report](../reports/phase3/external_future_harm_replay_20261120/REPORT.md), [summary](../results/phase3/external_future_harm_replay_20261120/summary.csv), [receipt](../results/phase3/external_future_harm_replay_20261120/reproduction_comparison.json) | 5 / 0 |
 
 Archived traces referenced by manifests may require regeneration or access to the laptop copy. Historical checksums describe the original runs. See the run-specific reproduction docs and preserve published result files when reproducing into a separate directory.
