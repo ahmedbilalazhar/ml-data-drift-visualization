@@ -1,0 +1,16 @@
+template,delay,f1_base,f1_late_avail,dF1,action
+S0,0,0.657,0.663,-0.006,monitor
+S0,2,0.657,0.681,-0.023,monitor
+S0,5,0.657,0.646,0.011,monitor
+S1,0,0.657,0.662,-0.004,investigate/request-labels
+S1,2,0.657,0.681,-0.023,investigate/request-labels
+S1,5,0.657,0.646,0.011,investigate/request-labels
+S2,0,0.657,0.646,0.011,investigate/request-labels
+S2,2,0.657,0.663,-0.006,investigate/request-labels
+S2,5,0.657,0.646,0.011,investigate/request-labels
+S6,0,0.657,0.583,0.074,evaluate-update
+S6,2,0.657,0.614,0.043,investigate/request-labels
+S6,5,0.657,0.646,0.011,investigate/request-labels
+S7,0,0.657,0.469,0.189,request-labels
+S7,2,0.657,0.51,0.148,request-labels
+S7,5,0.657,0.646,0.011,monitor

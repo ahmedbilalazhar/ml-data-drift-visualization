@@ -1,0 +1,3 @@
+stream,n_windows,alerts_at_pilot_thr,thr,mean_f1,detect_rate,delay_w,loc_P3
+elec2,54,54,0.0936,0.607,N/A (no event truth),,
+covtype-S2like,100,100,0.0936,0.221,True,0.0,1.0

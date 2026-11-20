@@ -1,0 +1,3 @@
+stream,n_windows,mean_fixed,mean_refresh,alerts_fixed,alerts_refresh,note
+elec2,54,0.848,0.375,54,53,thr illustrative; refresh warm-up NaN kept
+covtype,100,0.658,0.349,100,99,thr illustrative; refresh warm-up NaN kept

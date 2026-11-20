@@ -1,0 +1,9 @@
+template,alert,f1_base,f1_late,dF1,action
+S0,False,0.657,0.663,-0.006,monitor
+S1,True,0.657,0.662,-0.004,investigate/request-labels
+S2,True,0.657,0.646,0.011,investigate/request-labels
+S3,True,0.657,0.626,0.031,investigate/request-labels
+S4,True,0.657,0.649,0.008,investigate/request-labels
+S5,True,0.657,0.665,-0.008,investigate/request-labels
+S6,True,0.657,0.583,0.074,evaluate-update
+S7,False,0.657,0.469,0.189,request-labels

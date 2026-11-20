@@ -2,7 +2,7 @@
 
 Explainable drift monitoring, delayed-label evaluation and visualization, with pilot experiments and Phase 3 research extensions.
 
-Start with the [AI agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md) for the project map, reported findings and open questions. The [Phase 3 run index](prompts/PHASE3_RUN_INDEX.md) links to retained result evidence.
+Start with [experiment results and reproduction](EXPERIMENTS.md). For project context, scientific limits and open work, read the [AI agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md).
 
 ## Quickstart (Windows, CPU)
 
@@ -15,25 +15,22 @@ pytest -q
 Colab heavy tests: open `notebooks/colab/00_e0_smoke.ipynb`
 and run cells top-to-bottom (uses same `src/` package).
 
-## Layout
+## Repository structure
 
-- `src/drift_monitoring/` — simulation (S0–S7), windows/replay clock,
-  detectors (KS/Wasserstein/JS/ADWIN-inspired/RBF-MMD/joint-logreg),
-  explanations (ranking + DDE lift/scores), frozen models, evaluation,
-  visualization (aligned views + heatmaps), orchestration, real-data loader
-- `configs/` — dataset (incl. elec2/covtype/weather-pending/TierA) /
-  scenario (E0–E6/full) / method / study YAML — all runners read these
-- `scripts/` — smoke_e0, run_multiseed, run_real, e1_detection/compare,
-  e2_localization, e3_proxy/delay, e6_reference/sensitivity,
-  export_heatmap, build_dashboard, compare_offline, demo_dde,
-  materialize_tierA, audit/download_datasets
-- `experiments/protocols/` — protocol outline + E0 card; `experiments/registries/` — run log
-- `docs/` — charter, problem statement, data cards, decisions, architecture roadmap
-- `reports/literature/` — evidence matrix + deep-research review (Week-1)
-- `reports/manuscript/phase1/` — Phase 1 LaTeX report + compiled PDF
-- `studies/tasks/` — course requirement briefs; `studies/rubrics/` — evaluation checklists
-- `prompts/` — review/audit prompt templates
-- `data/` — `raw/` (immutable, gitignored), `processed/`, `manifests/`, `interim/`
-- `tests/` — scientific-invariant checks (leakage, label timing, resume)
+| Folder | What belongs here |
+| --- | --- |
+| [experiments/](experiments/) | Pilot protocols, experiment cards and the run registry |
+| [docs/phase3/](docs/phase3/) | Phase 3 protocols, dataset provenance, validation and decision records |
+| [configs/](configs/) | Dataset, scenario, method and study settings |
+| [src/drift_monitoring/](src/drift_monitoring/) | Monitoring, simulation, evaluation and visualization package |
+| [scripts/](scripts/) | Run, evaluate and report entry points |
+| [results/aggregates/](results/aggregates/) | Published pilot result tables |
+| [results/phase3/](results/phase3/) | Retained run results, validation receipts and selected replay inputs |
+| [reports/](reports/) | Interpretation, manuscript material, figures and reports |
+| [data/](data/) | Source manifests and selected external inputs |
+| [tests/](tests/) | Unit tests and scientific contracts |
+| [prompts/](prompts/) | Agent handoff and experiment navigation |
 
-Roadmap: `docs/architecture/research-project-architecture-and-roadmap.md` (planning doc, not results).
+For an experiment, follow its protocol to the runner and configuration, then compare its tables under `results/` with its interpretation under `reports/`. Write new run outputs to a new folder so the published evidence stays available.
+
+See the [architecture roadmap](docs/architecture/research-project-architecture-and-roadmap.md) for planned work.

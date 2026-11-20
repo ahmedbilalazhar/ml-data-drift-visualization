@@ -1,0 +1,9 @@
+template,mechanism,threshold,n_alerts,detected,delay_w
+S0,stationary,0.0972,1,False,
+S1,abrupt-irrelevant,0.0972,8,True,0.0
+S2,gradual-relevant,0.0972,7,True,1.0
+S3,recurrent,0.0972,5,True,0.0
+S4,correlated-group,0.0972,7,True,1.0
+S5,isolated,0.0972,8,True,0.0
+S6,dependence-change,0.0972,8,True,0.0
+S7,conditional-only,0.0972,1,False,

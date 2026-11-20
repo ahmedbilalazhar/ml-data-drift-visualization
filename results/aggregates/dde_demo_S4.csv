@@ -1,0 +1,7 @@
+feature,dde_score,in_truth,status
+x3,0.2,False,inferred-dde
+x4,0.2,False,inferred-dde
+x6,0.2,False,inferred-dde
+x7,0.2,False,inferred-dde
+x10,0.2,False,inferred-dde
+x11,0.2,False,inferred-dde

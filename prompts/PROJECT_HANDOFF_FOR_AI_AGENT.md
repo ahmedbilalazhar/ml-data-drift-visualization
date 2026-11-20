@@ -8,6 +8,8 @@ The project is **Explainable Visualization and Monitoring of ML Data Drift**. It
 
 ## Start here
 
+Open [experiment results and reproduction](../EXPERIMENTS.md) first. It maps the pilot experiments and each retained Phase 3 run to its saved metrics, status or validation records, and gives the exact location of replay inputs.
+
 1. `README.md` — quickstart and high-level repository map.
 2. `plan.md` and `docs/research_notes/project-plan.md` — overall plan and project intent.
 3. `docs/architecture/research-project-architecture-and-roadmap.md` — architecture and roadmap (planning, not results).
