@@ -1,3 +1,0 @@
-task,mechanism,feature_dimension,detector,stationary_false_alarm_rate,post_intervention_detection_rate,mean_detection_delay_batches,post_intervention_alarm_rate,seed_count
-five_region,M6_dependence_marginals_preserved,128,original_plus_pca_ks,0.0,0.0,,0.0,1
-five_region,M6_dependence_marginals_preserved,128,pairwise_correlation,0.0,1.0,1.0,0.25,1

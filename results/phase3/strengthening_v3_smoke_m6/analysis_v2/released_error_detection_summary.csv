@@ -1,5 +1,0 @@
-task,mechanism,feature_dimension,delay,stationary_false_alarm_rate,mean_stationary_alarm_count,detected_after_drain_rate,detected_during_input_rate,mean_detection_lag_source_batches,seed_count
-linear_probabilistic,M6_dependence_marginals_preserved,8,0,0.0,0.0,1.0,1.0,2.0,1
-linear_probabilistic,M6_dependence_marginals_preserved,8,5,0.0,0.0,1.0,1.0,2.0,1
-linear_probabilistic,M6_dependence_marginals_preserved,8,20,0.0,0.0,1.0,1.0,2.0,1
-linear_probabilistic,M6_dependence_marginals_preserved,8,100,0.0,0.0,1.0,0.0,2.0,1

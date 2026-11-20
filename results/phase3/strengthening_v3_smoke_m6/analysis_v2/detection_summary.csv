@@ -1,3 +1,0 @@
-task,mechanism,feature_dimension,detector,stationary_false_alarm_rate,post_intervention_detection_rate,mean_detection_delay_batches,post_intervention_alarm_rate,seed_count
-linear_probabilistic,M6_dependence_marginals_preserved,8,original_plus_pca_ks,0.20833333333333334,1.0,0.0,0.4166666666666667,1
-linear_probabilistic,M6_dependence_marginals_preserved,8,pairwise_correlation,0.125,1.0,0.0,1.0,1

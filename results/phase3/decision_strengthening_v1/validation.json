@@ -1,8 +1,0 @@
-{
-  "status": "passed",
-  "policy_rows": 6300,
-  "identical_label_budget": true,
-  "decision_rows": 151200,
-  "source_results_unchanged": true,
-  "localization_scope": "C1/C2 original marginal interventions only; no causal or dependence localization claim"
-}

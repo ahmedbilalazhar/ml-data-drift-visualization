@@ -1,9 +1,0 @@
-{
-  "python": "3.13.5",
-  "numpy": "2.1.3",
-  "pandas": "2.3.3",
-  "protocol_sha256": "171df720f93fcf5604dc96694707954a4506b4ce6e34761aa1bd29844806bd1c",
-  "source_sha256": "e7dc76f5355fb525e4e12de603fc67efb73ab30958a35b9eb42ba1ee12877e1e",
-  "detector_sha256": "238003886754c7a7aa9044a0b6219ac010924ab9b134fc5bcbb4091bad455914",
-  "mode": "development"
-}

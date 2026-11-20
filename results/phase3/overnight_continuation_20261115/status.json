@@ -1,8 +1,0 @@
-{
-  "stage": "blocked_or_failed",
-  "pid": 27140,
-  "updated_utc": "2026-11-15T23:56:37.998381+00:00",
-  "error": "RuntimeError('sample_reproduction failed, see log; exit 1')",
-  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\scripts\\continue_phase3_overnight.py\", line 197, in main\n    execute('sample_reproduction',[PY,ROOT/'scripts/compare_phase3_large_seed_sample.py','--run',RUN,'--out',REPORT/'sample_reproduction'],timeout=1200)\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\scripts\\continue_phase3_overnight.py\", line 69, in execute\n    if p.returncode: raise RuntimeError(f'{name} failed, see log; exit {p.returncode}')\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: sample_reproduction failed, see log; exit 1\n",
-  "partial_evidence_preserved": true
-}

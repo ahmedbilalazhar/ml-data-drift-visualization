@@ -1,9 +1,0 @@
-{
-  "config_path": "configs/dde_subset_audit_v1.json",
-  "config_sha256": "d607de4d85af5bcb30f0178d38364e3fa1108b85f11d4e65848298d5545f65f3",
-  "note": "No result seed cells completed; not scientific evidence.",
-  "protocol": "dde-style-subset-audit-v1",
-  "smoke_only": true,
-  "started_unix": 1794965866.1476574,
-  "status": "interrupted_smoke_after_runtime_design_revision"
-}

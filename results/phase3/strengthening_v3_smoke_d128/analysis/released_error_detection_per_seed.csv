@@ -1,5 +1,0 @@
-task,mechanism,seed,feature_dimension,delay,stationary_false_alarm,stationary_alarm_count,post_change_detected_after_drain,post_change_detected_during_input,first_changed_alarm_source_batch,first_changed_alarm_release_clock,detection_lag_source_batches,detector_name
-five_region,M6_dependence_marginals_preserved,73116001,128,0,False,0,False,False,,,,ADWIN-style exact scan; not a River/official ADWIN reproduction
-five_region,M6_dependence_marginals_preserved,73116001,128,5,False,0,False,False,,,,ADWIN-style exact scan; not a River/official ADWIN reproduction
-five_region,M6_dependence_marginals_preserved,73116001,128,20,False,0,False,False,,,,ADWIN-style exact scan; not a River/official ADWIN reproduction
-five_region,M6_dependence_marginals_preserved,73116001,128,100,False,0,False,False,,,,ADWIN-style exact scan; not a River/official ADWIN reproduction

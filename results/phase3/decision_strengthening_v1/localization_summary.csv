@@ -1,3 +1,0 @@
-condition,precision_at_1,recall_at_3,feature_flag_recall
-C1,1.0,1.0,1.0
-C2,0.9875,0.99375,0.9729166666666667

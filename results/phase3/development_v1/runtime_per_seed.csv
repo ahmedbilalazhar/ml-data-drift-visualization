@@ -1,2 +1,0 @@
-seed,prediction_seconds,original_ks_seconds,latent_ks_seconds,calibrated_impact_seconds,raw_impact_seconds,cluster_seconds,score_seconds,fit_seconds
-90001,0.2861825999134367,4.0610570001008375,1.7590790999965893,1.9080499000410698,1.8730107000155756,0.155775100065504,10.232406599825474,0.1665141999983461

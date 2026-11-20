@@ -1,6 +1,8 @@
 # Explainable Visualization and Monitoring of ML Data Drift
 
-E0 pilot + reproducible harness (roadmap Sec. 6, 11–13, 16).
+Explainable drift monitoring, delayed-label evaluation and visualization, with pilot experiments and Phase 3 research extensions.
+
+Start with the [AI agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md) for the project map, reported findings and open questions. The [Phase 3 run index](prompts/PHASE3_RUN_INDEX.md) links to retained result evidence.
 
 ## Quickstart (Windows, CPU)
 
@@ -27,7 +29,6 @@ and run cells top-to-bottom (uses same `src/` package).
   materialize_tierA, audit/download_datasets
 - `experiments/protocols/` — protocol outline + E0 card; `experiments/registries/` — run log
 - `docs/` — charter, problem statement, data cards, decisions, architecture roadmap
-- `references/papers/selected/` + `supporting/` — supplied paper texts + figure/table assets
 - `reports/literature/` — evidence matrix + deep-research review (Week-1)
 - `reports/manuscript/phase1/` — Phase 1 LaTeX report + compiled PDF
 - `studies/tasks/` — course requirement briefs; `studies/rubrics/` — evaluation checklists
