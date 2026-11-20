@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "method": "same-environment full rerun on the same 80 locked seeds",
+  "primary_run": "results/phase3/six_hour_forecast_20261120",
+  "repeat_run": "results/phase3/six_hour_forecast_repeat_20261120",
+  "scientific_csvs_identical": true,
+  "sha256": {
+    "evaluator_targets.csv": "2a06df003c59ca42c2f674b680ce63d655b88f22a4245fad2d4ec8a54c5a2917",
+    "forecast_probabilities.csv": "0dc817085ae8a3ab6b1aec868106bf51600189431ea4b45d2f56ed8095c6963c",
+    "metrics_by_family_delay.csv": "a6716c703299d8562a5f5072a072d43e76a6c536834bbaec2c4b2fecf0942b09",
+    "online_features.csv": "08bb4aa7252bef3f70724b611fee8ac08759067d45c9d57474407481a41c9f84",
+    "paired_seed_gains.csv": "9e26e597836dc4b73a6a8732c8d348a986b87b867bc083ac09331221a062682c",
+    "simultaneous_contrasts.csv": "79f81cb3357ecf582f74280a7be96612adc4470c623d4afd5595849c3910a038"
+  },
+  "original_elapsed_seconds": 177.60698959999718,
+  "repeated_elapsed_seconds": 148.75111080001807
+}

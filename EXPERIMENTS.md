@@ -353,6 +353,10 @@ Across nine unequal cohorts, equal-cohort MAE was 0.545 frozen versus 0.169, 0.2
 
 - [batch_metrics.csv](results/phase3/weather_reproduction_v2/evaluator/batch_metrics.csv). 21 rows; grouped by available fields `batch`. Observed column values: `accuracy` 0.678 to 0.826, `macro_f1` 0.58908 to 0.72422, `balanced_accuracy` 0.5919 to 0.71575.
 
+## 20 November strengthening study
+
+The [forecast stress and replay report](reports/phase3/six_hour_strengthening_20261120/REPORT.md) adds 80 fresh seeds across five paired synthetic conditions, with three delay settings and a stationary negative control. The unlabeled monitor's Brier gain over time alone ranged from +0.0453 for regional reversal to −0.3337 for boundary concentration. The report also records the UCI224 and ELEC2 replay checks. See the [locked design](docs/phase3/SIX_HOUR_STRENGTHENING_20261120.md) and [full contrast table](results/phase3/six_hour_forecast_20261120/simultaneous_contrasts.csv).
+
 ## Reproduction inputs and storage
 
 - **Core Phase 3 v2.** The final and reproduction summaries, protocol locks and [historical comparison receipt](reports/phase3/v2_reproduction/reproduction_comparison.json) are published. Use the [v2 guide](docs/phase3/23I-2581_23I-2604_Phase3_Reproduction.md) and [runner](scripts/run_phase3_v2.py) to regenerate two full run directories before using the exact comparator. The comparator expects all original CSVs and NPZ arrays on both sides. The GitHub snapshot is a compact reference for examining published results.

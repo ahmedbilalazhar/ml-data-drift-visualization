@@ -101,6 +101,8 @@ For every run being summarized, make a row with: experiment question; protocol p
 
 ## Open work to assess first
 
+Read the [20 November forecast stress and replay report](../reports/phase3/six_hour_strengthening_20261120/REPORT.md) before updating any future-harm claims. Fresh synthetic results include a conditional-reversal gain (+0.0453 Brier) and a boundary-concentration failure (−0.3337). Conditional-only inputs produced exactly the stationary control's unlabeled probabilities on matched seeds, so the score gains cannot establish discrimination of conditional shift. The report also records the UCI224 and ELEC2 replay checks.
+
 1. Trace Phase 2 requirements to implemented and evaluated features. Start with [Phase 2 traceability](../docs/phase3/PHASE2_TRACEABILITY.md) and the [implementation audit](../docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.md). Check later experiments against the dated [weakness register](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md) before calling a weakness open or resolved.
 2. Reconcile newest adaptation capacity, matched schedules, diversity and DDE subset runs against their seed audits and confirmation outputs. Report policy comparisons alongside their label, retraining and information budgets.
 3. Specify the evidence that would justify claims about human decisions, operational cost, cross-domain performance, or calibrated probabilities. The current scope supports descriptive localization and controlled replay findings. Causal attribution, decision benefits and broad transfer still require independent evidence.
