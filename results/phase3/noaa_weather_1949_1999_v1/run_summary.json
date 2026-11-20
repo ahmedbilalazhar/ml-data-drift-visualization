@@ -1,0 +1,61 @@
+{
+  "data_sha256": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+  "dataset_id": "noaa-gsod-offutt-weather-1949-1999-v2",
+  "date_ranges": {
+    "calibration": [
+      "1958-12-25",
+      "1958-12-24"
+    ],
+    "monitoring": [
+      "1968-12-15",
+      "1998-10-29"
+    ],
+    "reference": [
+      "1958-12-25",
+      "1963-12-19"
+    ],
+    "train": [
+      "1949-01-01",
+      "1958-12-24"
+    ]
+  },
+  "interpretation": "descriptive chronological holdout on one station; batches are serial temporal blocks, not independent replications",
+  "label_timing_limitation": "Features and rain occurrence are same-day GSOD summaries. This benchmark is retrospective classification and cannot support an ahead-of-time rain forecast.",
+  "model": {
+    "C": 1.0,
+    "actual_pca_components": 3,
+    "clusters": 3,
+    "frozen": true,
+    "max_iter": 2000,
+    "name": "LogisticRegression"
+  },
+  "primary_holdout_summary": {
+    "input_alarm_fraction": 1.0,
+    "mean_batch_accuracy": 0.7505714285714286,
+    "mean_batch_balanced_accuracy": 0.6535897350393777,
+    "mean_batch_macro_f1": 0.6608665636442406,
+    "mean_calibration_bias": 0.0416033493862215,
+    "mean_calibration_mae": 0.04431957018650259,
+    "mean_correctness_brier": 0.16759595591980297,
+    "plug_in_interval_coverage": 0.42857142857142855
+  },
+  "row_counts": {
+    "calibration": 1821,
+    "monitoring": 10926,
+    "monitoring_complete_batches": 21,
+    "monitoring_evaluated_rows": 10500,
+    "monitoring_remainder_dropped": 426,
+    "reference": 1821,
+    "train": 3642
+  },
+  "run_id": "noaa-weather-1949-1999-v2",
+  "software": {
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "python": "3.13.5",
+    "scikit_learn": "1.8.0"
+  },
+  "split_seed": null,
+  "status": "complete",
+  "timing_boundary": "features scored and written first; delay-zero labels released after the batch prediction; queue drainage creates no input"
+}

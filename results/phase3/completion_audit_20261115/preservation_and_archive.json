@@ -1,0 +1,169 @@
+{
+  "timestamp": "2026-11-15T20:31:04.637893+05:00",
+  "hash_checks": [
+    {
+      "path": "docs\\23i-2604_23i-2581DAV-phase2.docx",
+      "expected": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+      "actual": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+      "match": true
+    },
+    {
+      "path": "docs\\Phase 03 - Implementation.pdf",
+      "expected": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+      "actual": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\IMPLEMENTATION_PLAN.md",
+      "expected": "de47ac3b325a50389820bf2dbaa9fc2107369acb06cfa006e7bab354ed5afa01",
+      "actual": "de47ac3b325a50389820bf2dbaa9fc2107369acb06cfa006e7bab354ed5afa01",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\experiment_manifest.json",
+      "expected": "b0f45092661b215a387c6363977ca368edb9c3ad2df7b07f07b17895f8ac6185",
+      "actual": "b0f45092661b215a387c6363977ca368edb9c3ad2df7b07f07b17895f8ac6185",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\V2_EXTENSION_MANIFEST.md",
+      "expected": "4c8e120da024fa91b804e4e17727c8ec253398f7e81254aa4ba522a8d28e4b9b",
+      "actual": "4c8e120da024fa91b804e4e17727c8ec253398f7e81254aa4ba522a8d28e4b9b",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\V2_DECISION_LOG.md",
+      "expected": "c9ffe1a86f197f2f04c3d43fb3b6b1356670829b988642ac86b08b1a2528b200",
+      "actual": "c9ffe1a86f197f2f04c3d43fb3b6b1356670829b988642ac86b08b1a2528b200",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\ADAPTATION_PROTOCOL.md",
+      "expected": "462f29c929df220117f579945bbd6cfb593810f0bb8bb0a7f67c58c34faf5b97",
+      "actual": "462f29c929df220117f579945bbd6cfb593810f0bb8bb0a7f67c58c34faf5b97",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\23I-2581_23I-2604_Phase3_Reproduction.md",
+      "expected": "19ac17a4c828b1557a55c0d8a3e847931d0a9b023f889f51c714556d9d21b93b",
+      "actual": "19ac17a4c828b1557a55c0d8a3e847931d0a9b023f889f51c714556d9d21b93b",
+      "match": true
+    },
+    {
+      "path": "output\\phase3\\23I-2581_23I-2604_Phase3.zip",
+      "expected": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877",
+      "actual": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877",
+      "match": true
+    },
+    {
+      "path": "output\\phase3\\IDM_Viz_Phase3_v1_submission.zip",
+      "expected": "ddf91fa89ab9a9d45c20059c1dbea5cfdd966f3eea62a605769a371ae55e0ebd",
+      "actual": "ddf91fa89ab9a9d45c20059c1dbea5cfdd966f3eea62a605769a371ae55e0ebd",
+      "match": true
+    },
+    {
+      "path": "output\\phase3\\IDM_Viz_Phase3_v1_full_reproducibility.zip",
+      "expected": "0baba912c5f3e48a8a08a606e2a77a303f67e884ddccfef0907046d94dca5519",
+      "actual": "0baba912c5f3e48a8a08a606e2a77a303f67e884ddccfef0907046d94dca5519",
+      "match": true
+    },
+    {
+      "path": "output\\phase3\\IDM_Viz_Phase3_Day1_v1.1_Validated.zip",
+      "expected": "247cbd8e3d0da4fe853e644346cca45870d2b4e55d49515e0c4cc24f5c513602",
+      "actual": "247cbd8e3d0da4fe853e644346cca45870d2b4e55d49515e0c4cc24f5c513602",
+      "match": true
+    },
+    {
+      "path": "output\\phase3\\IDM_Viz_Phase3_Day2_External_Evaluation_v1.3_Validated.zip",
+      "expected": "c04e7d9d111196b28767a917c26364be3a9f70dc0335e571c08985892488ef9d",
+      "actual": "c04e7d9d111196b28767a917c26364be3a9f70dc0335e571c08985892488ef9d",
+      "match": true
+    },
+    {
+      "path": "data\\external\\uci224_source\\uci224_curl.zip",
+      "expected": "91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4",
+      "actual": "91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\research_improvement_day1\\REPORT.tex",
+      "expected": "3023c040063c29c401fdb183753b5377d30feee41e5f6dea17253bedad6a237f",
+      "actual": "3023c040063c29c401fdb183753b5377d30feee41e5f6dea17253bedad6a237f",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\research_improvement_day2\\REPORT.tex",
+      "expected": "61557058f84c9b67b7d870b289d80decd6d898a40cdba5ddca80e0fbc241d1c4",
+      "actual": "61557058f84c9b67b7d870b289d80decd6d898a40cdba5ddca80e0fbc241d1c4",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\research_improvement_day3\\REPORT.tex",
+      "expected": "f9c1b39e96aa4429a3b7b87704b3fb200f792a7cbd67c5dce13b638613aa412c",
+      "actual": "f9c1b39e96aa4429a3b7b87704b3fb200f792a7cbd67c5dce13b638613aa412c",
+      "match": true
+    },
+    {
+      "path": "scripts\\evaluate_uci224_day2.py",
+      "expected": "4a271c2cc779816c75140edf3cc5100f9e63fbf78cbd21a3a3cd135839235fe7",
+      "actual": "450089803aa998c89db68d95864810040d4a6bfe224dffbf0681a8000aa71029",
+      "match": false
+    },
+    {
+      "path": "scripts\\analyze_uci224_day2_sensitivity.py",
+      "expected": "c95e4b0396491577ffb8ada53d398fc870d08ace9d8efcb6981b0cebd1ad48fc",
+      "actual": "36f07327eb943ebf0806d3c0fcf1da0cc4718538e2a08b240b15703b734b7c12",
+      "match": false
+    },
+    {
+      "path": "scripts\\build_uci224_day3_figures.py",
+      "expected": "cbb3fe2a220dbed86bb3b9126d92c2708a3b9998f1fd3bbeb406d6cdf7f9a4ef",
+      "actual": "cbb3fe2a220dbed86bb3b9126d92c2708a3b9998f1fd3bbeb406d6cdf7f9a4ef",
+      "match": true
+    },
+    {
+      "path": "docs\\phase3\\research_improvement_day3\\Day2_v1.3_Validated.zip",
+      "expected": "c04e7d9d111196b28767a917c26364be3a9f70dc0335e571c08985892488ef9d",
+      "actual": "c04e7d9d111196b28767a917c26364be3a9f70dc0335e571c08985892488ef9d",
+      "match": true
+    }
+  ],
+  "all_hashes_match": false,
+  "latest_archive": {
+    "path": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\output\\phase3\\IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.4_Validated.zip",
+    "sha256": "740a9ed8e71058c03e1d6c5d3dc78d108c555f2fc5c3f4c0cbeb499376dadf68",
+    "crc_bad_member": null,
+    "members": 24,
+    "nested_archives": [
+      "Day2_v1.2_Validated.zip",
+      "Day2_v1.3_Validated.zip",
+      "uci224.zip"
+    ]
+  },
+  "archive_members": [
+    "figures/class_mix_sensitivity.png",
+    "figures/confidence_transfer.png",
+    "qa/page-01.png",
+    "qa/page-02.png",
+    "qa/page-03.png",
+    "results/sensitivity/class_mix_sensitivity.csv",
+    "results/sensitivity/confidence_transfer.csv",
+    "results/sensitivity/sensitivity_summary.json",
+    "analyze_uci224_day2_sensitivity.py",
+    "build_uci224_day3_figures.py",
+    "CONTINUE.md",
+    "Day2_v1.2_Validated.zip",
+    "Day2_v1.3_Validated.zip",
+    "FINDINGS.md",
+    "HASHES.sha256",
+    "PACKAGE_VALIDATION.json",
+    "README.md",
+    "REFERENCES.bib",
+    "REPORT.blg",
+    "REPORT.log",
+    "REPORT.pdf",
+    "REPORT.tex",
+    "uci224.zip",
+    "VALIDATION.md"
+  ]
+}

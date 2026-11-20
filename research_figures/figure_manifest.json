@@ -1,0 +1,35 @@
+{
+  "source": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\docs\\submissions\\DAV_Phase2_Submission.tex",
+  "source_sha256": "9a0d3cc83d398b8ff11b84d3f506a58d17fd4f3e55d15e2b9bc0ed2169a8b200",
+  "figures": [
+    {
+      "name": "methodology_overview",
+      "width_mm": 180,
+      "height_mm": 166.667,
+      "minimum_font_pt": 9.69,
+      "raster_images_in_pdf": 0,
+      "text_items": 45
+    },
+    {
+      "name": "proposed_framework_architecture",
+      "width_mm": 180,
+      "height_mm": 166.667,
+      "minimum_font_pt": 9.69,
+      "raster_images_in_pdf": 0,
+      "text_items": 59
+    }
+  ],
+  "design": "Research-informed workflow and swimlane data-flow architecture; 180 mm; semantic shapes; uniform arrows",
+  "svg_text": "editable Arial text",
+  "pdf_text": "embedded TrueType Arial",
+  "png_dpi": 300,
+  "source_modified": false,
+  "design_evidence": "diagram_design_research.md",
+  "arrow_semantics": "uniform information-dependency arrow; unconnected underpass",
+  "shape_semantics": {
+    "rounded_box": "computation",
+    "cylinder": "retained record",
+    "diamond": "label eligibility",
+    "dashed_boundary": "read-only reporting and assessment"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "pdf_sha256": "08ef7debb29fb01d6c6f2df477ef6bcea04df4c0a3ea44543d80578d5acf24fe",
+  "pages": 13,
+  "all_pages_rendered": true,
+  "review_method": "All 13 pages inspected through three rendered contact sheets",
+  "layout": "No clipping seen; dense scientific tables retained; no overfull or missing-glyph warnings in final compilation",
+  "replay_logic_checks": 75600,
+  "full_browser_layout_test": false,
+  "workspace_tests": "81 passed in 10.56 seconds",
+  "package_tests": "68 passed in clean extraction",
+  "exact_reproduced_csvs": 10,
+  "large_seed_results_included": false
+}

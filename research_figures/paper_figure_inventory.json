@@ -1,0 +1,605 @@
+[
+  {
+    "file": "references\\papers\\phase2_additional\\P2_01_Benchmark_KDD2026.pdf",
+    "pages": 12,
+    "figures": [
+      {
+        "pdf_page": 3,
+        "figure_mentions": [
+          "Figure 1: Drift detection evaluation criteria. The acceptable detection window is defined as the interval [𝑑𝑠 −𝛿𝑝𝑟𝑒 , 𝑑𝑒 +𝛿𝑚𝑎𝑥 ]. Any detection falling within this window is considered a true positive, while detections outside this window are counted as false positives. hyperparameter protocol (I1). Our work is the first to jointly address all three challeng",
+          "Figure 1. Any detection falling"
+        ]
+      },
+      {
+        "pdf_page": 5,
+        "figure_mentions": [
+          "Figure 2 illustrates this process. Let 𝑀 denote a predictive model (here, a classifier), 𝑔 the drift simulation function that applies the selected drift pattern, and𝐼=(𝑋 , 𝑦)an instance fromS 𝜋 . For each incoming instance 𝐼=(𝑋 , 𝑦) , the framework deter- mines whether drift should be applied based on the current posi- tion relative to the drift onset 𝑑𝑠. Be",
+          "Figure 1. Finally, because each drift type transforms instances from 𝐼 to 𝐼 ′ (or filters them), all four can be applied in either abrupt or gradual"
+        ]
+      },
+      {
+        "pdf_page": 6,
+        "figure_mentions": [
+          "Figure 2: Inference stage of the prequential workflow with simulated drifts (using error tracking as example). mode as described in Section 4. This flexibility allows the framework to simulate a wide range of drift dynamics. 5 Experiments 5.1 Experimental Setup Datasets.We evaluate our approach on seven widely used real- world datasets from the USP Data Stre"
+        ]
+      },
+      {
+        "pdf_page": 7,
+        "figure_mentions": [
+          "Figure 3 compares abrupt versus gradual scenarios by showing the F1 score distribution for each detector. Each boxplot aggregates4 × 7 = 28data points (4 drift types × 7 datasets). ABCDABCD(X)ADWINCUSUMDDM EWMAGMA HDDMAHDDMW PH RDDM SEED STEPDSTUDD 0.00 0.25 0.50 0.75 1.00F1 ABRUPT GRADUAL Figure 3: Distribution of F1 detection scores across dataset/drift-ty",
+          "Figure 3: Distribution of F1 detection scores across dataset/drift-type pairs for each detector, comparing abrupt and gradual drift conditions. As expected, abrupt drifts are generally easier to detect: most detectors exhibit higher median F1 scores and greater upward vari- ance for abrupt conditions. SEED and STEPD maintain the high- est medians in both con",
+          "Figure 4 visualizes the trade-off between detec- tion accuracy (F1 average rank) and reliability (FAR average rank), with detection timing (MDT average rank) encoded as dot size. Lower values indicate better performance on all three axes; an ideal detector would appear in the bottom-left corner with a small dot. 5 10 5.0 7.5 10.0 12.5 ABCD ABCD(X) ADWIN CUSU",
+          "Figure 4: Trade-off between F1 average rank (y-axis, lower is better) and FAR average rank (x-axis, lower is better). Dot size encodes MDT average rank (smaller is faster detection). SEED achieves the best F1 rank while maintaining a moderate FAR, making it the most balanced choice overall. STEPD follows closely with similar characteristics. ABCD offers a co"
+        ]
+      },
+      {
+        "pdf_page": 8,
+        "figure_mentions": [
+          "Figure 5: Distribution of F1 scores across different dataset/drift type pairs for each detection method control- ling for hyperparameter optimization approach and drift abruptness. 5.2.4 Detector hyperparameter optimization.Finally, we analyse the impact of the hyperparameter optimization described in Sec- tion 3.3. The results reported so far show the score",
+          "Figure 5 shows the distribution of F1 scores across different dataset/drift type pairs for each detection method controlling for hyperparameter optimization approach: optimized and default parameters. The results show that most approaches improve their median F1 score when optimized, apart fromSEED. 5.3 Discussion Main findings.The experiments reveal distinc"
+        ]
+      },
+      {
+        "pdf_page": 10,
+        "figure_mentions": [
+          "Figure 6 displays the average execution time (in minutes) for each drift detection method, aggregated across all datasets. The execution time encompasses the complete detection pipeline. This metric complements the main results by providing insight into the computational overhead associated with each detector. The computational cost varies across methods. Mo"
+        ]
+      },
+      {
+        "pdf_page": 11,
+        "figure_mentions": [
+          "Figure 6: Average execution time of each drift detection method across all datasets Table 5: Average F1 detection score of drift detectors across different datasets for abrupt drifts Detector Feature Filtering Feat. Per- mutation Class Prior Class Swap ABCD0.11 0.51 0.16 0.25 ABCD(X)0.020.980.0 0.0 ADWIN0.24 0.270.310.16 CUSUM0.19 0.01 0.22 0.1 DDM0.16 0.02 "
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\phase2_additional\\P2_02_WindowDilemma_IDA2026.pdf",
+    "pages": 12,
+    "figures": [
+      {
+        "pdf_page": 3,
+        "figure_mentions": [
+          "Figure 1 illustrates how various window partitions generate different approximations of distributions Di and Dj. When k→j , the approximated distribution DW(k,j) → D j. Conversely, when k→i , the approximated distribution DW(i,k) → D i. Here we see the Window Dilemma in action, as the choice of window partitioning affects the accuracy of the approximated dis",
+          "Figure 1 are clearly different and it is possible that a drift detector would pick up on this. Whether that is useful is a different matter which we address in the next Section. 4 Concept Drift Detection is Ill-Posed This Section aims to demonstrate why concept drift detection is ill-posed. Formally, a Concept Drift Detector M may be defined as mapping a win"
+        ]
+      },
+      {
+        "pdf_page": 4,
+        "figure_mentions": [
+          "Figure 1: An illustrative example of the Window Dilemma. In the top left we have two distributions Di and Dj for which we would like to detect Concept Drift. In practice, we have to achieve this by observing samples generated over the timestepsi= 0andj= 100and keeping them in a WindowW(i, j). By choosing some intermediate pointk, we can construct two sub-win"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\phase2_additional\\P2_03_PUDD_AAAI2025.pdf",
+    "pages": 9,
+    "figures": [
+      {
+        "pdf_page": 1,
+        "figure_mentions": [
+          "Fig. 1 shows an illustrative example. The objective of this paper is to address two key questions: (1) Can we identify a more effective drift detection signal that captures changes in data distribution when the error rate remains stable? (2) Can we theoretically prove that if the drift detection signal shows no significant change, then the model’s error rate"
+        ]
+      },
+      {
+        "pdf_page": 2,
+        "figure_mentions": [
+          "Figure 1: Illustrative example of the early stage of concept drift when an error rate-based detector fails to detect concept drift, but a prediction uncertainty-based detector can. The data around decision boundaries have been highlighted in the middle of the figure, showing the distribution gap between test sets 1 and 2. Such a gap implies concept drift occ"
+        ]
+      },
+      {
+        "pdf_page": 3,
+        "figure_mentions": [
+          "Fig. 1). To address this limitation, we propose a prediction uncertainty-based ap- proach, capable of detecting shifts even before error rates degrade. This method enhances early detection capabilities and complements existing drift detection strategies. Preliminaries Pearson’s Chi-Square Test The Pearson’s Chi-square test assesses whether two categor- ical "
+        ]
+      },
+      {
+        "pdf_page": 4,
+        "figure_mentions": [
+          "Figure 2: The framework of our proposed algorithm. The sliding window strategy has two components, i.e., antiquated data discard and cutting point exploration as shown on the left. The Adaptive PU-index Bucketing algorithm is shown in the middle. The drift detection process is shown on the right. classes is n, the classifier will output a prediction probabil"
+        ]
+      },
+      {
+        "pdf_page": 5,
+        "figure_mentions": [
+          "Fig. 2. Theoretical analysis shows that misclassified instances’ PU-indices must be grouped into the same bin. For counter- part, we use Ei-kMeans to form bins that meet the Chi-square test requirements. We call this the Adaptive PU-index Buck- eting algorithm, illustrated in the middle of Fig. 2. PU-Index based Drift Detector In this subsection, we introduc",
+          "Fig. 2. PU-Index based Drift Detector In this subsection, we introduce the overall of our method. Firstly, given a substream containing the recent chunks’ PU- index ut1,t, we explore all cutting points r ∈ [t1, t]. Based on the cutting points, we have t − t1 window pairs, denoted as ut1,r, and ur,t. Then we defined the PU-index pairs for correctly and wrongl"
+        ]
+      },
+      {
+        "pdf_page": 6,
+        "figure_mentions": [
+          "Fig. 3. Our method is denoted as PUDD-X, where X represents the exponent in 10−X. Based on these experiments, we derive 6 observations. We introduce 4 of them here and leave the remaining 2 in the Appendix. Observation 1: our method shows stronger perfor- mance compared to classic drift detectors as evidenced by the results presented in Table 2, Fig. 3, and ",
+          "Fig. 3, and additional results in Appenidx. In incremental learning settings, PUDD ranks first in 17 out of 24 cases across different datasets and classifiers, and it is in the top 3 in 20 out of 24 cases. When trained only initially or with adaptation, it still performs well. It achieves first rank in 15 cases and top 3 in 19 cases. This shows that PUDD is ",
+          "Fig. 3 show PUDD outperformed all the baselines, which demonstrates the superiority of our method in detecting the concept drift in the image dataset. The critical difference diagram of the experiment in the Appendix shows that the PUDD is statistically significantly outperforms SOTA methods. Observation 2: PUDD performs better with a smaller threshold as re"
+        ]
+      },
+      {
+        "pdf_page": 7,
+        "figure_mentions": [
+          "Figure 4 shows that PUDD surpasses Ei-kMeans across various datasets, classifier train- ing methods, and threshold settings. The critical difference diagram in the Appendix shows that improvements at thresh- olds 10−3 and 10−5 are statistically significant. In summary, these results confirm the theoretical bene- fits of the PU-index for drift detection. PUDD",
+          "Figure 3: Comparison with baselines on CIFAR-10-CD, ex- cluding methods unable to detect drift in image datasets. Figure 4: Accuracy comparison between PUDD (using Adap- tive PU-index Bucketing) and Ei-kMeans (EK). We show average accuracy across 9 datasets using 3 classifiers. of error rate-based approaches. Conclusion and Future Work In our study, we demon",
+          "Figure 4: Accuracy comparison between PUDD (using Adap- tive PU-index Bucketing) and Ei-kMeans (EK). We show average accuracy across 9 datasets using 3 classifiers. of error rate-based approaches. Conclusion and Future Work In our study, we demonstrated that the PU-index, as opposed to the error rate, is a more effective measure for detecting concept drift i"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\phase2_additional\\P2_04_Flexible_ICDMW2025.pdf",
+    "pages": 10,
+    "figures": [
+      {
+        "pdf_page": 3,
+        "figure_mentions": [
+          "Fig. 1. Visualization of Algorithm 1. •We introduce a distinct semi-supervised framework for the case where the analyst has access to information about prior detections (see Section I-A). To this end, we provide an algorithm (Algorithm 3) for this problem, that builds upon our batching approach, and analyze its performance via simulations. II. ALGORITHM FORP",
+          "Figure 1. Some remarks are due: •Non parametric and parallelizable.Our algorithm does not make any distribution assumption on the data pro- vided. Our algorithm can be parallelized by computing the distances between batches in parallel. •Distance metric.Our algorithm is flexible in the sense that we can choose the distance metric to use – some examples are t"
+        ]
+      },
+      {
+        "pdf_page": 4,
+        "figure_mentions": [
+          "Figure 2(a) – there is no clear relationship between FPR andk/n. 2)Mean drift in all feature dimensions.The detection window is sampled i.i.d. fromN(0.03·1 m,I m). Results"
+        ]
+      },
+      {
+        "pdf_page": 5,
+        "figure_mentions": [
+          "Fig. 2. Plots of how the ratiok/naffects the BD algorithm. are shown in Figure 2(b) – for MMD, FNR decreases andk/nincreases. There is no clear relationship be- tween FNR andk/nfor EMD and KL. 3)Variance drift in all feature dimensions.The detection window is sampled i.i.d. fromN(1 m,1.01·I m). Results are shown in Figure 2(c) – for both EMD and KL, as k/nis",
+          "Figure 2(b) – for MMD, FNR decreases andk/nincreases. There is no clear relationship be- tween FNR andk/nfor EMD and KL. 3)Variance drift in all feature dimensions.The detection window is sampled i.i.d. fromN(1 m,1.01·I m). Results are shown in Figure 2(c) – for both EMD and KL, as k/nis increased, FNR first drops and then increases. There is no clear relati",
+          "Figure 2(c) – for both EMD and KL, as k/nis increased, FNR first drops and then increases. There is no clear relationship between FNR andk/n for MMD. 4)Covariance drift in all feature dimensions.The de- tection window is sampled i.i.d. fromN(1 m,Σ m). The diagonal entries ofΣ m are all ones, and the off- diagonals are all0.07. Results are shown in Figure 2(d",
+          "Figure 2(d) – for MMD, FNR decreases andk/nincreases. There is no clear relationship between FNR andk/nfor EMD and KL. Overall, MMD works better with a higherk/nwhereas EMD and KL work better with a lowerk/n(around0.5to2). We also point out that increasingk/nmakes the BD algorithm run slower, and therefore recommendk/nto be around1to 2. B. Comparing with oth"
+        ]
+      },
+      {
+        "pdf_page": 6,
+        "figure_mentions": [
+          "Figure 3(a), the results of variance drift in all feature dimensions (scenario 3) in Figure 3(b), and the results of Variance drift in all feature dimensions (scenario 4) in Figure 3(c). We make the following observations: 1)No drift.From Table II, we above that the FPRs are around0.05, indicating that it is well controlled. 2)Mean drift in all feature dimen",
+          "Figure 3(b), and the results of Variance drift in all feature dimensions (scenario 4) in Figure 3(c). We make the following observations: 1)No drift.From Table II, we above that the FPRs are around0.05, indicating that it is well controlled. 2)Mean drift in all feature dimensions.From Table II and Figure 3(a), we observe that KS-BC and MMD- BD both performed",
+          "Figure 3(c). We make the following observations: 1)No drift.From Table II, we above that the FPRs are around0.05, indicating that it is well controlled. 2)Mean drift in all feature dimensions.From Table II and Figure 3(a), we observe that KS-BC and MMD- BD both performed well, with MMD-BD significantly outperforming MMD-PT. The other approaches are less powe",
+          "Figure 3(a), we observe that KS-BC and MMD- BD both performed well, with MMD-BD significantly outperforming MMD-PT. The other approaches are less powerful, performing similarly. 3)Variance drift in all feature dimensions.From Table II and Figure 3(b), we observe that EMD-BD and KL- BD performed the best, with EMD-BD, MMD-BD, and KL-BD outperforming EMD-PT, M",
+          "Figure 3(b), we observe that EMD-BD and KL- BD performed the best, with EMD-BD, MMD-BD, and KL-BD outperforming EMD-PT, MMD-PT, and KL-PT. 4)Covariance drift in all feature dimensions.From Table II and Figure 3(c), we observe that KL-BD performed the best, with KL-BD and MMD-BD significantly out- performing KL-PT and MMD-PT. In this setting EMD- PT outperfor"
+        ]
+      },
+      {
+        "pdf_page": 8,
+        "figure_mentions": [
+          "Figure 4. We make the following observations. 1)No drift.As expected, the FPR is kept low around 0.05, since we have adjusted the classifier’s predicted probability threshold so that the FPR is comparable to those of previous experiments in problem 1. 2)Mean drift in all feature dimensions.As expected, the more sophisticated approaches LR-s and MLP-s, along ",
+          "Fig. 4. Plots comparing the different approaches that utilize prior detection information. 3)Variance drift in all feature dimensions.Overall, the most sophisticated approach, MLP-p, performed the best. 4)Covariance drift, all off-diagonals.Overall, the most sophisticated approach, MLP-p, performed the best. Accuracy.The accuracy results for the various dete"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\phase2_additional\\P2_05_Causal_ECMLPKDD2026.pdf",
+    "pages": 17,
+    "figures": [
+      {
+        "pdf_page": 4,
+        "figure_mentions": [
+          "Fig. 1 (A) for an illustration). This  idea can be exploited to model a causal structure by linking it to experimental  interventions: in an experiment, we force certain variables to tak e on speciﬁc values and observe the remaining ones, which can be formalized as follows: Deﬁnition 2 (Experiment with Interventions). Let X be a dataspace with  features F. A"
+        ]
+      },
+      {
+        "pdf_page": 5,
+        "figure_mentions": [
+          "Fig. 1. Simple  causal  model  (A)  with  time  ( T) controlled sprinkler (  ) which  also   switches oﬀ if it rains (  ); in both cases the ground will be wet (  ). If we manually  turn oﬀ the sprinkler (B), i.e., apply a do-operator, all connections to its parents are removed in the graphical model such that x EF (x, A) is measurable and A EF (x, A) is a p",
+          "Fig.1. This kind of operation is called  an intervention or the do-operation on the Bayes network. If the Bayes network  coincides with reality for all such manipulations, it is called acausal model. This can be formalized as follows: Deﬁnition 3. Let  X  be  a dataspace with features F, E be  an experiment with  intervention, and  ( G, Pf ) a  Bayes  networ",
+          "Fig.1 (B)). In other words, the  do-operator coincides with usual conditioning only if applied to a set of variables  that has no parents, i.e., we have  PG(·  | do(XF = x)) = PG(·  | XF =x ). Assuming thatP G is the causal model for an experiment with intervention E , we can translate this idea back and deﬁne:"
+        ]
+      },
+      {
+        "pdf_page": 9,
+        "figure_mentions": [
+          "Fig.1. As time (T ) is already involved, we can apply our framework  directly. We want to know why the street is dry in the evening: it is not raining,  and the sprinkler is oﬀ, with the sprinkler being oﬀ because i t is late. This suggests that the action we should invoke is to turn the sprinkler on, i.e., the sprinkler is the only drift-reverting feature. ",
+          "Fig. 1 (B)), this is reasonable, as always turning on the  sprinkler independent of whether or not it is raining causes another drift in the  correlation of sprinkler and weather. Hence, to avoid this, we have to include the weather as stated by the theorem. We can get a more natural explanation, i.e., only the sprinkler, if we allow  the intervention to dep"
+        ]
+      },
+      {
+        "pdf_page": 11,
+        "figure_mentions": [
+          "Fig. 2a), where out of 38 edges in the  ground truth, 19 (50%) are detected correctly, while nine edges are wrongly  oriented and ten were not detected at all. For theStudent Performancedataset (Fig. 2b), meanwhile, the PC algorithm produces less accurate results, as it only  detects eight out of 26 edges correctly (30.77%). Additionally, 16 edges were  dete",
+          "Fig. 2b), meanwhile, the PC algorithm produces less accurate results, as it only  detects eight out of 26 edges correctly (30.77%). Additionally, 16 edges were  detected but orient ed inversely, while two edges were not detected, and three additional false edges were inserted. The poor performance on Student Performance can be explained by the com- parativel"
+        ]
+      },
+      {
+        "pdf_page": 12,
+        "figure_mentions": [
+          "Fig. 2. Performance of the PC Algorithm. Black edges indicate the ground truth,  while green edges indicate detections by the PC algorithm; thickness correlates with  the number of runs in which an edge was detected (Color ﬁgure online) 6.3 Experimental Results  When analysing the causal structure of our drift scenarios, we can clearly see that  our framewor",
+          "Fig.3a), where the drifting feature gets reliably identiﬁed as occupation.  The temporal feature T is detected as a parent of occupation in nine out of ten  experimental runs, while the other ancestors of the drifting feature are unchanged  from the detected causal structure of the unmodiﬁed dataset. While we can see  that our drifting stream results in over"
+        ]
+      },
+      {
+        "pdf_page": 13,
+        "figure_mentions": [
+          "Fig. 3. Case Studies on the Adult dataset. Black edges indicate the ground truth,  while green edges indicate detections by the PC algorithm; thickness correlates with  the number of runs in which an edge was detected. Children of T are m arked green, with the thickness of the border indicating the number of runs that correctly identiﬁed this relationship (C",
+          "Fig. 3b) shows, these statements even hold  true when there are multiple drifting features present in the stream. In eight out  of ten experimental runs, all three drifting features – capital-gain, capital-loss,  and income – are correctly identiﬁed as directly connected to T . In the other two  runs, only capital-gain is not detected as a direct relation of",
+          "Fig. 4a)  shows that our causal explanation framework works reliably even when large  parts of the causal graph are poorly recovered. In all ten runs, the drifting feature  schoolsup, short for ”school support”, is correctly identiﬁed as the only child of  T , and the conditional variable sex is identiﬁed as the only other parent of the  drifting feature. Th",
+          "Fig. 4b), where an analogous causal structure  may be observed. This implies that in scenarios where concept drift is suﬃciently  strong, causal explanations work well despite the high number of features and the low number of data points."
+        ]
+      },
+      {
+        "pdf_page": 14,
+        "figure_mentions": [
+          "Fig. 4. Case Studies on the Student dataset. Black edges indicate the ground truth,  while green edges indicate detections by the PC algorithm; thickness correlates with  the number of runs in which an edge was detected. Children of T are m arked green, with the thickness of the border indicating the number of runs that correctly identiﬁed this relationship "
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\phase2_additional\\P2_06_SHAP_xAI2025.pdf",
+    "pages": 13,
+    "figures": [
+      {
+        "pdf_page": 3,
+        "figure_mentions": [
+          "Fig. 1, a n d  each component is detailed i n the following subsections. 2.1 Data Preprocessing  A structured preprocessing pipeline is implemented to ensure an optimized  dataset for predictive modeling, comprising feature selection, normalization, and  data partitioning. The dataset contains historical energy generation records from 2023, collected from a "
+        ]
+      },
+      {
+        "pdf_page": 4,
+        "figure_mentions": [
+          "Fig. 1. Workﬂow of the proposed SHAP-based intelligent retraining framework. at an oﬃce building. It includes key environmental variables such as outdoor  temperature, humidity, solar radiation, wind speed, and atmospheric pressure,  which inﬂuence power generation. A derived feature, the period of the day (rang- ing from 0 to 143), is added to capture daily"
+        ]
+      },
+      {
+        "pdf_page": 8,
+        "figure_mentions": [
+          "Fig. 2. Heatmaps of RMSE (left) and Retrainings (right) for ndays_baseline =5 , kthreshold =2 .0. to the range [0, 1] using min-max normalization. The number of retrainings was  inverted such that lower values contribute positively to the overall score. A com- posite score was then computed as a weighted average of the normalized metrics. The top ﬁve conﬁgur",
+          "Fig. 2. The left panel displays RMSE values, while the right panel  illustrates the corresponding number of retrainings. Both heatmaps consider  ndays_baseline = 5 and kthreshold = 2.0, as these v alues were identiﬁed as optimal based on the best-performing conﬁgurations in Table 1.  The heatmaps show that larger range_period values lead to fewer retrainings"
+        ]
+      },
+      {
+        "pdf_page": 9,
+        "figure_mentions": [
+          "Fig. 3. SHAP Drift Score and Dynamic Threshold Over Time. values (0.3 and 0.5) generally improve forecasting accuracy, while higher values  introduce instability by overemphasizing recent SHAP changes, increasing false  positives. Moderate αema values smooth updates, balancing responsiveness and  stability. These results highlight the trade-oﬀ between sensit"
+        ]
+      },
+      {
+        "pdf_page": 10,
+        "figure_mentions": [
+          "Fig. 4. SHAP Feature Importance: Baseline (left) vs. Final (right). Fig. 5. Evolution of SHAP Feature Importance for the Top 5 F eatures Across Retrain- ing Iterations. The SHAP method triggered 717 retrainings over 46 d due to its sensitivity to  subtle shifts in feature importance. While this ensures model alignment with  evolving data, it may lead to exce",
+          "Fig. 5. Evolution of SHAP Feature Importance for the Top 5 F eatures Across Retrain- ing Iterations. The SHAP method triggered 717 retrainings over 46 d due to its sensitivity to  subtle shifts in feature importance. While this ensures model alignment with  evolving data, it may lead to excessive updates in dynamic settings. In resource- constrained scenario"
+        ]
+      },
+      {
+        "pdf_page": 11,
+        "figure_mentions": [
+          "Figure3  shows the SHAP drift score and its adaptive threshold over time. Peaks in the  drift score correspond to shifts in feature contributions, and when exceeding the  threshold, they trigger retraining. This dynamic approach maintains a b alance between stability and adaptability, ensuring timely updates without overﬁtting to transient changes in energy ",
+          "Fig. 4 com- pares feature importance rankings at the start and end of the study. Solar radi- ation and UV index remained consistently important, while variables like wind  speed and outdoor temperature showed changes in their predictive roles. These variations support the need for adaptive retraining to capture evolving data patterns. Figure5 illustrates how",
+          "Figure5 illustrates how SHAP values for the top ﬁve features changed  across iterations, with a decline in relevance for some (e.g., wind speed, indoor  temperature), while solar radiation remained a key predictor. The results con- ﬁrm that the SHAP-based drift detection framework consistently outperforms  baseline methods in maintaining forecasting accuracy"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\phase2_additional\\P2_07_Conformal_COPA2025.pdf",
+    "pages": 19,
+    "figures": []
+  },
+  {
+    "file": "references\\papers\\phase2_additional\\P2_08_Performative_AAAI2025.pdf",
+    "pages": 9,
+    "figures": [
+      {
+        "pdf_page": 3,
+        "figure_mentions": [
+          "Figure 1) instead of a predictive model. Given some data-stream of length T , a user-defined parameter f is used to split a feature into groups. These groups are equivalent to the possible labels in a classification task (e.g. in a binary classification task, each feature is split according to f and assigned either a label of 1 or 0). When an instance is rec",
+          "Figure 1: Example of the Checkboard Pattern produced by the Checkerboard Detector for an arbitrary feature value in a Binary Classification task. In this Figure, the CheckerBoard Detector is parameterized with f = 0.5 and τ = 2000. A and B using a user-defined confidence parameter α. If the p-value returned from the test is less than α, a detec- tion event i"
+        ]
+      },
+      {
+        "pdf_page": 4,
+        "figure_mentions": [
+          "Figure 2), where as τ increases, so does the detection rate, regard- less of σ. Conversely, our results show that if τ and σ are small, CB-PDD is unlikely to detect any performative drift. This is reflected clearly in the τ = 2500 scenario where when σ ≤ 0.001, we see a decline in the detection rate. Lastly, we want to note the detection rate when σ = 0.0 (i",
+          "Figure 3 illustrates this point where, for all f values investigated, the detection rate remains consistent across all σ investigated. 0.0 1e-4 5e-4 1e-3 5e-3 0.01 0.05 0.1 Performative Drift Strength ( ) 0.0 0.2 0.4 0.6 0.8 1.0Detection Rate  = 250  = 500  = 1000  = 2500  = 5000  = 10000 Figure 2: shows the effect trial length (τ ) has on the detec- tion ra",
+          "Figure 2: shows the effect trial length (τ ) has on the detec- tion rate of CB-PDD across various PD strengths (σ ). The main finding is that asτ increases, so does the detection rate. 0.0 1e-4 5e-4 1e-3 5e-3 0.01 0.05 0.1 Performative Drift Strength ( ) 0.00 0.25 0.50 0.75 1.00Detection Rate f = 1.0 f = 0.5 f = 0.25 f = 0.1 Figure 3: shows the effect f has ",
+          "Figure 3: shows the effect f has on the detection rate of CB- PDD across various PD strengths (σ) in a low ϵ setting. These results then seem to imply that f is not an impor- tant parameter, but that is not the case. Recall that we in- troduced the concept of ϵ to describe the range of future instances that might be generated by inducing a feedback loop in s",
+          "Figure 4 and show this phenomena. As f decreases, the detection rate across all but the strongest PD strength set- tings σ = {0.05, 0.1} decreases too. The takeaway from these findings are that, in general, f should be kept as high as possible to reduce the effect an unknown ϵ might have on the detection capabilities of CB-PDD. CB-PDD with Classifiers Tradit"
+        ]
+      },
+      {
+        "pdf_page": 5,
+        "figure_mentions": [
+          "Figure 4: shows the effect f has on the detection rate of CB- PDD across various PD strengths (σ) in a high ϵ setting. how well CB-PDD performs when paired with a predictive model. To achieve this, we ran experiments where instances are randomly assigned to either the CheckerBoard predic- tor or the deployed predictive model in accordance with a mix ∈ [0, 1]",
+          "Figure 5, it can be seen that, asmix is increased, the de- tection rate of the CB-PDD decreases. This is due to fewer instances being classified in accordance with the Checker- Board detector, creating weaker feedback loops which are harder to detect. This effect is less noticeable in the RC which does not induce PD, allowing up to 75% of the in- stances to ",
+          "Figure 5: shows the detection rate of CB-PDD when de- ployed in tandem with a predictive model. m describes the portion of instances given to the predictive model. These re- sults show that as m increases, the detection rate decreases. The trend is more noticeable in the Threshold Classifier (TC) which induces its own PD in comparison to a Random Clas- sifie",
+          "Figure 6. CB-PDD achieves a low detection rate when σ = 0.0, indicating that CB-PDD is robust to sudden drift. Additionally, in both high and low in- tensity PD settings σ = {0.01, 0.1}, there is manageable de- terioration in the detection rate as the number of drift events increases. However, when the frequency of drift events< τ , the detection rate decrea",
+          "Figure 2) show that increas- ing τ increases detection rate, but this will not necessarily be the case if the rate at which sudden drift events occur in the system are more frequent than τ. Incremental Intrinsic Drift Incremental Drift occurs when the underlying data generating process changes slowly over time. To simulate this in our data generator, centroi"
+        ]
+      },
+      {
+        "pdf_page": 6,
+        "figure_mentions": [
+          "Figure 6: shows the effect sudden intrinsic drift has on the detection rate of CB-PDD across various PD strengths (σ ). CB-PDD appears resilient to sudden drift except in cases where the number of drift events (E ) occur at a rate greater than the trial length parameter (τ = 1000). 2 4 10 20 40 100 200 400 Number of Drift Events (E) 0.2 0.4 0.6 0.8 1.0Detect",
+          "Figure 7: shows the effect incremental intrinsic drift has on the detection rate of CB-PDD across various PD strengths (σ). These results suggest that CB-PDD is resilient to incre- mental drift even as the number of drift events (E) increases. Shown in Figure 7, CB-PDD is robust to Intrinsic Drift in settings when there is no PD (whenσ = 0.0, the false detec",
+          "Figure 7, CB-PDD is robust to Intrinsic Drift in settings when there is no PD (whenσ = 0.0, the false detec- tion rate is low). Additionally, we do not observe the same degradation in detection rate as the number of drift events increases. Results suggest that CB-PDD is immune to the ef- fects of incremental drift. This is perhaps overly optimistic, and whil",
+          "Figure 8: compares performative drift strength (σ) to the de- tection rate of traditional Concept Drift detectors. Results show that traditional drift detectors are reliant on the predic- tive model they are paired with. For example, neither AD- WIN or DDM can detect PD when a Random Classifier (RC) is used, because a RC induces no PD. popular drift detector",
+          "Figure 8) show that neither ADWIN nor DDM are able to reliably detect PD (across any σ) when used with RC. This is because unlike CB-PDD, the other detectors don’t induce their own PD, and given that the RC, doesn’t induce PD either, PD is near-impossible to detect. When the TC is used, ADWIN is able to reliably detect PD at all but the lowest σ = 0.0001, ou"
+        ]
+      },
+      {
+        "pdf_page": 7,
+        "figure_mentions": [
+          "Figure 9: shows the detection rate of CB-PDD on datasets with imputed PD (σ). Results show that CB-PDD can effec- tively detect PD in semi-synthetic datasets, but it is suscepti- ble to class imbalances, as shown by theCreditCard dataset. desirable, this does have the benefit in that we are able to control the amount of PD each dataset exhibits. We take thre",
+          "Figure 9 shows positive results. For the Water Potability and Loan Status datasets, CB-PDD achieves near-perfect de- tection rates for all but the smallest σ = 0.0001. These re- sults are better than our purely-synthetic experiments. We at- tribute this to the consistent initial distribution that each sim- ulation starts with. In the synthetic setting, each "
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\selected\\01_Greco-2025-DriftLens-TKDE-arXiv-2406.17813.pdf",
+    "pages": 23,
+    "figures": [
+      {
+        "pdf_page": 2,
+        "figure_mentions": [
+          "Figure 1): Sudden/Abrupt Pattern Drift can occur suddenly if the distribution of new samples changes rapidly. An example of sudden drift is a tweet topic classifier during the outbreak of the COVID-19 pandemic. At that point, the model was suddenly exposed to numerous text samples containing a new topic. Recognizing this scenario is crucial for initiating th",
+          "Fig. 1: Examples of drift patterns. C. Application Scenario We design D RIFT LENS so that it can be effectively ex- ploited in a variety of application scenarios characterized by: (1) Unavailability of ground truth labels for new incoming data. Many applications involve classifying large-scale data productions (e.g., social media content) through deep learni"
+        ]
+      },
+      {
+        "pdf_page": 3,
+        "figure_mentions": [
+          "Figure 2). In the offline phase, it estimates the reference distributions and threshold values from the historical dataset (e.g., training data). These distributions, called baseline, repre- sent the distribution of features (embeddings) of the concepts learned by the model during training, thus representing the absence of drift. In the online phase, it proc",
+          "Figure 3, D RIFT LENS estimates two types of embedding distributions: (1) the overall distribution of the en- tire data (per-batch), and (2) |L| separate distributions, one for each predicted class ( per-label). It assumes that embeddings follow multivariate normal distributions, making Gaussianity"
+        ]
+      },
+      {
+        "pdf_page": 4,
+        "figure_mentions": [
+          "Fig. 2: D RIFT LENS Framework. In the offline phase, it estimates the reference distributions and distance thresholds from historical (training) data. Distributions are modeled as multivariate normal and are computed: (i) for the entire batch (per-batch), and (ii) conditioned on the predicted label ( per- label). In the online phase, it analyzes data streams",
+          "Fig. 3: D RIFT LENS Data Modeling. Given a deep learning model and a set of data X, it estimates the multivariate normal embedding distributions. It first extracts data embeddings and predicted labels from the model and reduces the embedding dimensionality. It then estimates (i) the per-batch distribution by computing the mean vector µ and covariance matrix "
+        ]
+      },
+      {
+        "pdf_page": 5,
+        "figure_mentions": [
+          "Figure 2), D RIFT LENS estimates: 1 the probability distribution of a reference (his- torical) dataset representing the concepts learned by the model during training ( baseline), and 2 distance thresholds to dis- tinguish between normal and drift-indicative distances, which will be used during the online phase. This phase is executed once to instantiate D RI",
+          "Figure 2) continuously de- tects drift in the monitored model when deployed and applied to a data stream. D RIFT LENS splits the data stream into fixed- size windows, whose size is defined by the parameter mw, and applies the same process to each window. Drift Detection in a Window Given a new data window Xw containing mw samples, 3 the data modeling is proc"
+        ]
+      },
+      {
+        "pdf_page": 6,
+        "figure_mentions": [
+          "Figure 4 shows a drift monitor example. The top chart shows the per-batch, whereas the bottom chart shows the per-label distribution distances over time. The x-axis reports timestamps and window identifiers. The y-axis shows the F DD distances. When a drift is detected, the area under the curve is filled, and a warning is displayed on the x-tick. This monito",
+          "Fig. 4: Drift monitor example the model to illustrate the “concepts” associated with each label and a batch of data. In the absence of drift, we expect these prototypes to closely resemble those in the historical data. In contrast, when drift is present, the drifting samples introduce new concepts specific to a label or the entire batch. Given one or multipl"
+        ]
+      },
+      {
+        "pdf_page": 10,
+        "figure_mentions": [
+          "Fig. 5: Running time evaluation. Mean (± std) of running time (log scale) for predicting drift with each detector, while varying one dimension at a time: (a) reference window size mb, (b) data stream window size mw, and (c) embedding dimensionality d. The other parameters are fixed at mb = 5,000, mw = 1,000, and d = 1,000. Mean and std are computed over five",
+          "Fig. 6: D RIFT LENS mean running time in seconds as the reference mb (a) and data stream mw (b) window sizes change. tracted. Experiments are executed on an Apple M1 MacBook Pro 13 2020 with 16GB of RAM. Due to the high dimension- alities tested, we use synthetically generated embeddings. Results Figure 5 shows the running time in seconds on a logarithmic sc",
+          "Figure 5 shows the running time in seconds on a logarithmic scale of each detector by varying (a) the reference window size mb, (b) the data stream window size mw, and (c) the embedding dimensionality d. One dimension at a time is varied while keeping the other fixed at: mw = 1 ,000, d = 1 ,000, and mb = 5 ,000. D RIFT LENS outperforms all detectors in terms",
+          "Figure 6 shows D RIFT LENS’ running time when dealing with large data volumes. The reference window is increased up to 500,000 samples, and the data stream window to 10, 000. The other detectors do not work with these dimensionalities on the experimental hardware. When varying the reference window size mb, the data stream window size is kept fixed to mw =5 ,",
+          "Figure 6-(b) shows that its running time increases almost negligibly with data stream window size, enabling real-time detection in high-throughput data streams. Notably, the running time is always ≤ 0.2s."
+        ]
+      },
+      {
+        "pdf_page": 11,
+        "figure_mentions": [
+          "Fig. 7: Drift patterns qualitative evaluation for use case 6.1 (ViT - Intel Image). Drift is simulated with a new class ( Sea). Historical Drifted Window Fig. 8: Drift explanation for class Glacier in use case 6.1. Summary of findings DRIFT LENS is the fastest detector, enabling real-time drift detection regardless of data volumes in the reference set or dat",
+          "Fig. 8: Drift explanation for class Glacier in use case 6.1. Summary of findings DRIFT LENS is the fastest detector, enabling real-time drift detection regardless of data volumes in the reference set or data stream (answering RQ3 in §I). D. Drift Curves Evaluation This evaluation assesses the ability of D RIFT LENS to rep- resent and characterize the drift c",
+          "Figure 7 shows the generated monitors for the (a) sudden, (b) incremental, and (c) periodic patterns Historical Drifted Window Fig. 9: Drift explanation for class Building in use case 6.1. TABLE III: Drift curve evaluation. Spearman correlation between drift severity and per-batch distribution distance (F DD), per drift pattern, averaged across all use cases",
+          "Fig. 9: Drift explanation for class Building in use case 6.1. TABLE III: Drift curve evaluation. Spearman correlation between drift severity and per-batch distribution distance (F DD), per drift pattern, averaged across all use cases. Drift Pattern Sudden Incremental Recurrent Avg. Spearman Corr. 0.88 ± .02 0 .99 ± .01 0 .85 ± .00 in use case 6.1, with the p"
+        ]
+      },
+      {
+        "pdf_page": 12,
+        "figure_mentions": [
+          "Figure 8, historical prototypes for Glacier are represented by two clusters: winter glaciers (top-left) and summer glaciers (top-right). When drift occurs, the drifted window is characterized by two clusters: glacier during winter and summer (bottom-left) and general sea images, which are responsible for drift (bottom-right). Similarly, in Figure 9, historic",
+          "Figure 9, historical prototypes for the class Building are characterized by two clusters of images: buildings only (top-left) and over streets (top-right). When drift occurs, the drifted window is characterized by two clusters: general buildings (bottom-left) and buildings over the sea, which are responsible for drift (bottom-right). These prototypes can hel"
+        ]
+      },
+      {
+        "pdf_page": 15,
+        "figure_mentions": [
+          "Figure 10 shows the (a) sudden, (b) incre- mental, and (c) periodic drift patterns generated using the settings described above. The per-batch and per-label drift curves produced align with the generated patterns. In addition, the per-label curves show that the labels World (red) and Business (green) are the most affected by drift, likely because the newly i"
+        ]
+      },
+      {
+        "pdf_page": 17,
+        "figure_mentions": [
+          "Figure 11 shows the (a) sudden, (b) incre- mental, and (c) periodic drift patterns, generated using the previously described settings. These curves confirm that the drift trend over time modeled by D RIFT LENS aligns with the generated pattern while highlighting the labels most affected by drift. In this case, the labels most affected by drift are Science (y",
+          "Figure 12 shows the (a) sudden, (b) incre- mental, and (c) periodic drift patterns. When drift occurs, the Nurse label (pink) is the most affected, likely due to the mis- classification of female-gendered bios from other occupations as nurses. In contrast, the impact on other occupations remains minimal. Additionally, the figure shows that, in the absence of",
+          "Figure 13 shows the (a) sudden, (b) incremen- tal, and (c) periodic drift patterns. The drift curves align with these patterns, confirming their coherence. As expected, the most impacted labels are Ship (dark green), Car (blue), and Airplane (pink), as the classifier tends to misclassify Truck images under these categories due to their semantic similarity. I",
+          "Figure 14, prototypes generated from historical data for the Ship class are represented by two clusters: (1) Large cargo ships (top- left) and (2) Passenger ships (top-right). In contrast, prototypes generated from a drifted window are characterized by a cluster of mixed ships (bottom-left) and a new emerging cluster of particular truck images (bottom-right)",
+          "Figure 15), where prototypes extracted from the drifted window highlight a new concept associated with different types of trucks (bottom-right), but this case, on normal streets background. Finally, the explanation of the class Airplane (Figure 16) identifies a mixed cluster composed of three prototype images picturing particular long tracks and one prototyp"
+        ]
+      },
+      {
+        "pdf_page": 20,
+        "figure_mentions": [
+          "Fig. 10: Drift patterns qualitative evaluation foruse case 1.1 (BERT - AG News). Drift simulated with a new class (Science/Tech). TABLE VIII: Drift explanation for class World in use case 1.1. (a) Historical: Prototypes generated from historical data. Cluster Prototype example: (Prototype ID)“Input Text” True Label Pred. Label 1 (1) “Nigerian oil flows despi"
+        ]
+      },
+      {
+        "pdf_page": 21,
+        "figure_mentions": [
+          "Fig. 11: Drift patterns qualitative evaluation for use case 2.1 (BERT - 20 News). Drift simulated with a new class ( Recreation). TABLE IX: Drift explanation for class Science in use case 2.1. (a) Historical: Prototypes generated from historical data. Cluster Prototype example:(Prototype ID)“Input Text” True Label Pred. Label 1 (1) “How hard would it be to s"
+        ]
+      },
+      {
+        "pdf_page": 22,
+        "figure_mentions": [
+          "Fig. 12: Drift patterns qualitative evaluation for use case 4 (BERT - BiasInBios). Drift simulated with opposite gender. TABLE X: Drift explanation for class Nurse in use case 4. (a) Historical: Prototypes generated from historical data. Cluster Prototype example: (Prototype ID)“Input Text” True Label Pred. Label 1 (1) “She graduated with honors in 1995. Hav"
+        ]
+      },
+      {
+        "pdf_page": 23,
+        "figure_mentions": [
+          "Fig. 13: Drift patterns qualitative evaluation for use case 7.1 (ViT - STL-10). Drift simulated with a new class Truck. Historical Drifted Window Fig. 14: Drift explanation for class Ship in use case 7.1. Historical Drifted Window Fig. 15: Drift explanation for class Car in use case 7.1. Historical Drifted Window Fig. 16: Drift explanation for class Airplane",
+          "Fig. 14: Drift explanation for class Ship in use case 7.1. Historical Drifted Window Fig. 15: Drift explanation for class Car in use case 7.1. Historical Drifted Window Fig. 16: Drift explanation for class Airplane in use case 7.1.",
+          "Fig. 15: Drift explanation for class Car in use case 7.1. Historical Drifted Window Fig. 16: Drift explanation for class Airplane in use case 7.1.",
+          "Fig. 16: Drift explanation for class Airplane in use case 7.1."
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\selected\\04_Szucs-Nemeth-2025-DDE-KAIS.pdf",
+    "pages": 25,
+    "figures": [
+      {
+        "pdf_page": 8,
+        "figure_mentions": [
+          "Fig. 1, where the drift points are marked with red, dashed lines, and different lines in the ﬁgure correspond to different features in the dataset. The horizontal axis shows the time steps, and the JS distance can be seen on the vertical axis. JS distance values are calculated by comparing the empirical distributions of consecutive data windows. Peaks in JS "
+        ]
+      },
+      {
+        "pdf_page": 9,
+        "figure_mentions": [
+          "Fig. 1 Detected drift points on the CICIDS dataset via JS distance. Solid lines are features; drift points are marked with red, dashed lines the subset of the dataset by DScheck containing all features in Scheck and a slice of DScheck at time t as DScheck ,t . For drift detection, set the size of the reference window Wref to r and the analysis window Wan to "
+        ]
+      },
+      {
+        "pdf_page": 11,
+        "figure_mentions": [
+          "Fig. 2) on the ﬁrst drift point of the Insects dataset. The lift values in the last column of Table 3 123"
+        ]
+      },
+      {
+        "pdf_page": 12,
+        "figure_mentions": [
+          "Fig. 2 Lift curve on the 1st drift of the Insects dataset (and the curve in Fig. 2) come from Eq 20 and 21 (it can be seen at the end of our derivation in Eq 24 that they are the same). These lift curves were also constructed for the other three datasets, from which we could derive insights into drift characteristics based on the curve trends detailed in the",
+          "Fig. 2) come from Eq 20 and 21 (it can be seen at the end of our derivation in Eq 24 that they are the same). These lift curves were also constructed for the other three datasets, from which we could derive insights into drift characteristics based on the curve trends detailed in the next sections. 5.2 Aggregate results with multiple drift points As previous",
+          "Fig. 3. While Fig. 3 contains the comparison between the curves on four different datasets by the same detector (Jensen– 123",
+          "Fig. 3 contains the comparison between the curves on four different datasets by the same detector (Jensen– 123"
+        ]
+      },
+      {
+        "pdf_page": 13,
+        "figure_mentions": [
+          "Fig. 3 Upward trending curves signal the Domino drift effect on all datasets (with Jensen–Shannon), except the Covertype dataset, where the drift is artiﬁcially induced Shannon), Fig. 4 shows the comparison between the curves of different detectors (Jensen– Shannon, Wasserstein, Kolmogorov–Smirnov, ADWIN) on the same dataset (Insects). As pictured in these ﬁ",
+          "Fig. 4 shows the comparison between the curves of different detectors (Jensen– Shannon, Wasserstein, Kolmogorov–Smirnov, ADWIN) on the same dataset (Insects). As pictured in these ﬁgures, all three datasets containing real drifts present the DDE phenomena via upward trending curves, while the Covertype shows a ﬂattening lift. As mentioned earlier, Covertype ",
+          "Fig. 5. 5.3 Evaluation of the prediction of new feature drifts The DDE method—as described in Chapter 4.3—can be applied to predict drift behavior for each feature in future data streams by monitoring only a subset of a dataset. The evaluation of the method can be interpreted as the evaluation of a binary classiﬁcation task, during which we want to determine"
+        ]
+      },
+      {
+        "pdf_page": 14,
+        "figure_mentions": [
+          "Fig. 4 Upward trending drift curves signal the Domino drift effect based on the four different detector outputs on the Insects dataset Fig. 5 Reverting and later ﬂattening curve signals the lack of DDE effect for artiﬁcial drift induced to the Insects dataset in Appendix present two ROC curve examples of predictions for the 2nd drift point of these datasets,",
+          "Fig. 5 Reverting and later ﬂattening curve signals the lack of DDE effect for artiﬁcial drift induced to the Insects dataset in Appendix present two ROC curve examples of predictions for the 2nd drift point of these datasets, where the size of Scheck was 50. During the evaluations, the size of Scheck sets varied between 1 ... m (number of all features). The "
+        ]
+      },
+      {
+        "pdf_page": 15,
+        "figure_mentions": [
+          "Fig. 6 F1-score-based performance of the 2nd drift point prediction varying the size of Scheck in the Insects dataset Fig. 7 F1-score-based performance of the 2nd drift point prediction varying the size ofScheck in the Heartbeats dataset 5.4 Experiments on the effects of performance as a function of the number of monitored features We conducted experiments t",
+          "Fig. 7 F1-score-based performance of the 2nd drift point prediction varying the size ofScheck in the Heartbeats dataset 5.4 Experiments on the effects of performance as a function of the number of monitored features We conducted experiments to analyze the effects of performance as a function of the number of monitored features. This analysis is interpreted a",
+          "Fig. 10) and Insects high-dimensional datasets as a function of the computational 123"
+        ]
+      },
+      {
+        "pdf_page": 16,
+        "figure_mentions": [
+          "Fig. 8 AUC-score-based performance of the 2nd drift point prediction varying the size of Scheck in the Insects dataset Fig. 9 AUC-score-based performance of the 2nd drift point prediction varying the size of Scheck in the Heartbeats dataset resources (number of features monitored with four different detectors). For both datasets, the resource requirements ca",
+          "Fig. 9 AUC-score-based performance of the 2nd drift point prediction varying the size of Scheck in the Heartbeats dataset resources (number of features monitored with four different detectors). For both datasets, the resource requirements can be signiﬁcantly decreased to achieve well-performing drift detec- tion across the entire feature space (the larger di",
+          "Fig.10), purely based on the co-drifting phenomenon of the features described by the DDE method. In Table 6, the results for the two lower-dimensional datasets are presented. In these cases, the reduction in the number of monitored features was limited by the lower number of dimensions themselves. 123"
+        ]
+      },
+      {
+        "pdf_page": 17,
+        "figure_mentions": [
+          "Fig. 11, the overall performance measured by the F1-score for all datasets is shown. Here, the horizontal axis shows not the absolute numbers of monitored features but their relative proportions. The performance curves were similar in three natural drift datasets, but in the artiﬁcially induced Covertype dataset it decreased by a much larger amount. We compa"
+        ]
+      },
+      {
+        "pdf_page": 18,
+        "figure_mentions": [
+          "Fig. 10 Resources and goodness of drift detection on the Heartbeats dataset Table 6 Drift detection performance on lower-dimensional datasets Dataset No. Monitored features Resource (%) Recall Precision F1 CICIDS 19 100.00 1.0000 0.9000 0.9400 9 47.37 0.7758 0.7148 0.7122 COVERTYPE 16 100.00 1.0000 1.0000 1.0000 7 43.75 0.6177 0.5215 0.5492 Full monitoring m"
+        ]
+      },
+      {
+        "pdf_page": 19,
+        "figure_mentions": [
+          "Fig. 11 Resources and F1-scores of drift detection on all datasets Table 7 Comparison of DDE method with three other methods on the Heartbeats dataset Resources (%) No. Monitored features 280 140 70 35 17 8 100% 50% 25% 13% 6% 3% DDE Recall – 0.9992 0 .9930 0 .9672 0 .9175 0 .8436 Precision – 0.5297 0.3964 0.3367 0.3079 0.2951 F1 – 0.6924 0.5666 0 .4996 0 .4"
+        ]
+      },
+      {
+        "pdf_page": 22,
+        "figure_mentions": [
+          "Fig. 12. Fig. 12 Aggregated ROC curves for |Scheck |= 50 based 10-fold cross-validation predictions at the 2nd drift point of the Heartbeats and Insects datasets Acknowledgements Project No. KDP-IKT-2023-900-I1-00000957/0000003 has been implemented with the support provided by the Ministry of Culture and Innovation of Hungary from the National Research, Deve",
+          "Fig. 12 Aggregated ROC curves for |Scheck |= 50 based 10-fold cross-validation predictions at the 2nd drift point of the Heartbeats and Insects datasets Acknowledgements Project No. KDP-IKT-2023-900-I1-00000957/0000003 has been implemented with the support provided by the Ministry of Culture and Innovation of Hungary from the National Research, Devel- opment"
+        ]
+      }
+    ]
+  },
+  {
+    "file": "references\\papers\\supporting\\13_Yang-2020-DriftVis-VAST-arXiv.pdf",
+    "pages": 12,
+    "figures": [
+      {
+        "pdf_page": 1,
+        "figure_mentions": [
+          "Figure 1: DriftVis: A visual analytics system for detecting, explaining, and correcting for concept drift: (a) The stream-level visualization consists of a line chart for drift degree (A), a feature selection list (B), and a streaming scatterplot (C) to visualize the drift and data distribution change over time (e.g., density increases in G, H, and I); (b) T"
+        ]
+      },
+      {
+        "pdf_page": 3,
+        "figure_mentions": [
+          "Fig. 2)."
+        ]
+      },
+      {
+        "pdf_page": 4,
+        "figure_mentions": [
+          "Figure 2: DriftVis overview. When data streams in, an incremental Gaussian mixture model is ﬁrst employed to model the data, and the output is further used in drift detection and data visualization. The stream-level visualization displays the drift degree and the time the distribution changes to support drift analysis. The prediction-level visualization faci"
+        ]
+      },
+      {
+        "pdf_page": 5,
+        "figure_mentions": [
+          "Figure 3: DriftVis analysis workﬂow. When drift is detected, analysts can explore when, where, and why it happens with the help of stream-level visualization. To adapt to the drift, analysts can select data samples to build learner(s) and then update the model. Ofﬂine Clustering. A GMM is built to cluster the data samples in ˆX, where each cluster is a Gauss",
+          "Fig. 1(a)) and a prediction-level visualization (Fig. 1(b)). The stream-level visualization discloses the distribution changes of the data stream over time. It supports the exploration purely of the data, including the distribution of data samples, the drift detection results, and some of the raw data contents (e.g., the raw text before feature extraction). ",
+          "Fig. 1(b)). The stream-level visualization discloses the distribution changes of the data stream over time. It supports the exploration purely of the data, including the distribution of data samples, the drift detection results, and some of the raw data contents (e.g., the raw text before feature extraction). The prediction-level visualization focuses on the",
+          "Fig. 3 illustrates the typical analysis workﬂow as data streams in. The workﬂow begins with an analyst checking the drift degree line chart to detect any obvious drift increase (“when”). In cooperation with the “when” analysis, the analyst can further analyze “where” and “why” the drift happens on the streaming scatterplot, which illustrates if the incoming ",
+          "Fig. 1A), a feature se- lection list (Fig. 1B), and a streaming scatterplot (Fig. 1C). The drift degree line chart is used to alert the analyst of possible occurrences of concept drift by displaying the calculated drift degree over time (R1). The line chart coordinates with the feature selection list to turn on and off the drift degree lines calculated on di"
+        ]
+      },
+      {
+        "pdf_page": 6,
+        "figure_mentions": [
+          "Fig. 1C shows an example of the scatterplot mode for analyzing the papers from NeurIPS. To illustrate the change of data distribution, we utilize a two-stage animation to exhibit the appearance of incoming data samples. The ﬁrst stage updates the projection of historical data and the density map. Historical data points move from their original positions to t",
+          "Fig. 1D), a samples of interest view (Fig. 1E), and a performance view (Fig. 1F). The base learner view lists all available base learners that can be used in the ensemble model. For each base learner, it shows the size of the training set and the proportion of the data points in the training set that belong to each Gaussian component. This proportion is repr",
+          "Fig. 1E), and a performance view (Fig. 1F). The base learner view lists all available base learners that can be used in the ensemble model. For each base learner, it shows the size of the training set and the proportion of the data points in the training set that belong to each Gaussian component. This proportion is repre- sented by a colored bar using the s",
+          "Fig. 1F). The base learner view lists all available base learners that can be used in the ensemble model. For each base learner, it shows the size of the training set and the proportion of the data points in the training set that belong to each Gaussian component. This proportion is repre- sented by a colored bar using the same color scheme in the streaming "
+        ]
+      },
+      {
+        "pdf_page": 7,
+        "figure_mentions": [
+          "Fig. 1F. Squares is able to provide a compact and effective comparison between classiﬁers before and after adaptation. It shows each class in a column, which contains a vertical axis annotated by its class label. The left-most vertical axis indicates the prediction conﬁdence ranges. Summary statistics (true positive, false positive, and false negative) for e",
+          "Fig. 4(a), she found that these new data were on the boundary of"
+        ]
+      },
+      {
+        "pdf_page": 8,
+        "figure_mentions": [
+          "Figure 4: The streaming scatterplot shows the density change from summer to early autumn in 1949: (a) the new data (A) came with a lower temperature (B); (b) a new component (C) was detected; (c) the following data (D) came and deviated from the yellow component. the existing component with relatively lower temperature, as shown in Fig. 4A and Fig. 4B. She s",
+          "Fig. 4A and Fig. 4B. She selected the new data and some similar data points from the historical data to build a new base learner, BL1, and combined BL1 with BL0 to create a new ensemble prediction model. After the adaptation, the drift went down, indicating that the adaptation was successful. Since Oct. 1, there were some data samples deviating from the blue",
+          "Fig. 4B. She selected the new data and some similar data points from the historical data to build a new base learner, BL1, and combined BL1 with BL0 to create a new ensemble prediction model. After the adaptation, the drift went down, indicating that the adaptation was successful. Since Oct. 1, there were some data samples deviating from the blue component, ",
+          "Fig. 4C) in the streaming scatterplot (Fig. 4(b)). The expert explained, “This is the ﬁrst month of autumn, and the temperatures have begun to decrease. This is why a new component has emerged.” However, she commented that the drift degree was still low, and many points in the yellow component were ﬂipped from the blue component. Therefore, she decided to mo",
+          "Fig. 4(b)). The expert explained, “This is the ﬁrst month of autumn, and the temperatures have begun to decrease. This is why a new component has emerged.” However, she commented that the drift degree was still low, and many points in the yellow component were ﬂipped from the blue component. Therefore, she decided to monitor the change closely for the follow"
+        ]
+      },
+      {
+        "pdf_page": 9,
+        "figure_mentions": [
+          "Figure 7: The yellow points in the blue region show high max tem- perature and low sea level pressure and are more similar to summer data (blue component) than autumn data (yellow component). (M2), and Sept. 1952 ( M3), we run them on yearly test data from Jun. 1949 to May 1954. M1 has its yearly accuracy being 0.77, 0.72, 0.73, 0.67, and 0.74; M2 has its ye",
+          "Fig. 8(a) shows the distribution of these papers. Several topics were identiﬁed from this distribution by hovering over the papers in the scatterplot to examine the key- words and titles. For example, the keywords in the green component (Fig.8A) were “kernel, vector, feature.” E 3 commented that there was a high research interest in the kernel methods at tha",
+          "Fig.8A) were “kernel, vector, feature.” E 3 commented that there was a high research interest in the kernel methods at that time due to the success of support vector machines, which was reﬂected in the leader-board of the MNIST dataset [48]. The orange component (#5) contained two inner clusters (Fig.8B and C). The top one (Fig.8B) fo- cused on neural networ",
+          "Fig.8B and C). The top one (Fig.8B) fo- cused on neural networks, while the bottom one (Fig.8C) focused on reinforcement learning. E3 commented that these two inner clusters might split if their respective topics become popular in the future. Analysis of papers in 2004-2007. Next, the papers from 2004 to 2007 were added year by year. In the year 2007, the dr",
+          "Fig.8B) fo- cused on neural networks, while the bottom one (Fig.8C) focused on reinforcement learning. E3 commented that these two inner clusters might split if their respective topics become popular in the future. Analysis of papers in 2004-2007. Next, the papers from 2004 to 2007 were added year by year. In the year 2007, the drift degree increased to 0.15"
+        ]
+      },
+      {
+        "pdf_page": 10,
+        "figure_mentions": [
+          "Figure 8: The scatterplot shows the Gaussian components in different years when analyzing NeurIPS papers. Each subgraph shows the different analytics steps our expert took. The regions (A)-(K) indicates the interesting components explored. components and added it to the model. After the adaptation incorpo- rating these two new learners, the classiﬁcation acc"
+        ]
+      }
+    ]
+  }
+]

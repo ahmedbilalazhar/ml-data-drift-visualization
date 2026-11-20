@@ -1,8 +1,9 @@
 """E2 localization pilot (roadmap Sec. 9.2) — no humans.
 
-For each template: reference (train) vs drifted test window -> KS ranking ->
-P/R/F1@3 + AP vs generator truth. S7 truth is relationship-level (no single
-feature cause); S6 truth is joint — both reported with limits, never forced.
+For each template: reference (train) vs drifted test window -> KS ranking (+JS
+comparator, same window) -> P/R/F1@3 + AP vs generator truth. S7 truth is
+relationship-level (no single feature cause); S6 truth is joint — both reported
+with limits, never forced.
 """
 import sys
 from pathlib import Path
@@ -11,10 +12,20 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from drift_monitoring.simulation.generator import ScenarioSpec, generate_stream
-from drift_monitoring.detectors.drift_detectors import ks_window_score
+from drift_monitoring.detectors.drift_detectors import ks_window_score, js_window_score
 from drift_monitoring.explanations.localization import rank_features, localization_scores
 
 OUT = ROOT / "results" / "aggregates"
+
+
+def load_study():
+    import yaml
+    p = ROOT / "configs" / "scenarios" / "E2.yaml"
+    if p.exists():
+        cfg = yaml.safe_load(p.read_text())
+        return cfg.get("templates", ["S0", "S1", "S2", "S3", "S4", "S5",
+                                     "S6", "S7"])
+    return ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]
 
 def truth_set(truth: dict, numeric: list[str]) -> set[str]:
     aff = [a for a in truth["affected_original_vars"] if a in numeric]
@@ -26,7 +37,7 @@ def truth_set(truth: dict, numeric: list[str]) -> set[str]:
 
 def main():
     rows = []
-    for tid in ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]:
+    for tid in load_study():
         df, truth = generate_stream(ScenarioSpec(template_id=tid, seed=0,
                                                  n_train=2000, n_calib=2000,
                                                  n_test=6000))
@@ -36,13 +47,20 @@ def main():
         seg = test.iloc[6 * 500:7 * 500]  # clearly post-onset window
         ks = ks_window_score(ref, seg, num)
         rk = rank_features(ks["per_feature"], k=3)
+        js = js_window_score(ref, seg, num)
+        rk_js = rank_features(js["per_feature"], k=3)
         ts = truth_set(truth, num)
         sc = localization_scores(rk["ranking"], ts, k=3)
+        sc_js = localization_scores(rk_js["ranking"], ts, k=3)
         rows.append({"template": tid, "top3": ",".join(rk["top3"]),
                      "truth": ",".join(sorted(ts)) or "(none)",
                      **{k: round(v, 3) if isinstance(v, float) else v
-                        for k, v in sc.items()}})
-        print(f"{tid}: top3={rk['top3']} truth={sorted(ts)} -> {sc}")
+                        for k, v in sc.items()},
+                     "top3_js": ",".join(rk_js["top3"]),
+                     "p@k_js": round(sc_js["p@k"], 3),
+                     "r@k_js": round(sc_js["r@k"], 3)})
+        print(f"{tid}: top3={rk['top3']} top3_js={rk_js['top3']} "
+              f"truth={sorted(ts)} -> {sc}")
     OUT.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(OUT / "e2_localization.csv", index=False)
     print(f"-> {OUT/'e2_localization.csv'}")

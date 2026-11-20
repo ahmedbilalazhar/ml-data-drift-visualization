@@ -16,11 +16,23 @@ and run cells top-to-bottom (uses same `src/` package).
 ## Layout
 
 - `src/drift_monitoring/` — simulation (S0–S7), windows/replay clock,
-  detectors, explanations, frozen models, evaluation, visualization, orchestration
-- `configs/` — dataset / scenario / method / study YAML
+  detectors (KS/Wasserstein/JS/ADWIN-inspired/RBF-MMD/joint-logreg),
+  explanations (ranking + DDE lift/scores), frozen models, evaluation,
+  visualization (aligned views + heatmaps), orchestration, real-data loader
+- `configs/` — dataset (incl. elec2/covtype/weather-pending/TierA) /
+  scenario (E0–E6/full) / method / study YAML — all runners read these
+- `scripts/` — smoke_e0, run_multiseed, run_real, e1_detection/compare,
+  e2_localization, e3_proxy/delay, e6_reference/sensitivity,
+  export_heatmap, build_dashboard, compare_offline, demo_dde,
+  materialize_tierA, audit/download_datasets
 - `experiments/protocols/` — protocol outline + E0 card; `experiments/registries/` — run log
-- `docs/` — charter, problem statement, data cards, decisions
-- `reports/literature/` — evidence matrix (Week-1)
+- `docs/` — charter, problem statement, data cards, decisions, architecture roadmap
+- `references/papers/selected/` + `supporting/` — supplied paper texts + figure/table assets
+- `reports/literature/` — evidence matrix + deep-research review (Week-1)
+- `reports/manuscript/phase1/` — Phase 1 LaTeX report + compiled PDF
+- `studies/tasks/` — course requirement briefs; `studies/rubrics/` — evaluation checklists
+- `prompts/` — review/audit prompt templates
+- `data/` — `raw/` (immutable, gitignored), `processed/`, `manifests/`, `interim/`
 - `tests/` — scientific-invariant checks (leakage, label timing, resume)
 
-Roadmap: `Research_Project_Architecture_and_Roadmap.md` (planning doc, not results).
+Roadmap: `docs/architecture/research-project-architecture-and-roadmap.md` (planning doc, not results).

@@ -1,0 +1,48 @@
+{
+  "protocol": "large fresh-seed replication of released-label adaptation pilot",
+  "status": "complete",
+  "mode": "development",
+  "started_at_utc": "2026-11-15T17:54:42.104393+00:00",
+  "seeds_by_task": {
+    "v1_synthetic": [
+      999001,
+      999002,
+      999003,
+      999004,
+      999005
+    ],
+    "xor_synthetic": [
+      999001,
+      999002,
+      999003,
+      999004,
+      999005
+    ]
+  },
+  "conditions": {
+    "v1_synthetic": "C3",
+    "xor_synthetic": "X3"
+  },
+  "delays": [
+    0,
+    5,
+    20
+  ],
+  "batch_size": 500,
+  "batches": 24,
+  "manifest_sha256": "3cded536206601bb34f0f934cf9bbb448f45cf6e0c771ea207d064859de58cd3",
+  "source_sha256": {
+    "src/drift_monitoring/phase3/adaptation.py": "01f93622f662aeaef9463af585142fbb76fde21675233edf72a5fcc33f6aa630",
+    "scripts/run_phase3_adaptation_replication.py": "1a699214a2f653688137c9f77214a5df5e80aef4e0eec6ee2394be5c9bc9736c",
+    "docs/phase3/ADAPTATION_SEED_REPLICATION_PROTOCOL.md": "3cded536206601bb34f0f934cf9bbb448f45cf6e0c771ea207d064859de58cd3"
+  },
+  "thread_limit": 1,
+  "online_contract": "no truth fields; write and flush before broker release",
+  "cache_policy": "one compact prediction array per task-seed, truth kept in evaluator-only output",
+  "completed_at_utc": "2026-11-15T17:54:50.750694+00:00",
+  "elapsed_seconds": 8.569573700000547,
+  "feature_streams": 10,
+  "delay_streams": 30,
+  "online_batch_records": 1440,
+  "evaluator_batch_records": 1440
+}

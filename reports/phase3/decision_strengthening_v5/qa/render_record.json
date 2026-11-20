@@ -1,0 +1,11 @@
+{
+  "pages": 14,
+  "pdf_bytes": 1553749,
+  "renderer": "pypdfium2",
+  "visual_review": "passed",
+  "output": "REPORT.pdf",
+  "review_notes": "All 14 rendered pages checked. No clipped text, missing glyphs, or isolated final-page float. Dense tables remain readable at full page scale; detailed coverage figure is kept in the supplementary robustness report.",
+  "log_overfull_boxes": 0,
+  "missing_character_warnings": 0,
+  "underfull_boxes": 42
+}

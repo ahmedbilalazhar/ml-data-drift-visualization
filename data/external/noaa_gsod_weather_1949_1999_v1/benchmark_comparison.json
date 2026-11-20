@@ -1,0 +1,18 @@
+{
+  "comparison_id": "noaa-gsod-vs-legacy-weather-mirror-v1",
+  "reference_path": "data/external/noaa_gsod_weather_1949_1999_v1/reference/scikit_multiflow_weather.csv",
+  "reference_sha256": "3c38f05bdc5c4cb115f122414c66976e3662c875d96d7199d9e47fc46aff150e",
+  "NOAA_station_id": "72554014949",
+  "raw_source_file_count": 51,
+  "legacy_rows": 18159,
+  "legacy_positive_count": 5698,
+  "NOAA_raw_rows": 18218,
+  "processed_NOAA_rows": 18210,
+  "processed_NOAA_positive_count": 5746,
+  "monotone_exact_feature_tuple_matches": 18072,
+  "unmatched_legacy_feature_rows": 87,
+  "rain_flag_mismatches_on_matched_rows": 45,
+  "exact_row_and_label_equivalence": false,
+  "matching_method": "Greedy monotone sequence alignment on all eight listed features rounded to 0.1, then compare the legacy class to NOAA FRSHTT rain bit. This is a diagnostic, not a proof of a unique alignment.",
+  "interpretation": "The timestamped NOAA station-year archive is used as the primary stream. The older generic-feature mirror is not used for timestamps or evaluator labels."
+}

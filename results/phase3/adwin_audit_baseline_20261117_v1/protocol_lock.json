@@ -1,0 +1,105 @@
+{
+  "status": "complete",
+  "protocol": "river-adwin-delayed-budgeted-audit-v1",
+  "river_version": "0.27.0",
+  "detector": "river.drift.ADWIN",
+  "parameters": {
+    "delta": 0.002,
+    "clock": 1,
+    "max_buckets": 5,
+    "min_window_length": 5,
+    "grace_period": 10,
+    "note": "Only clock=1 differs from River defaults, so checking occurs after every received error."
+  },
+  "input": "row-level binary error from cached frozen predictions; values are ingested only from selected cohorts after release",
+  "label_release_rule": "source_batch + delay < current decision clock",
+  "initial_probe": "ceil(24 / budget_cohorts), same as released-error baseline",
+  "budgets": [
+    2,
+    4,
+    8
+  ],
+  "delays": [
+    0,
+    5,
+    20,
+    100
+  ],
+  "cost_modes": [
+    "strict_cap",
+    "exact_quota"
+  ],
+  "batch_size": 500,
+  "stream_batches": 24,
+  "evaluation_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129
+  ],
+  "conditions": [
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6"
+  ],
+  "policy_cells": 5040,
+  "decision_rows": 120960,
+  "elapsed_seconds": 37.26303619999089,
+  "limitations": [
+    "Same synthetic cached predictions as the primary run; not an independent dataset or fresh model rerun.",
+    "ADWIN is supervised and can update only on audited, released rows; sparse audit feedback may make detection underpowered.",
+    "This baseline monitors prediction error and does not detect input drift without labels.",
+    "The strict-cap policy can consume fewer cohorts than uniform; event-yield contrasts are not equal-spend unless forced exact-quota mode is used.",
+    "ADWIN parameters are fixed at River defaults except clock=1 to check each arriving error; no final-seed tuning was performed."
+  ],
+  "source_sha256": {
+    "results/phase3/final_v1/online_batches.csv": "3c830d83a31a2f73ac46f44c23ce631757ea59622639afdd4a070a07be4900e3",
+    "results/phase3/final_v1/released_verification.csv": "0ff1b9498864965aa949350cf5894c55ae4d8d98d4eb93c7a52b64c33305f7d3",
+    "results/phase3/final_v1/evaluator_truth/100_C0.npz": "222d7e954b577ff5d281708f5016a333f77d2095b342e1058e20b1f44e99fa37",
+    "results/phase3/final_v1/predictions/100_C0.npz": "7fd4c410535954825d2485f6c6e10e2a41a9ac31477b6e3d711c013bcea623e4",
+    "scripts/run_adwin_audit_baseline.py": "6af8b7af6740b5efd1773164f3142ae3f031f8ad00acfe0614e46c4fd54acfff",
+    "pyproject.toml": "299fe2595b26e271a7505c77581dd6e16b385dcc2c520f3199859ae7f10f2438"
+  },
+  "output_sha256": {
+    "adwin_per_seed.csv": "43e071a0766c47b47f3ac60ba802463a97241bc578c8ca0334fa41c338a88adf",
+    "adwin_decisions.csv": "83aed372965a211a58a21d7041dee144070d55010a528f843285dd9ebee67c6d",
+    "adwin_summary.csv": "930866373444ab0a301dc53921249f91725ff4db6cd2f74f18947c5f6a736c64",
+    "paired_comparisons.csv": "b8973df4e274d8a14cbdd6b810a753d90a82b869c8b99f22385c34aa8ff31049"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.2.5",
+    "pandas": "2.3.3",
+    "river": "0.27.0"
+  }
+}

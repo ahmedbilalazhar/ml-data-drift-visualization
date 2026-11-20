@@ -1,0 +1,7 @@
+study: full-inventory
+gate: GATED  # budget.csv missing; registries/runs.csv append not done
+requires: [independent-calibration-streams, 5-held-out-seeds, long-stationary,
+  inclusion-manifest, history-baseline-h3, block-CI, group-scoring-S4-S6]
+ablation_cap: 24-jobs
+outputs: [results/aggregates/budget.csv]
+entry: scripts/run_full_inventory.py

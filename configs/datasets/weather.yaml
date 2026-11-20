@@ -1,0 +1,33 @@
+dataset:
+  name: weather
+  status: ADMITTED_WITH_LIMITATIONS
+  source: NOAA Global Surface Summary of the Day (GSOD), station 72554014949
+  source_metadata: https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ncdc:C00516/html
+  source_period: 1949-01-01 through 1999-12-31
+  time_semantics: strictly ordered daily station summaries; same-day features and label, not a forward forecast
+  label: second FRSHTT bit (rain or drizzle on the same summary date)
+  predictors: [TEMP, DEWP, SLP, VISIB, WDSP, MXSPD, MAX, MIN]
+  excluded_predictors: [PRCP, SNDP, FRSHTT, MAX_ATTRIBUTES, MIN_ATTRIBUTES]
+  missing_code: 999.9; drop a row if any selected numeric predictor uses this code
+  contract:
+    - timestamp must be unique and strictly increasing
+    - row_id is stable and assigned after chronological sort and missing-row filtering
+    - no precipitation amount or weather-event indicator enters predictor features
+    - splits: chronological 20/10/10/60 train/calibration/reference/monitoring
+    - evaluate 500-row complete monitoring batches and disclose the remainder
+  processed: data/processed/weather_noaa_1949_1999_v2/weather_ordered.csv
+  manifest: data/processed/weather_noaa_1949_1999_v2/weather_manifest.json
+  raw: data/external/noaa_gsod_weather_1949_1999_v1/raw/
+reference:
+  rows: 1821
+  policy: fixed
+windows:
+  size: 500
+  stride: 500
+truth:
+  events: no verified drift-onset catalog; alarm fraction is not false-alarm rate
+acquisition:
+  script: scripts/prepare_noaa_weather.py
+  evaluation: scripts/run_noaa_weather_transfer.py
+  audit: scripts/audit_datasets.py
+  interpretation: retrospective same-day classification; no future-rain or operational-warning claim

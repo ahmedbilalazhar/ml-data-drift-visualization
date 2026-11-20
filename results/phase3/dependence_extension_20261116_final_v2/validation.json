@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "rows": 5040,
+  "unique_seed_condition_batches": 5040,
+  "evaluator_truth_absent": true,
+  "threshold": 0.16573987161012022,
+  "threshold_source_sha256": "d3e348be1cb3766e0da991bd389e931447410208374fd12cefdbd3137f8ec6e7",
+  "contrasts": [
+    {
+      "contrast": "C6 onset detection rate difference",
+      "mean_difference": 0.4666666666666667,
+      "lower": 0.3,
+      "upper": 0.6333333333333333,
+      "paired_seeds": 30,
+      "bootstrap_replicates": 2000,
+      "resampling_unit": "seed"
+    },
+    {
+      "contrast": "C0 alarms per 24 batches difference",
+      "mean_difference": 0.8666666666666667,
+      "lower": 0.4,
+      "upper": 1.3666666666666667,
+      "paired_seeds": 30,
+      "bootstrap_replicates": 2000,
+      "resampling_unit": "seed"
+    }
+  ],
+  "summary_rows": 14,
+  "protocol_sha256": "65572d5b3f9485a511130322cb928289eafe3740bfc0ec996933b48c0a113cf4"
+}

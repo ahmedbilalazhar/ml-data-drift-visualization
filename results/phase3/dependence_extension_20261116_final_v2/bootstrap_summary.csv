@@ -1,0 +1,2 @@
+condition,metric,mean_difference,lower,upper,seeds,comparator
+C6,dependence_detector_onset_detection_rate,0.4666666666666667,0.3,0.6333333333333333,30,same-stream original-feature plus PCA KS alarm

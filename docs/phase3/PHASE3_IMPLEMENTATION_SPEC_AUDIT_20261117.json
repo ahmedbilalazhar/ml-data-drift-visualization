@@ -1,0 +1,2179 @@
+{
+  "registry_id": "idm-viz-phase3-implementation-spec-audit-v1",
+  "created_local": "2026-11-17 Asia/Karachi",
+  "basis": "User-provided complete strengthening specification, pasted-text-1.txt",
+  "preservation": [
+    {
+      "path": "docs/23i-2604_23i-2581DAV-phase2.docx",
+      "sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+      "status": "unchanged"
+    },
+    {
+      "path": "docs/Phase 03 - Implementation.pdf",
+      "sha256": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+      "status": "unchanged"
+    },
+    {
+      "path": "output/phase3/23I-2581_23I-2604_Phase3.zip",
+      "sha256": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877",
+      "status": "unchanged"
+    },
+    {
+      "path": "output/phase3/IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip",
+      "sha256": "24bd91b8686ae972051d1437b9c4f2d39cae531576a63f5ed64ad3ca8dd47725",
+      "status": "unchanged"
+    }
+  ],
+  "allowed_statuses": [
+    "evaluated",
+    "implemented_not_evaluated",
+    "substituted",
+    "deferred",
+    "unsupported"
+  ],
+  "requirements": [
+    {
+      "requirement_id": "PRES-01",
+      "phase2_section": "Preservation",
+      "promised_behavior": "Retain submitted documents, original archive, existing results and reports; record hashes and version new outputs.",
+      "implemented_behavior": "Historical DOCX, implementation brief and both ZIP snapshots retain recorded SHA-256 digests. NOAA addendum uses v2 and isolated reproduction namespaces.",
+      "evidence_paths": [
+        "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.json",
+        "reports/phase3/weather_noaa_1949_1999_v2/REPORT.pdf"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Additive post-deadline strengthening.",
+      "allowed_claim": "Recorded preservation hashes match the verified snapshots.",
+      "unresolved_limitation": "Git workspace has unrelated pre-existing changes; no reset/clean was performed."
+    },
+    {
+      "requirement_id": "TRACE-01",
+      "phase2_section": "All methodology steps and RQ1-RQ4",
+      "promised_behavior": "Structured Phase 2 traceability with exact status vocabulary and evidence paths.",
+      "implemented_behavior": "This versioned registry audits the pasted strengthening specification; historical Phase 2 traceability remains preserved.",
+      "evidence_paths": [
+        "docs/phase3/PHASE2_TRACEABILITY.md",
+        "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.md",
+        "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.json"
+      ],
+      "status": "implemented_not_evaluated",
+      "amendment_reason": "Versioned audit is additive; old traceability file is not rewritten.",
+      "allowed_claim": "Traceability is documented with explicit open items.",
+      "unresolved_limitation": "Not every Phase 2 aspiration has supporting empirical evidence."
+    },
+    {
+      "requirement_id": "RQ1",
+      "phase2_section": "Research Questions",
+      "promised_behavior": "Detect input and concept drift and localize evidence.",
+      "implemented_behavior": "Controlled synthetic mechanisms, original-feature KS/PCA and dependence detector, plus descriptive feature evidence.",
+      "evidence_paths": [
+        "configs/phase3_strengthening_v3.json",
+        "results/phase3/",
+        "docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Scope bounded to tested shift families.",
+      "allowed_claim": "Performance is reported on specified synthetic families and selected external streams.",
+      "unresolved_limitation": "No arbitrary-shift guarantee; dependence-pair localization is strong only for the specified intervention, and generating-region recovery remains weak even with historical many-to-one mappings and frozen PCA representations."
+    },
+    {
+      "requirement_id": "RQ2",
+      "phase2_section": "Research Questions",
+      "promised_behavior": "Estimate current and future model impact under delayed labels.",
+      "implemented_behavior": "Correctness calibration, Average Confidence, plug-in intervals, delayed verification and scoped future-risk experiments.",
+      "evidence_paths": [
+        "results/phase3/",
+        "reports/phase3/"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Current and future targets are explicitly distinguished.",
+      "allowed_claim": "Target-specific estimates and failures are reported within tested streams.",
+      "unresolved_limitation": "Natural-stream calibration, reference uncertainty and future-risk calibration remain weak or unverified."
+    },
+    {
+      "requirement_id": "RQ3",
+      "phase2_section": "Research Questions",
+      "promised_behavior": "Evaluate coordinated visualization and operational decision usefulness.",
+      "implemented_behavior": "Coordinated evidence prototype exists; no analyst decision-effect experiment is claimed.",
+      "evidence_paths": [
+        "docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md"
+      ],
+      "status": "deferred",
+      "amendment_reason": "No analyst decision-effect experiment is claimed; effectiveness remains unknown.",
+      "allowed_claim": "A coordinated prototype is implemented; effectiveness is unknown.",
+      "unresolved_limitation": "RQ3 decision effect remains unanswered."
+    },
+    {
+      "requirement_id": "RQ4",
+      "phase2_section": "Research Questions",
+      "promised_behavior": "Compare methods and component contributions.",
+      "implemented_behavior": "Matched baselines and component ablations are run in the frozen core protocol.",
+      "evidence_paths": [
+        "configs/phase3_strengthening_v3.json",
+        "results/phase3/"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Comparisons are restricted to implemented methods and settings.",
+      "allowed_claim": "Results support within-protocol comparisons.",
+      "unresolved_limitation": "Named literature baseline fidelity remains unresolved."
+    },
+    {
+      "requirement_id": "ARCH-01",
+      "phase2_section": "System architecture and timing",
+      "promised_behavior": "Separate features, predictor, monitor, label broker, evaluator; enforce information clocks.",
+      "implemented_behavior": "Cached predictions and scores are persisted before labels enter evaluator/replay; release clocks and row IDs are recorded. Adaptation schedule v4 now uses the shared LabelBroker, logs all release events with IDs and processing/prediction clocks, and records post-stream drain separately.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/",
+        "scripts/run_noaa_weather_transfer.py",
+        "tests/phase3/test_noaa_weather_contract.py",
+        "results/phase3/adaptation_schedule_audit_20261118_v4/label_release_events.csv",
+        "tests/phase3/test_adaptation_schedule_audit_contract.py"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "NOAA implements explicit feature-only scoring then delay-zero release.",
+      "allowed_claim": "Software information ordering passes contract tests.",
+      "unresolved_limitation": "This is an experimental software boundary, not production isolation."
+    },
+    {
+      "requirement_id": "CAUSAL-01",
+      "phase2_section": "Causal responsibility and explanation",
+      "promised_behavior": "Attribute drift to causal features or mechanisms only under a defensible identification strategy.",
+      "implemented_behavior": "No causal graph or causal identification method is implemented; all current explanations are descriptive.",
+      "evidence_paths": [
+        "docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md",
+        "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.md"
+      ],
+      "status": "unsupported",
+      "amendment_reason": "The existing data and interventions do not validate causal assumptions; causal claims are explicitly prohibited.",
+      "allowed_claim": "Observed feature and dependence changes are descriptive associations.",
+      "unresolved_limitation": "Causal attribution is unsupported until an identified design and assumptions are developed and tested."
+    },
+    {
+      "requirement_id": "CONFIG-01",
+      "phase2_section": "Configuration and data contracts",
+      "promised_behavior": "Validated per-experiment schema, model, calibrator, detector, clusters, dimensions, delays and hashes.",
+      "implemented_behavior": "Core config covers synthetic experiments; NOAA uses a separate explicit manifest and fixed runner contract.",
+      "evidence_paths": [
+        "configs/phase3_strengthening_v3.json",
+        "configs/datasets/weather.yaml",
+        "data/processed/weather_noaa_1949_1999_v2/weather_manifest.json"
+      ],
+      "status": "substituted",
+      "amendment_reason": "NOAA transfer is a separate locked protocol, not a generalized shared config runner.",
+      "allowed_claim": "The NOAA schema/split/run contract is validated.",
+      "unresolved_limitation": "Configuration is not yet unified across every extension."
+    },
+    {
+      "requirement_id": "RECOVERY-01",
+      "phase2_section": "Atomic persistence and recovery",
+      "promised_behavior": "Atomic outputs, immutable cells, hash-checked resume and explicit run states.",
+      "implemented_behavior": "Existing core runner uses checkpointed cells; NOAA output writes are atomic and versioned with integrity manifest; clean reproduction succeeds.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/contracts.py",
+        "results/phase3/noaa_weather_1949_1999_v1/integrity_manifest.json",
+        "results/phase3/weather_reproduction_v2/"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "No crash-interruption recovery fault injection was performed for NOAA.",
+      "allowed_claim": "Completed NOAA artifacts are checksummed and reproducible.",
+      "unresolved_limitation": "Resume-under-crash behavior for NOAA not independently fault-injected."
+    },
+    {
+      "requirement_id": "SYNTH-01",
+      "phase2_section": "Controlled generator matrix",
+      "promised_behavior": "Linear, nonlinear, five-region tasks; eight mechanisms; seasonal stress; no-intervention control.",
+      "implemented_behavior": "Frozen v3 synthetic protocol includes these tasks and mechanisms.",
+      "evidence_paths": [
+        "configs/phase3_strengthening_v3.json",
+        "results/phase3/"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Existing results retained.",
+      "allowed_claim": "Controlled results apply to implemented generator laws.",
+      "unresolved_limitation": "Synthetic mechanisms do not represent all natural shifts."
+    },
+    {
+      "requirement_id": "DIM-01",
+      "phase2_section": "Dimension and cluster sensitivity",
+      "promised_behavior": "Target 32/128 dimensions and 3/5/10 clusters against five true regions with historical-only mapping.",
+      "implemented_behavior": "Targeted d32/d128 sensitivity exists in the locked dimensionality run; 3/5/10 regional-cluster sensitivity was evaluated on 30 seeds. A follow-up compared scaled full space and training-frozen PCA-2/PCA-3, plus one-to-one and many-to-one historical maps.",
+      "evidence_paths": [
+        "configs/phase3_strengthening_v3.json",
+        "docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md",
+        "results/phase3/cluster_mapping_sensitivity_20261117_v2/cluster_mapping_sensitivity.csv",
+        "results/phase3/cluster_mapping_sensitivity_20261117_v2/historical_mappings.json",
+        "results/phase3/cluster_mapping_sensitivity_20261117_v2/audit_receipt.json",
+        "reports/phase3/cluster_mapping_sensitivity_20261117_v1/CLUSTER_MAPPING_SENSITIVITY.tex",
+        "reports/phase3/cluster_mapping_sensitivity_20261117_v1/seed_bootstrap_summary.csv"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Dedicated 30-seed historical-only regional localization analysis and frozen-representation sensitivity completed; primary method was not retuned.",
+      "allowed_claim": "Cluster count and representation sensitivity have been measured on the five-region synthetic generator; the tested cluster summaries remain weak proxies for generating-region identity.",
+      "unresolved_limitation": "Region-2 ranking is only modestly above its roughly 0.20 prevalence baseline; this one synthetic generator does not establish natural-domain localization. The d32/d128 analysis concerns the configured targeted cases only."
+    },
+    {
+      "requirement_id": "WEATHER-01",
+      "phase2_section": "Natural stream provenance and replay",
+      "promised_behavior": "Verify source, timestamp, target, predictors, ordering, missingness and label availability.",
+      "implemented_behavior": "51 NOAA station-year files validated; 18,210 chronologically unique rows; leakage fields excluded; stable IDs; same-day target limitation documented.",
+      "evidence_paths": [
+        "configs/datasets/weather.yaml",
+        "data/processed/weather_noaa_1949_1999_v2/weather_manifest.json",
+        "data/interim/audit_weather_noaa_20261117.json",
+        "docs/phase3/WEATHER_PROVENANCE_AUDIT_20261117.md"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Official timestamped NOAA GSOD stream used instead of unverified un-timestamped mirror semantics.",
+      "allowed_claim": "One station, one chronological same-day classification holdout.",
+      "unresolved_limitation": "Not a forecast, no verified drift onset, not an independent domain replication."
+    },
+    {
+      "requirement_id": "BASE-01",
+      "phase2_section": "Baseline fidelity",
+      "promised_behavior": "Audit named papers/implementations and compare faithfully configured baselines.",
+      "implemented_behavior": "The source-to-implementation audit still distinguishes DriftLens and Domino from internal controls. Canonical River 0.27.0 ADWIN is now run on row-level errors from selected 500-row cohorts, under the same seed bank, delays, budgets, bootstrap, and cost modes as the locked policy matrix. Corrected post-hoc early/midpoint ADWIN sensitivity (fixed probes at batches 1 and 12) resolves short-delay strict-cap cold-start in 273/630 cells at delays 0 and 5, while increasing strict-cap audits; the first buggy attempt is explicitly superseded.",
+      "evidence_paths": [
+        "docs/phase3/BASELINE_FIDELITY_AUDIT_20261117.md",
+        "scripts/run_adwin_audit_baseline.py",
+        "results/phase3/adwin_audit_baseline_20261117_v1/",
+        "reports/phase3/adwin_audit_baseline_20261117_v3/",
+        "results/phase3/adwin_midpoint_probe_sensitivity_20261118_v2/protocol_lock.json",
+        "reports/phase3/adwin_midpoint_probe_sensitivity_20261118_v1/adwin_midpoint_sensitivity.tex"
+      ],
+      "status": "substituted",
+      "amendment_reason": "Canonical ADWIN has been added as a named method baseline; the named DriftLens and Domino implementations remain unreproduced and are not conflated with internal controls.",
+      "allowed_claim": "River ADWIN was evaluated under the logged synthetic cohort-feedback protocol. Under strict caps it made no detections after the single bootstrap audit; exact-quota detections are constrained to the tested synthetic streams and do not establish general detector performance.",
+      "unresolved_limitation": "DriftLens and Domino remain unreproduced. ADWIN sensitivity is post hoc, reuses cached synthetic streams, does not compare at equal strict-cap spend, does not trigger at delays 20/100 within the horizon, and has no natural-stream or deployment validation."
+    },
+    {
+      "requirement_id": "LOCAL-01",
+      "phase2_section": "Marginal, pair and regional localization",
+      "promised_behavior": "Separately score marginal features, dependence pairs and generating regions with overlap/ambiguity.",
+      "implemented_behavior": "Marginal top-k scores and 30-seed historical-only pair/region audits are complete. A follow-up adds frozen PCA-2/PCA-3 sensitivity, many-to-one region maps, cluster composition/entropy, and ranking metrics.",
+      "evidence_paths": [
+        "results/phase3/localization_audit_20261117_v3/region_localization.csv",
+        "results/phase3/localization_audit_20261117_v3/dependence_pair_localization.csv",
+        "results/phase3/localization_audit_20261117_v3/audit_receipt.json",
+        "reports/phase3/localization_audit_20261117_v5/LOCALIZATION_AUDIT.tex",
+        "reports/phase3/localization_audit_20261117_v5/REPORT_RECEIPT.json",
+        "reports/phase3/localization_audit_20261117_v5/region_localization.png",
+        "results/phase3/cluster_mapping_sensitivity_20261117_v2/cluster_mapping_sensitivity.csv",
+        "reports/phase3/cluster_mapping_sensitivity_20261117_v1/CLUSTER_MAPPING_SENSITIVITY.tex",
+        "reports/phase3/cluster_mapping_sensitivity_20261117_v1/cluster_mapping_sensitivity.png"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "This post-hoc diagnostic fills a prespecified localization measurement gap without tuning on monitoring truth.",
+      "allowed_claim": "The target pair is localized reliably under the tested synthetic dependence intervention; tested cluster configurations poorly recover the generating region.",
+      "unresolved_limitation": "One designed pair intervention and one synthetic regional generator do not imply arbitrary-shift or natural-domain localization; region recovery remains weak."
+    },
+    {
+      "requirement_id": "EST-01",
+      "phase2_section": "Accuracy, concern and uncertainty",
+      "promised_behavior": "Separate realized harm, expected harm, calibrated correctness, future risk and reference/calibrator uncertainty.",
+      "implemented_behavior": "Historical/current estimators, scoped forecast experiments and 7/30/90-row calibrator/reference block sensitivity are supplemented with 200 training-only moving-block refits of the NOAA scoring pipeline. Each draw refits scaler, logistic model, PCA/clusters, isotonic calibrator and reference correctness while holding calibration/reference/monitor partitions fixed. The bootstrap interval contains the original fitted model estimate on all 21 batches; this is a descriptive consistency check, not coverage for true accuracy.",
+      "evidence_paths": [
+        "results/phase3/",
+        "reports/phase3/weather_noaa_1949_1999_v2/REPORT.tex",
+        "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/audit_receipt.json",
+        "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/bootstrap_draws.csv",
+        "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/NOAA_UNCERTAINTY.tex",
+        "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/NOAA_UNCERTAINTY.pdf",
+        "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/noaa_uncertainty.png",
+        "results/phase3/noaa_reference_calibration_uncertainty_20261117_v2/audit_receipt.json",
+        "results/phase3/noaa_reference_calibration_uncertainty_block7_20261117_v1/audit_receipt.json",
+        "results/phase3/noaa_reference_calibration_uncertainty_block90_20261117_v1/audit_receipt.json",
+        "reports/phase3/noaa_block_length_sensitivity_20261117_v3/NOAA_BLOCK_LENGTH_SENSITIVITY.tex",
+        "reports/phase3/noaa_block_length_sensitivity_20261117_v3/NOAA_BLOCK_LENGTH_SENSITIVITY.pdf",
+        "reports/phase3/noaa_block_length_sensitivity_20261117_v3/block_length_sensitivity.png",
+        "results/phase3/noaa_training_uncertainty_20261117_v2/audit_receipt.json",
+        "results/phase3/noaa_training_uncertainty_20261117_v2/training_bootstrap_draws.csv",
+        "results/phase3/noaa_training_uncertainty_20261117_v3/training_uncertainty_summary.csv",
+        "reports/phase3/noaa_training_uncertainty_20261117_v3/NOAA_TRAINING_UNCERTAINTY.tex",
+        "reports/phase3/noaa_training_uncertainty_20261117_v3/NOAA_TRAINING_UNCERTAINTY.pdf",
+        "reports/phase3/noaa_training_uncertainty_20261117_v3/training_uncertainty.png"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Training-block resampling was added as a separate conditional sensitivity component; the 7/30/90-row calibration/reference resampling remains separately reported.",
+      "allowed_claim": "On one NOAA chronology, the training-block refit interval for the calibrated accuracy estimate contains the original fitted model estimate on 21/21 batches. The original estimate MAE against observed accuracy remains 0.0443; bootstrap consistency does not establish coverage for truth or future accuracy.",
+      "unresolved_limitation": "No model misspecification, unseen regime, new station/domain, or joint training/calibrator/reference population uncertainty guarantee is established; batches are serial and dependent."
+    },
+    {
+      "requirement_id": "SELECT-01",
+      "phase2_section": "Selective label bias",
+      "promised_behavior": "Separate scheduled and selected feedback; random audit inclusion probabilities and supported IPW.",
+      "implemented_behavior": "Synthetic 30-seed known-probability selective-label evaluation plus a 1,000-draw retrospective sampling-design replay on the fixed NOAA monitoring chronology. Both separate feature-only acquisition from evaluator correctness and log selected-row inclusion probabilities; the NOAA replay exactly reproduces the locked batch accuracies.",
+      "evidence_paths": [
+        "results/phase3/selective_label_audit_20261117_v2/audit_receipt.json",
+        "results/phase3/selective_label_audit_20261117_v2/selected_label_log.csv",
+        "results/phase3/noaa_selective_label_replay_20261117_v1/audit_receipt.json",
+        "results/phase3/noaa_selective_label_replay_20261117_v1/selected_label_log.csv.gz",
+        "reports/phase3/noaa_selective_label_replay_20261117_v3/NOAA_SELECTIVE_LABEL_REPLAY.tex",
+        "reports/phase3/noaa_selective_label_replay_20261117_v3/NOAA_SELECTIVE_LABEL_REPLAY.pdf"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Synthetic known-probability acquisition and positivity/estimability distinctions were evaluated without representing simulated labels as natural prospective outcomes.",
+      "allowed_claim": "For the fixed NOAA stream, targeted-only selection had zero inclusion probability outside the target and could not estimate population accuracy; adding a known-probability random audit yielded a design-based HT estimate with near-nominal empirical interval coverage across randomized draws. This is conditional on one retrospective stream.",
+      "unresolved_limitation": "This is simulated retrospective sampling, not prospective natural-stream label operations or an independent-domain replication. It does not test nonresponse, label acquisition costs, changing/misspecified inclusion probabilities, or recalibration from selected labels."
+    },
+    {
+      "requirement_id": "FUTURE-01",
+      "phase2_section": "Future-risk forecasting",
+      "promised_behavior": "Train small meta-model and evaluate h=1/5 on held-out families without generator/time leakage.",
+      "implemented_behavior": "Scoped known and withheld synthetic family studies and balanced-onset follow-ups exist.",
+      "evidence_paths": [
+        "results/phase3/",
+        "docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Negative and limited forecasts retained.",
+      "allowed_claim": "Performance only on the specified synthetic families.",
+      "unresolved_limitation": "No natural future-risk validation or broad calibration claim."
+    },
+    {
+      "requirement_id": "AUDIT-01",
+      "phase2_section": "Audit budgets and policies",
+      "promised_behavior": "Strict cap and exact quota; full declared policy family, budget, and delay matrix; force-fills and unused budgets disclosed.",
+      "implemented_behavior": "A locked outcome-informed replay evaluates six policies across strict-cap and exact-quota modes, budgets 2/4/8, delays 0/5/20/100, seven conditions, and 30 evaluation seeds. Decisions use current cached predictors and only previously selected labels satisfying source_batch + delay < decision_clock. Seed-level paired uncertainty averages matched conditions and budgets before resampling.",
+      "evidence_paths": [
+        "scripts/run_audit_policy_matrix.py",
+        "results/phase3/audit_policy_matrix_20261117_v1/",
+        "reports/phase3/audit_policy_matrix_20261117_v7/",
+        "tests/phase3/test_audit_policy_matrix_contract.py"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "The prior limited policy set is expanded into the declared full Cartesian matrix; the new run is additive and does not overwrite earlier analyses.",
+      "allowed_claim": "The selected policies are compared on the preserved 30-seed synthetic evaluation under the explicitly logged budgets and delays. Delay 100 cannot verify labels within the 24-batch horizon. Strict-cap episode-yield differences are not equal-spend rankings because acquisition counts differ.",
+      "unresolved_limitation": "This is outcome-informed replay on cached synthetic predictions, not fresh independent confirmation, prospective deployment, acquisition-cost validation, or evidence of analyst benefit. The tested policy family is not every Phase 2 policy concept."
+    },
+    {
+      "requirement_id": "ADAPT-01",
+      "phase2_section": "Adaptation under matched budgets",
+      "promised_behavior": "Static, periodic, global/local error-driven policies with equal opportunities and row-use budgets.",
+      "implemented_behavior": "Two 30-seed adaptation comparisons now exist. The budget-trigger audit compares frozen, periodic, global-trigger and training-frozen-region local-trigger policies at delays 0/5/20. A separate matched-clock study gives global and cluster-local models the same released row-ID windows at four identical update clocks, with 2,000 rows per opportunity and an 8,000 cumulative repeated-fit-row cap; initial 4,000-row training is reported separately. The local policy partitions each common released window using a three-cluster training-frozen MiniBatchKMeans model and keeps the frozen global fallback for unsupported clusters. Strict source_batch + delay < forecast_batch timing and fit-level row-ID hashes are recorded. A fresh-seed diversity extension now evaluates the matched-clock global/local/frozen arms across linear, XOR and five-region tasks; stationary, gradual, recurrent and out-of-support mechanisms; and delays 0/5/20 (30 evaluation seeds, 3,240 cells). The 30-seed budget-trigger schedule was rerun through the shared LabelBroker: all 69,120 cohort releases are logged and verified; a corrected metric separates labels available at the final forecast from queue-drained labels.",
+      "evidence_paths": [
+        "results/phase3/adaptation_schedule_audit_20261117_v2/audit_receipt.json",
+        "results/phase3/adaptation_schedule_audit_20261117_v2/seed_metrics.csv",
+        "reports/phase3/adaptation_schedule_audit_20261117_v11/adaptation_schedule_audit.pdf",
+        "results/phase3/matched_adaptation_schedule_20261117_v2/audit_receipt.json",
+        "results/phase3/matched_adaptation_schedule_20261117_v2/fit_audit.csv",
+        "results/phase3/matched_adaptation_schedule_20261117_v2/seed_metrics.csv",
+        "reports/phase3/matched_adaptation_schedule_20261117_v2/matched_adaptation_schedule.tex",
+        "reports/phase3/matched_adaptation_schedule_20261117_v2/matched_adaptation_schedule.pdf",
+        "tests/phase3/test_matched_adaptation_schedule_contract.py",
+        "configs/phase3_adaptation_diversity_20261118.json",
+        "results/phase3/matched_adaptation_diversity_20261118_v1/audit_receipt.json",
+        "reports/phase3/matched_adaptation_diversity_20261118_v1/matched_adaptation_diversity.tex",
+        "docs/phase3/SEED_COLLISION_AUDIT_ADAPTATION_DIVERSITY_20261118.json",
+        "results/phase3/adaptation_schedule_audit_20261118_v4/seed_metrics.csv",
+        "results/phase3/adaptation_schedule_audit_20261118_v4/label_release_events.csv",
+        "reports/phase3/adaptation_schedule_audit_20261118_v19/paired_accuracy_differences.csv"
+      ],
+      "status": "substituted",
+      "amendment_reason": "Added a matched-opportunity and matched released-row window extension, but the complete policy, mechanism, task and cost matrix requested by Phase 2 remains broader than these bounded studies.",
+      "allowed_claim": "In the tested linear-probabilistic reversal stream, both matched adaptive arms improved mean accuracy over frozen by about 22 percentage points. Global refitting exceeded local refitting by 0.08\u20130.11 percentage points at delays 0/5/20, with paired 95% seed-bootstrap intervals excluding zero. In stationarity, both adaptive arms slightly reduced accuracy relative to frozen. Trigger-policy results are separately reported in the companion audit. These are generator- and schedule-specific findings.",
+      "unresolved_limitation": "The fresh extension remains synthetic, uses one logistic classifier and a fixed three-cluster partition, and compares models with different capacity/compute. Its 36 setting intervals are unadjusted descriptive intervals; no natural-stream adaptation, matched compute/acquisition cost, alternative local thresholds, or analyst decision-effect evidence is established."
+    },
+    {
+      "requirement_id": "UI-01",
+      "phase2_section": "Visualization and browser acceptance",
+      "promised_behavior": "Three view modes, coordinated linking, selected-clock data and browser acceptance scenarios.",
+      "implemented_behavior": "A coordinated visualization prototype and evidence presentation are implemented; complete browser acceptance matrix is not certified here.",
+      "evidence_paths": [
+        "reports/phase3/",
+        "docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md"
+      ],
+      "status": "implemented_not_evaluated",
+      "amendment_reason": "No analyst effectiveness claim is inferred from software presence.",
+      "allowed_claim": "Prototype availability only.",
+      "unresolved_limitation": "Browser acceptance matrix and decision-effect evaluation remain open."
+    },
+    {
+      "requirement_id": "STATS-01",
+      "phase2_section": "Seeds and statistical analysis",
+      "promised_behavior": "Seed-level uncertainty, 2,000 bootstraps and Holm correction for declared primary family.",
+      "implemented_behavior": "Primary v3 30-seed and broader 1,500-seed studies exist; each extension has its own evidence scope.",
+      "evidence_paths": [
+        "configs/phase3_strengthening_v3.json",
+        "results/phase3/"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Do not pool different study designs or call time blocks independent datasets.",
+      "allowed_claim": "Uncertainty only at the declared experimental unit.",
+      "unresolved_limitation": "Natural streams support dataset-specific descriptive analysis, not broad inferential rankings."
+    },
+    {
+      "requirement_id": "TEST-01",
+      "phase2_section": "Scientific invariant tests",
+      "promised_behavior": "Test timing, delay invariance, label isolation, generator invariants, budgets, queue and restart.",
+      "implemented_behavior": "NOAA data/clock, matched-adaptation and robustness-report wording contract tests were added; the full current project suite passes 196 tests. The latest full Phase 3 test run passes 205 tests, including full-run LabelBroker release-clock, queue-drain, corrected availability-count and report max-t interval contracts.",
+      "evidence_paths": [
+        "tests/phase3/test_noaa_weather_contract.py",
+        "tests/phase3/",
+        "reports/phase3/weather_reproduction_v2/",
+        "tests/phase3/test_adaptation_schedule_audit_contract.py",
+        "reports/phase3/adaptation_schedule_audit_20261118_v19/report_receipt.json"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Test results are from the current working tree.",
+      "allowed_claim": "172 automated tests pass; no human study is implied.",
+      "unresolved_limitation": "Not every crash/restart scenario is fault-injected; clean extraction of the latest supplementary adaptation delta has not yet been tested."
+    },
+    {
+      "requirement_id": "REPORT-01",
+      "phase2_section": "Evidence registry and reports",
+      "promised_behavior": "Single evidence registry should drive report tables, figures and packages; render and inspect outputs.",
+      "implemented_behavior": "The machine-readable audit and new adaptation reports are generated from versioned outputs. The standalone large-seed report now states the exact discrete-field/floating-tolerance reproduction contract. Historical reports are not all generated from one structured evidence registry. The v19 adaptation report uses 20,000 jointly resampled seed replicates and simultaneous max-|t| intervals over its 18 paired accuracy contrasts; its TeX, PDF, figures and receipt are compiled and visually reviewed.",
+      "evidence_paths": [
+        "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.json",
+        "reports/phase3/weather_reproduction_v2/REPORT.tex",
+        "reports/phase3/weather_reproduction_v2/REPORT.pdf",
+        "scripts/report_phase3_large_seed.py",
+        "reports/phase3/large_seed_robustness_final_reprowording_v1/23I-2581_23I-2604_Phase3_Robustness_Report.md",
+        "reports/phase3/large_seed_robustness_final_reprowording_v1/23I-2581_23I-2604_Phase3_Robustness_Report.pdf",
+        "reports/phase3/overnight_robustness_20261115/sample_reproduction_tolerant/sample_reproduction_comparison.json",
+        "tests/phase3/test_robustness_report_reproduction_wording.py",
+        "reports/phase3/adaptation_schedule_audit_20261118_v19/adaptation_schedule_audit.tex",
+        "reports/phase3/adaptation_schedule_audit_20261118_v19/report_receipt.json"
+      ],
+      "status": "implemented_not_evaluated",
+      "amendment_reason": "Registry-driven migration is not complete across historical reports.",
+      "allowed_claim": "The NOAA report is reproducible from its runner outputs.",
+      "unresolved_limitation": "Other report editions still contain manually maintained values."
+    },
+    {
+      "requirement_id": "PARQUET-01",
+      "phase2_section": "Dataset integrity",
+      "promised_behavior": "Read and validate admitted datasets and processed artifact contracts.",
+      "implemented_behavior": "Rebuilt both tables under verified_v2 from the exact raw sources in preserved manifests; read-back, loader and all-dataset checksum audits pass. Old unreadable Parquet files remain preserved and are no longer used by the loader.",
+      "evidence_paths": [
+        "scripts/rebuild_processed_datasets_v2.py",
+        "data/processed/verified_v2/elec2_ordered.parquet",
+        "data/processed/verified_v2/covtype_subset100k.parquet",
+        "data/interim/audit_all_datasets_20261117.json",
+        "tests/phase3/test_localization_audit_contract.py",
+        "data/interim/audit_all_datasets_20261117.json"
+      ],
+      "status": "substituted",
+      "amendment_reason": "Legacy processed files fail current PyArrow read-back. Rebuilt outputs preserve source data, row order, feature schemas and sampling design without overwriting legacy artifacts.",
+      "allowed_claim": "Verified v2 Elec2 and Covertype tables pass current checksums and loaders; prior raw-source manifests are reused.",
+      "unresolved_limitation": "The exact cause of the old Parquet corruption is unknown; those preserved artifacts remain unreadable and historical only."
+    },
+    {
+      "requirement_id": "ADWIN-PROBE-01",
+      "phase2_section": "Supervised detector under delayed selective feedback",
+      "promised_behavior": "Diagnose the one-probe strict-cap deadlock and verify a corrected fixed-probe sensitivity under the same seed, conditions, delays and cohort budgets.",
+      "implemented_behavior": "Post-hoc early/midpoint probe sensitivity at batches 1 and 12; both probes are selected in all 5,040 cells. Delayed release, cost caps, hashes, 30-seed paired bootstrap and report reproduction are checked.",
+      "evidence_paths": [
+        "scripts/run_adwin_midpoint_probe_sensitivity.py",
+        "results/phase3/adwin_midpoint_probe_sensitivity_20261118_v2/protocol_lock.json",
+        "results/phase3/adwin_midpoint_probe_sensitivity_20261118_v2/two_probe_per_seed.csv",
+        "reports/phase3/adwin_midpoint_probe_sensitivity_20261118_v1/adwin_midpoint_sensitivity.tex",
+        "tests/phase3/test_adwin_audit_baseline_contract.py"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Exploratory policy amendment motivated by strict-cap feedback deadlock; not confirmatory.",
+      "allowed_claim": "Fixed probes restore some short-delay ADWIN events on this cached synthetic stream matrix at additional audit use; no equal-spend or general detector claim.",
+      "unresolved_limitation": "Reuse of cached streams, post-hoc schedule, short 24-batch horizon, no natural-stream replication, no equal-spend strict-cap comparison."
+    },
+    {
+      "requirement_id": "ADAPT-DIVERSITY-01",
+      "phase2_section": "Generalization of matched global/local adaptation",
+      "promised_behavior": "Test global and cluster-local refitting beyond one linear abrupt-reversal setting, holding clocks and released feedback windows fixed.",
+      "implemented_behavior": "Fresh 30-seed matrix over three controlled task families, four mechanisms and delays 0/5/20; 3,240 seed-policy cells, 311,040 forecast rows and 17,280 fit-audit rows. Fresh seeds have no exact collisions in the declared text/archive scan. Matched feedback IDs, release clocks and row-use caps pass.",
+      "evidence_paths": [
+        "scripts/run_matched_adaptation_diversity.py",
+        "configs/phase3_adaptation_diversity_20261118.json",
+        "results/phase3/matched_adaptation_diversity_20261118_v1/audit_receipt.json",
+        "results/phase3/matched_adaptation_diversity_20261118_v1/paired_seed_differences.csv",
+        "reports/phase3/matched_adaptation_diversity_20261118_v1/matched_adaptation_diversity.tex",
+        "reports/phase3/matched_adaptation_diversity_20261118_v1/matched_adaptation_diversity.pdf",
+        "tests/phase3/test_adaptation_diversity_contract.py"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Post-deadline experimental extension addresses narrow task/mechanism coverage; it does not replace the submitted Phase 2 methodology.",
+      "allowed_claim": "Effects vary by task and mechanism; stationary XOR/five-region gains show the local architecture can benefit independently of drift adaptation.",
+      "unresolved_limitation": "Simulation only; one classifier and cluster count; unequal model capacity and compute; unadjusted intervals across 36 settings; no natural-stream adaptation or human decision-effect evidence."
+    },
+    {
+      "requirement_id": "ADAPT-CAPACITY-01",
+      "phase2_section": "Impact-aware adaptation and fair comparison of global and region-specific evidence",
+      "promised_behavior": "Determine whether the previously observed cluster-local refit gains are due to distinct local adaptation behavior or the cluster-conditional model capacity.",
+      "implemented_behavior": "Corrected v2 experiment starts frozen/global/local/interaction arms from the same historical global model, then evaluates a pooled 27-parameter cluster-block logistic model against three local experts on identical streams, update clocks, feedback windows and release-safe labels. 30 seeds \u00d7 3 tasks \u00d7 4 mechanisms \u00d7 3 delays \u00d7 4 arms = 4,320 cells and 414,720 forecasts. The interaction and local arm all-stream mean accuracy differs by 0.0016 percentage points overall; interaction minus global is +1.4413 percentage points averaged by seed over all settings. A 20,000-resample paired max-t seed bootstrap provides simultaneous 95% intervals across 36 local-vs-global settings; 32 intervals exclude zero. Full output, paired bootstrap contrasts and fit audit are retained.",
+      "evidence_paths": [
+        "scripts/run_adaptation_capacity_control.py",
+        "scripts/report_adaptation_capacity_control.py",
+        "scripts/reproduce_adaptation_capacity_control.ps1",
+        "configs/phase3_adaptation_capacity_control_20261118.json",
+        "results/phase3/adaptation_capacity_control_20261118_v2/audit_receipt.json",
+        "results/phase3/adaptation_capacity_control_20261118_v2/seed_metrics.csv",
+        "results/phase3/adaptation_capacity_control_20261118_v2/paired_seed_differences.csv",
+        "results/phase3/adaptation_capacity_control_20261118_v2/fit_audit.csv",
+        "reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.tex",
+        "reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.pdf",
+        "reports/phase3/adaptation_capacity_control_20261118_v9/capacity_control_effects.pdf",
+        "reports/phase3/adaptation_capacity_control_20261118_v9/local_vs_global_simultaneous_bootstrap.csv",
+        "tests/phase3/test_adaptation_capacity_control_contract.py"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Post-deadline fairness control. The invalid v1 arm initialization is retained but explicitly superseded by corrected v2; this does not change the submitted Phase 2 basis.",
+      "allowed_claim": "Within these synthetic generators, the observed local-global gap is largely reproduced by a pooled cluster-conditional function class. This supports capacity/representation as a plausible explanation, not causal proof or evidence of general IDM-Viz benefit.",
+      "unresolved_limitation": "Only one classifier family and one frozen three-cluster assignment; local-vs-interaction fit computation differs and numerical optimization need not be identical; 549 local region-level fits fall back to the initial global model; no independent natural-stream adaptation, human decision effect, or multiplicity-adjusted omnibus conclusion."
+    },
+    {
+      "requirement_id": "ADAPT-CAPACITY-CONF-01",
+      "phase2_section": "Empirical evaluation and reproducibility of matched global/cluster-conditional adaptation",
+      "promised_behavior": "Check whether the corrected capacity-control pattern persists on evaluation seeds independent from the original adaptation diversity and capacity-control runs.",
+      "implemented_behavior": "A separate config ran the unchanged corrected v2 runner on seeds 73116401--73116410: 1,440 cells, 138,240 forecasts and 7,200 fit-audit rows. Seed-collision scan found no matches in 3,097 text files/4,248 archive metadata members. Release-clock, feedback-hash, four-update, 8,000-row cap, and output-hash checks pass. Task-averaged local-minus-global accuracy was -0.176 pp (linear), +2.119 pp (XOR), and +1.508 pp (five-region); pooled interaction-minus-global had the same rounded pattern. The effects are reported separately from the 30-seed primary run.",
+      "evidence_paths": [
+        "configs/phase3_adaptation_capacity_control_confirmation_20261118.json",
+        "docs/phase3/SEED_COLLISION_AUDIT_ADAPTATION_CAPACITY_CONFIRMATION_20261118.json",
+        "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/audit_receipt.json",
+        "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/seed_metrics.csv",
+        "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/paired_seed_differences.csv",
+        "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/fit_audit.csv",
+        "scripts/report_adaptation_capacity_confirmation.py",
+        "scripts/reproduce_adaptation_capacity_confirmation.ps1",
+        "reports/phase3/adaptation_capacity_confirmation_20261118_v4/adaptation_capacity_confirmation.tex",
+        "reports/phase3/adaptation_capacity_confirmation_20261118_v4/adaptation_capacity_confirmation.pdf",
+        "reports/phase3/adaptation_capacity_confirmation_20261118_v4/independent_seed_effects.pdf",
+        "reports/phase3/adaptation_capacity_confirmation_20261118_v4/report_receipt.json",
+        "tests/phase3/test_adaptation_capacity_confirmation_contract.py"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "Fresh-seed post-deadline sensitivity check; no Phase 2 claim or submitted document changed.",
+      "allowed_claim": "The task-level pattern is directionally consistent on this independent seed bank: cluster-conditional arms improve over global refitting on XOR/five-region and slightly underperform on linear in this synthetic protocol.",
+      "unresolved_limitation": "Only 10 seeds and still the same synthetic generators, model family, fixed cluster count, mechanism design and one protocol; percentile intervals are exploratory, not adjusted across tasks, and this does not establish natural-domain generalization or causal benefit."
+    }
+  ],
+  "completion_summary": {
+    "implementation_completion": "partial; core and NOAA transfer run; explicit gaps remain",
+    "computational_evaluation_completion": "partial; corrected matched-capacity adaptation experiment, simultaneous 36-setting bootstrap sensitivity and separate 10-seed no-collision sensitivity added; 213-test suite passes; baseline, natural-domain transfer, recovery, evidence-registry and RQ3 gaps remain",
+    "full_original_research_completion": "not claimed; RQ3 unanswered and causal claims unsupported",
+    "instructor_feedback": "none received; no feedback is invented"
+  },
+  "artifacts": [
+    {
+      "path": "configs/phase3_adaptation_diversity_20261118.json",
+      "sha256": "c07ad30949afe76a70c9107e8efb08bce21e4f8a56142f4de2956a1621d78956",
+      "bytes": 5077,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/interim/audit_all_datasets_20261117.json",
+      "sha256": "96abcbf429913ca2101d1fc5ba7eca2500fab36a66e870a4032568c5727168b4",
+      "bytes": 4141,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/interim/audit_weather_noaa_20261117.json",
+      "sha256": "c398b8e21ac83e5b8631c4d51db1fd8c5c66142b7c36cf94172f6ba5693f1978",
+      "bytes": 1611,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/manifests/covtype_subset_verified_v2_manifest.json",
+      "sha256": "50264671f0361f6bb578848d9e598b0df430bbad35bc1c8969cbb320767a7833",
+      "bytes": 875,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/manifests/elec2_verified_v2_manifest.json",
+      "sha256": "6f26edf948540077d567f152a8b452f473d21c35247d88cadcaf3515b9268d88",
+      "bytes": 2484,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/processed/verified_v2/covtype_source_row_ids.csv",
+      "sha256": "c247269ed6ba262879db60ac366df6eb4f9b0d04feea158674a7e102e143e141",
+      "bytes": 1140197,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/processed/verified_v2/covtype_subset100k.parquet",
+      "sha256": "c7d6c07d9e1ff22c8c5d0352896b1601433376df7dd8df2a2a7c46cf74a7c500",
+      "bytes": 1320866,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/processed/verified_v2/elec2_ordered.parquet",
+      "sha256": "4e67ce139b94daede4321518e4a4cda8917835b816ddd17087f3dc9b47092ea1",
+      "bytes": 539489,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/processed/weather_noaa_1949_1999_v2/weather_manifest.json",
+      "sha256": "9d3360a644575cac900b80681e3e39f84b92482eb11d5b3a887f51be7ab42a1f",
+      "bytes": 14798,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "data/processed/weather_noaa_1949_1999_v2/weather_ordered.csv",
+      "sha256": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+      "bytes": 1001557,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "docs/23i-2604_23i-2581DAV-phase2.docx",
+      "sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+      "bytes": 529303,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "docs/Phase 03 - Implementation.pdf",
+      "sha256": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+      "bytes": 190512,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "docs/phase3/BASELINE_FIDELITY_AUDIT_20261117.md",
+      "sha256": "e1f7ac7e4fadee23dfede5a0ec90781d994e133db8caea8a8890ad8bf2f3b5f7",
+      "bytes": 5032,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "docs/phase3/LOCALIZATION_AUDIT_20261117.md",
+      "sha256": "dafa0ed7e57d3f25b05418f3a60b705b9e0dc5cc6ac212e94283ba09b8a28819",
+      "bytes": 3713,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "docs/phase3/SEED_COLLISION_AUDIT_ADAPTATION_DIVERSITY_20261118.json",
+      "sha256": "ab4e12f3649b8758b6ab7f01fb1bdfd074efffe69b490dfa9b90a360e7e0251d",
+      "bytes": 979,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "docs/phase3/WEATHER_PROVENANCE_AUDIT_20261117.md",
+      "sha256": "b59df5f9a90fb09b0f696b56f2e5244c5600e4490c8919537b38765885393c4e",
+      "bytes": 5244,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "output/phase3/23I-2581_23I-2604_Phase3.zip",
+      "sha256": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877",
+      "bytes": 10848405,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "output/phase3/IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip",
+      "sha256": "24bd91b8686ae972051d1437b9c4f2d39cae531576a63f5ed64ad3ca8dd47725",
+      "bytes": 401347418,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "7f968a0752404974768492d7249c43d0e7f1c33f50f58d50d8b49aa533821c56",
+      "bytes": 564,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/adwin_baseline.pdf",
+      "sha256": "b5b2221d17305b2b751b8534c7d1627bfcdfa744eb9ca84397ecd2c2ad73a3e6",
+      "bytes": 67481,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/adwin_baseline.tex",
+      "sha256": "2dbe97d5a96c1791e3d69c1f572dbc5be69b0340e0dbc63ec4f6290b038222fa",
+      "bytes": 6178,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/adwin_delay_summary.csv",
+      "sha256": "b860f6b4e6f2ad50fb37e86cf779da0a622037629700506feb434621c70308e6",
+      "bytes": 604,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/adwin_detection_summary.csv",
+      "sha256": "c3b4a684a038f5cb3b13e8c7a52840d211b78e9db6c31617d7a7966bc82afee5",
+      "bytes": 1236,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/adwin_effects.pdf",
+      "sha256": "a6a3ad51a5cf22af041ab1540ce2504262be71f8321763aaeec817aa4b7ee737",
+      "bytes": 30259,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/adwin_effects.png",
+      "sha256": "efa099251ae068e34e3b8acb686425bd4f91bf66b8a18f5e59dba002f6fefd87",
+      "bytes": 162223,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/adwin_effects.svg",
+      "sha256": "097da27c55c9b2afca52354cfac5a4312fcfc6a2f1192c20df9a509c0f26bbdb",
+      "bytes": 94269,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/adwin_paired_aggregate_effects.csv",
+      "sha256": "2395e876c6c540cc8de11fcf36d28273303edad11d8f84e38538a68cb7a24980",
+      "bytes": 5026,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_audit_baseline_20261117_v3/report_receipt.json",
+      "sha256": "0202bb2eea214fd4d120ff265bf10803ffa2af7a3826d1792aacddfe7a3f21fe",
+      "bytes": 1015,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_midpoint_probe_sensitivity_20261118_v1/adwin_midpoint_sensitivity.pdf",
+      "sha256": "b82c1d1aa29f2ee7ed6536c3ccff8748ad1601c4ffaa2b88b081b524a397d215",
+      "bytes": 63648,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_midpoint_probe_sensitivity_20261118_v1/adwin_midpoint_sensitivity.tex",
+      "sha256": "b8116e794cd65bb2a3c5df2d1261360094c631700502db8f5c68d3c0fed4857b",
+      "bytes": 6157,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/adwin_midpoint_probe_sensitivity_20261118_v1/midpoint_probe_effects.pdf",
+      "sha256": "c77cbb4c9bed4e42bd7881263506bcc984f3935dda6c7e62bbd040b871ae8471",
+      "bytes": 31187,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v3/audit_policy_effects.png",
+      "sha256": "7df9ef28db217087fb7cf82fb1c3d4bc8d2082e69e9e550d718714a99c68b1a8",
+      "bytes": 202918,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v3/audit_policy_effects.svg",
+      "sha256": "1b5fa00cf833b40a50f60c5b04eda151aa249ab5587e2221d3129ea129994437",
+      "bytes": 121244,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v3/audit_policy_matrix.pdf",
+      "sha256": "5771f9897d4473f5084a76641e35b52bfd4d98a22ee9ea08e06585986fab54ef",
+      "bytes": 66043,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v3/audit_policy_matrix.tex",
+      "sha256": "691e2f45e169ece0aa15390781ace4dfe8647759bd7f69ea87b779b66b3508a9",
+      "bytes": 5260,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v3/report_receipt.json",
+      "sha256": "82fd6d2129c312d79e0035bb479e479e6eb6214e306eebde8b5b05d1af59a779",
+      "bytes": 834,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v7/audit_policy_effects.png",
+      "sha256": "5886c33641658694f8f7b47b528b24bd9faddc503080ee8702afcb12e1dfd6c4",
+      "bytes": 261763,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v7/audit_policy_effects.svg",
+      "sha256": "29ebf3ddc6e30ca7941f9550782810371a31586472550907d2598aea2bc9b756",
+      "bytes": 143282,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v7/audit_policy_matrix.pdf",
+      "sha256": "4e2a3b7faf08b06cabbade7b03abec5d27f383a8d722a9202f51fabf613e7a56",
+      "bytes": 67918,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v7/audit_policy_matrix.tex",
+      "sha256": "2a1709dfddbe06d26a5a54a2f1d40d5b8946d34e01e156c3a96acc02de6f5ac1",
+      "bytes": 5579,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v7/paired_overall_effects.csv",
+      "sha256": "4b419dc3c3634d958244a20109dfd82ced6585b8620e10fcc2e832d8ca3e6bb8",
+      "bytes": 12916,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v7/policy_acquisition_summary.csv",
+      "sha256": "6305b033e4c1485c5ddb2d4b0dd34bbf3fa2ced44b8da29b92ac3d8265e6c3e5",
+      "bytes": 774,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/audit_policy_matrix_20261117_v7/report_receipt.json",
+      "sha256": "5831680dcf2bac808cadcd1175ad6941899839eb1d4e2e15e1069fd7befb4649",
+      "bytes": 1144,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/CLUSTER_MAPPING_SENSITIVITY.pdf",
+      "sha256": "8e8ee299f37b11c885bcab91021f5c912db5b74e1900dfc961b54ce6f4f9bd0c",
+      "bytes": 279880,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/CLUSTER_MAPPING_SENSITIVITY.tex",
+      "sha256": "379e6f369ca54cc91c56c1ea412474d14513505f1b8021b23f94e69cbd5923d5",
+      "bytes": 2688,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/REPORT_RECEIPT.json",
+      "sha256": "93461d00262ee394203a772c0e9a485cec1312dd7647ef9f47e1a68c5ee2ce7c",
+      "bytes": 1393,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/cluster_mapping_sensitivity.png",
+      "sha256": "286035bffdc71fffaad028484dd2bedf66db4dcf13f77f9c81a4a463c0983bec",
+      "bytes": 296259,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/cluster_mapping_sensitivity.svg",
+      "sha256": "45f10dd72403f1c998cb0feb745ab784de62f35b04b2c1c0f39a8f7c7417c5d9",
+      "bytes": 95026,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/seed_bootstrap_summary.csv",
+      "sha256": "ea68037a5e977e2cb1e9eb22b83944ded612b689816dc85f2ec54718dce0d2b1",
+      "bytes": 6032,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/localization_audit_20261117_v5/LOCALIZATION_AUDIT.tex",
+      "sha256": "15a1e6fb7fb69943f898eccca7adb4cc4095a693eb467bfc269ca61834a0c248",
+      "bytes": 2960,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/localization_audit_20261117_v5/REPORT_RECEIPT.json",
+      "sha256": "e0c2e349ed1deabcb6bca04dd25b6795a1174b96fad1cb75ffc3879ce88b2eff",
+      "bytes": 2158,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/localization_audit_20261117_v5/cluster_mapping_seed_bootstrap.csv",
+      "sha256": "77e67b13a3366115ca1db799fbf729d44ccf3b5047246c8b0251f06cf8652802",
+      "bytes": 1414,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/localization_audit_20261117_v5/dependence_detection.svg",
+      "sha256": "b2da48a71e8e6db49ac047360db32582c62c0310b600e7b36a75bb8cfc8a8f4e",
+      "bytes": 58790,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/localization_audit_20261117_v5/intervened_region_seed_bootstrap.csv",
+      "sha256": "1c2f9bb3d443391c3bf464c200ce3d8fbf359bc6c246790e10c9230575ab3d76",
+      "bytes": 1785,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/localization_audit_20261117_v5/pair_localization_seed_bootstrap.csv",
+      "sha256": "2dd5bd98bbb59cfe4d7363e1b1ce133bfadcb975132d5b2d6f69531d3f9489a4",
+      "bytes": 2898,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/localization_audit_20261117_v5/region_localization.svg",
+      "sha256": "bec902b9d2bedb134721f1d221383c290a0e02af793bc7a1f2739d9314f17232",
+      "bytes": 63499,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/matched_adaptation_diversity_20261118_v1/adaptation_diversity_effects.pdf",
+      "sha256": "fffbeed4e3d9865dc867dc823247f3acf14c690dba6fe9854ae9ec796bc3aaf8",
+      "bytes": 27751,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/matched_adaptation_diversity_20261118_v1/adaptation_diversity_effects.svg",
+      "sha256": "9ae0b73537b68b92d876a8465e373f57ddbc69b2775d1845560b3479b93d5d7d",
+      "bytes": 105193,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/matched_adaptation_diversity_20261118_v1/local_vs_global_accuracy_effects.csv",
+      "sha256": "b37eff386b197ae4341a69329b775502d0c12cde7e29c98cd853d245fd6f4895",
+      "bytes": 5640,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/matched_adaptation_diversity_20261118_v1/matched_adaptation_diversity.pdf",
+      "sha256": "4efda573cb482673d3fd4f2477ace31a95a5261a6d3ae12492440d6f100d3472",
+      "bytes": 60643,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/matched_adaptation_diversity_20261118_v1/matched_adaptation_diversity.tex",
+      "sha256": "10e27fba59ef41657e03cc622ce92211ef59c3bc7331d5cdbda41adb5c0cfcb0",
+      "bytes": 6866,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/matched_adaptation_diversity_20261118_v1/method_summary.csv",
+      "sha256": "f782e2d8127daf6e24b48ffd2b70cb80a93cc5329d64bb39f5e5aea754cc79cf",
+      "bytes": 4424,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/matched_adaptation_diversity_20261118_v1/report_receipt.json",
+      "sha256": "d2526dc517ecbb8087d1b2f66b37b7c7eb6250958d2d9b6ae46b1ed0faf6a020",
+      "bytes": 981,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/NOAA_BLOCK_LENGTH_SENSITIVITY.pdf",
+      "sha256": "d8ee576272271545038dc4255550ae6c2f81bc983098ed5bc25bde4ee5008b60",
+      "bytes": 196116,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/NOAA_BLOCK_LENGTH_SENSITIVITY.tex",
+      "sha256": "23ae891597bc0bbcf490b1c5027054635bd5eaab62ca59d19946c4bfbb7d712b",
+      "bytes": 2953,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/REPORT_RECEIPT.json",
+      "sha256": "13bdbd89049067bf6a1d7d0e421988db41c248cf97ccb1cacc528bb4d2036fa9",
+      "bytes": 2505,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/block_length_sensitivity.png",
+      "sha256": "dada001e5c18fe78abb956ca3da4f8620e14544b34ee92e72ddb20f071602e07",
+      "bytes": 194593,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/block_length_sensitivity.svg",
+      "sha256": "06380361aedfe3e0099efa6bad93f8c8f6b9d298fd9d78a08d68cb964318efbd",
+      "bytes": 77529,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/block_length_summary.csv",
+      "sha256": "9fc41c8c8f6c846a6fbc67568bdcd0f54bb09f4814f0d16f08b1eb4f8ea444f9",
+      "bytes": 575,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/NOAA_UNCERTAINTY.pdf",
+      "sha256": "bb63a2239d4a725abf621f9fc5fcf5fbaac9fd259d72023c6bb4239fe79c33d3",
+      "bytes": 429827,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/NOAA_UNCERTAINTY.tex",
+      "sha256": "c6321ae6b807f7a7eb5cb97194021917e5568d8ca59107c68c37ca8f3249dfe6",
+      "bytes": 3406,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/REPORT_RECEIPT.json",
+      "sha256": "b1668c915875942a37c94b3d800bc4c8e8de77cd886268fbb76b37f71ed7a45c",
+      "bytes": 1305,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/noaa_uncertainty.png",
+      "sha256": "186419f98af0d5f25be353b267edb074311dd94dda01b1686bdfa0b80fe521c9",
+      "bytes": 443370,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/noaa_uncertainty.svg",
+      "sha256": "ad8dfd98676b83c163e9a27ba587120b7be76706bc97dfda901184c95f84e6ad",
+      "bytes": 103811,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/REPORT_RECEIPT.json",
+      "sha256": "cf49fd7ebec9fda51e419b914585604259d0f6ccc10a290f620a33d886449db7",
+      "bytes": 1347,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/SELECTIVE_LABEL_AUDIT.pdf",
+      "sha256": "8417f73770e726f1f3ac78e25aefada73e0bd605498ab88bb2f2c0de6620a8a1",
+      "bytes": 263667,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/SELECTIVE_LABEL_AUDIT.tex",
+      "sha256": "b205676200e4786b5cc74fecb5263cb318219f8043cd1e33f5e61d66c462ed5c",
+      "bytes": 3974,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/seed_bootstrap_summary.csv",
+      "sha256": "12a5ecf081966ca8cab91df6cb3a7bbbf2c4a3657854f25628a875e1d4f09cfb",
+      "bytes": 10029,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/selective_label_bias.png",
+      "sha256": "dec36265397a2b123fb23e8bd7a277a7a058895e7656560a550bd29e0fcfd082",
+      "bytes": 261155,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/selective_label_bias.svg",
+      "sha256": "72144b0d8ea6327adff8468421cb497035eb608be7fe248ff3902a22e87a850b",
+      "bytes": 144346,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/weather_noaa_1949_1999_v2/REPORT.pdf",
+      "sha256": "85eccf2fb94967e13f99e113974095af260998b7a6240801f9b430f26c3c95d1",
+      "bytes": 70386,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/weather_noaa_1949_1999_v2/REPORT.tex",
+      "sha256": "1225c27e726d0225827879f91615492618197aefaae433d4bbb87207f777181f",
+      "bytes": 8081,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "reports/phase3/weather_noaa_1949_1999_v2/report_build_receipt.json",
+      "sha256": "3237b94139bd477ae95ecd2da9c913c4da2d2b439360d687d9edd0262f25f5d7",
+      "bytes": 885,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_audit_baseline_20261117_v1/adwin_decisions.csv",
+      "sha256": "83aed372965a211a58a21d7041dee144070d55010a528f843285dd9ebee67c6d",
+      "bytes": 9987579,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_audit_baseline_20261117_v1/adwin_per_seed.csv",
+      "sha256": "43e071a0766c47b47f3ac60ba802463a97241bc578c8ca0334fa41c338a88adf",
+      "bytes": 493208,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_audit_baseline_20261117_v1/adwin_summary.csv",
+      "sha256": "930866373444ab0a301dc53921249f91725ff4db6cd2f74f18947c5f6a736c64",
+      "bytes": 5850,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_audit_baseline_20261117_v1/paired_comparisons.csv",
+      "sha256": "b8973df4e274d8a14cbdd6b810a753d90a82b869c8b99f22385c34aa8ff31049",
+      "bytes": 21933,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_audit_baseline_20261117_v1/protocol_lock.json",
+      "sha256": "b3390d454fdbe5ac14003239763baf65fd25e77773a997c1baf8adafdfba7514",
+      "bytes": 3323,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_midpoint_probe_sensitivity_20261118_v2/paired_one_probe_contrasts.csv",
+      "sha256": "2868231401c2d4126e63893372a68a20b9032b0304cdcc855983677cb869fe98",
+      "bytes": 2854,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_midpoint_probe_sensitivity_20261118_v2/protocol_lock.json",
+      "sha256": "eb5476461d51a2d9dbf19009b271a04447a37f260f31f9ec17be0fa749a420b6",
+      "bytes": 3361,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_midpoint_probe_sensitivity_20261118_v2/two_probe_decisions.csv",
+      "sha256": "c43f547a9aa06e742d41a080be709bb9499ade82e4fdf828ce20fbc0934057ef",
+      "bytes": 8817035,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/adwin_midpoint_probe_sensitivity_20261118_v2/two_probe_per_seed.csv",
+      "sha256": "a853e86d7cad2a87a9f3ad31e07894135f5751307b492eb4a598f105e0ef98a8",
+      "bytes": 628202,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/audit_policy_matrix_20261117_v1/online_audit_decisions.csv",
+      "sha256": "f939922f758c1c2cc679043414227d3df43e5d9ec3f1920e88b9793d89bb1fc1",
+      "bytes": 87007094,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/audit_policy_matrix_20261117_v1/paired_seed_bootstrap.csv",
+      "sha256": "bfc651c2596456629211ab0ed8eea32f16ffd8a52d47bb204a4fe8e3ec855e91",
+      "bytes": 380145,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/audit_policy_matrix_20261117_v1/policy_per_seed.csv",
+      "sha256": "82eeb248368d8f577f89b3700f93b2d7e626f38c50515938adfbbf57bf0ff8c5",
+      "bytes": 3140174,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/audit_policy_matrix_20261117_v1/policy_summary.csv",
+      "sha256": "6bde242c32ed681fd717c91ddbbd1c97acfa9dea2c7b8f93d00febee60a9c014",
+      "bytes": 210620,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/audit_policy_matrix_20261117_v1/protocol_lock.json",
+      "sha256": "a9cef5b7c4b411815130df74259a95d9f6c5746501ae1d2f664fcebff81c10fd",
+      "bytes": 4177,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/cluster_mapping_sensitivity_20261117_v2/audit_receipt.json",
+      "sha256": "532f1e5964da155db0098c02ec313478fee10d7ccceedb70e18a191eca9194d6",
+      "bytes": 1962,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/cluster_mapping_sensitivity_20261117_v2/cluster_mapping_sensitivity.csv",
+      "sha256": "e75bbdfe2ab8e147614cb49f3e85469d51a0bec186ac0a936dab1c2db033adf3",
+      "bytes": 53373,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/cluster_mapping_sensitivity_20261117_v2/historical_mappings.json",
+      "sha256": "4db948ab4cf64e7f46f4fb4c4d945280c1b21806eb6c866e317d61f52368a057",
+      "bytes": 456696,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/localization_audit_20261117_v3/audit_receipt.json",
+      "sha256": "31be58092fcf42db87561d22ebffdb2b5aae2eea72dd3110c002d17cf94fea15",
+      "bytes": 2645,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/localization_audit_20261117_v3/dependence_pair_localization.csv",
+      "sha256": "93f284a4e3e15cabd6aae4bdfb937ef4f7b403a5303a5bf35579d2a468979525",
+      "bytes": 1938624,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/localization_audit_20261117_v3/historical_cluster_mappings.json",
+      "sha256": "48c62a941df9b2e3af4803a9633e81a7448c9f1f6824c2cec2a2ed40685b6104",
+      "bytes": 57559,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/localization_audit_20261117_v3/region_localization.csv",
+      "sha256": "dc3618328ccbac22379a1e42fda23b527466db90926e7141721603559ec053c0",
+      "bytes": 2274818,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/matched_adaptation_diversity_20261118_v1/audit_receipt.json",
+      "sha256": "2778eff63bf1d4880824ca870040892fcbb47c16fa816023d23372ab38eb0f55",
+      "bytes": 2798,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/matched_adaptation_diversity_20261118_v1/fit_audit.csv",
+      "sha256": "8c53bc0bfdc68d06cbb799a063019779dc1ab1e5e353db38bf419199f87561b7",
+      "bytes": 2835959,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/matched_adaptation_diversity_20261118_v1/online_batch_audit.csv",
+      "sha256": "a3dc6b80db1e94edb9dd7a00091a693907aa708a8303c3cdfdc2232af481ca89",
+      "bytes": 26992626,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/matched_adaptation_diversity_20261118_v1/paired_seed_differences.csv",
+      "sha256": "0d5e94b2b38526caffa009f0390c068813f65ffbf730597f13a87a658877aa5c",
+      "bytes": 69421,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/matched_adaptation_diversity_20261118_v1/seed_metrics.csv",
+      "sha256": "9a2217aadf9b266da4cc7fbe8a37260a8cb9d5cb0b433646e1631c548640b4a4",
+      "bytes": 584227,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/audit_receipt.json",
+      "sha256": "3d5b4fb1506df580ab7cd052f0a9cc9537c17e58f141b8946904ae6f15dfbd62",
+      "bytes": 2005,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/bootstrap_draws.csv",
+      "sha256": "0d8babee514ac534d3c75434f25272018200ec22359b4d28703005322ad2481e",
+      "bytes": 1933552,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/uncertainty_summary.csv",
+      "sha256": "3d2a0f2c150f501465c1002ebbc063ac23aadf6503e0fe3703fa14d482406702",
+      "bytes": 13756,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_20261117_v2/audit_receipt.json",
+      "sha256": "2ed0dc9b3eac7248960681c03834bc8faacb5c99cf53906ae14e284182ca1372",
+      "bytes": 1999,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_block7_20261117_v1/audit_receipt.json",
+      "sha256": "ae5d18dc94f80956c72e7cb775ceebd4dc16fd78832ea1d9a0f0fb7772db0392",
+      "bytes": 2012,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_block90_20261117_v1/audit_receipt.json",
+      "sha256": "e1fabccda29e55955de8be4c0b9c17e09a0319817bdbaccbe493445b81bc1acd",
+      "bytes": 2015,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/noaa_weather_1949_1999_v1/integrity_manifest.json",
+      "sha256": "1e89030bef3e5977285475c93e4a87bd8c53e428190080ce73cb9cf79a4813ca",
+      "bytes": 858,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/noaa_weather_1949_1999_v1/run_summary.json",
+      "sha256": "bc99298f1b7f31b3722660011473d17c221581bd8dd5cc5714664eaa9911a536",
+      "bytes": 1917,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/selective_label_audit_20261117_v2/audit_receipt.json",
+      "sha256": "6b7c3a0ceaf7fea69e100fabbac787279a801338272c50942b63ef863d61dcb8",
+      "bytes": 2552,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/selective_label_audit_20261117_v2/batch_estimates.csv",
+      "sha256": "2fce7e9da492b8ed357f58dc5b3734d5bbe6beca844885bc8258155842a10ab7",
+      "bytes": 6069361,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/selective_label_audit_20261117_v2/seed_bootstrap_summary.csv",
+      "sha256": "c91b6c3eaeeac779580ae4bb1fdf0815c7de85070f2a15cc56877cdb6764b1f7",
+      "bytes": 8015,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "results/phase3/selective_label_audit_20261117_v2/selected_label_log.csv",
+      "sha256": "99bc062a856603d03132dc37a9834a57bd79578f33fbfd6ecfa26bd4e66ba626",
+      "bytes": 437095425,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/audit_datasets.py",
+      "sha256": "aa452a2d625b0b1f855485708995869dea3ad9f3a70df0eff34e43e396d4e941",
+      "bytes": 8619,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/audit_strengthening_seed_collisions.py",
+      "sha256": "e396a60c37a47c5a3a8c1abdce5d0897be77299d57b6e95d910cbfc0a3f2154b",
+      "bytes": 4441,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/download_datasets.py",
+      "sha256": "00b9c8205000bc87478523c630a66b1827df1e465ef495ef735cc5f46caaa3da",
+      "bytes": 7336,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/package_phase3_addendum.py",
+      "sha256": "089acf6ed75d1a3d7b3ccb21bd7d28c7e6b49a43f0da28b011ecd2ce0759a1b4",
+      "bytes": 15462,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/package_phase3_adwin_delta_v6.py",
+      "sha256": "ae3621aef8ecd8f6370e01eadc2aaa6483d42a9c7ea18ba99174ad1068384ce8",
+      "bytes": 5533,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/package_phase3_audit_policy_delta.py",
+      "sha256": "e97c182c76577116cd06f9a9dae5b345ea0a13601f2d50f8dd44bc758ac6ea79",
+      "bytes": 5928,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/package_phase3_audit_policy_delta_v5.py",
+      "sha256": "ae0f20045be77541f151b99dbb3bc924971eea976f562f5366e1d54bc9568bd2",
+      "bytes": 5413,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/prepare_noaa_weather.py",
+      "sha256": "dd5b6665f9cda3bc2bc0a814e5c59852f57eb0ba2d575a7929d771ff2f5e6efc",
+      "bytes": 10321,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/rebuild_processed_datasets_v2.py",
+      "sha256": "9be6436ca2b1a0e1728975f42e34a2a53a81158e0b10e741f850bda7b10aa8df",
+      "bytes": 7597,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/report_adwin_audit_baseline.py",
+      "sha256": "540d953c9d7d011751e253ffd8549c39d67c2c1825a3ee17b3d42194517055e2",
+      "bytes": 13347,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/report_adwin_midpoint_probe_sensitivity.py",
+      "sha256": "f8b996bd66e3a04d85a9fca476b9091d336d046dd9c1cf75e1ae9e09d64b042f",
+      "bytes": 11718,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/report_audit_policy_matrix.py",
+      "sha256": "099f58f6d01aa4190602bf8f448d23b1fa116b3477b102097aef3915977f1ca4",
+      "bytes": 13595,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/report_matched_adaptation_diversity.py",
+      "sha256": "1e390057bc99d0d8bbd03efa3502566a3be2354e2907883c7c1d9197c520ce1c",
+      "bytes": 12010,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/report_noaa_weather.py",
+      "sha256": "574384b25b408d8d0bed87b9b80db18a0de7d8a24fcff056d09478378595f50d",
+      "bytes": 15210,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/reproduce_adaptation_diversity.ps1",
+      "sha256": "94046415f307729fa4f9c794519eb545d48988b13ab98423b1f73faeb4b85f56",
+      "bytes": 583,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/reproduce_noaa_block_length_sensitivity.ps1",
+      "sha256": "a23ca61a675ff0c3c26b1394b893ac321c9c7bd7bdd9620fd79ac2fe1f63b81e",
+      "bytes": 825,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/reproduce_noaa_weather.ps1",
+      "sha256": "9422ca86f3f23ed068d4573b3753d0787aeacd84d2fc52e5c2db41477b1cef83",
+      "bytes": 1283,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_adwin_audit_baseline.py",
+      "sha256": "6af8b7af6740b5efd1773164f3142ae3f031f8ad00acfe0614e46c4fd54acfff",
+      "bytes": 13751,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_adwin_bootstrap_sensitivity.py",
+      "sha256": "5fa49c1e202d8108c6eba988f582e212d0490ece70a52f16a019aa70c42914a6",
+      "bytes": 11857,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_adwin_midpoint_probe_sensitivity.py",
+      "sha256": "0a9469952144ab19ad2db901bd7f886c902fc4699699887cda5acd1fe239e9bf",
+      "bytes": 2627,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_audit_policy_matrix.py",
+      "sha256": "baf9796dc8c4a047e5a54e5b350d0b808c787ae754a063e9e4e16bdbf6e71462",
+      "bytes": 16250,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_cluster_mapping_sensitivity.py",
+      "sha256": "bf92de614851f991266be05d157ba585d16e775a127647866303720e2599d9d7",
+      "bytes": 8042,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_localization_audit.py",
+      "sha256": "3425fb7860dcb69d750d00d4f72d197cd3c727372ab1681bd5eedd20ca9b227a",
+      "bytes": 11454,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_matched_adaptation_diversity.py",
+      "sha256": "4f9aa52e9e4daa962c19205c539e1ea6a6bf67bfc6098270d108a77c9d14a19d",
+      "bytes": 17826,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_noaa_reference_calibration_uncertainty.py",
+      "sha256": "fdc2001e7c6491d6720df384f9f15204fb8c59a4fdff23a5358e6f143213dcb1",
+      "bytes": 7943,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_noaa_weather_transfer.py",
+      "sha256": "f2582080ffeb1177a568f378a18972f036cb7f964472c5b75c9053036b215df7",
+      "bytes": 13595,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_selective_label_audit.py",
+      "sha256": "5e7f0e517914472f23cfcc117f308f484b5b2f59c30c8e7310a1606ca5f495ae",
+      "bytes": 9742,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/summarize_cluster_mapping_sensitivity.py",
+      "sha256": "954e5df1ff11f03d72a4be40d8ca56c2806dcd1956840b93e406a8022200ebfc",
+      "bytes": 7596,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/summarize_localization_audit.py",
+      "sha256": "231478c8972cf8c44597b8a3141777160f462be39d5ca675d1c415065d03e271",
+      "bytes": 13558,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/summarize_noaa_block_length_sensitivity.py",
+      "sha256": "ec9294b9243feda5e6300af4255ca9d7b2e0e804b6461234528cb73b884c896f",
+      "bytes": 7812,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/summarize_noaa_reference_calibration_uncertainty.py",
+      "sha256": "a9c4754370d197baff47c3737e089675859540bce61880954383ea087f449ec8",
+      "bytes": 7822,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/summarize_selective_label_audit.py",
+      "sha256": "71a8f239f2bc385fa35bd0576d71c62725d406c2bf2fc8bb336176ad2bb33075",
+      "bytes": 11823,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/update_audit_policy_matrix_registry.py",
+      "sha256": "e7229b13ec51ff14c034c072664e94eaf4a10093e852442be46188b0f2ae33b2",
+      "bytes": 7656,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/update_phase3_addendum_package_status.py",
+      "sha256": "ad3df47b23f8ea14d3094d86cbd2f7f84eb6e7f22b5c1a9739f3f2ce3f1e110b",
+      "bytes": 1575,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "src/drift_monitoring/data/real.py",
+      "sha256": "381cba043dc6f1ddc36f5f4a7384110fcf2d015faf07256601a0c72e5d7d9579",
+      "bytes": 3071,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "src/drift_monitoring/phase3/strengthening_generators.py",
+      "sha256": "a3efbbacbbab451ebf308bfefc42ac6227686ce4733c3b82ea7a652b538ad308",
+      "bytes": 10199,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_adaptation_diversity_contract.py",
+      "sha256": "e3c629211a5e6756d3ed776234bbbc7adf5d3b37600d3893703915e850a12819",
+      "bytes": 3581,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_adwin_audit_baseline_contract.py",
+      "sha256": "89057f48a1f304d7c881d64b6eeb9377842aa96e203df93f2c3c2370499cc761",
+      "bytes": 5104,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_audit_policy_matrix_contract.py",
+      "sha256": "4716ffc5a9748bc8bd78004f07950c33d5145194017af801105a8a4731690a7b",
+      "bytes": 4539,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_cluster_mapping_sensitivity_contract.py",
+      "sha256": "648330acd61982b2108b5229c2c292cd89b1f9f203d581cec5933e8bf281e008",
+      "bytes": 1817,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_localization_audit_contract.py",
+      "sha256": "86e78418b3440576ffb935723a197c37f32463bcb883e235397fde904531c199",
+      "bytes": 3274,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_noaa_block_length_sensitivity_contract.py",
+      "sha256": "7860b2247d7de5ce5f50f1adf84aa06a72cab2fa1fadde726522209ca12e0f14",
+      "bytes": 1922,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_noaa_uncertainty_contract.py",
+      "sha256": "9f2fc0f46f33ec8822150aaa3f7b51e3cfea55b0542097ae61bbf62a39a8f3d3",
+      "bytes": 1845,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_noaa_weather_contract.py",
+      "sha256": "e0c15698ecaef556199c37d4bf4f91b6554412504fdb7f3a77b1587b7c892fef",
+      "bytes": 2311,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "tests/phase3/test_selective_label_audit_contract.py",
+      "sha256": "3088d865f286df1ce3bb2b65cdc69d8c16a2b358e97919fd846ee3bdba5c0375",
+      "bytes": 1937,
+      "role": "implementation_or_evaluation_evidence"
+    },
+    {
+      "path": "scripts/run_adaptation_capacity_control.py",
+      "sha256": "bca1bbc55e2b6e8eaa118f3cd9d4c4dfa90f92af01b56d732b6c7d69ee13e0e4",
+      "bytes": 22611
+    },
+    {
+      "path": "scripts/report_adaptation_capacity_control.py",
+      "sha256": "e6058685f2d8b1725ad01dfb9b5e4a7ee36e39bad0ae2a0655651f298424000e",
+      "bytes": 14498
+    },
+    {
+      "path": "scripts/reproduce_adaptation_capacity_control.ps1",
+      "sha256": "d6657f2267cec69ed6b4bc665c4d15f3d83a1669a4da8ddea61ca4c410c725d9",
+      "bytes": 586
+    },
+    {
+      "path": "configs/phase3_adaptation_capacity_control_20261118.json",
+      "sha256": "ca9a38d3b479fc6f01d12d88c5ef62c0602da3102a768ecd3dc1070c20563649",
+      "bytes": 5725
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_20261118_v2/audit_receipt.json",
+      "sha256": "419bcd15dce7919caae72320807ebc702cd3f846002314cc18f540ab570127a4",
+      "bytes": 3147
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_20261118_v2/seed_metrics.csv",
+      "sha256": "1b9ff3ef6af2aacf96fcf6c63f34f39ead40caeda44e015f9254cd64fc49c416",
+      "bytes": 788720
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_20261118_v2/paired_seed_differences.csv",
+      "sha256": "23725f3467df53a31bb82e76fb876c7cdf2bfcf5f18c72a66386aa7272574e81",
+      "bytes": 143758
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_20261118_v2/fit_audit.csv",
+      "sha256": "081e7be06234189fc6acb30ed88b257ac159afb6b932476c659d9f1faf5d335d",
+      "bytes": 3578999
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.tex",
+      "sha256": "82514b67ef96ff5d5e5d6c73635a3e3bd2abe44a6a10a0b10c567103b89a857a",
+      "bytes": 6463
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.pdf",
+      "sha256": "dda9e4a403ea9396aebb7546ca5b40de431eee5ebabc59029efe27e1d49df202",
+      "bytes": 58464
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_control_20261118_v9/capacity_control_effects.pdf",
+      "sha256": "1476614e38567fddb75e3814570ab6d7249ed52356a1518bc1ceddf747660450",
+      "bytes": 27864
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_control_20261118_v9/local_vs_global_simultaneous_bootstrap.csv",
+      "sha256": "6d4fe6bfa29650dde3e5c03ec48c0186fc8e7fbab4566c6a0e62b0361284c01b",
+      "bytes": 4542
+    },
+    {
+      "path": "tests/phase3/test_adaptation_capacity_control_contract.py",
+      "sha256": "a2ca33c8ccb566d7d4ba4d516df1539b1fd2a70ed51bbbf32836c7159022c4dd",
+      "bytes": 3323
+    },
+    {
+      "path": "configs/phase3_adaptation_capacity_control_confirmation_20261118.json",
+      "sha256": "06fb1ee2e8791345a73d23d76e7b1ad170922fd01370201bac4dea9f5954d409",
+      "bytes": 5909
+    },
+    {
+      "path": "docs/phase3/SEED_COLLISION_AUDIT_ADAPTATION_CAPACITY_CONFIRMATION_20261118.json",
+      "sha256": "0bd2f982a2fa6ad7a85bb744467406329866fbc2580ccdc49ed493ec8168ab87",
+      "bytes": 679
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/audit_receipt.json",
+      "sha256": "3f7fc8508d35cecc92a42560ad1e9a77226d851c91de7dbe247a91bfcee2194f",
+      "bytes": 2860
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/seed_metrics.csv",
+      "sha256": "08cfaa9ad62db0f8d24f1953f9ff7178041911c8fa590d91553ca6517616a058",
+      "bytes": 262859
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/paired_seed_differences.csv",
+      "sha256": "1463a91298c270d3a9b0d06f1bffd37e1be54e7c1c437f1e1e1143a2cf18cb12",
+      "bytes": 143586
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/fit_audit.csv",
+      "sha256": "c78be653ba2535d75eabf7bd552612dc708c14190480b918d4e6c2f166ea48d7",
+      "bytes": 1192991
+    },
+    {
+      "path": "scripts/report_adaptation_capacity_confirmation.py",
+      "sha256": "4b8c97a0ce460626f017954c1cd29334409c47dc3a479e65271cdf5e7b946946",
+      "bytes": 9217
+    },
+    {
+      "path": "scripts/reproduce_adaptation_capacity_confirmation.ps1",
+      "sha256": "3ce2cefe3e86218ef2d255639fa200d2a6f0d841d17bc99d7566010df9237c8b",
+      "bytes": 614
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_confirmation_20261118_v4/adaptation_capacity_confirmation.tex",
+      "sha256": "7ff4755312eeff13f65ee5366857e88f9da68b5a6b71c876ae4a883ee2ad6c20",
+      "bytes": 3862
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_confirmation_20261118_v4/adaptation_capacity_confirmation.pdf",
+      "sha256": "e7cf6fef4075a88e141aae3713ed56d0447b9bdbe88a636d849c7013bcdbeeac",
+      "bytes": 50260
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_confirmation_20261118_v4/independent_seed_effects.pdf",
+      "sha256": "d2563bd837e113ef1d0de068db2dd188e811434a752125b315b430eb2f8d6f55",
+      "bytes": 23495
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_confirmation_20261118_v4/report_receipt.json",
+      "sha256": "9218136ff42f1eeb2366d288a9594ab3e38dd982efa16012ef90d95ce52a950c",
+      "bytes": 991
+    },
+    {
+      "path": "tests/phase3/test_adaptation_capacity_confirmation_contract.py",
+      "sha256": "e776ea648aa30c971a0cbb60ee9eabea7918080209d502177dc829ffb1de004a",
+      "bytes": 2591
+    },
+    {
+      "path": "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.md",
+      "sha256": "2810f5cecd75cd03cff9c232d309a3129d3042d660721c2dbe60fab133d1b2e1",
+      "bytes": 20809
+    },
+    {
+      "path": "docs/phase3/CLEANUP_AUDIT_20261118.json",
+      "sha256": "9b651c2e82ad242629ca45291a05118c60dbe0fc24042c7be677c7e1f945a9d2",
+      "bytes": 7718
+    }
+  ],
+  "whole_project_audit": {
+    "status": "passed",
+    "result": "All three admitted stream loaders pass schema, missingness, row-ID and processed/raw source checksum checks.",
+    "audit_path": "data/interim/audit_all_datasets_20261117.json",
+    "legacy_unreadable_processed_files_preserved": [
+      "data/processed/elec2_ordered.parquet",
+      "data/processed/covtype_subset100k.parquet"
+    ],
+    "replacement_namespace": "data/processed/verified_v2/"
+  },
+  "clean_extraction_validation": {
+    "package_candidate": "output/phase3/IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v15.zip",
+    "validation_receipt": "output/phase3/IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v15.receipt.json",
+    "representative_tests": [
+      "tests/phase3/test_noaa_weather_contract.py",
+      "tests/phase3/test_localization_audit_contract.py",
+      "tests/phase3/test_cluster_mapping_sensitivity_contract.py",
+      "tests/phase3/test_noaa_uncertainty_contract.py",
+      "tests/phase3/test_selective_label_audit_contract.py",
+      "tests/phase3/test_noaa_block_length_sensitivity_contract.py"
+    ],
+    "reproduction": [
+      "scripts/reproduce_noaa_weather.ps1",
+      "scripts/run_localization_audit.py",
+      "scripts/summarize_localization_audit.py",
+      "scripts/run_cluster_mapping_sensitivity.py",
+      "scripts/summarize_cluster_mapping_sensitivity.py",
+      "scripts/run_noaa_reference_calibration_uncertainty.py",
+      "scripts/summarize_noaa_reference_calibration_uncertainty.py",
+      "scripts/run_selective_label_audit.py",
+      "scripts/summarize_selective_label_audit.py",
+      "scripts/reproduce_noaa_block_length_sensitivity.ps1",
+      "scripts/summarize_noaa_block_length_sensitivity.py"
+    ],
+    "prior_candidate_validation": {
+      "package": "output/phase3/IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v14.zip",
+      "status": "passed archive CRC/overlay hashes; source suite passed 183 before block-length extension"
+    }
+  },
+  "artifact_receipts": [
+    {
+      "path": "scripts/run_cluster_mapping_sensitivity.py",
+      "sha256": "bf92de614851f991266be05d157ba585d16e775a127647866303720e2599d9d7",
+      "bytes": 8042
+    },
+    {
+      "path": "scripts/summarize_cluster_mapping_sensitivity.py",
+      "sha256": "954e5df1ff11f03d72a4be40d8ca56c2806dcd1956840b93e406a8022200ebfc",
+      "bytes": 7596
+    },
+    {
+      "path": "tests/phase3/test_cluster_mapping_sensitivity_contract.py",
+      "sha256": "648330acd61982b2108b5229c2c292cd89b1f9f203d581cec5933e8bf281e008",
+      "bytes": 1817
+    },
+    {
+      "path": "results/phase3/cluster_mapping_sensitivity_20261117_v2/cluster_mapping_sensitivity.csv",
+      "sha256": "e75bbdfe2ab8e147614cb49f3e85469d51a0bec186ac0a936dab1c2db033adf3",
+      "bytes": 53373
+    },
+    {
+      "path": "results/phase3/cluster_mapping_sensitivity_20261117_v2/historical_mappings.json",
+      "sha256": "4db948ab4cf64e7f46f4fb4c4d945280c1b21806eb6c866e317d61f52368a057",
+      "bytes": 456696
+    },
+    {
+      "path": "results/phase3/cluster_mapping_sensitivity_20261117_v2/audit_receipt.json",
+      "sha256": "532f1e5964da155db0098c02ec313478fee10d7ccceedb70e18a191eca9194d6",
+      "bytes": 1962
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/CLUSTER_MAPPING_SENSITIVITY.tex",
+      "sha256": "379e6f369ca54cc91c56c1ea412474d14513505f1b8021b23f94e69cbd5923d5",
+      "bytes": 2688
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/CLUSTER_MAPPING_SENSITIVITY.pdf",
+      "sha256": "8e8ee299f37b11c885bcab91021f5c912db5b74e1900dfc961b54ce6f4f9bd0c",
+      "bytes": 279880
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/seed_bootstrap_summary.csv",
+      "sha256": "ea68037a5e977e2cb1e9eb22b83944ded612b689816dc85f2ec54718dce0d2b1",
+      "bytes": 6032
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/cluster_mapping_sensitivity.png",
+      "sha256": "286035bffdc71fffaad028484dd2bedf66db4dcf13f77f9c81a4a463c0983bec",
+      "bytes": 296259
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/cluster_mapping_sensitivity.svg",
+      "sha256": "45f10dd72403f1c998cb0feb745ab784de62f35b04b2c1c0f39a8f7c7417c5d9",
+      "bytes": 95026
+    },
+    {
+      "path": "reports/phase3/cluster_mapping_sensitivity_20261117_v1/REPORT_RECEIPT.json",
+      "sha256": "93461d00262ee394203a772c0e9a485cec1312dd7647ef9f47e1a68c5ee2ce7c",
+      "bytes": 1393
+    },
+    {
+      "path": "scripts/summarize_noaa_reference_calibration_uncertainty.py",
+      "sha256": "a9c4754370d197baff47c3737e089675859540bce61880954383ea087f449ec8",
+      "bytes": 7822
+    },
+    {
+      "path": "tests/phase3/test_noaa_uncertainty_contract.py",
+      "sha256": "9f2fc0f46f33ec8822150aaa3f7b51e3cfea55b0542097ae61bbf62a39a8f3d3",
+      "bytes": 1845
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/bootstrap_draws.csv",
+      "sha256": "0d8babee514ac534d3c75434f25272018200ec22359b4d28703005322ad2481e",
+      "bytes": 1933552
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/uncertainty_summary.csv",
+      "sha256": "3d2a0f2c150f501465c1002ebbc063ac23aadf6503e0fe3703fa14d482406702",
+      "bytes": 13756
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/audit_receipt.json",
+      "sha256": "3d5b4fb1506df580ab7cd052f0a9cc9537c17e58f141b8946904ae6f15dfbd62",
+      "bytes": 2005
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/NOAA_UNCERTAINTY.tex",
+      "sha256": "c6321ae6b807f7a7eb5cb97194021917e5568d8ca59107c68c37ca8f3249dfe6",
+      "bytes": 3406
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/NOAA_UNCERTAINTY.pdf",
+      "sha256": "bb63a2239d4a725abf621f9fc5fcf5fbaac9fd259d72023c6bb4239fe79c33d3",
+      "bytes": 429827
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/noaa_uncertainty.png",
+      "sha256": "186419f98af0d5f25be353b267edb074311dd94dda01b1686bdfa0b80fe521c9",
+      "bytes": 443370
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/noaa_uncertainty.svg",
+      "sha256": "ad8dfd98676b83c163e9a27ba587120b7be76706bc97dfda901184c95f84e6ad",
+      "bytes": 103811
+    },
+    {
+      "path": "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/REPORT_RECEIPT.json",
+      "sha256": "b1668c915875942a37c94b3d800bc4c8e8de77cd886268fbb76b37f71ed7a45c",
+      "bytes": 1305
+    },
+    {
+      "path": "docs/phase3/BASELINE_FIDELITY_AUDIT_20261117.md",
+      "sha256": "e1f7ac7e4fadee23dfede5a0ec90781d994e133db8caea8a8890ad8bf2f3b5f7",
+      "bytes": 5032
+    },
+    {
+      "path": "scripts/run_selective_label_audit.py",
+      "sha256": "5e7f0e517914472f23cfcc117f308f484b5b2f59c30c8e7310a1606ca5f495ae",
+      "bytes": 9742
+    },
+    {
+      "path": "scripts/summarize_selective_label_audit.py",
+      "sha256": "71a8f239f2bc385fa35bd0576d71c62725d406c2bf2fc8bb336176ad2bb33075",
+      "bytes": 11823
+    },
+    {
+      "path": "tests/phase3/test_selective_label_audit_contract.py",
+      "sha256": "3088d865f286df1ce3bb2b65cdc69d8c16a2b358e97919fd846ee3bdba5c0375",
+      "bytes": 1937
+    },
+    {
+      "path": "results/phase3/selective_label_audit_20261117_v2/batch_estimates.csv",
+      "sha256": "2fce7e9da492b8ed357f58dc5b3734d5bbe6beca844885bc8258155842a10ab7",
+      "bytes": 6069361
+    },
+    {
+      "path": "results/phase3/selective_label_audit_20261117_v2/selected_label_log.csv",
+      "sha256": "99bc062a856603d03132dc37a9834a57bd79578f33fbfd6ecfa26bd4e66ba626",
+      "bytes": 437095425
+    },
+    {
+      "path": "results/phase3/selective_label_audit_20261117_v2/seed_bootstrap_summary.csv",
+      "sha256": "c91b6c3eaeeac779580ae4bb1fdf0815c7de85070f2a15cc56877cdb6764b1f7",
+      "bytes": 8015
+    },
+    {
+      "path": "results/phase3/selective_label_audit_20261117_v2/audit_receipt.json",
+      "sha256": "6b7c3a0ceaf7fea69e100fabbac787279a801338272c50942b63ef863d61dcb8",
+      "bytes": 2552
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/seed_bootstrap_summary.csv",
+      "sha256": "12a5ecf081966ca8cab91df6cb3a7bbbf2c4a3657854f25628a875e1d4f09cfb",
+      "bytes": 10029
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/selective_label_bias.png",
+      "sha256": "dec36265397a2b123fb23e8bd7a277a7a058895e7656560a550bd29e0fcfd082",
+      "bytes": 261155
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/selective_label_bias.svg",
+      "sha256": "72144b0d8ea6327adff8468421cb497035eb608be7fe248ff3902a22e87a850b",
+      "bytes": 144346
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/SELECTIVE_LABEL_AUDIT.tex",
+      "sha256": "b205676200e4786b5cc74fecb5263cb318219f8043cd1e33f5e61d66c462ed5c",
+      "bytes": 3974
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/SELECTIVE_LABEL_AUDIT.pdf",
+      "sha256": "8417f73770e726f1f3ac78e25aefada73e0bd605498ab88bb2f2c0de6620a8a1",
+      "bytes": 263667
+    },
+    {
+      "path": "reports/phase3/selective_label_audit_20261117_v5/REPORT_RECEIPT.json",
+      "sha256": "cf49fd7ebec9fda51e419b914585604259d0f6ccc10a290f620a33d886449db7",
+      "bytes": 1347
+    },
+    {
+      "path": "scripts/run_noaa_reference_calibration_uncertainty.py",
+      "sha256": "fdc2001e7c6491d6720df384f9f15204fb8c59a4fdff23a5358e6f143213dcb1",
+      "bytes": 7943
+    },
+    {
+      "path": "scripts/summarize_noaa_block_length_sensitivity.py",
+      "sha256": "ec9294b9243feda5e6300af4255ca9d7b2e0e804b6461234528cb73b884c896f",
+      "bytes": 7812
+    },
+    {
+      "path": "scripts/reproduce_noaa_block_length_sensitivity.ps1",
+      "sha256": "a23ca61a675ff0c3c26b1394b893ac321c9c7bd7bdd9620fd79ac2fe1f63b81e",
+      "bytes": 825
+    },
+    {
+      "path": "tests/phase3/test_noaa_block_length_sensitivity_contract.py",
+      "sha256": "7860b2247d7de5ce5f50f1adf84aa06a72cab2fa1fadde726522209ca12e0f14",
+      "bytes": 1922
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_20261117_v2/audit_receipt.json",
+      "sha256": "2ed0dc9b3eac7248960681c03834bc8faacb5c99cf53906ae14e284182ca1372",
+      "bytes": 1999
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_block7_20261117_v1/audit_receipt.json",
+      "sha256": "ae5d18dc94f80956c72e7cb775ceebd4dc16fd78832ea1d9a0f0fb7772db0392",
+      "bytes": 2012
+    },
+    {
+      "path": "results/phase3/noaa_reference_calibration_uncertainty_block90_20261117_v1/audit_receipt.json",
+      "sha256": "e1fabccda29e55955de8be4c0b9c17e09a0319817bdbaccbe493445b81bc1acd",
+      "bytes": 2015
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/block_length_summary.csv",
+      "sha256": "9fc41c8c8f6c846a6fbc67568bdcd0f54bb09f4814f0d16f08b1eb4f8ea444f9",
+      "bytes": 575
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/block_length_sensitivity.png",
+      "sha256": "dada001e5c18fe78abb956ca3da4f8620e14544b34ee92e72ddb20f071602e07",
+      "bytes": 194593
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/block_length_sensitivity.svg",
+      "sha256": "06380361aedfe3e0099efa6bad93f8c8f6b9d298fd9d78a08d68cb964318efbd",
+      "bytes": 77529
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/NOAA_BLOCK_LENGTH_SENSITIVITY.tex",
+      "sha256": "23ae891597bc0bbcf490b1c5027054635bd5eaab62ca59d19946c4bfbb7d712b",
+      "bytes": 2953
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/NOAA_BLOCK_LENGTH_SENSITIVITY.pdf",
+      "sha256": "d8ee576272271545038dc4255550ae6c2f81bc983098ed5bc25bde4ee5008b60",
+      "bytes": 196116
+    },
+    {
+      "path": "reports/phase3/noaa_block_length_sensitivity_20261117_v3/REPORT_RECEIPT.json",
+      "sha256": "13bdbd89049067bf6a1d7d0e421988db41c248cf97ccb1cacc528bb4d2036fa9",
+      "bytes": 2505
+    },
+    {
+      "path": "scripts/package_phase3_addendum.py",
+      "sha256": "089acf6ed75d1a3d7b3ccb21bd7d28c7e6b49a43f0da28b011ecd2ce0759a1b4",
+      "bytes": 15462
+    },
+    {
+      "path": "scripts/run_adaptation_capacity_control.py",
+      "sha256": "bca1bbc55e2b6e8eaa118f3cd9d4c4dfa90f92af01b56d732b6c7d69ee13e0e4",
+      "bytes": 22611
+    },
+    {
+      "path": "scripts/report_adaptation_capacity_control.py",
+      "sha256": "e6058685f2d8b1725ad01dfb9b5e4a7ee36e39bad0ae2a0655651f298424000e",
+      "bytes": 14498
+    },
+    {
+      "path": "scripts/reproduce_adaptation_capacity_control.ps1",
+      "sha256": "d6657f2267cec69ed6b4bc665c4d15f3d83a1669a4da8ddea61ca4c410c725d9",
+      "bytes": 586
+    },
+    {
+      "path": "configs/phase3_adaptation_capacity_control_20261118.json",
+      "sha256": "ca9a38d3b479fc6f01d12d88c5ef62c0602da3102a768ecd3dc1070c20563649",
+      "bytes": 5725
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_20261118_v2/audit_receipt.json",
+      "sha256": "419bcd15dce7919caae72320807ebc702cd3f846002314cc18f540ab570127a4",
+      "bytes": 3147
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_20261118_v2/seed_metrics.csv",
+      "sha256": "1b9ff3ef6af2aacf96fcf6c63f34f39ead40caeda44e015f9254cd64fc49c416",
+      "bytes": 788720
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_20261118_v2/paired_seed_differences.csv",
+      "sha256": "23725f3467df53a31bb82e76fb876c7cdf2bfcf5f18c72a66386aa7272574e81",
+      "bytes": 143758
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_20261118_v2/fit_audit.csv",
+      "sha256": "081e7be06234189fc6acb30ed88b257ac159afb6b932476c659d9f1faf5d335d",
+      "bytes": 3578999
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.tex",
+      "sha256": "82514b67ef96ff5d5e5d6c73635a3e3bd2abe44a6a10a0b10c567103b89a857a",
+      "bytes": 6463
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.pdf",
+      "sha256": "dda9e4a403ea9396aebb7546ca5b40de431eee5ebabc59029efe27e1d49df202",
+      "bytes": 58464
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_control_20261118_v9/capacity_control_effects.pdf",
+      "sha256": "1476614e38567fddb75e3814570ab6d7249ed52356a1518bc1ceddf747660450",
+      "bytes": 27864
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_control_20261118_v9/local_vs_global_simultaneous_bootstrap.csv",
+      "sha256": "6d4fe6bfa29650dde3e5c03ec48c0186fc8e7fbab4566c6a0e62b0361284c01b",
+      "bytes": 4542
+    },
+    {
+      "path": "tests/phase3/test_adaptation_capacity_control_contract.py",
+      "sha256": "a2ca33c8ccb566d7d4ba4d516df1539b1fd2a70ed51bbbf32836c7159022c4dd",
+      "bytes": 3323
+    },
+    {
+      "path": "configs/phase3_adaptation_capacity_control_confirmation_20261118.json",
+      "sha256": "06fb1ee2e8791345a73d23d76e7b1ad170922fd01370201bac4dea9f5954d409",
+      "bytes": 5909
+    },
+    {
+      "path": "docs/phase3/SEED_COLLISION_AUDIT_ADAPTATION_CAPACITY_CONFIRMATION_20261118.json",
+      "sha256": "0bd2f982a2fa6ad7a85bb744467406329866fbc2580ccdc49ed493ec8168ab87",
+      "bytes": 679
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/audit_receipt.json",
+      "sha256": "3f7fc8508d35cecc92a42560ad1e9a77226d851c91de7dbe247a91bfcee2194f",
+      "bytes": 2860
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/seed_metrics.csv",
+      "sha256": "08cfaa9ad62db0f8d24f1953f9ff7178041911c8fa590d91553ca6517616a058",
+      "bytes": 262859
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/paired_seed_differences.csv",
+      "sha256": "1463a91298c270d3a9b0d06f1bffd37e1be54e7c1c437f1e1e1143a2cf18cb12",
+      "bytes": 143586
+    },
+    {
+      "path": "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/fit_audit.csv",
+      "sha256": "c78be653ba2535d75eabf7bd552612dc708c14190480b918d4e6c2f166ea48d7",
+      "bytes": 1192991
+    },
+    {
+      "path": "scripts/report_adaptation_capacity_confirmation.py",
+      "sha256": "4b8c97a0ce460626f017954c1cd29334409c47dc3a479e65271cdf5e7b946946",
+      "bytes": 9217
+    },
+    {
+      "path": "scripts/reproduce_adaptation_capacity_confirmation.ps1",
+      "sha256": "3ce2cefe3e86218ef2d255639fa200d2a6f0d841d17bc99d7566010df9237c8b",
+      "bytes": 614
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_confirmation_20261118_v4/adaptation_capacity_confirmation.tex",
+      "sha256": "7ff4755312eeff13f65ee5366857e88f9da68b5a6b71c876ae4a883ee2ad6c20",
+      "bytes": 3862
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_confirmation_20261118_v4/adaptation_capacity_confirmation.pdf",
+      "sha256": "e7cf6fef4075a88e141aae3713ed56d0447b9bdbe88a636d849c7013bcdbeeac",
+      "bytes": 50260
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_confirmation_20261118_v4/independent_seed_effects.pdf",
+      "sha256": "d2563bd837e113ef1d0de068db2dd188e811434a752125b315b430eb2f8d6f55",
+      "bytes": 23495
+    },
+    {
+      "path": "reports/phase3/adaptation_capacity_confirmation_20261118_v4/report_receipt.json",
+      "sha256": "9218136ff42f1eeb2366d288a9594ab3e38dd982efa16012ef90d95ce52a950c",
+      "bytes": 991
+    },
+    {
+      "path": "tests/phase3/test_adaptation_capacity_confirmation_contract.py",
+      "sha256": "e776ea648aa30c971a0cbb60ee9eabea7918080209d502177dc829ffb1de004a",
+      "bytes": 2591
+    },
+    {
+      "path": "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.md",
+      "sha256": "2810f5cecd75cd03cff9c232d309a3129d3042d660721c2dbe60fab133d1b2e1",
+      "bytes": 20809
+    },
+    {
+      "path": "docs/phase3/CLEANUP_AUDIT_20261118.json",
+      "sha256": "9b651c2e82ad242629ca45291a05118c60dbe0fc24042c7be677c7e1f945a9d2",
+      "bytes": 7718
+    }
+  ],
+  "updated_local": "2026-11-18 Asia/Karachi",
+  "artifact_reconciliation_2026_11_18": {
+    "refreshed_current_digests": [
+      "reports/phase3/adwin_midpoint_probe_sensitivity_20261118_v1/adwin_midpoint_sensitivity.pdf",
+      "reports/phase3/adwin_midpoint_probe_sensitivity_20261118_v1/midpoint_probe_effects.pdf",
+      "scripts/package_phase3_addendum.py",
+      "scripts/run_adaptation_capacity_control.py",
+      "scripts/report_adaptation_capacity_control.py",
+      "scripts/reproduce_adaptation_capacity_control.ps1",
+      "configs/phase3_adaptation_capacity_control_20261118.json",
+      "results/phase3/adaptation_capacity_control_20261118_v2/audit_receipt.json",
+      "results/phase3/adaptation_capacity_control_20261118_v2/seed_metrics.csv",
+      "results/phase3/adaptation_capacity_control_20261118_v2/paired_seed_differences.csv",
+      "results/phase3/adaptation_capacity_control_20261118_v2/fit_audit.csv",
+      "reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.tex",
+      "reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.pdf",
+      "reports/phase3/adaptation_capacity_control_20261118_v9/capacity_control_effects.pdf",
+      "reports/phase3/adaptation_capacity_control_20261118_v9/local_vs_global_simultaneous_bootstrap.csv",
+      "tests/phase3/test_adaptation_capacity_control_contract.py",
+      "configs/phase3_adaptation_capacity_control_confirmation_20261118.json",
+      "docs/phase3/SEED_COLLISION_AUDIT_ADAPTATION_CAPACITY_CONFIRMATION_20261118.json",
+      "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/audit_receipt.json",
+      "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/seed_metrics.csv",
+      "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/paired_seed_differences.csv",
+      "results/phase3/adaptation_capacity_control_confirmation_20261118_v1/fit_audit.csv",
+      "scripts/report_adaptation_capacity_confirmation.py",
+      "scripts/reproduce_adaptation_capacity_confirmation.ps1",
+      "reports/phase3/adaptation_capacity_confirmation_20261118_v4/adaptation_capacity_confirmation.tex",
+      "reports/phase3/adaptation_capacity_confirmation_20261118_v4/adaptation_capacity_confirmation.pdf",
+      "reports/phase3/adaptation_capacity_confirmation_20261118_v4/independent_seed_effects.pdf",
+      "reports/phase3/adaptation_capacity_confirmation_20261118_v4/report_receipt.json",
+      "tests/phase3/test_adaptation_capacity_confirmation_contract.py",
+      "docs/phase3/CLEANUP_AUDIT_20261118.json",
+      "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.md"
+    ],
+    "reason": "two PDF outputs were recompiled after report recreation; the package-builder source differs from its prior recorded version. Current source/artifact digests are indexed; preserved submission archives were separately verified unchanged. Capacity-control source, run, report and contract-test digests were added after the corrected v2 experiment; the invalid v1 is marked superseded in its receipt. The capacity-control final report v9 supersedes its earlier layout drafts and includes a simultaneous max-t bootstrap across 36 paired settings; hashes now point to v9. Independent 10-seed capacity sensitivity and final two-page report v4 were indexed separately from the 30-seed main experiment. Cleanup ledger tracks verified deletions; preserved submission hashes remain unchanged.",
+    "preservation_check": "phase2 DOCX, implementation PDF and both recorded archives match their prior preservation hashes.",
+    "adaptation_schedule_labelbroker_v4": {
+      "run": "results/phase3/adaptation_schedule_audit_20261118_v4",
+      "report": {
+        "directory": "reports/phase3/adaptation_schedule_audit_20261118_v19",
+        "tex_sha256": "9191bf73f672c25ae041428eb96ddb145fbd088c6d5770559177e18c11528202",
+        "pdf_sha256": "bc9806c309a126270c83a46b6d177d8306e67272db24bc5874db434496508d81",
+        "pages": 2,
+        "visual_reviewed": true,
+        "compile_exit_code": 0,
+        "inference": "20,000 jointly resampled seeds; simultaneous max-|t| 95% intervals over 18 contrasts"
+      },
+      "state": "complete",
+      "seed_policy_cells": 720,
+      "forecasts": 69120,
+      "release_events": 69120,
+      "correction": "Queue-drain labels now do not inflate labels available by the last forecast; v3 is superseded only for that field.",
+      "validation": "205 tests passed in 60.56s, including full-run v4 timing and report max-t regression checks."
+    }
+  }
+}

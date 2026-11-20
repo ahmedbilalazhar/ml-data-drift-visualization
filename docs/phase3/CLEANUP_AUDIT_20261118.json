@@ -1,0 +1,167 @@
+{
+  "date_local": "2026-11-18 Asia/Karachi",
+  "policy": "Remove only exact scratch copies reproducible from retained archives, malformed interrupted archives, and report drafts/preview renders created during this continuation. Keep source, result and submitted artifacts.",
+  "removed": [
+    {
+      "path": "tmp\\phase3_day1_extract_01",
+      "bytes": 1343862,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day1_Research_Improvement.zip; extraction is recreatable"
+    },
+    {
+      "path": "tmp\\phase3_day1_extract_validated_01",
+      "bytes": 19784821,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day1_v1.1_Validated.zip; extraction is recreatable"
+    },
+    {
+      "path": "tmp\\phase3_day2_extract_01",
+      "bytes": 2939962,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day2_External_Evaluation_v1.1_Validated.zip; extraction is recreatable"
+    },
+    {
+      "path": "tmp\\phase3_day2_extract_final_01",
+      "bytes": 28383571,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day2_External_Evaluation_v1.2_Validated.zip; extraction is recreatable"
+    },
+    {
+      "path": "tmp\\phase3_day2_extract_v13",
+      "bytes": 2940292,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day2_External_Evaluation_v1.3_Validated.zip; extraction is recreatable"
+    },
+    {
+      "path": "tmp\\phase3_day3_extract_01",
+      "bytes": 815133,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1_Validated.zip; extraction is recreatable"
+    },
+    {
+      "path": "tmp\\phase3_day3_extract_final_01",
+      "bytes": 28877204,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.1_Validated.zip; extraction is recreatable"
+    },
+    {
+      "path": "tmp\\phase3_day3_extract_final_02",
+      "bytes": 816835,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.2_Validated.zip; extraction is recreatable"
+    },
+    {
+      "path": "tmp\\phase3_day3_extract_final_03",
+      "bytes": 38868126,
+      "reason": "fully covered by retained archive IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.4_Validated.zip; extraction is recreatable"
+    },
+    {
+      "path": "output\\phase3\\IDM_Viz_Phase3_Final_Strengthening_20261116_v3_interrupted.zip",
+      "bytes": 68160534,
+      "sha256": "10084de1ff9c63c1321207cfc00531c59eabb9c1d7b4672f88190de7afba8457",
+      "reason": "unopenable malformed archive explicitly marked interrupted; completed later version retained"
+    },
+    {
+      "path": "output\\phase3\\IDM_Viz_Phase3_Final_Strengthening_20261116_v5_interrupted.zip",
+      "bytes": 316111921,
+      "sha256": "39093ed96dc1e2c25298d61a6cc16b0f3cf9b903f875b4a8c94e746050e81600",
+      "reason": "unopenable malformed archive explicitly marked interrupted; completed later version retained"
+    },
+    {
+      "path": "output\\phase3\\IDM_Viz_Phase3_Final_Strengthening_20261116_v6_interrupted.zip",
+      "bytes": 249466574,
+      "sha256": "f5a55bfd3cdee7ec2dd50db357240b55ce77f721595f0b6c58c55ec57a044d58",
+      "reason": "unopenable malformed archive explicitly marked interrupted; completed later version retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v1",
+      "bytes": 163911,
+      "reason": "superseded draft/failed layout from this continuation; final v6 retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v2",
+      "bytes": 700672,
+      "reason": "superseded draft/failed layout from this continuation; final v6 retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v3",
+      "bytes": 669326,
+      "reason": "superseded draft/failed layout from this continuation; final v6 retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v4",
+      "bytes": 226895,
+      "reason": "superseded draft/failed layout from this continuation; final v6 retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v5",
+      "bytes": 669769,
+      "reason": "superseded draft/failed layout from this continuation; final v6 retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v6\\page-01.png",
+      "bytes": 136247,
+      "reason": "temporary visual QA render; reproducible from retained PDF"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v6\\page-02.png",
+      "bytes": 180703,
+      "reason": "temporary visual QA render; reproducible from retained PDF"
+    },
+    {
+      "path": "tmp\\adaptation_diversity_render",
+      "bytes": 0,
+      "reason": "empty temporary scratch directory"
+    },
+    {
+      "path": "tmp\\adwin_midpoint_render",
+      "bytes": 0,
+      "reason": "empty temporary scratch directory"
+    },
+    {
+      "path": "tmp\\pdf_review",
+      "bytes": 0,
+      "reason": "empty temporary scratch directory"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v6",
+      "bytes": 221280,
+      "reason": "superseded report draft from this continuation; final v9 with simultaneous intervals retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v7",
+      "bytes": 32904,
+      "reason": "superseded report draft from this continuation; final v9 with simultaneous intervals retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_control_20261118_v8",
+      "bytes": 516767,
+      "reason": "superseded report draft from this continuation; final v9 with simultaneous intervals retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_confirmation_20261118_v1",
+      "bytes": 137042,
+      "reason": "superseded layout/report attempt from this continuation; final v4 retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_confirmation_20261118_v2",
+      "bytes": 324489,
+      "reason": "superseded layout/report attempt from this continuation; final v4 retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_confirmation_20261118_v3",
+      "bytes": 85041,
+      "reason": "superseded layout/report attempt from this continuation; final v4 retained"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_confirmation_20261118_v4\\qa-01.png",
+      "bytes": 128717,
+      "reason": "temporary visual inspection render; reproducible from retained PDF"
+    },
+    {
+      "path": "reports\\phase3\\adaptation_capacity_confirmation_20261118_v4\\qa-02.png",
+      "bytes": 43536,
+      "reason": "temporary visual inspection render; reproducible from retained PDF"
+    }
+  ],
+  "preserved_sha256": {
+    "docs/23i-2604_23i-2581DAV-phase2.docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "docs/Phase 03 - Implementation.pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "output/phase3/23I-2581_23I-2604_Phase3.zip": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877",
+    "output/phase3/IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip": "24bd91b8686ae972051d1437b9c4f2d39cae531576a63f5ed64ad3ca8dd47725",
+    "output/phase3/IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v15.zip": "d64f09880102cf7f61d9456ada98789750a1a5d0159852a690da1477126ffac0"
+  },
+  "retained_output_zip_policy": "All other output/phase3 ZIPs retained; no ZIP was created in this continuation."
+}

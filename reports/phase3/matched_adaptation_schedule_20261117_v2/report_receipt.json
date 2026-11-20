@@ -1,0 +1,18 @@
+{
+  "status": "compiled_and_visual_reviewed",
+  "run_receipt_sha256": "5d504596f9d67de4ca6416a1615e68170773a012e62e0af97955c104bf493678",
+  "run_protocol": "matched-clock-global-vs-cluster-local-refit-v1",
+  "output_sha256": {
+    "policy_means.csv": "bfca9773764d3268321f7d294294e9034904e5db0d360c6a094084909a41d1a7",
+    "paired_seed_differences.csv": "1b8e765a8b96c4122eec34b899776f1abd3c7698c678383956ecd2affcecc041",
+    "matched_adaptation_schedule.tex": "0ddfc587587a91d9e1d6dafb049ab5048ed2c11a48ff379508b687beec410973",
+    "matched_adaptation_effects.png": "b73e2b356ff7281cbdb069a6caf5fa7cdb4ba7b6434f6c3f172d5b7e51b3b992",
+    "matched_adaptation_effects.pdf": "bab78abd98d6a766ae2e5606630b632828bbec60fb9e54c89558b95530812d1e",
+    "matched_adaptation_effects.svg": "fa6e10784997d8ca94f18df7c6fbc0e187447b87a7cc94e842c5a9e7649dad66"
+  },
+  "compiled_report_pdf": {
+    "path": "matched_adaptation_schedule.pdf",
+    "sha256": "a435ffed11f1fac4ac8db82f873fcfcd6a03fe2f3be9fa8e5d8f38c2989a3549",
+    "bytes": 55252
+  }
+}

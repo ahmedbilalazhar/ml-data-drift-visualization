@@ -1,6 +1,7 @@
 # Python
 __pycache__/
 *.pyc
+.pytest_cache/
 .venv/
 # Data / artifacts (immutable raw + large caches stay out of git)
 data/raw/
@@ -16,3 +17,7 @@ studies/anonymized/
 # OS
 .DS_Store
 Thumbs.db
+
+tmp/
+tmp_*
+

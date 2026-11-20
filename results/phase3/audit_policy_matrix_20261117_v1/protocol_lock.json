@@ -1,0 +1,127 @@
+{
+  "status": "complete",
+  "protocol": "delayed-audit-policy-matrix-v1",
+  "outcome_informed": true,
+  "development_seeds": [
+    90001,
+    90002,
+    90003,
+    90004,
+    90005
+  ],
+  "final_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129
+  ],
+  "conditions": [
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6"
+  ],
+  "policies": [
+    "uniform",
+    "input",
+    "concern",
+    "released_error",
+    "conjunction",
+    "disjunction"
+  ],
+  "cost_modes": [
+    "strict_cap",
+    "exact_quota"
+  ],
+  "budgets_cohorts": [
+    2,
+    4,
+    8
+  ],
+  "labels_per_cohort": 500,
+  "delays_batches": [
+    0,
+    5,
+    20,
+    100
+  ],
+  "stream_batches": 24,
+  "input_thresholds": {
+    "2": {
+      "input": 94.7643820507422,
+      "concern": 0.430948653088692
+    },
+    "4": {
+      "input": 76.46365099909546,
+      "concern": 0.0768460980238662
+    },
+    "8": {
+      "input": 0.808402327494084,
+      "concern": 0.0163828513281018
+    }
+  },
+  "combined_conjunction": "development-quantile input score AND development-quantile concern score for the budget rate",
+  "disjunction": "input OR concern OR released reference-minus-accuracy greater than 0.05; fixed bootstrap probe at ceil(24/budget) for label evidence",
+  "released_error_policy": "fixed bootstrap probe at ceil(24/budget); then maximum reference-minus-accuracy among selected labels satisfying source_batch + delay < current_decision_clock exceeds 0.05",
+  "strict_cap": "select only while the evidence rule is active and budget remains; unused budget is retained",
+  "exact_quota": "same evidence rule plus forced selection in the last remaining clocks when necessary to spend exactly the quota; forced acquisitions are separately counted",
+  "warning_fraction": "fraction of decision clocks with the policy evidence signal active; bootstrap probes and forced quota fills are excluded",
+  "confirmation_clock": "selected source_batch + delay + 1; this respects source_batch + delay < decision_clock",
+  "primary_outcome": "harm is evaluator accuracy more than 0.05 below the frozen historical reference; strictly greater boundary",
+  "episodes": "maximal contiguous runs of harmful cohorts in the 24-batch evaluator horizon",
+  "paired_bootstrap_replicates": 2000,
+  "bootstrap_unit": "seed within condition; conditions are not independent domains",
+  "source_sha256": {
+    "results/phase3/development_v1/online_batches.csv": "e0ed0e2c30585a7e15c5e9264b6e15d00cc1b5b50ee64da9766a1b74082c90ed",
+    "results/phase3/development_remaining_v1/online_batches.csv": "fca97f3495022c39ed23e8d7ee1eeabd94f352a00c87fe6897fd74701d619a29",
+    "results/phase3/final_v1/online_batches.csv": "3c830d83a31a2f73ac46f44c23ce631757ea59622639afdd4a070a07be4900e3",
+    "results/phase3/final_v1/released_verification.csv": "0ff1b9498864965aa949350cf5894c55ae4d8d98d4eb93c7a52b64c33305f7d3",
+    "scripts/run_audit_policy_matrix.py": "baf9796dc8c4a047e5a54e5b350d0b808c787ae754a063e9e4e16bdbf6e71462"
+  },
+  "output_sha256": {
+    "policy_per_seed.csv": "82eeb248368d8f577f89b3700f93b2d7e626f38c50515938adfbbf57bf0ff8c5",
+    "online_audit_decisions.csv": "f939922f758c1c2cc679043414227d3df43e5d9ec3f1920e88b9793d89bb1fc1",
+    "policy_summary.csv": "6bde242c32ed681fd717c91ddbbd1c97acfa9dea2c7b8f93d00febee60a9c014",
+    "paired_seed_bootstrap.csv": "bfc651c2596456629211ab0ed8eea32f16ffd8a52d47bb204a4fe8e3ec855e91"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3"
+  },
+  "limitations": [
+    "Outcome-informed replay on one preserved final synthetic run, not fresh confirmation.",
+    "Threshold selection uses five development seeds.",
+    "No operational acquisition cost or analyst benefit is measured.",
+    "At delay 100, no selected label is released within the 24-batch decision horizon."
+  ]
+}

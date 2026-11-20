@@ -1,0 +1,63 @@
+{
+  "status": "complete",
+  "dataset": "OpenML electricity 151 v1 / ELEC2",
+  "source_sha256": "2d86fbc74c69a5c04bcde0119bce280dd6d8efa0115987edc75b77ccf024d7f2",
+  "runner_sha256": "2a6995e11b7e3cecfda01729a6765c616abefcba3eaccc320f4b204277ea02d2",
+  "rows": 45312,
+  "rows_sorted_by": [
+    "normalized_date",
+    "first_source_occurrence_of_date_weekday_group",
+    "period",
+    "source_row_index"
+  ],
+  "source_file_order_was_not_date_monotone": true,
+  "normalized_date_values_with_multiple_weekday_groups": 11,
+  "feature_names": [
+    "day",
+    "period",
+    "nswdemand",
+    "vicprice",
+    "vicdemand",
+    "transfer"
+  ],
+  "excluded": [
+    "normalized_date (ordering only)",
+    "nswprice (target-proximal)"
+  ],
+  "split": {
+    "train": [
+      0,
+      10800
+    ],
+    "calibration": [
+      10800,
+      14462
+    ],
+    "reference": [
+      14462,
+      18124
+    ],
+    "monitor": [
+      18124,
+      45312
+    ],
+    "reference_input_rows": 1000,
+    "batch_size": 500
+  },
+  "monitor_batches": 55,
+  "delays": [
+    0,
+    5,
+    20
+  ],
+  "online_truth_columns_absent": true,
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scipy": "1.17.0",
+    "sklearn": "1.8.0"
+  },
+  "elapsed_seconds": 8.800032800005283,
+  "evaluator_sha256": "d38a1e5c4a7fbb314291556cc8028908f8512ce400648d74da1d03a8894674c2"
+}

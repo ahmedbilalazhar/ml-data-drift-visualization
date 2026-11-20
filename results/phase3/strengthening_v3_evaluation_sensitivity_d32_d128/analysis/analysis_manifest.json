@@ -1,0 +1,31 @@
+{
+  "analyzer_sha256": "d3bc6561742b7a5bd2c3662e31a9d05a500d1601b81d14cb2a997b52ef03cac3",
+  "bootstrap_replicates": 2000,
+  "bootstrap_unit": "independent seed",
+  "completed_cells": 1440,
+  "decision_effect_evaluation": "not measured; the evidence does not support analyst decision-benefit claims",
+  "files": {
+    "delayed_verification_per_seed.csv": "ec282c486446ef789eccb9dcec6285ee415dfda290c61a8f61e1322d09b0a212",
+    "delayed_verification_summary.csv": "e20a0d5f2d83210d8a6948a67def4c732dad17adc7629083cf8719285607f576",
+    "detection_per_seed.csv": "da16cd0de2a2bc391c4a307356e55ab6a9f3bf905c3711909883e1035ab4a31d",
+    "detection_summary.csv": "2c0dd40eac070b6ed0233f84b1be824440376876e2af9ec2385507d1da3d0be9",
+    "estimation_per_seed.csv": "5eb39fd0ab45a10c0010940dce88eb59516985069940928b9741dfe716df2e9a",
+    "estimation_summary.csv": "132295504376ebe3470f8313f5b36f0eb0c08f2715cb46323224aea03cc92b1a",
+    "fig01_estimator_mae.png": "6673be9ecbcabe3d98ce8a0728f388cd9310ef3c15ca527c8ad37cebaaa3205c",
+    "fig02_detection_and_accuracy_timeline.png": "382623f4882abb3a65bffaa717510a488c78c77d8c439666d74b79a496ad0266",
+    "fig03_delay_verification.png": "7c323f9dd797151078f90543a34e672121e5d088f2ccd7ae3100e8a6f09d617c",
+    "fig04_feature_localization.png": "6a708874bf060cc2bfd907c26d46934a8fc883ad6901fdd83f210a2efffd7f66",
+    "localization_per_seed_batch.csv": "06b334515218ba0c848fcd8ff3328569870df2f6f7bfc29527ed3d9515e4ea5e",
+    "paired_estimator_tests.csv": "e07da648afe60315268e8409b6f4596e68c9644a83846d835c874e201970e595",
+    "released_error_detection_per_seed.csv": "20e3c04addbb0cb6273e90f0a0e0aabff762067d8dd13d2bd1a941fd7d4d729f",
+    "released_error_detection_summary.csv": "08351d36624fa6be879c4e29a263f4900f85b8c40ce9e619e7041a5636de132e",
+    "released_error_detector_trace.csv": "7f13574079aa69e87e9173402cf59fd01ec648875f19e5500bd26965e8aa4d45",
+    "temporal_per_seed.csv": "67afa5932e205ec9d4b342d321228cd1b7030ea89db4e72cf0f082e4a54ba299"
+  },
+  "paired_tests": "two-sided seed-level sign-flip randomization; Holm across reported contrasts",
+  "protocol_lock_sha256": "92722fe8d44d36a71f0e7b036be81303d82494eee5c54e9ab454f175318b6995",
+  "released_error_detector": "ADWIN-style exact split scan of released cohort errors; not a River/official ADWIN implementation",
+  "released_error_detector_sha256": "587e782e93cccef67cc980fec41873fa83eb8d2f6740dac31c0dba8140a19fe7",
+  "run_dir": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\results\\phase3\\strengthening_v3_evaluation_sensitivity_d32_d128",
+  "run_state": "complete"
+}

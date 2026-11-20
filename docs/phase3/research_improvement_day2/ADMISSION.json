@@ -1,0 +1,19 @@
+{
+  "status": "admitted_with_limits",
+  "uci_id": 224,
+  "source_page": "https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset",
+  "archive_sha256": "91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4",
+  "zip_crc": "passed",
+  "rows": 13910,
+  "batch_rows": [445,1244,1586,161,197,2300,3613,294,470,3600],
+  "features": 128,
+  "classes": 6,
+  "batch1_class_counts": {"1":90,"2":98,"3":83,"4":30,"5":70,"6":74},
+  "all_batches_have_all_classes": false,
+  "invalid_or_nonfinite_values": 0,
+  "exact_duplicate_rows": 0,
+  "batch1_history_warning": "Only 445 rows; 60/20/20 split gives 267/89/89 and implies substantial estimation uncertainty.",
+  "cohort_timestamp_resolution": "batch order only; no within-batch time inferred",
+  "license_note": "UCI page labels CC BY 4.0 and also states research-only/non-commercial in dataset description; follow restrictive research-only condition",
+  "external_claim_limit": "One dataset with nine unequal held-out cohorts; not independent replications or known-onset detection evaluation."
+}

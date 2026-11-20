@@ -1,0 +1,11 @@
+{
+  "n_train": 4000,
+  "n_calibration": 2000,
+  "n_reference": 2000,
+  "n_monitoring": 12000,
+  "ids_sha256": {
+    "train": "86e1fc0ae715b52e5ddf8158fcb5366862a91c7a3b873f7c396425d68cd8a163",
+    "calibration": "1a75c66cc8a75c04d5302dd66074aec85e8599f9221b6e9640cbb15ffddad91a",
+    "reference": "192dced414731890cd883da55b520195f18bea7bc5e107ebfb021b82de04ac0e"
+  }
+}

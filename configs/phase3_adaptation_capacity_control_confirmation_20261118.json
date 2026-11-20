@@ -1,0 +1,214 @@
+{
+  "protocol_id": "idm-viz-adaptation-capacity-control-independent-seed-sensitivity-v1",
+  "phase2_basis": {
+    "path": "docs/23i-2604_23i-2581DAV-phase2.docx",
+    "sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4"
+  },
+  "source": {
+    "generator": "paired standard-normal innovations with unit marginal scales",
+    "no_intervention_counterfactual": "M0_stationary",
+    "sampling_design": "paired task/seed innovations and label uniforms across mechanisms"
+  },
+  "tasks": [
+    "linear_probabilistic",
+    "xor_nonlinear",
+    "five_region"
+  ],
+  "mechanisms": [
+    "M0_stationary",
+    "M1_abrupt_nuisance",
+    "M2_gradual_predictive",
+    "M3_incremental_repeated_small",
+    "M4_abrupt_conditional_reversal",
+    "M5_recurrent_conditional_reversal",
+    "M6_dependence_marginals_preserved",
+    "M7_out_of_support"
+  ],
+  "seasonal_stress": {
+    "id": "S1_seasonal_nuisance",
+    "separate_from_primary_mechanism_matrix": true,
+    "period_batches": 24,
+    "amplitude": 0.6,
+    "feature": 7
+  },
+  "feature_dimensions": {
+    "primary": 8,
+    "targeted_sensitivity": [
+      32,
+      128
+    ],
+    "nuisance_extension_only": true
+  },
+  "history": {
+    "train_rows": 4000,
+    "calibration_rows": 2000,
+    "reference_rows": 2000,
+    "chronological": true
+  },
+  "stream": {
+    "batch_size": 500,
+    "batches": 96,
+    "stationary_batches": 24,
+    "intervention_start_batch": 25,
+    "gradual_end_batch": 40,
+    "recurrent_return_batch": 65,
+    "seasonal_period_batches": 24
+  },
+  "models": {
+    "primary": {
+      "name": "logistic",
+      "C": 1.0,
+      "max_iter": 2000
+    },
+    "sensitivity": {
+      "name": "decision_tree",
+      "max_depth": 6,
+      "min_samples_leaf": 25
+    }
+  },
+  "calibration": {
+    "method": "isotonic_correctness",
+    "fit_partition": "calibration_only",
+    "frozen_predictions_for_estimator_comparison": true
+  },
+  "representations": {
+    "pca_requested_components": 3,
+    "clusters_primary": 3,
+    "clusters_regional_sensitivity": [
+      3,
+      5,
+      10
+    ],
+    "cluster_to_region_mapping_fit_partition": "historical_only"
+  },
+  "detectors": [
+    "original_feature_KS",
+    "original_plus_PCA_KS",
+    "pairwise_correlation_discrepancy",
+    "released_error_ADWIN"
+  ],
+  "delays_batches": [
+    0,
+    5,
+    20,
+    100
+  ],
+  "future_horizons_batches": [
+    0,
+    1,
+    5
+  ],
+  "audit_budgets_cohorts": [
+    2,
+    4,
+    8
+  ],
+  "audit_policies": [
+    "uniform",
+    "input",
+    "concern",
+    "released_error",
+    "conjunction",
+    "disjunction"
+  ],
+  "adaptation": {
+    "methods": [
+      "static",
+      "periodic_sliding_window",
+      "global_error_triggered",
+      "cluster_local_error_triggered"
+    ],
+    "maximum_updates": 4,
+    "training_row_use_cap": 8000,
+    "minimum_region_rows": 100
+  },
+  "statistics": {
+    "bootstrap_unit": "seed",
+    "bootstrap_replicates": 2000,
+    "primary_multiple_comparison": "Holm",
+    "seed_collision_check_required": true
+  },
+  "seed_banks": {
+    "development": [
+      73116001,
+      73116002,
+      73116003,
+      73116004,
+      73116005
+    ],
+    "validation": [
+      73116101,
+      73116102,
+      73116103,
+      73116104,
+      73116105,
+      73116106,
+      73116107,
+      73116108,
+      73116109,
+      73116110
+    ],
+    "evaluation": [
+      73116401,
+      73116402,
+      73116403,
+      73116404,
+      73116405,
+      73116406,
+      73116407,
+      73116408,
+      73116409,
+      73116410
+    ]
+  },
+  "feedback_design": {
+    "full_scheduled_labels": true,
+    "selective_feedback_separate_arm": true,
+    "random_audit_share": 0.2,
+    "audit_inclusion_probability_logged": true
+  },
+  "scope_amendments": {
+    "causal_discovery": "not implemented; causal feature-responsibility claims prohibited",
+    "weather": "not admitted until primary MOA/USP source, temporal order, label construction, and checksum pass audit",
+    "decision_effect_evaluation": "not a Phase 3 completion gate; the coordinated view is a prototype and analyst-benefit claims remain unsupported",
+    "instructor_feedback": "none received"
+  },
+  "adaptation_diversity_sensitivity": {
+    "tasks": [
+      "linear_probabilistic",
+      "xor_nonlinear",
+      "five_region"
+    ],
+    "mechanisms": [
+      "M0_stationary",
+      "M2_gradual_predictive",
+      "M5_recurrent_conditional_reversal",
+      "M7_out_of_support"
+    ],
+    "note": "Fresh evaluation seed bank for mechanism/task diversity extension; paired task/mechanism comparisons within seed; distinct from prior adaptation run."
+  },
+  "capacity_control": {
+    "primary_estimand": "matched_interaction minus matched_global accuracy, paired by seed within task/mechanism/delay",
+    "mechanism": "one pooled logistic model with three frozen-cluster indicator intercepts and cluster-by-feature interactions",
+    "parameter_count_per_class": "3 * (feature_count + 1), matching three independent local logistic models",
+    "evaluation_seed_bank": "fresh reserved seeds, not used by the original adaptation diversity or capacity-control runs",
+    "multiplicity": "exploratory 10-seed independent sensitivity; report seed-bootstrap intervals and avoid confirmatory claims"
+  },
+  "confirmation_design": {
+    "purpose": "independent seed sensitivity for the corrected capacity-control estimand",
+    "seed_count": 10,
+    "evaluation_seed_bank": [
+      73116401,
+      73116402,
+      73116403,
+      73116404,
+      73116405,
+      73116406,
+      73116407,
+      73116408,
+      73116409,
+      73116410
+    ],
+    "note": "Same frozen protocol/configuration except seed bank; exploratory and lower precision than the 30-seed primary run."
+  }
+}

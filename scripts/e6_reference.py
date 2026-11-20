@@ -43,8 +43,8 @@ def scores(df_test: pd.DataFrame, ref_fixed: pd.DataFrame, num: list[str],
 
 def main():
     out = []
-    for name, drop in [("elec2_ordered.parquet", ("date",)),
-                       ("covtype_subset100k.parquet", ())]:
+    for name, drop in [("verified_v2/elec2_ordered.parquet", ("date",)),
+                       ("verified_v2/covtype_subset100k.parquet", ())]:
         df = pd.read_parquet(PROC / name).sort_values("event_id").reset_index(drop=True)
         for c in df.columns:
             if isinstance(df[c].dtype, pd.CategoricalDtype):

@@ -1,0 +1,131 @@
+{
+  "protocol": "IDM-Viz Phase 3 v2 outcome-informed extension",
+  "mode": "final",
+  "status": "complete",
+  "started_at_utc": "2026-11-15T11:54:30.063451+00:00",
+  "seeds_by_task": {
+    "v1_synthetic": [
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129
+    ],
+    "xor_synthetic": [
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229
+    ]
+  },
+  "conditions_by_task": {
+    "v1_synthetic": [
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "xor_synthetic": [
+      "X0",
+      "X1",
+      "X2",
+      "X3",
+      "X4"
+    ]
+  },
+  "models": [
+    "logistic",
+    "shallow_tree"
+  ],
+  "delays": [
+    0,
+    5,
+    20
+  ],
+  "batch_size": 500,
+  "batches_per_stream": 24,
+  "manifest_sha256": "4c8e120da024fa91b804e4e17727c8ec253398f7e81254aa4ba522a8d28e4b9b",
+  "source_sha256": {
+    "src/drift_monitoring/phase3/v2.py": "1f0822c15bce5a4c3f8c69d21cab1396fc5184705343b48a45bfc763b14b7ebf",
+    "src/drift_monitoring/phase3/core.py": "a62b11c4e92f86505ab3862b72dd95e9cbb6c75cdc944de9bd0958e7fd976a37",
+    "src/drift_monitoring/phase3/replay.py": "bb7dc5af90826d66014aa1b0168f100a0e2167fe9a205fe33a7eb70887e214a8",
+    "scripts/run_phase3_v2.py": "dc98aacd804904f195fcf0aa4d2224aef097cd5b2973f1123268568aed4aede7",
+    "scripts/evaluate_phase3_v2.py": "5bb30377b3982a9d0f5432f719ec1479ac5f82e93250ddeb9b801ba463a0c7ac",
+    "tests/phase3/test_v2_extension_contract.py": "71b9f3ff5ab454837a6c818c75e9858e0241b8fa1d6b2a2dae60fe2eed2decc0",
+    "docs/phase3/V2_EXTENSION_MANIFEST.md": "4c8e120da024fa91b804e4e17727c8ec253398f7e81254aa4ba522a8d28e4b9b"
+  },
+  "thread_limit": 1,
+  "original_documents_sha256": {
+    "docs/23i-2604_23i-2581DAV-phase2.docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "docs/Phase 03 - Implementation.pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115"
+  },
+  "v1_archives_sha256": {
+    "IDM_Viz_Phase3_v1_submission.zip": "ddf91fa89ab9a9d45c20059c1dbea5cfdd966f3eea62a605769a371ae55e0ebd",
+    "IDM_Viz_Phase3_v1_full_reproducibility.zip": "0baba912c5f3e48a8a08a606e2a77a303f67e884ddccfef0907046d94dca5519"
+  },
+  "ended_at_utc": "2026-11-15T12:14:27.499093+00:00",
+  "elapsed_seconds": 1197.4412008000072,
+  "memory_end": {
+    "rss_bytes": 350941184,
+    "peak_working_set_bytes": 390291456
+  },
+  "streams": 360,
+  "model_streams": 720,
+  "online_batches": 17280,
+  "monitoring_rows": 4320000,
+  "verification_rows": 51840
+}

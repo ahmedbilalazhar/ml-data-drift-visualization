@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 MAN = ROOT / "data" / "manifests"
-PROC = ROOT / "data" / "processed"
+PROC = ROOT / "data" / "processed" / "verified_v2"
 
 
 def sha256(p: Path) -> str:
@@ -27,6 +27,8 @@ def sha256(p: Path) -> str:
 
 def main():
     from sklearn.datasets import fetch_covtype, fetch_openml
+    if (PROC / "elec2_ordered.parquet").exists() or (PROC / "covtype_subset100k.parquet").exists():
+        raise FileExistsError(f"Refusing to overwrite a verified processed v2 dataset in {PROC}")
     RAW.mkdir(parents=True, exist_ok=True)
     MAN.mkdir(parents=True, exist_ok=True)
     PROC.mkdir(parents=True, exist_ok=True)
@@ -58,7 +60,7 @@ def main():
                "classes": sorted(map(int, cov_df.Cover_Type.unique().tolist())),
                "files": [{"path": str(gz.relative_to(ROOT)), "bytes": gz.stat().st_size,
                           "sha256": sha256(gz)}]}
-    (MAN / "covtype_manifest.json").write_text(json.dumps(cov_man, indent=1))
+    (MAN / "covtype_verified_v2_manifest.json").write_text(json.dumps(cov_man, indent=1))
     print(f"covtype: {cov_df.shape}, classes {cov_man['classes']}")
 
     # stratified 100k subset, fixed seed, recorded ids
@@ -76,11 +78,12 @@ def main():
     sub = sub.rename(columns={"Cover_Type": "label"})
     sub.insert(0, "event_id", np.arange(len(sub)))
     sub.to_parquet(PROC / "covtype_subset100k.parquet", index=False)
-    (MAN / "covtype_subset_manifest.json").write_text(json.dumps(
+    (MAN / "covtype_subset_verified_v2_manifest.json").write_text(json.dumps(
         {"seed": 0, "n": len(sub), "strategy": "stratified-balanced ~14.3k/class",
          "replay_order": "event_id ascending = subsample-sorted source order (EXPLICITLY constructed, not natural time)",
          "class_counts": sub.label.value_counts().sort_index().to_dict(),
-         "file": "data/processed/covtype_subset100k.parquet"}, indent=1))
+         "file": "data/processed/verified_v2/covtype_subset100k.parquet",
+         "sha256": sha256(PROC / "covtype_subset100k.parquet")}, indent=1))
     print(f"covtype subset: {sub.shape}")
 
     # ---- Elec2 / electricity ----
@@ -102,9 +105,30 @@ def main():
               "time_semantics": "file order = chronological market intervals (MUST hold for replay)",
               "files": [{"path": str(p.relative_to(ROOT)), "bytes": p.stat().st_size,
                          "sha256": sha256(p)} for p in el_files]}
-    (MAN / "elec2_manifest.json").write_text(json.dumps(el_man, indent=1))
     X.to_parquet(PROC / "elec2_ordered.parquet", index=False)
+    el_man["processed_file"] = {"path": "data/processed/verified_v2/elec2_ordered.parquet",
+                                "sha256": sha256(PROC / "elec2_ordered.parquet"),
+                                "rows": len(X), "readback_verified": True}
+    (MAN / "elec2_verified_v2_manifest.json").write_text(json.dumps(el_man, indent=1))
     print(f"elec2: {X.shape}, classes {el_man['class_counts']}")
+
+    # ---- Weather (verified, timestamped NOAA GSOD Offutt station) ----
+    # This target is same-day rain/drizzle classification, not a forecast.
+    # Existing raw files are validated by the dedicated preparer; this generic
+    # downloader deliberately does not fetch or silently substitute a toy set.
+    from scripts.prepare_noaa_weather import preprocess
+    weather_raw = ROOT / "data/external/noaa_gsod_weather_1949_1999_v1/raw"
+    weather_out = ROOT / "data/processed/weather_noaa_1949_1999_v2"
+    weather_ref = ROOT / "data/external/noaa_gsod_weather_1949_1999_v1/reference/scikit_multiflow_weather.csv"
+    if not weather_raw.exists():
+        print("weather: verified NOAA raw archive absent; run scripts/reproduce_noaa_weather.ps1")
+    else:
+        weather_manifest = preprocess(weather_raw, weather_out,
+                                      weather_ref if weather_ref.exists() else None)
+        (MAN / "weather_noaa_manifest.json").write_text(
+            json.dumps(weather_manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"weather: verified NOAA stream rows={weather_manifest['processed']['row_count']}; "
+              "same-day retrospective classification only")
 
 
 if __name__ == "__main__":

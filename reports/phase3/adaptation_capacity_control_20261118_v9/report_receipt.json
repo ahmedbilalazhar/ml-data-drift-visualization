@@ -1,0 +1,19 @@
+{
+  "status": "report_compiled",
+  "run_receipt_sha256": "419bcd15dce7919caae72320807ebc702cd3f846002314cc18f540ab570127a4",
+  "run_protocol": "matched-capacity-global-interaction-control-v2",
+  "report_script_sha256": "e6058685f2d8b1725ad01dfb9b5e4a7ee36e39bad0ae2a0655651f298424000e",
+  "reproduction_script_sha256": "d6657f2267cec69ed6b4bc665c4d15f3d83a1669a4da8ddea61ca4c410c725d9",
+  "output_sha256": {
+    "method_summary.csv": "0e56ecf59bc320c87d5f9d1b476a6feab01f1dab0e5b187431fa7a4a2a1d8328",
+    "local_vs_global_accuracy_effects.csv": "bfc73378ba4c204567d9bbc19228504da1d628894a83b0d7eec8bd963b651ab2",
+    "local_vs_global_simultaneous_bootstrap.csv": "6d4fe6bfa29650dde3e5c03ec48c0186fc8e7fbab4566c6a0e62b0361284c01b",
+    "local_vs_interaction_accuracy_effects.csv": "6ebc78e84cdffd698a30cd46fb493815cdbe7098d7fad349ba5e379a3ea829cf",
+    "interaction_vs_global_accuracy_effects.csv": "686503299ed57bb524b8454f030525fd31e276e2df28f6c97e2e9ee17db391da",
+    "interaction_minus_global_seed_effects.csv": "dcf62981aab8d0f4c86c0dfa589590c69448c48b91670b7212a4a5a4624c052e",
+    "capacity_control_effects.pdf": "1476614e38567fddb75e3814570ab6d7249ed52356a1518bc1ceddf747660450",
+    "capacity_control_effects.svg": "ade95330af6f2717afd0fec86d5f10c95aa0b16f40bbb7cd9d78a87cff2fadae",
+    "adaptation_capacity_control.tex": "82514b67ef96ff5d5e5d6c73635a3e3bd2abe44a6a10a0b10c567103b89a857a",
+    "adaptation_capacity_control.pdf": "dda9e4a403ea9396aebb7546ca5b40de431eee5ebabc59029efe27e1d49df202"
+  }
+}

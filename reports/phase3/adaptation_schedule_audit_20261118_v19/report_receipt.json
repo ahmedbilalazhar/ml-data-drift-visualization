@@ -1,0 +1,34 @@
+{
+  "status": "compiled_and_visually_reviewed",
+  "created_local": "2026-11-18 Asia/Karachi",
+  "run": "results/phase3/adaptation_schedule_audit_20261118_v4",
+  "run_protocol": "matched-cap-global-and-region-local-released-error-trigger-adaptation-v4-labelbroker-drain-accounting",
+  "run_receipt_sha256": "974c5c1df32291fad98b948f916037f3d6aa9d25dec58ac8b4856732f100380a",
+  "run_output_sha256": {
+    "results/phase3/adaptation_schedule_audit_20261118_v4/online_batch_audit.csv": "8d20d9877c5485ecc1f915916872e653f8a621372ae84e2e05b457efa4150472",
+    "results/phase3/adaptation_schedule_audit_20261118_v4/seed_metrics.csv": "7f401d9125b4c97a9302a5bc65d8a8627a7a8245026b29cd5595119900c20880",
+    "results/phase3/adaptation_schedule_audit_20261118_v4/seed_bootstrap_summary.csv": "0511e249ac18eb055036ab899337c738c4c9a03dad15b463bd8e371c0959d28e",
+    "results/phase3/adaptation_schedule_audit_20261118_v4/label_release_events.csv": "f39808632b6f181d598931a780b3193c3df5b29320e1cc723b2db90935908a05"
+  },
+  "report_generator": "scripts/report_adaptation_schedule_audit.py",
+  "report_generator_sha256": "8f821f1c723377299526c090dd23dfd5e963dab8caadc8b809587e35a453d26a",
+  "outputs_sha256": {
+    "adaptation_schedule_audit.tex": "9191bf73f672c25ae041428eb96ddb145fbd088c6d5770559177e18c11528202",
+    "adaptation_schedule_audit.pdf": "bc9806c309a126270c83a46b6d177d8306e67272db24bc5874db434496508d81",
+    "adaptation_schedule.png": "a7d7b0c56f0e627309de7775c277c2cc1340a052ac32e74c1c93b5908b04facc",
+    "adaptation_schedule.pdf": "5a6c967b8bfa9e90878e613059dc53b91836657f1260ed7729e24fe02fa26aa1",
+    "adaptation_schedule.svg": "d2d982ef405fc6f3757da48cb9323991b3045b2e3e8f41c09e8b379b5733f9d8",
+    "paired_accuracy_differences.csv": "0b4eeaaf4eb669545987bbd1e9411b051c6fef66502ffa0c26f59146f66d0c30",
+    "policy_means.csv": "6f0ef0eeac915f0026a4b099bf2cb1af77bdfcebb34512b52351bfeaac7d7377"
+  },
+  "page_count": 2,
+  "bootstrap": {
+    "replicates": 20000,
+    "unit": "paired evaluation seed jointly resampled across all settings",
+    "interval": "95% simultaneous max-|t| over 18 accuracy contrasts",
+    "seed": 261118,
+    "zero-variance_contrasts": "retained with zero-width interval and explicitly marked in CSV"
+  },
+  "visual_inspection": "Both pages rendered and inspected; clean two-page layout with no split result paragraph, clipping, or overfull/underfull TeX warnings. Tectonic exit code 0.",
+  "interpretation": "Post-deadline synthetic policy sensitivity, not independent replication or evidence of analyst benefit."
+}

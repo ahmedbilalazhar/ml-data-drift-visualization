@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "archive": "output/phase3/IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.4_Validated.zip",
+  "clean_extraction": "passed; fresh extraction verified archive CRC, embedded Day 2 archive hash, report sources, PDF, and dataset source",
+  "embedded_day2_archive": "Day2_v1.3_Validated.zip",
+  "day2_archive_sha256": "c04e7d9d111196b28767a917c26364be3a9f70dc0335e571c08985892488ef9d",
+  "external_source_sha256": "91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4",
+  "report_pages": 3,
+  "pdf_visual_inspection": "passed all 3 pages",
+  "pytest_phase3": "35 passed in 17.87 seconds",
+  "submitted_phase2_and_archive_hashes": "match baseline"
+}

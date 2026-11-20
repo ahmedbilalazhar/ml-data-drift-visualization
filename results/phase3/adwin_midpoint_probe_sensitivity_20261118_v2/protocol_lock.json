@@ -1,0 +1,93 @@
+{
+  "status": "exploratory_complete",
+  "protocol": "river-adwin-early-midpoint-probes-sensitivity-v1",
+  "motivation": "Post hoc follow-up to the strict-cap one-probe ADWIN deadlock; not confirmatory.",
+  "adwin_version": "0.27.0",
+  "adwin_parameters": {
+    "delta": 0.002,
+    "clock": 1,
+    "max_buckets": 5,
+    "min_window_length": 5,
+    "grace_period": 10
+  },
+  "bootstrap_clocks": [
+    1,
+    12
+  ],
+  "bootstrap_rule": "one early probe at batch 1 and one fixed midpoint probe at batch 12, both within the declared audit budget",
+  "selection_signal": "two initial probes or an ADWIN event from selected, released row-level errors",
+  "release_clock": "source_batch + delay < current_decision_clock",
+  "evaluation_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129
+  ],
+  "conditions": [
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6"
+  ],
+  "cells": 5040,
+  "decision_rows": 120960,
+  "elapsed_seconds": 27.9057993000024,
+  "warnings": [
+    "This schedule was devised after inspecting the one-probe result and is exploratory.",
+    "It reuses the same predictions and labels; it is not independent confirmation.",
+    "Two early probes consume two of the available audit cohorts; strict-cap policy volume differs from one-probe ADWIN.",
+    "ADWIN monitors supervised error and cannot detect input drift without labels."
+  ],
+  "source_sha256": {
+    "results/phase3/final_v1/online_batches.csv": "3c830d83a31a2f73ac46f44c23ce631757ea59622639afdd4a070a07be4900e3",
+    "results/phase3/final_v1/released_verification.csv": "0ff1b9498864965aa949350cf5894c55ae4d8d98d4eb93c7a52b64c33305f7d3",
+    "scripts/run_adwin_bootstrap_sensitivity.py": "5fa49c1e202d8108c6eba988f582e212d0490ece70a52f16a019aa70c42914a6",
+    "scripts/run_adwin_audit_baseline.py": "6af8b7af6740b5efd1773164f3142ae3f031f8ad00acfe0614e46c4fd54acfff",
+    "pyproject.toml": "7f968a0752404974768492d7249c43d0e7f1c33f50f58d50d8b49aa533821c56",
+    "scripts/run_adwin_midpoint_probe_sensitivity.py": "0a9469952144ab19ad2db901bd7f886c902fc4699699887cda5acd1fe239e9bf"
+  },
+  "output_sha256": {
+    "two_probe_per_seed.csv": "a853e86d7cad2a87a9f3ad31e07894135f5751307b492eb4a598f105e0ef98a8",
+    "two_probe_decisions.csv": "c43f547a9aa06e742d41a080be709bb9499ade82e4fdf828ce20fbc0934057ef",
+    "two_probe_summary.csv": "ec1b7d25de26199681e9dab67ba3e87dba5d29a289f6d2c4030418e387294b64",
+    "paired_one_probe_contrasts.csv": "2868231401c2d4126e63893372a68a20b9032b0304cdcc855983677cb869fe98"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "river": "0.27.0"
+  },
+  "variant": "midpoint two-probe schedule; exploratory sensitivity following one-probe deadlock and adjacent early-probe non-detection",
+  "supersedes": "adwin_midpoint_probe_sensitivity_20261118_v1 (invalid: compared stream clock to cohort budget and skipped clock-12 probe for budgets below 12)",
+  "probe_budget_gate": "probe is selected when its fixed stream clock is reached and at least one cohort of budget remains"
+}

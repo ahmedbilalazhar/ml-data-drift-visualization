@@ -1,0 +1,20 @@
+dataset:
+  name: elec2
+  source: OpenML electricity v1 (NSW market, normalized)
+  url: https://www.openml.org/d/151
+  time_semantics: file order = chronological market intervals (MUST hold for replay)
+  label: binary (UP vs DOWN mapped to 1/0)
+  contract:
+    - event_id ascending = time order
+    - columns: event_id, label + numeric features (categoricals as codes)
+    - splits: chronological 20/20/60 train/calib/test (see audit_report.json)
+  processed: data/processed/elec2_ordered.parquet
+  manifest: data/manifests/elec2_manifest.json
+reference:
+  rows: 5000
+  policy: fixed
+windows:
+  size: 500
+  stride: 500
+truth:
+  events: none-admitted  # NO event truth; burden + score/F1 association ONLY

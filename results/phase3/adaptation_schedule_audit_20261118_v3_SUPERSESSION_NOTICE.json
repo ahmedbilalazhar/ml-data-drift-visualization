@@ -1,0 +1,15 @@
+{
+  "status": "partially_superseded_do_not_use_as_final_metric_source",
+  "run": "results/phase3/adaptation_schedule_audit_20261118_v3",
+  "superseded_by": "results/phase3/adaptation_schedule_audit_20261118_v4",
+  "issue": "The post-stream queue drain updated last_available_source before seed_metrics.csv was written. Therefore released_labels_by_last_forecast incorrectly counted drain-only labels for delays 0, 5 and 20.",
+  "affected_field": "seed_metrics.csv:released_labels_by_last_forecast",
+  "unaffected_outputs": "Forecast predictions, accuracy/F1/balanced-accuracy, updates, model fit counts, fit-row costs, and the label_release_events.csv timing records; all those fields exactly match the corrected v4 run.",
+  "correct_values_by_delay": {
+    "0": 47500,
+    "5": 45000,
+    "20": 37500
+  },
+  "values_after_queue_drain": 48000,
+  "disposition": "Preserve v3 as a historical artifact, but use v4 for final reported label-accounting values."
+}\n

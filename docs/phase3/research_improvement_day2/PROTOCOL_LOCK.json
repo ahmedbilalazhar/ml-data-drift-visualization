@@ -1,0 +1,53 @@
+{
+  "study": "IDM-Viz Day 2 external cohort evaluation",
+  "version": "day2-v1-locked-before-outcomes",
+  "status": "locked_before_model_evaluation; first execution superseded by implementation split bug",
+  "dataset": {
+    "name": "Gas Sensor Array Drift Dataset",
+    "uci_id": 224,
+    "url": "https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset",
+    "archive": "data/external/uci224_source/uci224_curl.zip",
+    "archive_sha256": "91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4",
+    "license": "CC BY 4.0; source page excludes commercial use in its dataset description, follow the more restrictive research-only condition",
+    "acquisition_order": "batch IDs 1-10 are coarse collection cohorts; no within-cohort timestamps are modeled"
+  },
+  "admission": {
+    "expected_rows": 13910,
+    "feature_count": 128,
+    "class_ids": [1, 2, 3, 4, 5, 6],
+    "missing_or_nonfinite": "reject if any",
+    "exact_duplicate_rows": "audit and report; do not deduplicate silently",
+    "cohort_coverage": "report per-class counts and proportions for every batch"
+  },
+  "historical_split": {
+    "only_source": "batch 1",
+    "allocation": "stratified 60% training, 20% calibration, 20% reference; first hold out 40%, then split that remainder equally",
+    "first_split_random_state": 2242026,
+    "second_split_random_state": 2242027,
+    "monitoring_cohorts": "whole batches 2-10, never used for fitting, calibration, reference, or protocol selection"
+  },
+  "model": {
+    "name": "multinomial LogisticRegression",
+    "C": 1.0,
+    "max_iter": 2000,
+    "decision": "argmax class probabilities",
+    "scaler": "StandardScaler fit on training partition only",
+    "calibration": "one-dimensional fixed LogisticRegression(C=1,max_iter=2000) mapping max class probability to correctness, fit on calibration partition only",
+    "representations": "three-component PCA fit on standardized training partition only"
+  },
+  "monitoring": {
+    "unit": "one whole acquisition batch",
+    "input_tests": "two-sided KS per original feature plus three frozen PCA scores, Holm correction within each cohort; alpha 0.05",
+    "impact": "mean calibrated correctness probability; continuity-corrected normal approximation to the plug-in Poisson-binomial 95% predictive interval",
+    "baselines": ["raw mean maximum class probability", "historical reference accuracy"],
+    "reported_metrics": ["accuracy", "macro-F1", "per-class precision/recall/F1/support", "accuracy estimation absolute error", "interval coverage and width", "input alarm count and fraction"],
+    "uncertainty": "use normal approximation with sum(q_i) and sum(q_i(1-q_i)) and continuity correction; report per-cohort realized proportion and interval; summarize coverage over nine cohorts descriptively only; no independent replication or known onset recall claim",
+    "composition": "report class counts/proportions and state that composition change contributes to aggregate accuracy change"
+  },
+  "deviations": [
+    "External extension is multi-class and cohort-level; it does not simulate within-batch online timestamps or delayed label arrival.",
+    "Batch 1 is only 445 rows, so the predeclared stratified historical partitions are small; results are an admission-limited evaluation.",
+    "This UCI page says research use only; no commercial use is claimed."
+  ],
+  "selection_rule": "No monitoring outcome, detector result, or model score was inspected when the split, model, calibration, thresholds, or metrics were fixed."
+}

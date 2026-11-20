@@ -1,0 +1,324 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper,margin=18mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb}
+\usepackage{array,booktabs,longtable,pdflscape}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage[expansion=false]{microtype}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+\definecolor{headgray}{HTML}{E8EDF2}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.13}
+\titlespacing*{\section}{0pt}{9pt}{5pt}
+\titlespacing*{\subsection}{0pt}{7pt}{4pt}
+\titlespacing*{\subsubsection}{0pt}{7pt}{3pt}
+\setlength{\emergencystretch}{2em}
+\newcommand{\A}{\textbf{A:}\ }
+\newcommand{\R}{\textbf{R:}\ }
+
+\begin{document}
+\pagestyle{plain}
+\begin{center}
+{\small\textsc{Data Analysis and Visualization --- Phase 1}}\\[3pt]
+{\Large\bfseries Literature Review and Research Gap Identification}\\[4pt]
+{\normalsize Explainable Visualization and Monitoring of Machine Learning\\
+Data Drift in Dynamic Environments}\\[4pt]
+{\small Saneedullah (23I-2568) \quad Ahmed Bilal (23I-2581)}
+\end{center}
+
+\begingroup
+\fontsize{11}{13}\selectfont
+\section*{Literature review}
+Reliable monitoring of deployed machine learning models requires more than an alarm when the input distribution changes. A useful monitoring system must establish what changed, whether the change affects predictions, and what action the available evidence supports. This review examines recent work on representation-based detection, feature-level monitoring, adaptation and shift identification alongside earlier visual-analytics systems. Changes in $P(X)$ are distinguished from changes in the predictive relationship $P(Y\mid X)$, since the two have different implications for detection and model performance.
+
+The recent studies approach this problem from different directions. DriftLens compares Gaussian summaries of PCA-reduced deep representations through Fr\'echet Drift Distance (FDD), using predicted-label curves and cluster prototypes to characterize changes \cite[Secs.~IV--V]{greco}. DDE estimates drift in unmonitored features from observed alarms and Pearson-based co-drift relationships \cite[Secs.~2,4--5]{szucs}. Proactive Hoeffding trees adjust boundaries or subtrees in anticipation of changing data \cite[Secs.~4--6]{guerrero}. ADWIN-U applies adaptive-window tests to scalar summaries of individual examples and requests labels for Random Forest updates \cite[Secs.~4--6]{assis}. Roschewitz et al.\ combine output and embedding tests with prevalence-adjusted resampling to distinguish prevalence, covariate and mixed shifts \cite[Sec.~3]{roschewitz}. These contributions address complementary tasks, but their reported scores measure different outcomes: drifted windows, inferred feature events, predictive adaptation or shift-type identification.
+
+Several restrictions are acknowledged by the authors. Greco et al.\ discuss small-sample sensitivity, Gaussian approximation, dependence on the first two moments, an unbounded distance scale and nearly balanced windows \cite[Sec.~VI]{greco}. Sz\H{u}cs and N\'emeth require an initial event and usable co-drift relationships; their independent-change controls produce flat lift curves \cite[Secs.~4.3,5.2,6]{szucs}. Guerrero Cano et al.\ identify unpredictable abrupt changes, complex trajectories and high-speed streams as difficulties for anticipation \cite[Sec.~7]{guerrero}. Assis and Souza note that unseen classes may be assigned to existing predicted-class detectors and that certified drift positions are unavailable for most evaluated streams \cite[Sec.~6.3]{assis}. Roschewitz et al.\ acknowledge that identifying covariate shift does not distinguish population changes from acquisition changes \cite[Sec.~5]{roschewitz}.
+
+Critical comparison also reveals limitations beyond those explicitly discussed. Distinct distributions can share the same mean and covariance, so FDD cannot fully characterize change even in the represented space. Predicted-label partitions depend on the incumbent classifier's assignments. DDE is evaluated against detector-derived feature targets, making agreement with those targets weaker evidence than independently known feature changes. ADWIN-U compresses coordinates that may have different units; robustness to feature-wise rescaling consequently needs examination. In shift identification, prevalence estimation errors and limited test power affect the adjusted comparison. Failure to reject a difference therefore cannot establish equality of the underlying distributions. These concerns follow from the methods' assumptions and should be tested directly \cite{greco,szucs,assis,roschewitz}.
+
+\newpage
+\section*{Literature review (continued)}
+The datasets provide useful breadth, although their construction limits generalization. DriftLens spans eight text, image and audio datasets, but generates windows with replacement using held-out classes, blur and subgroup interventions \cite[Sec.~V-A]{greco}. DDE uses four datasets, including modified 16-feature Covertype, with detailed feature-prediction experiments concentrated on Insects and Heartbeats \cite[Secs.~4--5]{szucs}. The proactive-tree synthetic streams are binary, balanced and 2-, 5- or 10-dimensional; seven natural streams introduce greater complexity and imbalance \cite[Secs.~5--6]{guerrero}. ADWIN-U covers ten natural streams, but the monitored statistic, learner and update policy jointly determine its outcomes \cite[Sec.~6]{assis}. The medical-imaging study constructs shifts through resampling PadChest, EMBED and RETINA rather than observing prospective deployment events \cite[Sec.~3.2]{roschewitz}. Repeated samples from these collections do not constitute independent deployment replications.
+
+Reported gains must be read in relation to these protocols. DriftLens leads in 15/17 use cases, but its at-least-fivefold runtime advantage is measured after embeddings are available. Its severity--FDD correlation measures injected change rather than predictive loss, and reference-size caps differ across baselines, apart from the shared smaller 20 Newsgroups reference \cite[Sec.~V]{greco}. On Heartbeats, DDE-ADWIN monitors 8/280 features with recall 0.8436, precision 0.2951 and F1 0.4373; DDE-JS achieves F1 0.8548 with 17/280 features. The savings--accuracy trade-off thus depends on the detector \cite[Table~4]{szucs}. PHT-MC increases aggregate synthetic accuracy from 0.9406 to 0.9574, whereas natural-stream accuracy is 0.7646 against VFDT's 0.7654 \cite[Tables~7,14]{guerrero}. The study includes statistical tests, sensitivity analysis, resource measurements and HAT/EFDT extensions, yet synthetic superiority does not transfer consistently. ADWIN-U's BAR combines ordinary accuracy and label economy, so its components should be reported separately \cite[Eq.~5]{assis}. Roschewitz et al.\ report average identification rates of 91\% for prevalence shift, 87\% for covariate shift and 75\% for mixed shift under their stated image/exam sample sizes \cite[Sec.~4.2]{roschewitz}.
+
+Earlier visual-analytics work is particularly relevant to interpreting the research gaps. DriftVis integrates detection, feature exploration, prediction views and interactive adaptation; ConceptExplorer coordinates model evolution and concept comparison \cite{driftvis,conceptexplorer}. Their case studies and expert feedback demonstrate applications, but do not isolate the effect of the interface on decision quality. Performance-aware detection is also established in the literature \cite{bayram}. Lukats et al.\ show that predictive accuracy and lift-per-drift can favor different alarm frequencies \cite{lukats}. In process monitoring, CV4CDD-4D's CDRIFT F1 increases from 0.56 to 0.92 when positional tolerance rises from 1\% to 2.5\%; this retrospective tolerance should not be interpreted as online detection delay \cite[Table~3]{kraus}.
+
+Further research should connect these contributions through a common evaluation protocol. Chronological calibration, held-out streams, stationary controls, harmful and harmless input changes, dependence-only changes and explicit label delays would clarify where each method is useful. Pure changes in $P(Y\mid X)$ with invariant $P(X)$ require additional information, such as delayed labels, because an input-only monitor cannot identify them \cite[Sec.~6]{driftvis}. Synthetic experiments should report independently known events and features, while natural-stream experiments should assess observed loss and intervention outcomes where event truth is unavailable. Matched budgets, component ablations, uncertainty over independent streams or seeds, complete pipeline costs and controlled analyst tasks would provide stronger evidence for effective monitoring.
+
+\clearpage
+\endgroup
+\begin{landscape}
+\section{Cross-paper comparison}
+\small
+Table~\ref{tab:comparison} compares ten publications on drift detection, adaptation and visual analysis. Recent experimental studies are considered alongside earlier systems and reviews that establish the methodological background. The limitations distinguish those reported by the authors (\textbf{A}) from critical observations made in this review (\textbf{R}). Results retain each study's task and evaluation conditions.
+\fontsize{8.4}{10.2}\selectfont
+\begin{longtable}{L{0.4cm}L{3.5cm}L{0.95cm}L{2.55cm}L{2.65cm}L{2.65cm}L{2.25cm}L{2.65cm}L{3.8cm}}
+\caption{Comparison of methods, datasets, evaluation practices and limitations.}\label{tab:comparison}\\
+\toprule\rowcolor{headgray}
+\textbf{\#}&\textbf{Title}&\textbf{Year}&\textbf{Dataset used}&\textbf{Preprocessing techniques}&\textbf{Models / techniques}&\textbf{Evaluation metrics}&\textbf{Results}&\textbf{Limitations / research gap}\\
+\midrule\endfirsthead
+\multicolumn{9}{l}{\small\emph{Table~\thetable\ continued}}\\[3pt]
+\toprule\rowcolor{headgray}
+\textbf{\#}&\textbf{Title}&\textbf{Year}&\textbf{Dataset used}&\textbf{Preprocessing techniques}&\textbf{Models / techniques}&\textbf{Evaluation metrics}&\textbf{Results}&\textbf{Limitations / research gap}\\
+\midrule\endhead
+\midrule\multicolumn{9}{r}{\emph{Continued on next page}}\\\endfoot
+\bottomrule\endlastfoot
+1 & Unsupervised Concept Drift Detection From Deep Learning Representations in Real-Time \cite{greco} &
+2025 & AG News, 20 Newsgroups, Bias in Bios, MNIST, Intel Image, STL-10, FairFace, Common Voice; 17 use cases. &
+Four disjoint data splits; deep embeddings; reference-fitted PCA; resampled windows; predicted-label grouping. &
+Gaussian summaries; batch/label FDD; calibrated thresholds; silhouette-selected K-means prototypes. MMD, KS, LSDD, CVM baselines. &
+Drift-window accuracy; HDD harmonic summary; severity--FDD Spearman correlation; detector runtime; cluster purity. &
+Leads in 15/17 cases; $\geq5\times$ faster after embedding extraction; evaluated purity 0.73--0.92 (Table IV). &
+\A Gaussian/two-moment approximation, small samples, nearly balanced windows.
+\R Moment-preserving changes can be invisible in the represented space; purity is not analyst-task performance.\\[4pt]
+2 & Domino drift effect approach for probability estimation of feature drift in high-dimensional data \cite{szucs} &
+2025 & Modified Covertype (16 features), CICIDS (19), Insects (200), Heartbeats (280). &
+Reference/analysis windows; Pearson relationships; initial full monitoring to fit lift curves; selected monitored subsets; post-alarm relationship updates. &
+DDE inference coupled to JS, KS, Wasserstein, ADWIN. Full, reduced, and reduced-random monitoring baselines. &
+Feature precision, recall, F1, AUC; monitored fraction; runtime; ten random subset repetitions. &
+Heartbeats: ADWIN 8/280 gives F1 0.4373 (recall 0.8436, precision 0.2951); JS 17/280 gives F1 0.8548 (Table 4). &
+\A Initial event and co-drift needed; independent-change controls give flat lift.
+\R Detector-derived targets lack independent feature-event truth; linear dependence and subset choice condition transfer.\\[4pt]
+3 & Anticipating to Change: A Proactive Approach for Concept Drift Adaptation in Data Streams \cite{guerrero} &
+2026; online 2025 & 72 binary, balanced RBF configurations per movement family; seven natural streams: CreditCard, Electricity, Weather, MIRS, Yoga, Ozone, Phishing. &
+Temporal processing; centroid histories; boundary-near samples; adaptation windows (1,000 synthetic/500 natural by default); shadow shifts. &
+PHT-M, MR, MC, S vs.\ VFDT; boundary, feature, subtree adaptation; shadow learning; HAT and EFDT extensions. &
+Rolling prequential accuracy (500); degradation episodes, affected fraction, recovery; runtime, memory; paired tests. &
+MC/VFDT synthetic: 0.9574/0.9406; natural: 0.7646/0.7654 (Tables 7,14). Synthetic runtime: 16.73/7.28 s (Table 13). &
+\A Predictable trajectories; abrupt/complex/rapid changes limit anticipation.
+\R Real-stream gains not established; existing stress tests do not establish delayed-label action value.\\[4pt]
+4 & ADWIN-U: adaptive windowing for unsupervised drift detection on data streams \cite{assis} &
+2025 & Ten USP streams: Electricity, GasSensor, three Insects variants, LADPU, Outdoor, Rialto, StarLightCurves, Yoga. &
+Initial labelled training; scalar summaries across each example's coordinates; predicted-class partitioning; compressed adaptive windows. &
+Single/multiple ADWIN-U; statistical-summary choices; Random Forest updating. KS, supervised ADWIN, static/always-update baselines. &
+Ordinary accuracy; label-request fraction; BAR; Friedman/Nemenyi tests; selected known-change position plots. &
+StarLightCurves: multiple-detector kurtosis accuracy 89.63\%, BAR 86.70\%; KS 91.62\%, BAR 86.43\% (Tables 8--9). &
+\A Unseen-class assignment; change truth absent for most streams.
+\R Statistic selection uses the evaluated collection; BAR is not class-balanced accuracy or a substitute for event metrics.\\[4pt]
+5 & Automatic dataset shift identification to support safe deployment of medical imaging AI \cite{roschewitz} &
+2025 & PadChest, EMBED, RETINA (Kaggle DR, Aptos, Messidor-v2); chest, mammography, fundus images. &
+SSL embeddings; calibrated prevalence estimation; prevalence-matched reference resampling; exactly four images/exam and one exam/patient in EMBED; exam-level sampling. &
+Output KS/BBSD and embedding MMD; Bonferroni correction; adjusted retesting to identify prevalence, covariate, mixed shifts. &
+Detection rates over 200 bootstrap samples; shift-type identification; sample-size/encoder comparisons. &
+Sec.~4.2: prevalence identification 91\% at 500 images; covariate 87\%; mixed 75\% at stated 500-image/250-EMBED-exam conditions. &
+\A Covariate subtypes unresolved.
+\R Non-rejection is not equality; shift type does not establish causal attribution or mitigation benefit.\\[4pt]
+6 & Machine learning-based detection of concept drift in business processes \cite{kraus} &
+2025 & 50,000 generated CDLG logs; 115 CDRIFT logs; Hospital, Helpdesk, Sepsis. &
+Trace windows; directly-follows frequencies; cosine-similarity images; COCO-box annotation; scaling augmentation. &
+CV4CDD-4D; pretrained RetinaNet/SpineNet fine-tuning; four drift types; seven change-point baselines. &
+Precision, recall, F1 at 1, 2.5, 5\% positional tolerances; noise/window sensitivity; qualitative natural-log checks. &
+CDLG change-point F1 0.81--0.83. CDRIFT: 0.56 at 1\%, 0.92 at 2.5\% tolerance (Table 3). Offline analysis. &
+\A Coarse boxes; window choice; one generator; missing process-perspective localization.
+\R Best CDRIFT window configuration is selected on evaluated logs; tolerance is not online delay.\\[4pt]
+7 & A benchmark and survey of fully unsupervised concept drift detectors on real-world data streams \cite{lukats} &
+2025 volume; online 2024 & Eleven natural streams (five Insects variants plus Electricity2, Weather, Outdoor, Poker, Powersupply, Rialto); two synthetic checks. &
+Temporal processing; method-specific representations; reconstructed implementations/reset policies; configuration grids. &
+Ten detectors reviewed; seven benchmarked, including D3, SPLL, IBDD, OCDD; Hoeffding-tree/Naive-Bayes coupling. &
+MTR and delay, miss, false-alarm components where defined; predictive accuracy; lift-per-drift. &
+Accuracy and lift-per-drift induce opposing alarm-frequency preferences; performance depends on metric and configuration. &
+\A Non-abrupt metric ambiguity; lack of stationary periods; impractical implementations excluded.
+\R Best configurations do not establish untuned transfer. Review with original benchmarking; metric choice conditions the conclusions.\\[4pt]
+8 & Diagnosing Concept Drift with Visual Analytics (DriftVis) \cite{driftvis} &
+2020 & Two 5-million-point Gaussian streams (99 changes each); NOAA Weather; 7,926 NeurIPS papers. &
+Weather subset; text tokenization and lemmatization, TF-IDF/SVD; incremental GMM; constrained t-SNE; retrospective case splits. &
+Energy-distance monitoring; coordinated distribution, feature, and prediction views; interactive ensemble adaptation. &
+Detected, late, missed, false events over ten runs; predictive accuracy; expert cases; latency. &
+Mean-shift stream: 97.9/99 promptly detected, 0.8 false alarms. Variance-shift stream: 77.5 promptly detected, 6.4 false alarms (Table 1). &
+\A Classification/input-change scope; GMM/projection scaling.
+\R Prompt detection uses each method's window size; retrospective cases do not isolate interface effects. Existing integration bounds Main Gap 1.\\[4pt]
+9 & ConceptExplorer: Visual Analysis of Concept Drifts in Multi-source Time-series Data \cite{conceptexplorer} &
+2020 & Beijing air-quality sites; MMORPG servers; MovieLens, Rotten Tomatoes, IMDb-related rating streams. &
+Time alignment/batching; error windows; precomputed model histories; attribute selection by label correlation. &
+Adaptive ensemble; DDM-like drift index; Naive-Bayes source-consistency model; concept-time/comparison views. &
+Accuracy/index trajectories; three case studies; three expert interviews; computation time. &
+Demonstrates coordinated source/concept comparisons; no controlled analyst-task effect size is established. &
+\A Index omits stable/improving-accuracy changes; 15-attribute display; offline model preprocessing.
+\R Label-dependent diagnostics and expert feedback do not establish decision benefit with delayed labels.\\[4pt]
+10 & From concept drift to model degradation: An overview on performance-aware drift detectors \cite{bayram} &
+2022 & Literature corpus; no new experimental dataset. &
+Literature selection and terminology consolidation; experimental preprocessing not applicable. &
+Taxonomy of process-control, windowing, and ensemble detectors; comparison by task, metric, learner, drift type. &
+Descriptive comparison; new detector-performance experiment not applicable. &
+Establishes performance-aware monitoring as prior art and documents classification/error-rate emphasis. &
+\A Sparse regression coverage; false alarms; scenario-dependent detector choice.
+\R Descriptive synthesis provides no new comparative experimental effect sizes.\\
+\end{longtable}
+\end{landscape}
+
+\clearpage
+\section{Research gap synthesis}
+Three main research gaps emerge from the comparison: the evaluation of unified monitoring, the relation between statistical change and predictive degradation, and the validation of interpretability across tasks and domains. Supporting gaps concern the calibration, observability, label availability and computational costs needed to investigate these questions.
+
+\subsection{Main Research Gaps}
+\subsubsection*{Main Research Gap 1: Decision benefit of unified detection, localization and visual explanation}
+The connection between detected change and explanatory evidence has already been developed. DriftLens supplies representation-level detection and prototypes; DDE estimates feature events; proactive trees and ADWIN-U assess predictive adaptation; medical shift identification distinguishes distributional types \cite{greco,szucs,guerrero,assis,roschewitz}. DriftVis and ConceptExplorer coordinate several monitoring activities within visual interfaces \cite{driftvis,conceptexplorer}. More specifically, Hinder et al.\ (2023) train models that extract information about drift localization or segmentation, then apply model-explanation techniques to characterize the change. Their framework includes feature relevance, representative examples and counterfactuals, with demonstrations on MNIST and an ImageNet-derived stream \cite[Secs.~3--4]{hinder2023}. Hinder et al.\ (2024) systematize this connection and explain how contrasting sample pairs can indicate both which features changed and how they changed \cite[Sec.~4.3.2]{hinder2024}. Linking drift to explanatory evidence is therefore an established methodological contribution.
+
+G\^almeanu and Andonie (2024) provide a complementary visual approach through Parallel Histograms through Time (PHT). The display traces feature distributions and their means across successive windows, including class-specific views, and illustrates changes associated with the adaptive-window SVM's removal of earlier samples \cite[Secs.~3--4]{galmeanu}. PHT here denotes the histogram visualization, distinct from the proactive Hoeffding-tree variants in Table~\ref{tab:comparison}. Its marginal views can miss changes visible only through feature interactions, and displaying many features or windows creates clutter. Hinder et al.\ also identify counterfactual-generation costs, uncertain validity and difficulties beyond abrupt changes; their 2024 discussion explicitly calls for user-study evaluation \cite[Secs.~4.3.2--4.4]{hinder2024}. These restrictions qualify the tools' practical use without negating their explanatory contribution.
+
+The gap concerns the measured efficacy of these specific tools within controlled, human-in-the-loop workflows. The reviewed demonstrations do not establish how much model-based explanations, counterfactual pairs or PHT improve diagnosis and response compared with the same monitoring evidence presented without them. A counterbalanced study should compare alarm-only, separate-view and coordinated-view conditions, with explanation components added or removed while streams, detector outputs, label access and analyst training remain fixed. Tasks should include identifying affected features or examples, distinguishing harmless change from predictive harm, and choosing whether to retain the model, request labels or update it. Diagnosis accuracy, action correctness, completion time, confidence calibration and harmful interventions would quantify decision benefit. Counterfactuals should be evaluated as explanations of the fitted drift model; their plausibility does not establish a causal account of the underlying change.
+
+\subsubsection*{Main Research Gap 2: Statistical drift magnitude and model degradation}
+DriftLens relates FDD to injected severity, while DDE evaluates agreement with feature-level detector events \cite{greco,szucs}. These results provide limited information about whether a score anticipates predictive loss. Proactive trees measure degradation and ADWIN-U includes accuracy and label economy, building on an established literature on performance-aware detection \cite{guerrero,assis,bayram,lukats}. The research opportunity is to calibrate the relation between a monitored score and a future loss increase under realistic label delays.
+
+For a fixed model $f$ and prediction window $W_t$, loss can be evaluated when the corresponding labels arrive:
+\[
+ L_t=\frac{1}{|W_t|}\sum_{i\in W_t}\ell(f(x_i),y_i),
+ \qquad H_{t+h}=\mathbf{1}\{L_{t+h}-L_{\mathrm{ref}}>\delta\}.
+\]
+Here, $H_{t+h}$ represents a loss increase exceeding margin $\delta$ at horizon $h$. The loss function, margin, horizon and reference should be specified before evaluation. A score recorded at prediction time can then be tested for harmful-alert precision and recall, calibration and useful lead time on held-out chronological data. Fixed-model calibration should be evaluated separately from adaptation, since an update changes the model whose loss is measured. Comparing static, periodic and detector-triggered updates at equal budgets would establish whether the relationship also supports beneficial action.
+
+\subsubsection*{Main Research Gap 3: Interpretability and external validity in complex image domains}
+Cluster purity, feature-detector agreement and shift-type accuracy evaluate different technical properties \cite{greco,szucs,roschewitz}. Their relation to an analyst's ability to diagnose or respond to change remains less well established. Visual-analytics studies provide case studies and expert feedback, while proactive trees include natural streams, rapid and abrupt changes, sensitivity analysis and other learners \cite{driftvis,conceptexplorer,guerrero}. The weaker natural-stream gains in the proactive-tree experiments nevertheless illustrate the difficulty of transferring results from controlled conditions.
+
+Tran et al.\ (2026) identify substantial limitations when detection methods encounter high-dimensional, unstructured image data. Pixel-level monitoring can be fast while overlooking semantic change; shallow representations can miss complex visual structure; and pretrained embeddings do not by themselves establish cross-domain adaptation. Their survey reports poor transfer across domains such as medical imaging and remote sensing, limited coverage of within-class evolution, and a shortage of authentic, temporally annotated image streams \cite[Secs.~5.2.3,6.1--6.4 and Appendix~A]{tran}. These findings concern the surveyed literature rather than a new shared experimental comparison. They also acknowledge progress from self-supervised representations, while noting that several novelty-discovery approaches assume batch or transductive access and lack online adaptability. Thus, evidence supports restricted transfer and incomplete coverage, rather than a claim that every image detector fails.
+
+The explanation literature reinforces this concern. In Hinder et al.'s ImageNet example, counterfactual generation benefits from a generator aligned with the induced class change; the authors question whether comparable explanations would result when drift does not match that model's design \cite[Sec.~4.2.3]{hinder2023}. Souza et al.\ (2020) identify a broader barrier to external validity: scarce real-world streams, heavy reliance on synthetic or manipulated data, uncertain change annotations and dataset selection capable of reversing comparative findings \cite[Secs.~3--4]{souza2020}. Their temporal-dependence analysis further shows that high prequential accuracy can reflect repeated labels rather than successful drift adaptation. This benchmarking critique applies to validation practice; it is not an experimental finding about all image detectors. The lack of sufficiently diverse, well-characterized real-world validation is therefore a primary barrier to external validity.
+
+Evaluation should therefore test explanation utility and detection transfer together on held-out domains and genuinely ordered real-world streams. Synthetic interventions remain necessary for known event and localization truth, but cannot substitute for deployment evidence. Image tests should separate acquisition or appearance changes, novel classes and within-class evolution, with stationary, noisy and recurring controls. Results should distinguish observable changes in $P(X)$ from posterior changes requiring labels. Analyst correctness, time and confidence should be reported alongside detector errors and predictive loss by domain and regime. Where natural change points are unknown, observed outcomes can support an external-validity assessment without supplying invented event labels.
+
+\subsection{Supporting Research Gaps}
+\subsubsection*{Supporting Research Gap S1: Sequential calibration and reference maintenance}
+Threshold calibration in DriftLens, relationship updates in DDE and reset sensitivity in the benchmark of Lukats et al.\ show the importance of reference management \cite{greco,szucs,lukats}. Fixed, rolling and alarm-triggered references should be compared under the same warm-up and update rules. Stationary and evolving controls would allow false alarms per unit time, alarm clustering, misses, delay and score stability to be evaluated consistently.
+
+\subsubsection*{Supporting Research Gap S2: Representation loss and observability}
+Gaussian moments, Pearson relationships and scalar summaries preserve different aspects of a distribution \cite{greco,szucs,assis}. Moment-preserving, nonlinear-dependence and marginal-preserving joint changes would test the consequences of these choices. Posterior changes with unchanged $P(X)$ provide an observability control: fixed deterministic predictions or embeddings of $X$ cannot reveal such changes \cite{driftvis}. Delayed-label and error signals should be evaluated where input monitoring alone is insufficient.
+
+\subsubsection*{Supporting Research Gap S3: Label delay, selective observation and decision costs}
+ADWIN-U requests labels for updates, proactive trees require labelled learning and visual adaptation can involve annotation \cite{assis,guerrero,driftvis}. Evaluation should model label delay, missingness and selective requests, report observed coverage, and distinguish loss on the labelled subset from population loss. Equal-budget comparisons should include imbalance-sensitive loss, annotation and retraining costs, and missed harm. Selective observation deserves particular attention because the examples chosen for labelling may differ from the full stream.
+
+\subsubsection*{Supporting Research Gap S4: Pipeline costs and reproducible transfer}
+Detector timing after embedding extraction, whole-learner runtime, offline training and visualization latency describe different workloads \cite{greco,guerrero,kraus,driftvis,conceptexplorer}. Encoding, monitoring, explanation, rendering and adaptation should be measured both separately and together, with hardware, versions, units, temporal ordering, seeds and parameters recorded. Held-out streams evaluated with previously selected parameters would make transfer claims more comparable and reduce dependence on configuration choices.
+
+\section{Proposed research direction}
+The proposed study will evaluate a coordinated workflow that connects detection, localization, visual explanation and subsequent predictive outcomes. It will build on Hinder et al.'s model-based explanations and counterfactuals and G\^almeanu and Andonie's PHT, rather than claim these connections as new \cite{hinder2023,hinder2024,galmeanu}. Three complementary evaluations will address detection and localization with known interventions, transfer to real-world streams, and decision benefit in analyst tasks. Chronological training, calibration and test partitions will be used, with preprocessing fitted before testing and label-arrival assumptions specified explicitly.
+
+\subsection{Image representations and drift coverage}
+To address the limitations identified by Tran et al., the image experiments will compare simple pixel or image-summary monitoring with pretrained representation-based monitoring under matched sample and alarm budgets \cite{tran}. For an image $x_t$, let
+\[
+ z_t=g_{\theta}(x_t),
+\]
+where $g_{\theta}$ is an encoder fitted or selected using development data. The initial comparison will freeze $\theta$ before testing, separating changes in the observed stream from changes introduced by the representation itself. Any adaptive encoder will be evaluated in a separate condition with recorded update times, computational costs and reference-recalibration rules. This comparison will test the benefit and failure modes of semantic representations; it does not assume that embeddings resolve cross-domain drift.
+
+Controlled image tests will distinguish appearance changes, new-class introduction and within-class evolution, including combinations of changes, noise and recurrence. Where the source collections permit, domains will be held out during representation and parameter selection. ImageNet-derived and medical-image collections described in the reviewed papers can support controlled testbeds, but resampling them into streams will be identified as constructed evaluation rather than natural deployment \cite{hinder2023,roschewitz,tran}. Authentic image-stream validation will require verified temporal provenance. Related images from one patient, examination or acquisition group will be kept together in the partitioning wherever such identifiers are available. Results will be reported by domain, change type and severity, including failures of feature localization, missed semantic change and excessive alarms.
+
+PHT will display a limited, declared set of meaningful features or image summaries rather than treating every latent coordinate as a human-readable attribute. Prototype and counterfactual views will provide complementary example-level evidence. Counterfactual checks will distinguish validity for the fitted explanation model, similarity to the original image and plausibility of the reconstruction; these properties will be assessed separately from analyst benefit. Generation failures and processing time will be reported, particularly for shifts outside the encoder or generator's supported domain \cite{hinder2023,hinder2024,galmeanu}.
+
+\subsection{Real-world streams and baseline evaluation}
+Following Souza et al., dataset provenance, original ordering, temporal dependence, class imbalance and the evidence for non-stationarity will be documented before comparisons \cite[Secs.~3--4]{souza2020}. Real streams will supplement synthetic controls and constructed image streams, with conclusions reported separately for each source of evidence. Label sorting, arbitrary reordering or injected shifts will not be presented as naturally occurring drift. Stream and domain selection will be fixed before final testing, and results will be reported for every included stream to limit selective conclusions.
+
+Predictive evaluation will use test-before-update processing: predictions will be recorded before the corresponding labels are used for learning, and delayed labels will become available only at their declared arrival times. Frozen-model, periodic-update and detector-triggered policies will be compared at equal label and retraining budgets. In labelled settings, the No-Change baseline used by Souza et al.\ will test whether apparent gains arise from label persistence; it predicts the next label from the preceding label and is admissible only when that label is available at prediction time. Kappa-Temporal may supplement accuracy under the same availability condition. Neither will be used as a label-free detection baseline, consistent with the authors' stated restriction \cite[Sec.~4.2]{souza2020}. Predictive baselines will remain distinct from detector comparisons, for which identical stream windows, reference access and false-alarm budgets will be used.
+
+Event detection, localization, predictive loss, label use, runtime and memory will be reported separately. Delay will be measured from an event to an alarm issued after observing the relevant data; retrospective positional tolerance will be treated as a different measure. Natural-stream degradation alone will not be taken as certified drift, since noise and poor generalization can also reduce accuracy \cite[Sec.~4.1]{souza2020}. Where change points are unavailable, evaluation will concern observed loss, alarm burden and intervention outcomes. BAR will be accompanied by accuracy and requested-label fraction, since its value is zero at full label use for positive accuracy and requires a convention for the $0/0$ case \cite[Eq.~5]{assis}. Uncertainty will be estimated over independent streams or seeds, or temporally justified blocks; overlapping windows and repeated samples from one collection will not be treated as independent deployment replications.
+
+\subsection{Controlled analyst evaluation}
+The human-in-the-loop study will compare the same monitoring cases under alarm-only, separate-view and coordinated-view conditions. Model-based feature explanations, counterfactual pairs and PHT will be evaluated through component ablations on tasks suited to each tool. Task order will be counterbalanced, training standardized and label access held constant. Independently known interventions will support localization scoring in controlled cases; natural cases will use documented outcome evidence and explicit adjudication criteria without assuming a known causal explanation.
+
+Analysts will identify affected features or examples and choose among retaining the model, requesting evidence and updating it. Correctness, completion time, confidence calibration, unnecessary updates and missed harmful changes will be measured. Fixed-model score-to-loss calibration from Main Research Gap~2 will be evaluated separately from interventions, which alter the model and its future loss. Matched-budget stream replay will assess the consequences of chosen actions. The study will establish whether the specific explanations improve decisions and whether that benefit persists across domains, rather than infer usefulness from visual appeal, cluster purity or counterfactual plausibility alone.
+
+\clearpage
+\begin{thebibliography}{15}\small\raggedright
+\bibitem{greco}
+S. Greco, B. Vacchetti, D. Apiletti, and T. Cerquitelli.
+Unsupervised Concept Drift Detection From Deep Learning Representations in Real-Time.
+\emph{IEEE Transactions on Knowledge and Data Engineering}, 37(10):6232--6245, 2025.
+\url{https://doi.org/10.1109/TKDE.2025.3593123}.
+\bibitem{szucs}
+G. Sz\H{u}cs and M. N\'emeth.
+Domino drift effect approach for probability estimation of feature drift in high-dimensional data.
+\emph{Knowledge and Information Systems}, 67:4597--4621, 2025.
+\url{https://doi.org/10.1007/s10115-025-02362-0}.
+
+\bibitem{guerrero}
+J. V. Guerrero Cano, G. J. Aguiar, and A. Cano.
+Anticipating to Change: A Proactive Approach for Concept Drift Adaptation in Data Streams.
+\emph{Machine Learning}, 115, article 3, 2026; online 14 December 2025.
+\url{https://doi.org/10.1007/s10994-025-06945-4}.
+
+\bibitem{assis}
+D. N. Assis and V. M. A. Souza.
+ADWIN-U: adaptive windowing for unsupervised drift detection on data streams.
+\emph{Knowledge and Information Systems}, 67(11):10005--10034, 2025.
+\url{https://doi.org/10.1007/s10115-025-02523-1}.
+
+\bibitem{roschewitz}
+M. Roschewitz, R. Mehta, C. Jones, and B. Glocker.
+Automatic dataset shift identification to support safe deployment of medical imaging AI.
+In \emph{Medical Image Computing and Computer Assisted Intervention---MICCAI 2025},
+Lecture Notes in Computer Science, vol.~15966, pp.~67--76, 2025.
+\url{https://doi.org/10.1007/978-3-032-04981-0_7}.
+\bibitem{kraus}
+A. Kraus and H. van der Aa.
+Machine learning-based detection of concept drift in business processes.
+\emph{Process Science}, 2, article 5, 2025.
+\url{https://doi.org/10.1007/s44311-025-00012-w}.
+
+\bibitem{lukats}
+D. Lukats, O. Zielinski, A. Hahn, and F. Stahl.
+A benchmark and survey of fully unsupervised concept drift detectors on real-world data streams.
+\emph{International Journal of Data Science and Analytics}, 19:1--31, 2025; online 27 August 2024.
+\url{https://doi.org/10.1007/s41060-024-00620-y}.
+
+\bibitem{driftvis}
+W. Yang, Z. Li, M. Liu, Y. Lu, K. Cao, R. Maciejewski, and S. Liu.
+Diagnosing Concept Drift with Visual Analytics.
+In \emph{2020 IEEE Conference on Visual Analytics Science and Technology (VAST)},
+pp.~12--23, 2020.
+\url{https://doi.org/10.1109/VAST50239.2020.00007}.
+
+\bibitem{conceptexplorer}
+X. Wang, W. Chen, J. Xia, Z. Chen, D. Xu, X. Wu, M. Xu, and T. Schreck.
+ConceptExplorer: Visual Analysis of Concept Drifts in Multi-source Time-series Data.
+In \emph{2020 IEEE Conference on Visual Analytics Science and Technology (VAST)},
+pp.~1--11, 2020.
+\url{https://doi.org/10.1109/VAST50239.2020.00006}.
+
+\bibitem{bayram}
+F. Bayram, B. S. Ahmed, and A. Kassler.
+From concept drift to model degradation: An overview on performance-aware drift detectors.
+\emph{Knowledge-Based Systems}, 245:108632, 2022.
+\url{https://doi.org/10.1016/j.knosys.2022.108632}.
+
+
+\bibitem{hinder2023}
+F. Hinder, V. Vaquet, J. Brinkrolf, and B. Hammer.
+Model-based explanations of concept drift.
+\emph{Neurocomputing}, 555:126640, 2023.
+\url{https://doi.org/10.1016/j.neucom.2023.126640}.
+Reviewed author version: \url{https://arxiv.org/abs/2303.09331}.
+
+\bibitem{hinder2024}
+F. Hinder, V. Vaquet, and B. Hammer.
+One or two things we know about concept drift---a survey on monitoring in evolving environments.
+Part B: locating and explaining concept drift.
+\emph{Frontiers in Artificial Intelligence}, 7:1330258, 2024.
+\url{https://doi.org/10.3389/frai.2024.1330258}.
+
+\bibitem{galmeanu}
+H. G\^almeanu and R. Andonie.
+Concept Drift Visualization of SVM with Shifting Window.
+arXiv preprint arXiv:2406.13754, 2024.
+\url{https://arxiv.org/abs/2406.13754}.
+
+\bibitem{tran}
+Q.-T. Tran, N.-A. Le-Khac, and M. Bertolotto.
+Concept drift detection in image data stream: a survey on current literature, limitations and future directions.
+\emph{Artificial Intelligence Review}, 59, article 33, 2026; online 11 December 2025.
+\url{https://doi.org/10.1007/s10462-025-11428-y}.
+
+\bibitem{souza2020}
+V. M. A. Souza, D. M. dos Reis, A. G. Maletzke, and G. E. A. P. A. Batista.
+Challenges in Benchmarking Stream Learning Algorithms with Real-world Data.
+\emph{Data Mining and Knowledge Discovery}, 34:1805--1858, 2020.
+\url{https://doi.org/10.1007/s10618-020-00698-5}.
+
+\end{thebibliography}
+\end{document}

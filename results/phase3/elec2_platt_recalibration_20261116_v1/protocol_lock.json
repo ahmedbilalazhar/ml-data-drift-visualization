@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "source_run": "results\\phase3\\elec2_temporal_20261116_v2",
+  "delays": [
+    0,
+    5,
+    20
+  ],
+  "method": "cumulative Platt-style logistic calibration of correctness on logit predicted-class confidence",
+  "paired_training_budget": "same initial correctness-calibration set plus exactly the released monitoring batches used by the cumulative isotonic comparator",
+  "availability_rule": "monitor batch b usable at forecast t only when b+delay < t; same-clock release is processed after current forecast",
+  "classifier_frozen": true,
+  "source_predictions_unchanged": true,
+  "source_sha256": "2d86fbc74c69a5c04bcde0119bce280dd6d8efa0115987edc75b77ccf024d7f2",
+  "runner_sha256": "2615e7bdbc9cf3fc1ddfaf287110d340487487679b5a7beac8db386a4d3e5a46"
+}

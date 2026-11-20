@@ -1,0 +1,13 @@
+{
+  "figures": {
+    "weather_holdout_timeline.pdf": "64bfb5b58baaaaf8835d82edc935c0f9f96c58a66d1776121c26ae911d3b9c44",
+    "weather_holdout_timeline.png": "646e00e67915c57a41e5c9af0a6e4593e6576f7fbb35e5eba57b53b2f72c4f81"
+  },
+  "processed_weather_sha256": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+  "report_status": "generated from complete checksum-verified NOAA run",
+  "report_tex_sha256": "1225c27e726d0225827879f91615492618197aefaae433d4bbb87207f777181f",
+  "run_dir": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\results\\phase3\\noaa_weather_1949_1999_v1",
+  "run_lock_sha256": "ccdda8ed5f0fff4996e270cf6cc251446bc1be1a7732d5387903a97d51cb2706",
+  "run_summary_sha256": "bc99298f1b7f31b3722660011473d17c221581bd8dd5cc5714664eaa9911a536",
+  "weather_manifest_sha256": "9d3360a644575cac900b80681e3e39f84b92482eb11d5b3a887f51be7ab42a1f"
+}

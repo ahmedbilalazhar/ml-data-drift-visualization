@@ -1,0 +1,230 @@
+{
+  "record_id": "idm-viz-phase2-to-phase3-traceability-2026-11-16-v2",
+  "authoritative_phase2": {
+    "path": "docs/23i-2604_23i-2581DAV-phase2.docx",
+    "sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "modified": false
+  },
+  "instructor_feedback": "none received",
+  "completion_gate": "Implementation and computational evaluation.",
+  "status_vocabulary": [
+    "evaluated",
+    "implemented_not_evaluated",
+    "partial",
+    "substituted",
+    "deferred",
+    "unsupported"
+  ],
+  "requirements": [
+    {
+      "requirement_id": "p2-pipeline-five-layers",
+      "phase2_section": "Methodology architecture; five integrated components",
+      "promised_behavior": "Connect input drift detection, descriptive localization, accuracy/impact estimation, coordinated visualization, and operational decisions.",
+      "implemented_behavior": "Frozen feature-only scoring, original-feature KS and PCA, descriptive rankings and cluster summaries, calibrated current-cohort accuracy proxy, delayed-label replay, and coordinated offline evidence views exist. This v3 run adds eight controlled mechanisms, independent paired seeds, and a historical-only pairwise-correlation threshold.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/core.py",
+        "src/drift_monitoring/phase3/replay.py",
+        "src/drift_monitoring/phase3/dependence.py",
+        "src/drift_monitoring/visualization/",
+        "docs/phase3/PHASE2_TRACEABILITY.md",
+        "results/phase3/strengthening_v3_evaluation_d8/"
+      ],
+      "status": "partial",
+      "amendment_reason": "PCA replaces the proposed autoencoder, causal discovery remains deferred, and decision-policy benefit is reported only where the separate audit-allocation experiments measured it.",
+      "allowed_claim": "A label-safe monitoring and evidence prototype was implemented and evaluated on specified controlled streams.",
+      "unresolved_limitation": "The five layers are not validated as a production control loop; no causal or analyst-benefit claim follows from coordinated display."
+    },
+    {
+      "requirement_id": "p2-latent-anchor",
+      "phase2_section": "Feature/latent evidence",
+      "promised_behavior": "Compare feature-level evidence with a learned latent representation.",
+      "implemented_behavior": "Three-component PCA is fitted on historical training inputs and frozen; actual component count is capped by feature count and training sample size.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/core.py",
+        "tests/phase3/test_scientific_contract.py",
+        "configs/phase3_strengthening_v3.json"
+      ],
+      "status": "substituted",
+      "amendment_reason": "Computationally modest, deterministic PCA is used instead of a neural autoencoder.",
+      "allowed_claim": "A frozen PCA anchor adds descriptive marginal tests in the evaluated feature space.",
+      "unresolved_limitation": "It is not an autoencoder, learned causal representation, or faithful replication of a named system."
+    },
+    {
+      "requirement_id": "p2-causal-discovery",
+      "phase2_section": "Causal explanation and drift type",
+      "promised_behavior": "Identify causal relations and causal feature responsibility.",
+      "implemented_behavior": "Descriptive marginal ranks, frozen clusters, and a pairwise correlation discrepancy are computed without causal attribution.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/core.py",
+        "src/drift_monitoring/phase3/dependence.py",
+        "docs/phase3/PHASE2_TRACEABILITY.md"
+      ],
+      "status": "deferred",
+      "amendment_reason": "No causal identification assumptions or validated graph-learning evaluation were available in this scoped strengthening run.",
+      "allowed_claim": "Feature and correlation evidence is descriptive and the known synthetic intervention target is evaluator truth.",
+      "unresolved_limitation": "Distribution change does not identify causal responsibility."
+    },
+    {
+      "requirement_id": "p2-localization",
+      "phase2_section": "Feature and cluster localization",
+      "promised_behavior": "Locate changed features and relevant regions.",
+      "implemented_behavior": "Per-feature KS ranks and calibrated pairwise-correlation alarms are produced; the five-region task records region membership only in evaluator artifacts.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/core.py",
+        "src/drift_monitoring/phase3/dependence.py",
+        "src/drift_monitoring/phase3/strengthening_generators.py",
+        "scripts/analyze_strengthening_v3.py"
+      ],
+      "status": "partial",
+      "amendment_reason": "The three primary tasks distinguish known marginal, dependence, and conditional changes; region-local accuracy and a trained cluster-to-region map are not included in this run.",
+      "allowed_claim": "Marginal-feature ranking and pairwise dependence detection are evaluated against programmed targets.",
+      "unresolved_limitation": "No causal responsibility or general cluster-localization accuracy claim is supported."
+    },
+    {
+      "requirement_id": "p2-average-confidence-calibration",
+      "phase2_section": "Accuracy estimation / Average Confidence",
+      "promised_behavior": "Estimate current accuracy using confidence evidence and assess calibration.",
+      "implemented_behavior": "A frozen logistic model, separate historical calibration split, isotonic correctness map, raw Average Confidence, ATC-style threshold, and historical-accuracy baseline are compared.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/core.py",
+        "scripts/analyze_strengthening_v3.py",
+        "docs/phase3/PHASE2_TRACEABILITY.md"
+      ],
+      "status": "partial",
+      "amendment_reason": "The additional v3 matrix is a frozen-model synthetic robustness study; separate natural-stream recalibration evidence remains versioned elsewhere.",
+      "allowed_claim": "Estimator MAE, bias, Brier score, and interval behavior are measured on the named streams.",
+      "unresolved_limitation": "Source calibration can fail under conditional shift; it does not identify accuracy under arbitrary unlabeled shift."
+    },
+    {
+      "requirement_id": "p2-harm-interval",
+      "phase2_section": "Impact estimation and concern score",
+      "promised_behavior": "Estimate probability and uncertainty of consequential accuracy loss.",
+      "implemented_behavior": "A plug-in Poisson-binomial interval and thresholded concern proxy compare a current batch with frozen historical reference accuracy.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/core.py",
+        "scripts/analyze_strengthening_v3.py",
+        "docs/phase3/PHASE2_TRACEABILITY.md"
+      ],
+      "status": "partial",
+      "amendment_reason": "The binary correctness probabilities are treated as fixed for a computationally modest interval; reference and calibration uncertainty are not propagated.",
+      "allowed_claim": "The exact plug-in interval and concern score have measured coverage, width, and error on evaluated synthetic streams.",
+      "unresolved_limitation": "The interval is not a distribution-free bound or calibrated population harm probability."
+    },
+    {
+      "requirement_id": "p2-future-harm",
+      "phase2_section": "Forecast and proactive action",
+      "promised_behavior": "Forecast future accuracy deterioration and support an operational response.",
+      "implemented_behavior": "A separately versioned synthetic horizon forecast evaluates h=0/1/5; the v3 runner evaluates contemporaneous batch evidence and delayed verification.",
+      "evidence_paths": [
+        "docs/phase3/FUTURE_HARM_FORECAST_EXTENSION_20261116.md",
+        "reports/phase3/future_harm_forecast_20261116_v10/",
+        "src/drift_monitoring/phase3/replay.py"
+      ],
+      "status": "partial",
+      "amendment_reason": "The forecast remains distinct from contemporaneous estimation and has not been validated across natural domains.",
+      "allowed_claim": "Forecast metrics apply only to the specified held-out synthetic intervention laws.",
+      "unresolved_limitation": "No general future-risk or certified operational decision claim."
+    },
+    {
+      "requirement_id": "p2-delay-and-selective-feedback",
+      "phase2_section": "Delayed feedback and verification",
+      "promised_behavior": "Respect label availability and compare complete and selected feedback.",
+      "implemented_behavior": "Prediction is persisted before release; delays 0/5/20/100 replay cached predictions and verify every cohort after queue drainage. Separate equal-budget audit-allocation experiments exist.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/replay.py",
+        "tests/phase3/test_scientific_contract.py",
+        "reports/phase3/decision_strengthening_v3/",
+        "scripts/run_strengthening_v3.py"
+      ],
+      "status": "partial",
+      "amendment_reason": "The current v3 extension uses complete scheduled labels; selection-bias correction is a separate protocol and not inferred from complete feedback.",
+      "allowed_claim": "Label availability, release age, and the named audit-allocation comparisons are reported separately.",
+      "unresolved_limitation": "No general correction for selectively missing outcomes without positivity and known inclusion probabilities."
+    },
+    {
+      "requirement_id": "p2-detection-baselines",
+      "phase2_section": "Baseline comparison",
+      "promised_behavior": "Compare the proposed evidence with appropriate existing detectors and baselines.",
+      "implemented_behavior": "Within-study baselines include raw confidence, isotonic confidence, ATC-style thresholding, historical constant, original-feature KS, PCA KS, a frozen historical-only maximum-correlation detector, and a release-time ADWIN-style exact window split scan over cohort errors.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/core.py",
+        "src/drift_monitoring/phase3/dependence.py",
+        "src/drift_monitoring/phase3/released_error.py",
+        "scripts/analyze_strengthening_v3.py",
+        "docs/phase3/PHASE2_TRACEABILITY.md"
+      ],
+      "status": "partial",
+      "amendment_reason": "Named algorithms are not called reproductions unless their protocol is implemented faithfully; the correlation threshold is a project-specific detector.",
+      "allowed_claim": "Comparisons are internal, paired, and specific to the locked synthetic conditions; the released-error method is ADWIN-style, not a River/official ADWIN reproduction.",
+      "unresolved_limitation": "No faithful head-to-head reproduction of all named papers or external benchmark leaderboard."
+    },
+    {
+      "requirement_id": "p2-natural-streams",
+      "phase2_section": "Dataset, chronological split, and transfer",
+      "promised_behavior": "Evaluate data beyond synthetic streams with documented chronology and preprocessing.",
+      "implemented_behavior": "Gas Sensor and one ELEC2 exercise are preserved in separately versioned extensions; weather is not admitted because the requested primary-source provenance was not established.",
+      "evidence_paths": [
+        "docs/phase3/PHASE2_TRACEABILITY.md",
+        "docs/phase3/ELEC2_TEMPORAL_EXTENSION_20261116.md",
+        "docs/phase3/WEATHER_PROVENANCE_AUDIT_20261116.md"
+      ],
+      "status": "partial",
+      "amendment_reason": "Weather remains unavailable until its primary source, temporal ordering, labels, and checksum are verified.",
+      "allowed_claim": "Results describe the named UCI streams and documented fixed splits only.",
+      "unresolved_limitation": "Two datasets do not establish broad transfer; ELEC2 has no known onset truth and weather is unavailable."
+    },
+    {
+      "requirement_id": "p2-ablation-and-statistics",
+      "phase2_section": "Ablation, uncertainty, and results analysis",
+      "promised_behavior": "Measure component contributions and uncertainty across independent replicates.",
+      "implemented_behavior": "Existing versioned reports cover calibration, latent-test, and point-rule ablations; the new analyzer reports seed-level bootstrap intervals and Holm-adjusted paired estimator contrasts.",
+      "evidence_paths": [
+        "docs/phase3/PHASE2_TRACEABILITY.md",
+        "scripts/analyze_strengthening_v3.py",
+        "results/phase3/strengthening_v3_evaluation_d8/analysis/"
+      ],
+      "status": "partial",
+      "amendment_reason": "Ablations reuse paired streams; batch and delay copies are not independent statistical units.",
+      "allowed_claim": "Uncertainty intervals resample independent generator seeds; results remain conditional on each synthetic law.",
+      "unresolved_limitation": "Causal discovery and coordinated-view ablations remain absent; synthetic seeds are not independent natural domains."
+    },
+    {
+      "requirement_id": "p2-coordinated-view-user-impact",
+      "phase2_section": "RQ3; coordinated visualization",
+      "promised_behavior": "Coordinate evidence in a view and assess effects on decisions.",
+      "implemented_behavior": "A coordinated offline view exists and aligns evidence to an as-of clock.",
+      "evidence_paths": [
+        "src/drift_monitoring/visualization/",
+        "docs/phase3/PHASE2_TRACEABILITY.md"
+      ],
+      "status": "unsupported",
+      "amendment_reason": "Decision-effect evaluation is outside the present Phase 3 completion scope; the requirement is not a completion gate and the research question remains open.",
+      "allowed_claim": "The coordinated visualization is implemented as a prototype; no claim is made about analyst performance or benefit.",
+      "unresolved_limitation": "RQ3's decision-effect question remains scientifically unanswered."
+    },
+    {
+      "requirement_id": "p2-reproducible-release",
+      "phase2_section": "Implementation details and reproducibility",
+      "promised_behavior": "Make data generation, experiment settings, output, and reproduction auditable.",
+      "implemented_behavior": "The v3 runner locks configuration, seed cells and source hashes, snapshots code and the Phase 2 basis, atomically commits per-cell archives, and verifies checksums before resume/analysis. The locked 720-cell evaluation completed with checksum-verified analysis and a compiled report.",
+      "evidence_paths": [
+        "src/drift_monitoring/phase3/contracts.py",
+        "scripts/run_strengthening_v3.py",
+        "scripts/analyze_strengthening_v3.py",
+        "results/phase3/strengthening_v3_smoke_m6/",
+        "results/phase3/strengthening_v3_evaluation_d8/protocol_lock.json",
+        "results/phase3/strengthening_v3_evaluation_d8/analysis/analysis_manifest.json",
+        "reports/phase3/strengthening_v3_evaluation/REPORT.tex"
+      ],
+      "status": "evaluated",
+      "amendment_reason": "The full held-out matrix and clean-extract final reproduction must complete before this status is upgraded.",
+      "allowed_claim": "The contract has passed smoke and focused tests; the exact full run is complete only when its lock is in state complete.",
+      "unresolved_limitation": "Environment differences can affect floating point outputs; result packages identify versions and source hashes."
+    }
+  ],
+  "source_preservation": {
+    "submitted_phase2_docx_sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "implementation_brief_sha256": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "rule": "Do not overwrite or replace these submitted artifacts."
+  }
+}

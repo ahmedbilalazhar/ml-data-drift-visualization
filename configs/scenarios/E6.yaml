@@ -1,0 +1,6 @@
+study: E6-reference-and-window
+window_sweep: [250, 500, 1000]
+reference_policies: [fixed, refresh]
+streams: [synthetic-S2, elec2, covtype]
+outputs: [results/aggregates/e6_window.csv, results/aggregates/e6_refpolicy.csv]
+note: thresholds illustrative on real streams, never calibrated-cross-stream

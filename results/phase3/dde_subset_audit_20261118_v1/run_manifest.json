@@ -1,0 +1,9 @@
+{
+  "config_path": "configs/dde_subset_audit_v1.json",
+  "config_sha256": "fbb96dcc1a56dba31db3ea1341080a984c53303824227e46186cf5dee0e57bf9",
+  "note": "Preserved initial run. Not scientific evidence: P@k tie-breaking by feature index was detected during review. Superseded by v2 with tie-averaged P@k.",
+  "protocol": "dde-style-subset-audit-v1",
+  "smoke_only": false,
+  "started_unix": 1794966500.656992,
+  "status": "interrupted_superseded_metric_tie_bias"
+}

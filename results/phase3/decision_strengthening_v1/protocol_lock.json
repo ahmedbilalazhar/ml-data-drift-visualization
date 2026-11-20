@@ -1,0 +1,71 @@
+{
+  "study": "equal-budget label-audit extension",
+  "outcome_informed": true,
+  "development_seeds": [
+    90001
+  ],
+  "final_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129
+  ],
+  "budget_batches": [
+    2,
+    4
+  ],
+  "label_cost_per_audit": 500,
+  "delays": [
+    0,
+    5,
+    20
+  ],
+  "thresholds": {
+    "2": {
+      "input_only": 89.34997608040925,
+      "concern_only": 0.2727517051914663,
+      "combined": 0.7083333333333334
+    },
+    "4": {
+      "input_only": 76.14017305349412,
+      "concern_only": 0.0003228616491703,
+      "combined": 0.5952380952380952
+    }
+  },
+  "policy_rules": "threshold crossing with fixed quota; force remaining audits in final remaining slots; no future ranking",
+  "released_label_rule": "initial probe at ceil(24/budget); then max observed reference-minus-accuracy over prior selected labels; threshold .05; no current-clock release",
+  "combined_rule": "minimum of development empirical percentiles of input and concern scores (conjunction)",
+  "uniform_rule": "evenly spaced fixed batch positions",
+  "missing_claims": [
+    "no accuracy improvement from audits",
+    "no human decision benefit",
+    "no future-horizon forecast"
+  ],
+  "source_sha256": "b9d36549cb9351978c6929ce24e9e2c4ee03b15034689c5c9afb398d60efd2e8"
+}

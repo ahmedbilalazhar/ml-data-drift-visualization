@@ -1,0 +1,8 @@
+\contentsline {section}{\numberline {1}Phase 2 basis and changes}{2}{section.1}%
+\contentsline {section}{\numberline {2}Experimental setup}{2}{section.2}%
+\contentsline {section}{\numberline {3}Accuracy-estimation results}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Feature-dimensionality sensitivity}{4}{subsection.3.1}%
+\contentsline {section}{\numberline {4}Input detection and descriptive localization}{4}{section.4}%
+\contentsline {section}{\numberline {5}Delayed-label verification}{5}{section.5}%
+\contentsline {section}{\numberline {6}Statistical analysis and reproducibility}{8}{section.6}%
+\contentsline {section}{\numberline {7}Comparison with research and limits}{8}{section.7}%

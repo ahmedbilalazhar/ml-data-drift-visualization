@@ -1,0 +1,14 @@
+{
+  "run_dir": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\results\\phase3\\strengthening_v3_evaluation_d8",
+  "analysis_dir": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\results\\phase3\\strengthening_v3_evaluation_d8\\analysis",
+  "run_lock_sha256": "a85e3dd89af995faf2e7153698f8eaa5c83878ef3b500a8774b493c147269b1c",
+  "report_tex_sha256": "feef44f87e4875642f0e78e5c26729206f01ebb516d9abbcc33a259f71fc6e1b",
+  "table_tex_sha256": "b3046849f2f100d53843d5e96c7d2764995bad4a6f2ce9d8b927cf6a0b4f0278",
+  "copied_figures": {
+    "fig01_estimator_mae.png": "d2352bc447da35092fd1cdbea7784ddc8d80373087ee1479bba6361b093dba68",
+    "fig02_detection_and_accuracy_timeline.png": "3d3667a331b5f69f86f4c4e6bed47939cf2f789960ed18fcb397020255703661",
+    "fig03_delay_verification.png": "b61e715be64f579015a4ea25acf443254516445b33e7d71486462a5d39e2c8f5",
+    "fig04_feature_localization.png": "46277d2e1e782c6f5696ed66a7a2e29b2688bc945fe6fa061f28ffd5e054056e"
+  },
+  "report_status": "editable TeX generated from completed, checksum-verified results"
+}

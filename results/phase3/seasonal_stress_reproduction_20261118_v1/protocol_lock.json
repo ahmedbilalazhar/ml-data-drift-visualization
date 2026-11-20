@@ -1,0 +1,470 @@
+{
+  "completed_cells": {
+    "five_region|S1_seasonal_nuisance|73116201|d8": {
+      "artifact": "cells/5992eb3fa9f8dbb1f56f3743.zip",
+      "sha256": "327e5c80b732f6398e1d61bbaf494abc39e37db23365d6a98ada795da42c7832"
+    },
+    "five_region|S1_seasonal_nuisance|73116202|d8": {
+      "artifact": "cells/eecc02d4ad1946f6bd1e22dc.zip",
+      "sha256": "20604f1e04924bb949847d4cb07c9cd5f34778e094864b3206d1ebfafce1a509"
+    },
+    "five_region|S1_seasonal_nuisance|73116203|d8": {
+      "artifact": "cells/a301b1d93e010511e452d2df.zip",
+      "sha256": "f70d3b8f51a7d825d3b4136c91fdb0831d996443a320d9fbc619d07ec57f1adc"
+    },
+    "five_region|S1_seasonal_nuisance|73116204|d8": {
+      "artifact": "cells/65a7d71797d2bee6374045bf.zip",
+      "sha256": "21c1bb002a6c9ef3bcc470d8e3a5bf27412ea1fb6804e4e2e0b090b78c35dc25"
+    },
+    "five_region|S1_seasonal_nuisance|73116205|d8": {
+      "artifact": "cells/1f91483dfd5ffa4eb1640ddf.zip",
+      "sha256": "13e4b941cb9aaee3111d4eee323a6876980aa40b73fe654fb5c46d970b86dc5f"
+    },
+    "five_region|S1_seasonal_nuisance|73116206|d8": {
+      "artifact": "cells/1e2f8ac4921dbd99c8fee0a3.zip",
+      "sha256": "e98d4cbbad862e7e891708a8edc6f265eb0701506e298a0aa4f71ad990044aaa"
+    },
+    "five_region|S1_seasonal_nuisance|73116207|d8": {
+      "artifact": "cells/e7244e94be25d512aeb064cf.zip",
+      "sha256": "f38f98313859937aff626205c443de3f44794773209afb110886f68f40a7790b"
+    },
+    "five_region|S1_seasonal_nuisance|73116208|d8": {
+      "artifact": "cells/018699f45754b0fdfa2942d3.zip",
+      "sha256": "f831a669acda14233feece3a9bce2f598ddff15dd9a51d1bebde9f5674f9a6c1"
+    },
+    "five_region|S1_seasonal_nuisance|73116209|d8": {
+      "artifact": "cells/23b9a667888c3287ca1290ba.zip",
+      "sha256": "bcb46e122e0fbdff9c087398ea2cd694e2e15640f65039423c59b89fe0835de8"
+    },
+    "five_region|S1_seasonal_nuisance|73116210|d8": {
+      "artifact": "cells/1e3b72c12b63b9515a3d14e5.zip",
+      "sha256": "e122daf3fa3e6e65d361c72b49a7077aa50f81de7d828890c820c1b170eda729"
+    },
+    "five_region|S1_seasonal_nuisance|73116211|d8": {
+      "artifact": "cells/d2a4d9fb98909df015746c69.zip",
+      "sha256": "357282eef77c5c8a49196b43328be0b877d0eb829b530280c97832e2d867daf8"
+    },
+    "five_region|S1_seasonal_nuisance|73116212|d8": {
+      "artifact": "cells/766cb60f69543876004a3228.zip",
+      "sha256": "20f3dcb52ddba14f06174d6e75739679f7f8f3ea9672f8cbab5f890ebc824911"
+    },
+    "five_region|S1_seasonal_nuisance|73116213|d8": {
+      "artifact": "cells/dbcc3ef7631b86db35460352.zip",
+      "sha256": "4dd3cd13bcad6dc33b819a2859e7b61c3edd3b184abc781bce37ee95696a86d7"
+    },
+    "five_region|S1_seasonal_nuisance|73116214|d8": {
+      "artifact": "cells/4dd771f450b424175531af38.zip",
+      "sha256": "e2fad28ec7bb755d86145dd63bd434052a442f9298afc3882c07a745f2c8c6c9"
+    },
+    "five_region|S1_seasonal_nuisance|73116215|d8": {
+      "artifact": "cells/d0bb437298ff66cb3becf517.zip",
+      "sha256": "855fe8f735e4ca8c6988e90b2e11b0c518603cc4e7c49cdd34967f78ec8681fa"
+    },
+    "five_region|S1_seasonal_nuisance|73116216|d8": {
+      "artifact": "cells/9bb7aaad4485aaa3df4f4df5.zip",
+      "sha256": "d8e2ea43a099c71b4a6cfb857dcaa87919f4f491f7b60fcd9ded67a3849a1057"
+    },
+    "five_region|S1_seasonal_nuisance|73116217|d8": {
+      "artifact": "cells/a1af4a70ab99f8a1cb856196.zip",
+      "sha256": "3861689b2d4a50040f9c406988dee9a67a0c65b6ccc9c73ca5c964c89978164f"
+    },
+    "five_region|S1_seasonal_nuisance|73116218|d8": {
+      "artifact": "cells/9f23c00bbc053e3696c579cf.zip",
+      "sha256": "b4f552960a097d8abd4b193a88cbd1c4e68caceafbd8eaf69b692009bdf8fc3f"
+    },
+    "five_region|S1_seasonal_nuisance|73116219|d8": {
+      "artifact": "cells/67c3a52af9f9df88c0eb66df.zip",
+      "sha256": "1571323f6f6fca173d2ff2597ef73a819c760b6fb110c5dea5cc5b2f22403d62"
+    },
+    "five_region|S1_seasonal_nuisance|73116220|d8": {
+      "artifact": "cells/2f7ef4630fd63dcae9208855.zip",
+      "sha256": "7b81805a45c325a4d9cb5323561e74bbf0c62069f1546331a0a69ac52fa895ab"
+    },
+    "five_region|S1_seasonal_nuisance|73116221|d8": {
+      "artifact": "cells/9cb2a786d683c83063b69d6f.zip",
+      "sha256": "94f912c2a8d9dd2feb7157c3f415b60cd6ea8955f34aa1233984870e40f25d66"
+    },
+    "five_region|S1_seasonal_nuisance|73116222|d8": {
+      "artifact": "cells/da4866555bb9b823d80de197.zip",
+      "sha256": "afd48033346dfa60cdec7587993fefc0ff9582c35908c42fc140f19f67103b6c"
+    },
+    "five_region|S1_seasonal_nuisance|73116223|d8": {
+      "artifact": "cells/97cc4e285ad1c02302485346.zip",
+      "sha256": "dfe569dfdd7b77fe5f022b0189dff21f353492a99dd235f17ebe986258b5e11a"
+    },
+    "five_region|S1_seasonal_nuisance|73116224|d8": {
+      "artifact": "cells/3cabb1a6eb39e5fa6dcfd1b4.zip",
+      "sha256": "483cb868f5389ef9c0acd932855ef2bd02e9a2f2b61e6dc1d0af7443276ad76c"
+    },
+    "five_region|S1_seasonal_nuisance|73116225|d8": {
+      "artifact": "cells/f11de06a0661490a844e436d.zip",
+      "sha256": "32e4e085058bef673aaf2e3a51943a2065bac3a887f6b8f1081d137ced9b9a88"
+    },
+    "five_region|S1_seasonal_nuisance|73116226|d8": {
+      "artifact": "cells/89dffd8650dba2d7195ec4cb.zip",
+      "sha256": "b4730bcb053b445e1658039d18fad00b1ecdbd31a4fed29b9c642177a0041d17"
+    },
+    "five_region|S1_seasonal_nuisance|73116227|d8": {
+      "artifact": "cells/0c161320b59fe02cf5460fd5.zip",
+      "sha256": "0768e630f19b545dbee37dca56bd45147d8226e8fe95082a6afc5a8d34db133b"
+    },
+    "five_region|S1_seasonal_nuisance|73116228|d8": {
+      "artifact": "cells/5a9a0197e7cd5b6b6a48932c.zip",
+      "sha256": "28ab66e91edf304b6b8fc488c4940cfcac951299ef2f5b4adc9b170e1022f9e1"
+    },
+    "five_region|S1_seasonal_nuisance|73116229|d8": {
+      "artifact": "cells/267aecbd4549ea462166d600.zip",
+      "sha256": "587f58ea15ce04756033708f7beded13389a7166110f7a410f8348a62331a151"
+    },
+    "five_region|S1_seasonal_nuisance|73116230|d8": {
+      "artifact": "cells/7ea809e72ff8975a5d6b9254.zip",
+      "sha256": "c14db8115d7e030308399d2fa88d04abf1aa45082b7f04bcf4e86f5185ad1ff8"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116201|d8": {
+      "artifact": "cells/f4971ae1efc774329035d733.zip",
+      "sha256": "471765d46de1271364948359f9ff248d4c7ff49ffb7efc2c5c8fa3d13c7f26fa"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116202|d8": {
+      "artifact": "cells/9d0409b8dc89d3fd4dd334eb.zip",
+      "sha256": "e9b1afb7601124f46dee06588c20d199950fd065701f497b5e6ee7e6a4b5eafe"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116203|d8": {
+      "artifact": "cells/188bc8ccb3a8431f3a9bfc09.zip",
+      "sha256": "6674878680f35a6de174f9404ebaf374d3e194ea8f7dfc160e7cc435a113c7eb"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116204|d8": {
+      "artifact": "cells/4709622184d24a3f8ec5c7a1.zip",
+      "sha256": "1800480e3e7df75ed5b41bb523b082c6760014f393eb2b0db8a3c7d61999d74a"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116205|d8": {
+      "artifact": "cells/923d7ecb0f93c71334a0637d.zip",
+      "sha256": "49ebb00529f7fa99771aab97f5b720ff0c3e3c98ab5b1d0d5a3ff88461f23386"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116206|d8": {
+      "artifact": "cells/d8e0ab18ac1998b9262b845d.zip",
+      "sha256": "730ca3c42fe81c5e49be97aeee8a1367dcdaee3fad75d911056bee1ed03ec00d"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116207|d8": {
+      "artifact": "cells/53f6fcde9ccb44856ca2d107.zip",
+      "sha256": "e9e44b3b63166ef4cb99c8cc820a823a2a41d291aad6744ff892449c65f3e769"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116208|d8": {
+      "artifact": "cells/721a24c046c3c545e07e3c2c.zip",
+      "sha256": "68c369accf6707d23c67919064d80de205b079a2ff4b829a4d8278c90120fd1d"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116209|d8": {
+      "artifact": "cells/2f19c480d8f11a1d00e199a3.zip",
+      "sha256": "ee0c241ce197d48b0727d50d19f653637b01dbfcac245095313258eccab4f8a4"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116210|d8": {
+      "artifact": "cells/3991fce24c52f25881d61293.zip",
+      "sha256": "1a5838ce3b001ebe9a1d5a2866463d83ade37c9aef9226792faf68eca8ec9f8c"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116211|d8": {
+      "artifact": "cells/345695ec86a53a78929cbb52.zip",
+      "sha256": "9d4f0d08d33632f0747a659ae7130bb331316fc39e768a3651a95d3dd37925bc"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116212|d8": {
+      "artifact": "cells/befdd8b9e12a9da510e87de2.zip",
+      "sha256": "e58a54911cac190593e1b15ee1393fe5c4e0dd41adabb6559467812026d5da1a"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116213|d8": {
+      "artifact": "cells/22ca17a216122d96f561281e.zip",
+      "sha256": "5954a6397930818d4e387938bd0fab815359c7d675cb2243640c0f5a7fcb1fdc"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116214|d8": {
+      "artifact": "cells/aa0a21205cf983af2605fe95.zip",
+      "sha256": "288d283c205d490eda715cf0e5f20aed5918fb84130763da24666d5dce34b43a"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116215|d8": {
+      "artifact": "cells/50bedf3a7f5f93f47ef5ff0b.zip",
+      "sha256": "ca077f21fa24e751c7de05c9a4330280acbcf33dda4610b816b1962414e8a8dc"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116216|d8": {
+      "artifact": "cells/6146c9de42b4530a599ba0c2.zip",
+      "sha256": "b85db16efe964e97612a0a2a021a2533690220daecd490669d860a7ae9cd266e"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116217|d8": {
+      "artifact": "cells/03eaac17ad5e5bb0fd1c2728.zip",
+      "sha256": "1d2581b4ecd6f30bd049548d93f1138b1d3d27ce9d069a958b389f958655f872"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116218|d8": {
+      "artifact": "cells/d28c3f5c97867452c993923e.zip",
+      "sha256": "502f975c29fabc814c42b1de0dfa890c68fc34c584ab9fccfd3ef75181287785"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116219|d8": {
+      "artifact": "cells/6f2e333ce7c1dfba53d1ba5d.zip",
+      "sha256": "dfea4115fd174de1b167f28af8bb10da61079b197f00cc5af1cbe56f6ec60895"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116220|d8": {
+      "artifact": "cells/19600cd57563a5283b22dc1b.zip",
+      "sha256": "0080c36d6b58793908a779afa505119b5456198ae3ff375e599cb2d605a2d0a3"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116221|d8": {
+      "artifact": "cells/d863bfc1347eaf74c6d20203.zip",
+      "sha256": "7779ea3f978eee71d2c46d225cb4ba56b4d5bd8b5a02668192b1fdb6221ef846"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116222|d8": {
+      "artifact": "cells/95d463c76165a7aa62db7b48.zip",
+      "sha256": "ff406d03ab5706e96a749722b07e0220757c721474181075d1457b2fda55b610"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116223|d8": {
+      "artifact": "cells/f365275dbb17349c74420289.zip",
+      "sha256": "d06212ebe61510738b8312f0a9ca35a49126e4fb8fdd775018b2a17cf905b96f"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116224|d8": {
+      "artifact": "cells/16e6bb15be454a7e3eb65a7c.zip",
+      "sha256": "53a02c9832edf64166db46802598ec1dee2b2bcbf3c91f56a858d3baeb58706f"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116225|d8": {
+      "artifact": "cells/083ffcfca8638d08ee55db85.zip",
+      "sha256": "25c5afe2678e7b0324ad787469724fdce339a4ad6ee7a3e6022639c04c01a339"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116226|d8": {
+      "artifact": "cells/c57f8def9fca2b1903bcd2c7.zip",
+      "sha256": "961513eb86ea3e41a7b5ce4b714bf87a3fe0a1c2e9f6e385ad15700de43163f0"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116227|d8": {
+      "artifact": "cells/f896222803d0d06f60a8956a.zip",
+      "sha256": "06abda4614217e1de3d4199fe61509226400d5837e0e33136176ceafcec2a279"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116228|d8": {
+      "artifact": "cells/4a6da062942de4e36a31f9eb.zip",
+      "sha256": "adcf885255a2d3f5e769a9084e330d9a69258286a6b420526b32fac2383e0fec"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116229|d8": {
+      "artifact": "cells/d1d7241e0e0ce5a2cc66b8f5.zip",
+      "sha256": "9c076d0647ec2bc1b82239297aed120a931d8c90dea433a7f499ec9402aa3d14"
+    },
+    "linear_probabilistic|S1_seasonal_nuisance|73116230|d8": {
+      "artifact": "cells/f91c858e30a09c6e881ea1d5.zip",
+      "sha256": "6475c20781ec97406b54201ff6f7dbb9e072918925edb0076a3a808ac3135cad"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116201|d8": {
+      "artifact": "cells/056d1587a2870e25d66f8fdf.zip",
+      "sha256": "702530be9ce2594122bc601179889d3d75583b86ca2730e03ceb8df51d146820"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116202|d8": {
+      "artifact": "cells/7e33ef772416d5d02bc7d8e6.zip",
+      "sha256": "ebb37eef703fa5d7072e790bd8745cdb911f70c3cdcbd15c346b56b5ebff447e"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116203|d8": {
+      "artifact": "cells/94676dfd8831f019c5c46d97.zip",
+      "sha256": "adc91a0f5a810cf09dc6f61faabf7648a7f9fb9ac149a29058deda66cd822e78"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116204|d8": {
+      "artifact": "cells/f5b167e6c8f033553fa78cc8.zip",
+      "sha256": "1f70d684f07acc7dccabbec3179ba445ce24aaf2685b156381656ab64b3fedf1"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116205|d8": {
+      "artifact": "cells/81f2258ace6a7975ea2067f1.zip",
+      "sha256": "b81ee96bdcb69d54776ffad1b8cefd7e4a708e913028df6b7c3043713da2229f"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116206|d8": {
+      "artifact": "cells/04bc87e6bbc9e548f1e995f0.zip",
+      "sha256": "3590db2419895ee27c625c2cdab6267c46179273995fb313df4b3725a738775c"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116207|d8": {
+      "artifact": "cells/0695c309f530d61ef8b1af9d.zip",
+      "sha256": "699c1dd286ddf2c4fe1560f4a284958dcc9ef79c1b7684be8e0511c7205c8d5d"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116208|d8": {
+      "artifact": "cells/decb09c2bceb6cef3c07510b.zip",
+      "sha256": "a1f2a5b2c30b9e4072b2c58d44fdfe03a78d47ff4e99db02d3d0c5d4d73b7bd2"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116209|d8": {
+      "artifact": "cells/e5153abb17efd058d8bec9bb.zip",
+      "sha256": "d3bb450d9255e0a7b8508e88ea57cb698fc6da197b997b354cab12446fd9978f"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116210|d8": {
+      "artifact": "cells/66a435664764286f3f454dad.zip",
+      "sha256": "0998bb173585b3b6b4eb27639a82319d0fd5be54a31951f34e2549179fb5b117"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116211|d8": {
+      "artifact": "cells/0896f1f6f3473b1ccdbef8b5.zip",
+      "sha256": "578119764e2d9a58ae587704c6956164fe6ae7534c3e1ae7965df8b131e963d8"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116212|d8": {
+      "artifact": "cells/c5432bedb86252aec9d4ea38.zip",
+      "sha256": "2e0f0a1262df29464c12c06ee9888c0e757ce0a75f9885b9eb20e31fdf9df66a"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116213|d8": {
+      "artifact": "cells/fa0e9a25ea513e8838cb0f14.zip",
+      "sha256": "7cb996f40f91c10860c236c497ccbd951844f68768ab6bcdb8d23cee59a7966d"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116214|d8": {
+      "artifact": "cells/ce2783b50b1c423271c167c1.zip",
+      "sha256": "d9a296686e261352edb85d02b69a54b0369d9e7e992e198f226baab5d82a2698"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116215|d8": {
+      "artifact": "cells/97dbc04577fcb8d752b5d95c.zip",
+      "sha256": "827e6348811ff18f0128b79483fc73ab21bd91e831969dd0db10ecda1d12ddda"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116216|d8": {
+      "artifact": "cells/32cc11da7bfb582a6544fd08.zip",
+      "sha256": "55c40d0f14d46737c8e5510f513f1e3351e26bfb1c555c48b32cb73c1f63b1f0"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116217|d8": {
+      "artifact": "cells/8e4a14c0403c761e79e3e484.zip",
+      "sha256": "bdf4bd44cda646e1d0354d119a45f0cb34c5c3c385c8819c06e7515bcf6cc179"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116218|d8": {
+      "artifact": "cells/ee079db37dbdbfad544f355a.zip",
+      "sha256": "d077c7d038ebab7c474f983d02824010b8925f066423bf5d5f75a0645b5c4e6c"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116219|d8": {
+      "artifact": "cells/8de8878dcd953ad88a654f36.zip",
+      "sha256": "f84440892e2030a110826f9375c1d47caa8350dad65c3e3050070618d0761cf2"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116220|d8": {
+      "artifact": "cells/aa6b14a0fab06c42143955c7.zip",
+      "sha256": "67c48edcde48c9863b5400f6936e0a25015086640ea3df695e0c45f592be277d"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116221|d8": {
+      "artifact": "cells/a2b0e48860a8c274401ec9e4.zip",
+      "sha256": "b6b924377b3a8264d6c8ffee162f36b95ef8501eb7f4e8a2e8cd36bc854cae80"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116222|d8": {
+      "artifact": "cells/9b55dcd913b27536f77a95a1.zip",
+      "sha256": "6337c94f862bc4a4f3aa1e7106233aaa19b68088119e26205e0d8ece762f24f0"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116223|d8": {
+      "artifact": "cells/2e319b0de2981efb50df98a9.zip",
+      "sha256": "a316ec4b6d579dd1336fc590f44bab82d9fa511d8ac255f63e12fcc49f8b0451"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116224|d8": {
+      "artifact": "cells/c6e8c1875550f7f4e520fc68.zip",
+      "sha256": "ba8b30c11fa7bf0a1ce7695861c7ee0d8f41775557d233726e1fc7a845fb6726"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116225|d8": {
+      "artifact": "cells/7c8db3fc1b25f70503a0244a.zip",
+      "sha256": "5259338056c5fbeb8cd82f270978f8f4a0c8019199f6db1f2278355e3b822c82"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116226|d8": {
+      "artifact": "cells/329c963a80e70494d4b73458.zip",
+      "sha256": "5fc1c7cc9bd39a2fe8cc1aed2d1d27d349be71a117c7f1de60bbee58018c3b0a"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116227|d8": {
+      "artifact": "cells/0e80d803b7f4e587962fd91b.zip",
+      "sha256": "140bad17a7587b6495d3e91b7f3f55dc2b383146848c42a97bde35c7f3fae59d"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116228|d8": {
+      "artifact": "cells/554dc8b045be8a3abfb2278d.zip",
+      "sha256": "d11fa08afad072e45877557b4b8b938d2b04cd83a2ec0118d8f49c65e08de04d"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116229|d8": {
+      "artifact": "cells/c6243e45977a75853b218a77.zip",
+      "sha256": "5c74bac35e3c33915aa31269e94a01d05cb2973720cbe63d1393086cfae209ea"
+    },
+    "xor_nonlinear|S1_seasonal_nuisance|73116230|d8": {
+      "artifact": "cells/d91cd74cba2f22fc6a169d84.zip",
+      "sha256": "d9f5123e6261e294cca18550838c76a1cf8f78e49e81ba1bf0317d069dbbfba9"
+    }
+  },
+  "completed_utc": "2026-11-18T00:17:38.625397+00:00",
+  "config_sha256": "f375cf446380f943be6bf414b48aaaf7252f0f420cda339435fc1937d4cbd642",
+  "expected_cells": [
+    "five_region|S1_seasonal_nuisance|73116201|d8",
+    "five_region|S1_seasonal_nuisance|73116202|d8",
+    "five_region|S1_seasonal_nuisance|73116203|d8",
+    "five_region|S1_seasonal_nuisance|73116204|d8",
+    "five_region|S1_seasonal_nuisance|73116205|d8",
+    "five_region|S1_seasonal_nuisance|73116206|d8",
+    "five_region|S1_seasonal_nuisance|73116207|d8",
+    "five_region|S1_seasonal_nuisance|73116208|d8",
+    "five_region|S1_seasonal_nuisance|73116209|d8",
+    "five_region|S1_seasonal_nuisance|73116210|d8",
+    "five_region|S1_seasonal_nuisance|73116211|d8",
+    "five_region|S1_seasonal_nuisance|73116212|d8",
+    "five_region|S1_seasonal_nuisance|73116213|d8",
+    "five_region|S1_seasonal_nuisance|73116214|d8",
+    "five_region|S1_seasonal_nuisance|73116215|d8",
+    "five_region|S1_seasonal_nuisance|73116216|d8",
+    "five_region|S1_seasonal_nuisance|73116217|d8",
+    "five_region|S1_seasonal_nuisance|73116218|d8",
+    "five_region|S1_seasonal_nuisance|73116219|d8",
+    "five_region|S1_seasonal_nuisance|73116220|d8",
+    "five_region|S1_seasonal_nuisance|73116221|d8",
+    "five_region|S1_seasonal_nuisance|73116222|d8",
+    "five_region|S1_seasonal_nuisance|73116223|d8",
+    "five_region|S1_seasonal_nuisance|73116224|d8",
+    "five_region|S1_seasonal_nuisance|73116225|d8",
+    "five_region|S1_seasonal_nuisance|73116226|d8",
+    "five_region|S1_seasonal_nuisance|73116227|d8",
+    "five_region|S1_seasonal_nuisance|73116228|d8",
+    "five_region|S1_seasonal_nuisance|73116229|d8",
+    "five_region|S1_seasonal_nuisance|73116230|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116201|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116202|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116203|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116204|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116205|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116206|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116207|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116208|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116209|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116210|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116211|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116212|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116213|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116214|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116215|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116216|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116217|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116218|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116219|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116220|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116221|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116222|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116223|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116224|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116225|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116226|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116227|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116228|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116229|d8",
+    "linear_probabilistic|S1_seasonal_nuisance|73116230|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116201|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116202|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116203|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116204|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116205|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116206|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116207|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116208|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116209|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116210|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116211|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116212|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116213|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116214|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116215|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116216|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116217|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116218|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116219|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116220|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116221|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116222|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116223|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116224|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116225|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116226|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116227|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116228|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116229|d8",
+    "xor_nonlinear|S1_seasonal_nuisance|73116230|d8"
+  ],
+  "failure": null,
+  "source_sha256": {
+    "configs/phase3_strengthening_v3.json": "f0581f41563a2e3f30b8210d3182a3388a4eccc2a9544d650e6daff2b48a2995",
+    "docs/23i-2604_23i-2581DAV-phase2.docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "scripts/run_strengthening_v3.py": "066d06c8c7ef6ed0b67955c89c113674888de07c40ecb3fc05588c0543aede52",
+    "src/drift_monitoring/phase3/contracts.py": "f84694b2f68470438cd3818280572533afa1181bdef6046f16d2002ac754b4b1",
+    "src/drift_monitoring/phase3/core.py": "c5e5b6dba259c200c4fb17564d3859776d70316ad0a22519028d635d4f3137cf",
+    "src/drift_monitoring/phase3/dependence.py": "76b8def16bd4b593d84918bb330a0ed5a23ea6d23c772a8181b891774e54f6a6",
+    "src/drift_monitoring/phase3/replay.py": "652c450b878d88d1e12e01eed9d373ced69124a215c2e7b5a3e35cccb669bf5a",
+    "src/drift_monitoring/phase3/strengthening_generators.py": "a3efbbacbbab451ebf308bfefc42ac6227686ce4733c3b82ea7a652b538ad308"
+  },
+  "state": "complete"
+}

@@ -1,0 +1,25 @@
+{
+  "batch_size": 500,
+  "calibration": "historical calibration partition only; isotonic correctness map",
+  "complete_batches": 21,
+  "delay_batches": 0,
+  "feature_schema": [
+    "temp",
+    "dewp",
+    "slp",
+    "visib",
+    "wdsp",
+    "mxspd",
+    "max",
+    "min"
+  ],
+  "model": "LogisticRegression(C=1,max_iter=2000), frozen",
+  "protocol": "noaa-weather-chronological-holdout-v2",
+  "source_data_sha256": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+  "split_counts": {
+    "calibration": 1821,
+    "monitoring": 10926,
+    "reference": 1821,
+    "train": 3642
+  }
+}

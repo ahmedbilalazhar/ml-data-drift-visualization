@@ -1,0 +1,18 @@
+{
+  "status": "complete",
+  "source_run": "results\\phase3\\elec2_temporal_20261116_v2",
+  "source_run_lock_sha256": "f7681b7a51a8b3d241576eba7290821e89d896bd584574cd5e22f18bf2b6fdce",
+  "runner_sha256": "b99131b670a290426891485fae331138ae5f4f9e200da1ec6ba5cc691625dc29",
+  "delays": [
+    0,
+    5,
+    20
+  ],
+  "batches": 55,
+  "prediction_order": "score and persist each batch before adding labels with source_batch+delay == current clock",
+  "feature_model_frozen": true,
+  "only_correctness_calibrator_updated": true,
+  "strict_label_time_assertion_passed": true,
+  "online_metrics_contain_no_truth": true,
+  "evaluator_sha256": "038a23585b5619b053f96f71f8af40d4b41310f630f4d4eaa0adc3ed47118ed5"
+}

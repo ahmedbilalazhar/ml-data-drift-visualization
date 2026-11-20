@@ -1,0 +1,40 @@
+{
+  "status": "complete",
+  "protocol": "noaa-retrospective-known-probability-selective-label-replay-v1",
+  "interpretation": "retrospective simulated sampling on one fixed NOAA chronology; not prospective label operations or domain-level replication",
+  "dataset_id": "noaa-gsod-offutt-weather-1949-1999-v2",
+  "rows_scored": 10500,
+  "unscored_monitoring_remainder": 426,
+  "batches": 21,
+  "batch_size": 500,
+  "finite_stream_accuracy": 0.7505714285714286,
+  "design_replicates": 20,
+  "design_seed": 261117,
+  "policies": {
+    "targeted_10pct": "certainty sample of 10% lowest confidence; zero inclusion probability outside target so population accuracy is not estimable",
+    "stratified_random_audit": "10% lowest-confidence certainty stratum plus Bernoulli p=0.10 on remainder; known inclusion probabilities 1 or 0.10",
+    "simple_random_budget_matched": "Bernoulli p=0.19 across stream; same expected label count"
+  },
+  "sampling_unit": "row within batch; design-replicate summaries condition on the single observed finite monitoring stream",
+  "selection_label_order": "all feature-only policy selections are fixed before any monitoring correctness is joined for that design draw",
+  "model": "same frozen LogisticRegression and historical splits as the locked NOAA transfer runner; reconstructed batch accuracy exactly matched reference",
+  "source_sha256": {
+    "scripts/run_noaa_selective_label_replay.py": "df916864456fa4e4163ac6334a2935256055d07e5cfdcabf57d1540a3a3eb588",
+    "scripts/run_selective_label_audit.py": "5e7f0e517914472f23cfcc117f308f484b5b2f59c30c8e7310a1606ca5f495ae",
+    "data/processed/weather_noaa_1949_1999_v2/weather_ordered.csv": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+    "data/processed/weather_noaa_1949_1999_v2/weather_manifest.json": "9d3360a644575cac900b80681e3e39f84b92482eb11d5b3a887f51be7ab42a1f",
+    "src/drift_monitoring/phase3/core.py": "c5e5b6dba259c200c4fb17564d3859776d70316ad0a22519028d635d4f3137cf",
+    "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv": "fe869ec985fbdd9fc19a0a7cd235b51cdc4f3e26c161ba9d9ac0818ee704208b"
+  },
+  "output_sha256": {
+    "results/phase3/noaa_selective_label_replay_reproduction_smoke_20261117_v2/selected_label_log.csv.gz": "e05507602e826cbea6138290ca42b1433298b5a6c0b566e1df40d839f5912444",
+    "results/phase3/noaa_selective_label_replay_reproduction_smoke_20261117_v2/design_replicate_metrics.csv": "b4187460981d05720227c6870bf05df27d8186be3be17ff54937e2981c437529",
+    "results/phase3/noaa_selective_label_replay_reproduction_smoke_20261117_v2/design_summary.csv": "256b86a4248d02684875aba6ccf727d344dc81bd63f8bfd829dfcb89d65cbe41"
+  },
+  "software": {
+    "python": "3.14.0",
+    "numpy": "2.4.3",
+    "pandas": "3.0.1",
+    "scikit_learn": "1.8.0"
+  }
+}

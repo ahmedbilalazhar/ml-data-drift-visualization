@@ -1,0 +1,5 @@
+seed,task,mechanism,delay,method,accuracy,post_onset_accuracy,macro_f1,balanced_accuracy,initial_training_rows,update_opportunities,successful_updates,adaptation_row_uses,adaptation_row_use_cap,failed_local_region_fits,active_local_models_at_end,wall_seconds,released_rows_by_final_clock,queue_drain_rows_after_stream
+73116201,linear_probabilistic,M0_stationary,20,frozen,0.7276458333333333,0.7284444444444444,0.7251818903815797,0.724774434818652,4000,0,0,0,8000,0,0,0.697959000011906,37500,10500
+73116201,linear_probabilistic,M0_stationary,20,matched_global,0.7276666666666667,0.7284722222222222,0.724628283511789,0.7239322567608388,4000,4,4,8000,8000,0,0,0.6889171999937389,37500,10500
+73116201,linear_probabilistic,M0_stationary,20,matched_local,0.7236458333333333,0.7231111111111111,0.7204640934040414,0.7197464708403319,4000,4,4,8000,8000,0,3,0.6818138000089675,37500,10500
+73116201,linear_probabilistic,M0_stationary,20,matched_interaction,0.723625,0.7230833333333333,0.7204442771084338,0.7197272304509065,4000,4,4,8000,8000,0,0,0.6756679000100121,37500,10500

@@ -1,0 +1,132 @@
+{
+  "record_id": "idm-viz-scientific-extension-reconciliation-20261118-v1",
+  "created_local": "2026-11-18 Asia/Karachi",
+  "phase2_preservation": {
+    "path": "docs\\23i-2604_23i-2581DAV-phase2.docx",
+    "sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "expected_sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "matches_recorded_hash": true
+  },
+  "seasonal_stress_canonical": {
+    "run": "results\\phase3\\seasonal_stress_evaluation_20261118_v1",
+    "state": "complete",
+    "expected_cells": 90,
+    "completed_cells": 90,
+    "source_snapshot_mismatches": [],
+    "lock_sha256": "35ab0ff2f96c10fc5ee5813fb03dd7216fdbda695a2afa4579c5d1463092ada3",
+    "analysis_manifest_sha256": "62dff6b0ab3aca2dac1a24e8abbe72b10997e3f2f09d744382bceb413cecece6"
+  },
+  "seasonal_stress_clean_reproduction": {
+    "run": "results\\phase3\\seasonal_stress_reproduction_20261118_v1",
+    "state": "complete",
+    "expected_cells": 90,
+    "completed_cells": 90,
+    "source_snapshot_mismatches": [],
+    "lock_sha256": "8b07de916b3b07cea99f605cf51f305fc344bbde58ecd3d4f1247e442f41bc0f",
+    "analysis_manifest_sha256": "cc16129eb5d1ccdde2afd88c3b7fe20959e29f684e66672c10ebf7c0992b0d20"
+  },
+  "reproduction_comparison": {
+    "seed_level_rows": 90,
+    "fields_compared": [
+      "task",
+      "seed",
+      "accuracy_seasonal",
+      "accuracy_stationary",
+      "accuracy_delta",
+      "x7_alarm_rate",
+      "x7_stationary_rate",
+      "x7_alarm_delta",
+      "input_alarm_rate",
+      "input_stationary_rate",
+      "input_alarm_delta",
+      "pca_alarm_rate",
+      "correlation_alarm_rate",
+      "max_abs_true_probability_delta"
+    ],
+    "dataframes_exactly_equal": true,
+    "maximum_numeric_absolute_difference": 0.0,
+    "figures_byte_equal": {
+      "fig_seasonal_paired_accuracy.png": true,
+      "fig_seasonal_timeline.png": true
+    },
+    "timing_fields_excluded": "machine-dependent execution timings are not scientific outcomes"
+  },
+  "scientific_result": {
+    "task_families": 3,
+    "evaluation_seeds_per_task": 30,
+    "input_alarm_excess": [
+      0.744444,
+      0.768056,
+      0.764236
+    ],
+    "feature7_alarm_excess": [
+      0.790625,
+      0.790972,
+      0.795486
+    ],
+    "paired_accuracy_delta": [
+      -2.5e-05,
+      1e-06,
+      -8e-06
+    ],
+    "interpretation": "Nuisance-only seasonality triggered input alarms while paired frozen-model accuracy remained near unchanged in these synthetic families."
+  },
+  "high_dimension_run_reconciliation": {
+    "run": "results\\phase3\\strengthening_v3_evaluation_sensitivity_d32_d128",
+    "state": "complete",
+    "expected_cells": 1440,
+    "completed_cells": 1440,
+    "all_1440_cell_artifacts_checksum_verified": true,
+    "run_lock_sha256": "92722fe8d44d36a71f0e7b036be81303d82494eee5c54e9ab454f175318b6995",
+    "stale_failure_record": {
+      "message": "[WinError 5] Access is denied: 'C:\\\\Users\\\\hp\\\\Desktop\\\\University\\\\2. DAV\\\\3. Project\\\\results\\\\phase3\\\\strengthening_v3_evaluation_sensitivity_d32_d128\\\\.protocol_lock.json.4y68eogk.tmp' -> 'C:\\\\Users\\\\hp\\\\Desktop\\\\University\\\\2. DAV\\\\3. Project\\\\results\\\\phase3\\\\strengthening_v3_evaluation_sensitivity_d32_d128\\\\protocol_lock.json'",
+      "type": "PermissionError"
+    },
+    "disposition": "The historical lock remains unchanged. All expected scientific cells are present and hash-valid; final state is complete. Metadata retains a PermissionError from final lock replacement, so mark that metadata inconsistency rather than silently repairing the historical record."
+  },
+  "validation": {
+    "command": "C:\\Users\\hp\\anaconda3\\python.exe -m pytest -p no:cacheprovider tests/phase3 -q --tb=short",
+    "result": "201 passed in 52.19s (re-run after final changes)"
+  },
+  "report": {
+    "tex": "reports\\phase3\\seasonal_stress_20261118_v1\\REPORT.tex",
+    "tex_sha256": "a0fff23e68b2d432e7f5d51404bd97b0efa3bd303119f0408d0391df65069f66",
+    "pdf": "reports\\phase3\\seasonal_stress_20261118_v1\\REPORT.pdf",
+    "pdf_sha256": "1fec37479444e60b54e571f8d710db924988474b55098f584a2367f1549f478f",
+    "pages": 4,
+    "visually_reviewed": true,
+    "compile_exit_code": 0,
+    "visual_review": "all pages rendered and inspected; no clipping/overlap observed"
+  },
+  "scope": "Additive post-deadline research evidence. The submitted Phase 2 document and prior reports/results remain unchanged.",
+  "adaptation_schedule_labelbroker_v4": {
+    "run": "results/phase3/adaptation_schedule_audit_20261118_v4",
+    "state": "complete",
+    "protocol": "matched-cap-global-and-region-local-released-error-trigger-adaptation-v4-labelbroker-drain-accounting",
+    "evaluation_seeds": 30,
+    "seed_policy_cells": 720,
+    "forecast_rows": 69120,
+    "release_events": 69120,
+    "release_clock_audit": "Every one of 96 source cohorts is released once per seed/mechanism/delay/method cell; all 48,000 labels per cell are accounted for. Available by final forecast: 47,500 / 45,000 / 37,500 at delays 0 / 5 / 20; remaining labels are post-forecast queue drain only.",
+    "release_events_sha256": "f39808632b6f181d598931a780b3193c3df5b29320e1cc723b2db90935908a05",
+    "receipt_sha256": "974c5c1df32291fad98b948f916037f3d6aa9d25dec58ac8b4856732f100380a",
+    "forecast_equivalence_to_20261117_v2": "exact for accuracy, post-onset accuracy, macro-F1, balanced accuracy, fit counts, update counts and fit-row cost across all 720 seed-policy cells.",
+    "v3_disposition": "v3 forecast outcomes remain valid, but released_labels_by_last_forecast was accidentally measured after queue drain. The field is superseded by corrected v4; a notice is stored beside v3.",
+    "report": {
+      "directory": "reports/phase3/adaptation_schedule_audit_20261118_v19",
+      "receipt_sha256": "74a1ddd91ef46f7fd837d1fa023a091fd85215f9fe3f1014f9d5a0dc05019055",
+      "tex_sha256": "9191bf73f672c25ae041428eb96ddb145fbd088c6d5770559177e18c11528202",
+      "pdf_sha256": "bc9806c309a126270c83a46b6d177d8306e67272db24bc5874db434496508d81",
+      "pages": 2,
+      "simultaneous_familywise_intervals": 18,
+      "bootstrap_replicates": 20000,
+      "visual_reviewed": true,
+      "compile_exit_code": 0
+    },
+    "validation_latest": {
+      "command": "C:/Users/hp/anaconda3/python.exe -m pytest -p no:cacheprovider tests/phase3 -q --tb=short",
+      "result": "205 passed in 60.56s; includes full-run release-clock/accounting and report max-|t| contract tests."
+    },
+    "phase2_hash_unchanged": true
+  }
+}

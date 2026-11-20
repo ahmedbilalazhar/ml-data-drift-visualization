@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "cohort_records": 204,
+  "per_class_records": 1224,
+  "split_seeds_are_sensitivity_repeats_not_independent_domains": true,
+  "all_online_cache_rows_scored": 308232,
+  "comparison_batches": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "batch1_only_includes_batch2_outside_common_comparison": true,
+  "common_cohort_mae_batches_3_to_10": [
+    {
+      "history_window": "batch1",
+      "model": "logistic",
+      "raw_estimate_abs_error": 0.4277419278618835,
+      "calibrated_estimate_abs_error": 0.5533086697038726,
+      "reference_estimate_abs_error": 0.5340078131509297
+    },
+    {
+      "history_window": "batch1",
+      "model": "tree_depth6",
+      "raw_estimate_abs_error": 0.42572179286906625,
+      "calibrated_estimate_abs_error": 0.3737475337229392,
+      "reference_estimate_abs_error": 0.39889100723924825
+    },
+    {
+      "history_window": "batch1_2",
+      "model": "logistic",
+      "raw_estimate_abs_error": 0.17264155354177368,
+      "calibrated_estimate_abs_error": 0.3415795242865187,
+      "reference_estimate_abs_error": 0.3415827457923634
+    },
+    {
+      "history_window": "batch1_2",
+      "model": "tree_depth6",
+      "raw_estimate_abs_error": 0.3579723225610781,
+      "calibrated_estimate_abs_error": 0.40141892015915404,
+      "reference_estimate_abs_error": 0.40810474962813464
+    }
+  ],
+  "batch2_logistic_history1_only": [
+    {
+      "model": "logistic",
+      "raw_estimate_abs_error": 0.07839723892528942,
+      "calibrated_estimate_abs_error": 0.20683273184028125,
+      "reference_estimate_abs_error": 0.18763623444970312
+    },
+    {
+      "model": "tree_depth6",
+      "raw_estimate_abs_error": 0.12024449309431291,
+      "calibrated_estimate_abs_error": 0.06850881350286613,
+      "reference_estimate_abs_error": 0.06598715030648987
+    }
+  ],
+  "split_seed_sd_is_descriptive_only": true
+}

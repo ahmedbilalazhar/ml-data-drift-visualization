@@ -1,0 +1,89 @@
+{
+  "status": "exploratory_complete",
+  "protocol": "river-adwin-two-early-probes-sensitivity-v1",
+  "motivation": "Post hoc follow-up to the strict-cap one-probe ADWIN deadlock; not confirmatory.",
+  "adwin_version": "0.27.0",
+  "adwin_parameters": {
+    "delta": 0.002,
+    "clock": 1,
+    "max_buckets": 5,
+    "min_window_length": 5,
+    "grace_period": 10
+  },
+  "bootstrap_clocks": [
+    1,
+    2
+  ],
+  "bootstrap_rule": "two earliest batches, within the budget",
+  "selection_signal": "two initial probes or an ADWIN event from selected, released row-level errors",
+  "release_clock": "source_batch + delay < current_decision_clock",
+  "evaluation_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129
+  ],
+  "conditions": [
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6"
+  ],
+  "cells": 5040,
+  "decision_rows": 120960,
+  "elapsed_seconds": 46.237455800001044,
+  "warnings": [
+    "This schedule was devised after inspecting the one-probe result and is exploratory.",
+    "It reuses the same predictions and labels; it is not independent confirmation.",
+    "Two early probes consume two of the available audit cohorts; strict-cap policy volume differs from one-probe ADWIN.",
+    "ADWIN monitors supervised error and cannot detect input drift without labels."
+  ],
+  "source_sha256": {
+    "results/phase3/final_v1/online_batches.csv": "3c830d83a31a2f73ac46f44c23ce631757ea59622639afdd4a070a07be4900e3",
+    "results/phase3/final_v1/released_verification.csv": "0ff1b9498864965aa949350cf5894c55ae4d8d98d4eb93c7a52b64c33305f7d3",
+    "scripts/run_adwin_bootstrap_sensitivity.py": "17a33f8620d4b19f67d0ba816fb87ad81c79363056501e8d57c8511d6747cd1e",
+    "scripts/run_adwin_audit_baseline.py": "6af8b7af6740b5efd1773164f3142ae3f031f8ad00acfe0614e46c4fd54acfff",
+    "pyproject.toml": "7f968a0752404974768492d7249c43d0e7f1c33f50f58d50d8b49aa533821c56"
+  },
+  "output_sha256": {
+    "two_probe_per_seed.csv": "06d007067b17605891f4eba8aa9ffd8ed2bbe5063848b979ffcf3577fc8cdfd6",
+    "two_probe_decisions.csv": "4fffd68ddb8a54a5cf1ad9fc682f11bf006b12b9cc3e28143d35af2a015c26a1",
+    "two_probe_summary.csv": "a8c9e5c5747e552698f32978dd73ebd6758d20fa212091b2a1e65df2e26b92bf",
+    "paired_one_probe_contrasts.csv": "3368d3ec4a3269788964dd89aa81ec6fa9e6ce5234e3d054f341f145818506de"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "river": "0.27.0"
+  }
+}

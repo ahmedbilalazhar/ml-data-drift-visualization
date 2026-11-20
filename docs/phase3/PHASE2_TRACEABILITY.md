@@ -1,0 +1,68 @@
+# Phase 2 to Phase 3 traceability
+
+**Basis:** `docs/23i-2604_23i-2581DAV-phase2.docx` (preserved; SHA-256 `786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4`). No instructor feedback was received. This record distinguishes the submitted design from implementation substitutions and unresolved questions.
+
+Status meanings: `evaluated` means an implementation and result exist; `partial` means only a subset of the proposed behavior was evaluated; `substituted` means a different method was used; `deferred` means no evidence currently addresses the commitment.
+
+| Phase 2 commitment | Current implementation and evidence | Status | Claim boundary / remaining work |
+|---|---|---|---|
+| Five-layer pipeline: detection, localization, impact, visualization, decision | Frozen logistic monitor, input tests, feature ranks, PCA and clusters, confidence impact estimates, delayed replay, offline evidence view | partial | The layers are present, but their combined decision benefit is untested. |
+| Autoencoder latent anchor | Three-component PCA fit on historical training inputs | substituted | PCA is not an autoencoder or a reproduction of CADD/DriftLens. |
+| Causal feature graph and causal drift types | No causal discovery implementation | deferred | Feature ranks are descriptive evidence, not causes or responsibility. |
+| Feature and cluster localization | Original-feature KS rankings, frozen cluster summaries, and a targeted maximum-correlation-change detector evaluated on a fresh synthetic C6 seed set | partial | The dependence extension recovers the programmed pair under a specific covariance intervention; it is exploratory, synthetic-only evidence and does not establish general or causal localization. |
+| Average Confidence with calibration | Frozen isotonic correctness calibration on separate calibration data; raw AC and ATC-style comparators; released-label isotonic recalibration tested on one ELEC2 stream | partial | Recalibration reduced bias toward zero but did not improve equal-batch MAE at delays 0/5/20; no general calibration repair is shown. Transfer under conditional-only shift remains weak. |
+| Poisson-binomial impact interval | Exact plug-in distribution for the binary synthetic core; exact-vs-normal UCI check on identical cached correctness scores | partial | Both UCI interval methods covered 0/9 cohorts; exact mean width was 0.0234 versus 0.0258 for the normal approximation. Calibration parameter/reference uncertainty and correctness dependence remain omitted; no arbitrary-shift guarantee. |
+| Probability and upper bound of harm | Current-cohort plug-in concern score at h=0 | partial | Not a calibrated probability bound or a population-risk certificate. |
+| Harm forecast for h>0 | Persistence baselines at h=0/1/5 | partial | No learned future-risk predictor; the main estimator is current-cohort. |
+| Delays 0, 5, 20, 100 and selective labels | Core covers 0/5/20; a cached delay-100 availability replay found 0/5,040 outcomes available by the input horizon and all released by clock 124 | partial | Delay 100 was tested for release availability only, not adaptation or performance. Selection-bias correction and full selective-label evaluation remain. |
+| Alarm, feature evidence, impact and recommended action | Offline coordinated evidence view with release-filtered historical replay | partial | Not an operational security boundary; action recommendations have not been validated with users. |
+| Detection baselines | Original-feature KS, PCA KS, ATC and persistence comparators; paired KS/PCA comparison for the dependence extension | partial | Proposed DriftLens, Domino, ADWIN-U and benchmark detectors are not faithful implementations. The dependence detector has higher C6 sensitivity and higher stationary alarm burden in its targeted experiment. |
+| Adaptation baselines | Separate cumulative logistic adaptation study | partial | Does not yet compare all proposed policies at common label and training-effort budgets. |
+| Natural streams and held-out domains | UCI multiclass Gas Sensor cohort study with six split sensitivities/two learners, plus the fixed-model ELEC2 stream with delayed replay | partial | Two datasets improve breadth, but each has one temporal/domain protocol; ELEC2 lacks onset truth, normalized-date tie order is approximate, and neither supports broad generalization. |
+| Abrupt, incremental, gradual, recurrent, harmful and harmless events | Seven controlled conditions plus a separate XOR family; 1,500 seeds per task in a robustness extension | partial | Repetition narrows Monte Carlo uncertainty inside synthetic laws; it does not establish domain generality. |
+| Statistical comparisons over independent streams | Paired seed estimates and seed-level bootstrap | partial | Seeds are valid units for these generators, not independent natural datasets. |
+| Analyst comparison of table, separate and coordinated views | A coordinated evidence view exists; no analyst-performance outcome is measured | unsupported | No claim about improved analyst decisions; the original decision-effect question remains unanswered. |
+| Ablate latent, causal, cluster, calibration, interval and views | Calibration, latent-test and point-rule ablations exist | partial | Causal and view ablations are absent; latent detector removal cannot change the AC estimator by construction. |
+| Cost and workload metrics | Runtime, label budgets, audit allocations and selected adaptation costs | partial | Deployment episode burden, full system costs and human costs remain unmeasured. |
+| Reproducibility and provenance | Frozen manifests, seeds, checksums, label-safe replay, clean-extraction validation, and deterministic external interval/split extensions | evaluated | The package validates included analyses; it does not freshly rerun all historical classifier experiments. |
+
+## Phase 2 research-question disposition
+
+| Question | Current answer | Evidence required to strengthen it |
+|---|---|---|
+| RQ1: Does calibrated confidence estimate accuracy and anticipate harm under delayed labels? | Partially answered for current-cohort estimation; Gas Sensor calibration transfer failed across configurations, exact intervals did not restore coverage, and ELEC2 released-label recalibration did not reduce equal-batch MAE. Future harm remains unanswered. | Evaluate recalibration prospectively over multiple independent streams and test a separately trained, held-out future-risk model. |
+| RQ2: Does combined evidence improve localization? | Partially answered for marginal feature evidence in selected synthetic interventions. | Add dependence-pair and generating-region truth; compare evidence sources separately and in a locked fusion. |
+| RQ3: Do coordinated views improve analyst decisions? | Unevaluated. | The coordinated view is a prototype; no analyst-performance conclusion is drawn. |
+| RQ4: Do findings transfer across streams and regimes? | Partially answered within two synthetic task families and two external data sets. Gas Sensor split/model sensitivity reveals model/window dependence; ELEC2 shows the pipeline runs on a second stream but has no known onset labels. | More independently sourced natural streams, verified chronological metadata and held-out intervention families with frozen thresholds. |
+
+## Scientific-design caveats in the submitted Phase 2
+
+- It combines estimation, forecasting, observed harm, action choice and analyst benefit. These require separate targets and cannot be inferred from one another.
+- Under arbitrary conditional shift, unlabeled inputs alone do not identify target accuracy. Any prediction before labels needs explicit shift assumptions and out-of-family evaluation.
+- The Poisson-binomial interval treats calibrated correctness values as known Bernoulli probabilities. It omits calibration and historical-reference uncertainty and is not a distribution-free confidence interval.
+- A feature that changes distribution is not necessarily responsible for model harm. Causal wording requires an intervention or defensible causal design.
+- A large number of synthetic seeds does not replace independent data domains or human evaluation.
+- The proposed named baselines need protocol-fidelity audits. A simplified comparator must be labeled “style” or “inspired,” not reported as a reproduction.
+
+These are scientific limitations of the submitted proposal or its evidence model, not instructor feedback. The Phase 2 DOCX remains unmodified.
+
+## 16 November dependence extension
+
+The targeted dependence-change detector, its frozen threshold protocol, held-out results, and TeX supplement are documented in `DEPENDENCE_EXTENSION_PROTOCOL_20261116.md` and `../../reports/phase3/dependence_extension_20261116/DEPENDENCE_EXTENSION.tex`. This is a bounded exploratory extension addressing the known C6 blind spot. It is not evidence that all dependence drift is detected or that the selected feature pair caused model harm. Phase 2's submitted DOCX and the earlier report remain unchanged.
+
+## 16 November external validation extensions
+
+The exact-vs-normal interval analysis and two-history-window/six-split/two-model sensitivity analysis are in `UCI224_EXACT_INTERVAL_EXTENSION_20261116.md` and `UCI224_SPLIT_MODEL_SENSITIVITY_20261116.md`. Their reports are in `../../reports/phase3/uci224_exact_intervals_20261116/` and `../../reports/phase3/uci224_split_model_sensitivity_20261116_v2/`. The delay-100 release-availability analysis is in `DELAY100_AVAILABILITY_EXTENSION_20261116.md`. These analyses add evidence about numerical approximation, split/model sensitivity and label timing; none creates an additional independent dataset or resolves the conditional-shift identifiability problem.
+
+The ELEC2 second-domain stream run is locked in `ELEC2_TEMPORAL_EXTENSION_20261116.md` and reported in `../../reports/phase3/elec2_temporal_20261116/`. It adds 55 fixed-model monitoring batches with 0/5/20 delayed-label replay and retrospective cohort metrics. Input alarms occurred in all batches, but onset truth is absent, so alarm recall is undefined. The dataset's normalized date ordering has 11 tied date values with multiple weekday groups; this uncertainty is explicitly recorded.
+
+The released-label recalibration comparison is documented in `ELEC2_DELAYED_RECALIBRATION_20261116.md` and `../../reports/phase3/elec2_recalibration_20261116/`. On this single stream, cumulative isotonic recalibration reduced signed bias but slightly increased equal-batch MAE at all tested delays; interval coverage did not consistently improve. This result is retained as evidence that a straightforward mitigation did not solve calibration transfer.
+
+The prospective five-batch future-harm forecast is an additional synthetic outcome-prediction test specified in `FUTURE_HARM_FORECAST_EXTENSION_20261116.md`; editable TeX and figures are in `../../reports/phase3/future_harm_forecast_20261116_v10/`. It uses separate development and held-out seeds, a strict delayed-label availability clock, and no seed/condition predictors. Even a positive result would establish only prediction within these known synthetic laws; it cannot establish causality, analyst benefit, or transfer to natural streams. Residual weaknesses and the evidence needed to address them are listed in `PHASE3_REMAINING_WEAKNESSES_20261116.md`.
+
+The matched-budget ELEC2 calibration-family comparison is documented in `ELEC2_CALIBRATION_FAMILY_EXTENSION_20261116.md` and reported in `../../reports/phase3/elec2_calibration_family_20261116_v1/`. Cumulative Platt calibration and cumulative isotonic calibration use exactly the same labels released strictly before each forecast. Both reduced signed bias, but neither lowered MAE or ECE relative to frozen isotonic at delays 0/5/20, and interval coverage remained incomplete. This is one-stream exploratory evidence, not a calibration solution.
+
+The future-harm forecaster was also tested on a held-out conditional-randomization synthetic law. The first shared-onset pilot had time-only AUC 0.998, exposing a timeline confound. A balanced-onset follow-up (batches 5/9/13/17) reduced but did not eliminate time predictability: time-only Brier 0.238, unlabeled-monitor 0.188, and released-label 0.194. Seed-level bootstrap did not show a clear Brier advantage for adding released labels over unlabeled features. Protocols, both runs, and the TeX report are in `FUTURE_HARM_UNSEEN_FAMILY_PROTOCOL_20261116.md`, `FUTURE_HARM_ONSET_RANDOMIZED_FOLLOWUP_20261116.md`, `../../results/phase3/future_harm_unseen_family_balanced_20261116_v1/`, and `../../reports/phase3/future_harm_unseen_family_balanced_20261116_v1/`. This remains synthetic-only evidence.
+## UCI external delayed-label and metadata follow-up (16 November 2026)
+
+The Day 3 improvement report identified that the UCI 224 external evaluation was retrospective and that batch-1 source composition could be confused with its 89-row reference evaluation partition. A new versioned metadata run explicitly records both denominators and reproduces all original cohort performance and alarm metrics exactly. A separate cohort-clock replay reuses the frozen classifier and predictions, updating only the logistic correctness calibrator using outcomes satisfying `source_batch + delay < forecast_batch` for delays 0, 1 and 2. Three focused tests cover strict release order, current/future label invariance, and denominator sums; all five focused extension tests pass. Results and limits are detailed in `reports/phase3/uci224_delayed_replay_20261116_v3/REPORT.tex`. This remains a simulated release schedule over one ordered dataset, not a natural delayed-label trace.

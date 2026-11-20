@@ -1,8 +1,22 @@
 # Detector configs (roadmap Sec. 8.1): same universe/reference/windows for all.
-detectors: [ks, wasserstein]
+detectors: [ks, wasserstein, js, adwin-inspired, mmd-rbf, joint-logreg]
+joint-logreg:
+  cv: 2-fold
+  range: "[0.5,1.0]"
 ks:
   correction: holm
   operating_point: 10-per-1000-stationary
 wasserstein:
   normalized: pooled-std
+js:
+  bins: 20
+  bounded: "[0,1]"
+adwin-inspired:
+  note: fixed-window mean-change proxy, NOT full adaptive ADWIN
+mmd-rbf:
+  max_n: 400
+  bandwidth: median-heuristic
+localization:
+  measured: [ks, js, wasserstein]
+  inferred: [dde-scores]
 models: [tree-d6, logreg-C1]

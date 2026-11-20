@@ -1,0 +1,13 @@
+# Phase 2 research figures
+
+Two original programmatic figures describe proposed research: a numbered research workflow and a swimlane-style data-flow architecture. The figures are grounded in the user's drift-monitoring corpus, empirical diagram-design research and publisher production guidance. The evidence and selection rationale are documented in `diagram_design_research.md`; inspected pages are retained separately under `literature_inspection/` and are not reproduced in the submission.
+
+The workflow maps all twelve required methodology stages. The architecture distinguishes computations, retained records and label eligibility; one dark arrow style denotes information dependencies. The input and released-label channels write a common cohort ledger. The ledger feeds display and policy assessment separately. Evaluator-only synthetic truth never feeds monitoring. An unconnected crossing uses an underpass. Invalid records require repair; incomplete labels defer.
+
+Each figure has editable SVG, vector PDF, 300-dpi PNG and a smaller inspection PNG. Both vector masters are 180 × 166.667 mm and are intended to span two paper columns. Text is at least 9.69 pt at native size and above 9 pt at the current submission width. PDF fonts are embedded TrueType Arial; no PDF raster images are used. Colour is reinforced by lane labels and conventional shapes.
+
+`generate_figures.py` reproduces both figures using common SVG/PDF geometry, then renders PNG previews. It requires Python with reportlab, pypdf, pypdfium2 and Windows Arial fonts. The generator records the submission SHA256 **at figure-generation time** in `figure_manifest.json`; that historical hash is not a claim that every later prose revision regenerated the figures. It does not change Word or research implementation files.
+
+The existing LaTeX file includes the two PDFs. Publisher practices are distinguished from formal UML/BPMN certification and from validated reader performance. No completed experiment is depicted. The built-in editor compiler is available and has returned successful compilation during the 6 November review. `submission_validation.json` records the saved-source hash covered by its latest recorded compiler check. Compilation success does not establish full submission page-layout quality; no separate submission PDF is exported for this review.
+
+The current two-hour review record is `phase2_review_20261106_two_hour.md`; `phase2_review_20261106.md` preserves the preceding review. Later checks compare the figures' twelve stages, two classifiers, six mechanisms, thirty seeds and evidence-flow semantics against the saved protocol without rewriting the generation-time manifest.

@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "mode": "development",
+  "seeds_per_task": 5,
+  "online_rows": 1440,
+  "evaluator_rows": 1440,
+  "release_rows": 720,
+  "prediction_truth_joins": 1440,
+  "release_ids_equal_across_delays": true,
+  "preprediction_budget_exact": true,
+  "no_same_or_future_labels": true,
+  "queues_drained": true,
+  "online_truth_absent": true,
+  "bootstrap_replicates": 2000,
+  "resampling_unit": "seed"
+}

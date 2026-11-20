@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "dataset_rows": 27188,
+  "monitor_batches": 55,
+  "final_partial_batch_n": 188,
+  "row_weighted_accuracy": 0.6278873032220097,
+  "row_weighted_balanced_accuracy": 0.6217468667463633,
+  "row_weighted_macro_f1": 0.6036064622081108,
+  "equal_batch_estimate_mae": 0.05857105713432565,
+  "equal_batch_estimate_bias": -0.01062164878134511,
+  "row_weighted_correctness_brier": 0.21587817015160304,
+  "equal_batch_ece10": 0.080120584568473,
+  "interval_coverage_batches": 23,
+  "input_alarm_batches": 55,
+  "no_ground_truth_drift_onset": true,
+  "delay_release_counts": [
+    {
+      "delay": 0,
+      "total_batch_labels": 27188,
+      "batches": 55,
+      "verified_by_input_end": 55,
+      "first_release": 1,
+      "final_release": 55,
+      "unresolved_at_input_end": 0,
+      "labels_after_drain": 27188
+    },
+    {
+      "delay": 5,
+      "total_batch_labels": 27188,
+      "batches": 55,
+      "verified_by_input_end": 50,
+      "first_release": 6,
+      "final_release": 60,
+      "unresolved_at_input_end": 5,
+      "labels_after_drain": 27188
+    },
+    {
+      "delay": 20,
+      "total_batch_labels": 27188,
+      "batches": 55,
+      "verified_by_input_end": 35,
+      "first_release": 21,
+      "final_release": 75,
+      "unresolved_at_input_end": 20,
+      "labels_after_drain": 27188
+    }
+  ],
+  "online_truth_columns_absent": true,
+  "input_hashes": {
+    "online_batches.csv": "ae7b02e2080f3238a0fc0ec160bcc39dcb19572067c9700e00616b591affd281",
+    "evaluator_truth.npz": "4d6194014a2dbea6e2846e946cf3d85bc368b327dbb7c0ae9f4ecb047457be33",
+    "protocol_lock.json": "5e366eb71760c5b31d68f6e9a32dd1773e9892373baa83d154cade082d7182b1"
+  }
+}

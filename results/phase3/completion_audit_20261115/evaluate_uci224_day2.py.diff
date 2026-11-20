@@ -1,0 +1,175 @@
+--- packaged/evaluate_uci224_day2.py
++++ current/evaluate_uci224_day2.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import hashlib
++import argparse
+ import json
+ import zipfile
+ from collections import Counter
+@@ -26,22 +27,67 @@
+ def load_cohorts():
+     cohorts = {}
+     with zipfile.ZipFile(ARCHIVE) as archive:
++        if archive.testzip() is not None:
++            raise ValueError("UCI source archive failed CRC validation")
+         for batch in range(1, 11):
+-            lines = archive.read(f"Dataset/batch{batch}.dat").decode("ascii").splitlines()
+-            x = np.zeros((len(lines), 128), dtype=np.float64)
+-            y = np.empty(len(lines), dtype=np.int8)
+-            for row, line in enumerate(lines):
+-                tokens = line.split()
+-                y[row] = int(tokens[0])
+-                for token in tokens[1:]:
+-                    feature, value = token.split(":")
+-                    x[row, int(feature) - 1] = float(value)
+-            cohorts[batch] = (x, y)
++            contents = archive.read(f"Dataset/batch{batch}.dat").decode("ascii")
++            cohorts[batch] = parse_batch(contents, batch)
+     return cohorts
++
++
++def parse_batch(contents, batch):
++    lines = [line for line in contents.splitlines() if line.strip()]
++    if not lines:
++        raise ValueError(f"batch {batch} is empty")
++    x = np.zeros((len(lines), 128), dtype=np.float64)
++    y = np.empty(len(lines), dtype=np.int8)
++    for row, line in enumerate(lines):
++        tokens = line.split()
++        try:
++            label = int(tokens[0])
++        except (IndexError, ValueError) as error:
++            raise ValueError(f"invalid class label in batch {batch}, row {row + 1}") from error
++        if label not in CLASSES:
++            raise ValueError(f"unexpected class {label} in batch {batch}, row {row + 1}")
++        y[row] = label
++        seen_features = set()
++        for token in tokens[1:]:
++            try:
++                feature_token, value_token = token.split(":", maxsplit=1)
++                feature = int(feature_token)
++                value = float(value_token)
++            except ValueError as error:
++                raise ValueError(f"malformed feature in batch {batch}, row {row + 1}") from error
++            if not 1 <= feature <= 128 or feature in seen_features or not np.isfinite(value):
++                raise ValueError(f"invalid or duplicate feature in batch {batch}, row {row + 1}")
++            seen_features.add(feature)
++            x[row, feature - 1] = value
++    if not np.isfinite(x).all():
++        raise ValueError(f"non-finite feature in batch {batch}")
++    return x, y
++
++
++def historical_split(labels):
++    labels = np.asarray(labels)
++    if labels.ndim != 1 or len(labels) == 0:
++        raise ValueError("historical labels must be a non-empty vector")
++    indices = np.arange(len(labels))
++    train, holdout = next(StratifiedShuffleSplit(
++        n_splits=1, test_size=0.4, random_state=2242026).split(indices, labels))
++    calibration_local, reference_local = next(StratifiedShuffleSplit(
++        n_splits=1, test_size=0.5, random_state=2242027).split(holdout, labels[holdout]))
++    calibration, reference = holdout[calibration_local], holdout[reference_local]
++    if len(set(train) & set(calibration)) or len(set(train) & set(reference)) or len(set(calibration) & set(reference)):
++        raise AssertionError("historical partitions overlap")
++    if set(np.concatenate((train, calibration, reference))) != set(indices):
++        raise AssertionError("historical partitions do not cover batch 1 exactly")
++    return train, calibration, reference
+ 
+ 
+ def holm(pvalues):
+     pvalues = np.asarray(pvalues, dtype=float)
++    if pvalues.ndim != 1 or not len(pvalues) or not np.isfinite(pvalues).all() or np.any((pvalues < 0) | (pvalues > 1)):
++        raise ValueError("Holm correction requires a non-empty vector of finite p-values in [0,1]")
+     order = np.argsort(pvalues)
+     adjusted = np.empty_like(pvalues)
+     running = 0.0
+@@ -52,25 +98,21 @@
+     return adjusted
+ 
+ 
+-def main():
++def main(output_dir=None):
++    out = Path(output_dir) if output_dir is not None else OUT
++    if out.exists():
++        raise FileExistsError(f"output already exists; choose a new versioned path: {out}")
+     lock = json.loads(LOCK.read_text(encoding="utf-8"))
+     actual_hash = hashlib.sha256(ARCHIVE.read_bytes()).hexdigest()
+     if actual_hash != lock["dataset"]["archive_sha256"]:
+         raise RuntimeError("source archive hash differs from locked protocol")
+     cohorts = load_cohorts()
+     x_hist, y_hist = cohorts[1]
+-    indices = np.arange(len(y_hist))
+-    train_indices, holdout_indices = next(StratifiedShuffleSplit(
+-        n_splits=1, test_size=0.4, random_state=2242026).split(indices, y_hist))
+-    calibration_local, reference_local = next(StratifiedShuffleSplit(
+-        n_splits=1, test_size=0.5, random_state=2242027).split(
+-            holdout_indices, y_hist[holdout_indices]))
+-    calibration_indices = holdout_indices[calibration_local]
+-    reference_indices = holdout_indices[reference_local]
++    train_indices, calibration_indices, reference_indices = historical_split(y_hist)
+     train_x, train_y = x_hist[train_indices], y_hist[train_indices]
+     calibration_x, calibration_y = x_hist[calibration_indices], y_hist[calibration_indices]
+     reference_x, reference_y = x_hist[reference_indices], y_hist[reference_indices]
+-    if set(np.concatenate([train_indices, calibration_indices, reference_indices])) != set(indices):
++    if set(np.concatenate([train_indices, calibration_indices, reference_indices])) != set(range(len(y_hist))):
+         raise AssertionError("historical partition does not exactly cover batch 1")
+ 
+     scaler = StandardScaler().fit(train_x)
+@@ -88,11 +130,12 @@
+     reference_input = reference_x
+     reference_pca = pca.transform(scaler.transform(reference_x))
+ 
+-    OUT.mkdir(parents=True, exist_ok=False)
+-    (OUT / "protocol_lock.json").write_text(json.dumps({
++    out.mkdir(parents=True, exist_ok=False)
++    (out / "protocol_lock.json").write_text(json.dumps({
+         **lock,
+-        "status": "executed",
++        "status": "running",
+         "source_archive_sha256_verified": actual_hash,
++        "implementation_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+         "historical_partition_row_indices": {
+             "batch1_train": train_indices.tolist(),
+             "batch1_calibration": calibration_indices.tolist(),
+@@ -157,7 +200,7 @@
+             "class_counts": json.dumps(dict(sorted(counts.items()))),
+             "class_proportions": json.dumps({str(k): v / len(y_eval) for k, v in sorted(counts.items())}),
+         })
+-        np.savez_compressed(OUT / f"batch{batch:02}_predictions.npz", prediction=prediction,
++        np.savez_compressed(out / f"batch{batch:02}_predictions.npz", prediction=prediction,
+                             probability=probabilities, confidence=confidence,
+                             calibrated_correctness=calibrated_correctness)
+         for feature, pvalue in enumerate(pvalues):
+@@ -165,11 +208,15 @@
+                               "raw_p": float(pvalue), "holm_adjusted_p": float(adjusted[feature]),
+                               "rejected": bool(adjusted[feature] < 0.05)})
+ 
+-    pd.DataFrame(cohort_rows).to_csv(OUT / "cohort_metrics.csv", index=False)
+-    pd.DataFrame(class_rows).to_csv(OUT / "class_metrics.csv", index=False)
+-    pd.DataFrame(test_rows).to_csv(OUT / "input_tests.csv", index=False)
++    pd.DataFrame(cohort_rows).to_csv(out / "cohort_metrics.csv", index=False)
++    pd.DataFrame(class_rows).to_csv(out / "class_metrics.csv", index=False)
++    pd.DataFrame(test_rows).to_csv(out / "input_tests.csv", index=False)
+     summary = pd.DataFrame(cohort_rows)
+-    summary.to_json(OUT / "summary.json", orient="records", indent=2)
++    summary.to_json(out / "summary.json", orient="records", indent=2)
++    run_lock = json.loads((out / "protocol_lock.json").read_text(encoding="utf-8"))
++    run_lock["status"] = "complete"
++    run_lock["completed_cohorts"] = len(cohort_rows)
++    (out / "protocol_lock.json").write_text(json.dumps(run_lock, indent=2), encoding="utf-8")
+     print(json.dumps({
+         "status": "complete", "cohorts": len(cohort_rows),
+         "monitoring_rows": int(summary.loc[summary.batch > 1, "cohort_rows"].sum()),
+@@ -183,4 +230,8 @@
+ 
+ 
+ if __name__ == "__main__":
+-    main()
++    parser = argparse.ArgumentParser(description="Run the locked UCI 224 external cohort evaluation.")
++    parser.add_argument("--out", type=Path, default=OUT,
++                        help="new result directory; existing directories are never overwritten")
++    arguments = parser.parse_args()
++    main(arguments.out)

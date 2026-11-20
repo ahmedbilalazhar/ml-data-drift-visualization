@@ -16,11 +16,23 @@ from drift_monitoring.orchestration.runner import run_stream_experiment
 
 OUT = ROOT / "results" / "runs"
 
+_FALLBACK_TIDS = ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]
+
+
+def load_templates():
+    import yaml
+    p = ROOT / "configs" / "scenarios" / "e0_core.yaml"
+    if p.exists():
+        t = (yaml.safe_load(p.read_text()) or {}).get("templates")
+        if t:
+            return list(t)
+    return list(_FALLBACK_TIDS)
+
 def main():
     tracemalloc.start()
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
-    for tid in ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]:
+    for tid in load_templates():
         spec = ScenarioSpec(template_id=tid, seed=0,
                             n_train=2000, n_calib=2000, n_test=6000)
         df, truth = generate_stream(spec)

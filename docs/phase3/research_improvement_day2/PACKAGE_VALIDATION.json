@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "day2_version": "v1.3 corrected split",
+  "primary_results": "results/external_uci224_day2_v2",
+  "superseded_v1_retained": true,
+  "report_pages": 3,
+  "pdf_visual_inspection": "passed",
+  "tests_phase3": "35 passed in 17.87 seconds",
+  "preservation_checks": "Phase 2 DOCX, Phase 3 implementation PDF, submitted archive hashes match baseline",
+  "archive_extraction": "passed; clean extraction has 57 members; archive CRC passed; required report, corrected result CSV, Day 1 archive, and dataset all present",
+  "dataset_sha256_in_archive": "91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4"
+}

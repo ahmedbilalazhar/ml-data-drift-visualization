@@ -1,0 +1,58 @@
+{
+  "objective": "Extend held-out dependence-detector stability over locked Gaussian pair interventions, strengths, and batch sizes",
+  "started_local": "2026-11-16T13:19:24.255363+05:00",
+  "started_utc": "2026-11-16T08:19:24.255462+00:00",
+  "stage": "stopped at user request; held-out evaluation incomplete",
+  "elapsed_wall_seconds": 3743.89,
+  "measured_compute_seconds": 295.54,
+  "protocol": "docs/phase3/DEPENDENCE_STABILITY_PROTOCOL_20261116_v1.md",
+  "protocol_sha256": "171df720f93fcf5604dc96694707954a4506b4ce6e34761aa1bd29844806bd1c",
+  "runner": "scripts/run_dependence_stability.py",
+  "runner_sha256": "e7dc76f5355fb525e4e12de603fc67efb73ab30958a35b9eb42ba1ee12877e1e",
+  "evaluator": "scripts/evaluate_dependence_stability.py",
+  "tests": [
+    "tests/phase3/test_dependence_stability.py"
+  ],
+  "test_result": "5 passed in 5.60 seconds",
+  "commands": [
+    {
+      "command": "C:\\Users\\hp\\anaconda3\\python.exe -m pytest tests\\phase3\\test_dependence_stability.py tests\\phase3\\test_dependence_detector.py -q",
+      "exit_code": 0
+    },
+    {
+      "command": "C:\\Users\\hp\\anaconda3\\python.exe scripts\\run_dependence_stability.py --mode development --out results/phase3/dependence_stability_20261116_v1_development",
+      "exit_code": 0,
+      "rows": 2160,
+      "seeds": 30
+    },
+    {
+      "command": "C:\\Users\\hp\\anaconda3\\python.exe scripts\\run_dependence_stability.py --mode evaluation --threshold-file results/phase3/dependence_stability_20261116_v1_development/threshold.json --out results/phase3/dependence_stability_20261116_v1_evaluation",
+      "exit_code": "interrupted_by_user",
+      "process_id": 32824,
+      "process_cpu_seconds_before_stop": 289.94,
+      "partial_output": "No batch result or CSV was checkpointed; evaluation output directory exists but is empty."
+    }
+  ],
+  "exit_codes": {
+    "scientific_unit_tests": 0,
+    "development": 0,
+    "evaluation": "interrupted_by_user"
+  },
+  "result_paths": [
+    "results/phase3/dependence_stability_20261116_v1_development",
+    "results/phase3/dependence_stability_20261116_v1_evaluation (empty, retained)"
+  ],
+  "failed_attempts": [
+    "Held-out stability run exceeded expected wall time, made inadequate progress, and had no per-seed checkpoints; stopped at user request. No held-out findings are available."
+  ],
+  "completed_tests": [
+    {
+      "suite": "dependence detector tests",
+      "passed": 5,
+      "elapsed_seconds": 5.6
+    }
+  ],
+  "exact_next_command": "C:\\Users\\hp\\anaconda3\\python.exe scripts\\run_dependence_stability.py --mode evaluation --threshold-file results/phase3/dependence_stability_20261116_v1_development/threshold.json --out results/phase3/dependence_stability_20261116_v2_evaluation",
+  "development_threshold_lock": "results/phase3/dependence_stability_20261116_v1_development/threshold.json",
+  "updated_utc": "2026-11-16T09:21:48.148775+00:00"
+}

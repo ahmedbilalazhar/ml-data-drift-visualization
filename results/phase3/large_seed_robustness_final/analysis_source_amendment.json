@@ -1,0 +1,7 @@
+{
+  "scope": "analysis output labeling only",
+  "locked_source_sha256": "2038360fbb2e0bb52fa1e8ee06b61b15c8d5341f83d1d379655d587d8ac4fd93",
+  "executed_source_sha256": "9066b88d90cad051dbe54a7d12c16768e7538980916503c17e7e99ab93144f75",
+  "description": "A post-start output-label correction preserves the metric name in paired-bootstrap rows; it does not change metrics, resampling, run data, predictions or conditions.",
+  "scientific_outputs_changed": false
+}

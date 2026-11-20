@@ -1,0 +1,15 @@
+{
+  "pages": 6,
+  "render_seconds": 2.388556100006099,
+  "pdf_sha256": "d67da833750c0d8b117338d57f578a66587e6fb54a5ed9c220465af058234427",
+  "source_sha256": "368d710dd468e9e760668bb389608f273e8e1cb266f0ce4bb3f3555a71a1e993",
+  "renderer_sha256": "0e155e68cc2ad8fc9158f4cf9554f3785d81f1e25c518136bc6ded9855697560",
+  "page_text_characters": [
+    3580,
+    2393,
+    181,
+    188,
+    2856,
+    806
+  ]
+}

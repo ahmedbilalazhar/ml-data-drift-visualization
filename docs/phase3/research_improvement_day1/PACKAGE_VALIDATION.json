@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "archive": "output/phase3/IDM_Viz_Phase3_Day1_v1.1_Validated.zip",
+  "initial_archive": "output/phase3/IDM_Viz_Phase3_Day1_Research_Improvement.zip",
+  "clean_extraction": "tmp/phase3_day1_extract_01",
+  "embedded_core_archive_sha256": "2a055ce833894338f1a0e9da8b9008acfcc86d0deb6e5fdba89e61303d9edfbb",
+  "source_core_archive_sha256": "2a055ce833894338f1a0e9da8b9008acfcc86d0deb6e5fdba89e61303d9edfbb",
+  "pdf_pages": 3,
+  "pdf_extracted_characters": 9098,
+  "pdf_reference_text_check": "passed",
+  "pdf_visual_inspection": "all 3 pages rendered and inspected",
+  "laTeX_compiler": "Tectonic 0.17.0",
+  "scientific_experiments_rerun": false,
+  "tests_rerun": false
+}

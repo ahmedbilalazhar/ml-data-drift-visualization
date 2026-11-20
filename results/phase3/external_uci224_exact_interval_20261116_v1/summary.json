@@ -1,0 +1,19 @@
+{
+  "status": "exploratory_complete",
+  "cohorts": 9,
+  "cohort_unit_warning": "nine sequential cohorts from one dataset are not independent replications",
+  "exact_coverage_count": 0,
+  "normal_coverage_count": 0,
+  "mean_exact_width": 0.02338211415936944,
+  "mean_normal_width": 0.025802992731058707,
+  "mean_width_difference_exact_minus_normal": -0.0024208785716892667,
+  "mean_absolute_endpoint_difference": 0.001295006379505575,
+  "calibration_transfer_error_unchanged": 0.544657889410022,
+  "source_sha256": "91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4",
+  "limitations": [
+    "plug-in q treated as known",
+    "independent correctness assumption",
+    "no reference or calibration parameter uncertainty",
+    "no arbitrary-shift guarantee"
+  ]
+}

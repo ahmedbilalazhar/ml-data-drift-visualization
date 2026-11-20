@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "bootstrap_replicates": 5000,
+  "bootstrap_unit": "seed",
+  "input_sha256": {
+    "results/phase3/cluster_mapping_sensitivity_20261117_v2/audit_receipt.json": "532f1e5964da155db0098c02ec313478fee10d7ccceedb70e18a191eca9194d6",
+    "results/phase3/cluster_mapping_sensitivity_20261117_v2/cluster_mapping_sensitivity.csv": "e75bbdfe2ab8e147614cb49f3e85469d51a0bec186ac0a936dab1c2db033adf3",
+    "scripts/summarize_cluster_mapping_sensitivity.py": "954e5df1ff11f03d72a4be40d8ca56c2806dcd1956840b93e406a8022200ebfc"
+  },
+  "output_sha256": {
+    "reports/phase3/cluster_mapping_sensitivity_20261117_v1/seed_bootstrap_summary.csv": "ea68037a5e977e2cb1e9eb22b83944ded612b689816dc85f2ec54718dce0d2b1",
+    "reports/phase3/cluster_mapping_sensitivity_20261117_v1/cluster_mapping_sensitivity.png": "286035bffdc71fffaad028484dd2bedf66db4dcf13f77f9c81a4a463c0983bec",
+    "reports/phase3/cluster_mapping_sensitivity_20261117_v1/cluster_mapping_sensitivity.svg": "45f10dd72403f1c998cb0feb745ab784de62f35b04b2c1c0f39a8f7c7417c5d9",
+    "reports/phase3/cluster_mapping_sensitivity_20261117_v1/CLUSTER_MAPPING_SENSITIVITY.tex": "379e6f369ca54cc91c56c1ea412474d14513505f1b8021b23f94e69cbd5923d5",
+    "reports/phase3/cluster_mapping_sensitivity_20261117_v1/CLUSTER_MAPPING_SENSITIVITY.pdf": "8e8ee299f37b11c885bcab91021f5c912db5b74e1900dfc961b54ce6f4f9bd0c"
+  }
+}

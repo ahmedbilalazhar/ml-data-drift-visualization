@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "run_dir": "results/phase3/localization_audit_20261117_v3",
+  "input_sha256": {
+    "results/phase3/localization_audit_20261117_v3/audit_receipt.json": "31be58092fcf42db87561d22ebffdb2b5aae2eea72dd3110c002d17cf94fea15",
+    "results/phase3/localization_audit_20261117_v3/region_localization.csv": "dc3618328ccbac22379a1e42fda23b527466db90926e7141721603559ec053c0",
+    "results/phase3/localization_audit_20261117_v3/historical_cluster_mappings.json": "48c62a941df9b2e3af4803a9633e81a7448c9f1f6824c2cec2a2ed40685b6104",
+    "results/phase3/localization_audit_20261117_v3/dependence_pair_localization.csv": "93f284a4e3e15cabd6aae4bdfb937ef4f7b403a5303a5bf35579d2a468979525"
+  },
+  "summarizer_sha256": "231478c8972cf8c44597b8a3141777160f462be39d5ca675d1c415065d03e271",
+  "output_sha256": {
+    "reports/phase3/localization_audit_20261117_v5/cluster_mapping_seed_bootstrap.csv": "77e67b13a3366115ca1db799fbf729d44ccf3b5047246c8b0251f06cf8652802",
+    "reports/phase3/localization_audit_20261117_v5/dependence_detection.png": "6f8b385466dc354f72ea6d635bd739d24d28f922cb1add2f6051d30f2f60eac5",
+    "reports/phase3/localization_audit_20261117_v5/dependence_detection.svg": "b2da48a71e8e6db49ac047360db32582c62c0310b600e7b36a75bb8cfc8a8f4e",
+    "reports/phase3/localization_audit_20261117_v5/intervened_region_seed_bootstrap.csv": "1c2f9bb3d443391c3bf464c200ce3d8fbf359bc6c246790e10c9230575ab3d76",
+    "reports/phase3/localization_audit_20261117_v5/LOCALIZATION_AUDIT.tex": "15a1e6fb7fb69943f898eccca7adb4cc4095a693eb467bfc269ca61834a0c248",
+    "reports/phase3/localization_audit_20261117_v5/pair_localization_seed_bootstrap.csv": "2dd5bd98bbb59cfe4d7363e1b1ce133bfadcb975132d5b2d6f69531d3f9489a4",
+    "reports/phase3/localization_audit_20261117_v5/region_localization.png": "015e8d264b25c33df079c5270bae31e568af9d0092c50594bc76018b2d5809a9",
+    "reports/phase3/localization_audit_20261117_v5/region_localization.svg": "bec902b9d2bedb134721f1d221383c290a0e02af793bc7a1f2739d9314f17232"
+  },
+  "bootstrap_replicates": 2000,
+  "bootstrap_unit": "seed; batch-level observations aggregated within seed first"
+}

@@ -1,0 +1,10 @@
+# Scientific environment actually used; Python 3.13.5 (Anaconda).
+numpy==2.1.3
+scipy==1.17.0
+scikit-learn==1.8.0
+pandas==2.3.3
+matplotlib==3.10.8
+pytest==8.3.4
+threadpoolctl==3.5.0
+psutil==5.9.0
+PyYAML==6.0.2

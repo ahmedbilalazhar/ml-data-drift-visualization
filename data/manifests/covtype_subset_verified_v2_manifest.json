@@ -1,0 +1,22 @@
+{
+  "seed": 0,
+  "n": 83665,
+  "strategy": "stratified-balanced ~14.3k/class",
+  "replay_order": "event_id ascending = subsample-sorted source order (EXPLICITLY constructed, not natural time)",
+  "class_counts": {
+    "1": 14285,
+    "2": 14285,
+    "3": 14285,
+    "4": 2747,
+    "5": 9493,
+    "6": 14285,
+    "7": 14285
+  },
+  "file": "data/processed/verified_v2/covtype_subset100k.parquet",
+  "dataset_id": "uci-covertype-stratified-verified-v2",
+  "source_row_ids_path": "data/processed/verified_v2/covtype_source_row_ids.csv",
+  "source_row_ids_sha256": "c247269ed6ba262879db60ac366df6eb4f9b0d04feea158674a7e102e143e141",
+  "sha256": "c7d6c07d9e1ff22c8c5d0352896b1601433376df7dd8df2a2a7c46cf74a7c500",
+  "readback_verified": true,
+  "supersedes_for_new_runs": "unreadable legacy data/processed/covtype_subset100k.parquet; legacy file preserved"
+}

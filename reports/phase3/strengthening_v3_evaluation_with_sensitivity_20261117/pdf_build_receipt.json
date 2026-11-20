@@ -1,0 +1,67 @@
+{
+  "pdf_sha256": "4915fb5c7b0128a3c5e82fc1f77853fa16ba25b2238a3b98733f3d2bc552c99d",
+  "report_tex_sha256": "a9a25678d5fcaa4476b386b637d75648cc61c8fbe24d5dbc5f6753c3bf11015d",
+  "tables_tex_sha256": "350ff13b66c640e6828275fb9df6a0dbf3597d3418165025bdf86186283bbc2b",
+  "page_count": 10,
+  "qa_render_pages": [
+    {
+      "file": "page-01.png",
+      "sha256": "af90277f24fd4d3f0e22a48fb3f4ea221e2addce82a4cef564eb2e9d5a1cc181"
+    },
+    {
+      "file": "page-02.png",
+      "sha256": "542d7515f6ef8990503bd18b13cdaafd6e2ecfabb2fdd8ad6154674ece11bece"
+    },
+    {
+      "file": "page-03.png",
+      "sha256": "e4d7db38b47e68f36b19e741789530292d81af3dbf8667675a30463b374f7ae7"
+    },
+    {
+      "file": "page-04.png",
+      "sha256": "bb2993a7e10c3ffd4af60d152609e8038e9fb3e95a8ce18722bcb692d2157b98"
+    },
+    {
+      "file": "page-05.png",
+      "sha256": "5aceb958321b29f5350f9043e7076c4860aa3db1a80e1c49c2f0f8bc09495407"
+    },
+    {
+      "file": "page-06.png",
+      "sha256": "5c1603bbb3b42e3fcabe34fa38673708013418ff32168e1998715d3680c13092"
+    },
+    {
+      "file": "page-07.png",
+      "sha256": "e92284b8298d41fa7039dbc449ca0ea4ad933be47fba81133ffef9618fed2705"
+    },
+    {
+      "file": "page-08.png",
+      "sha256": "bfb72d9d00c271eaf43e8a5bf084ca79c6fca88ef928f7f5ad8e36021b798d22"
+    },
+    {
+      "file": "page-09.png",
+      "sha256": "21a1ec20b673408c293fd95f234b9cea0a3cc46342e6ac2b551f287f1b707d0a"
+    },
+    {
+      "file": "page-10.png",
+      "sha256": "58867d647bd725f7ea3135b04a4534eb0269c2acf375e2b5e3abbb62df954889"
+    }
+  ],
+  "tectonic_version": "Tectonic 0.17.0",
+  "primary_run_state": "complete",
+  "primary_cell_count": 720,
+  "sensitivity_run_state": "complete",
+  "sensitivity_cell_count": 1440,
+  "visual_qa": "All 10 rendered pages visually inspected, including cover, tables, figures, discussion, commands, and references; no clipping detected. Dense delayed-verification series are separated into small multiples.",
+  "limitations": "Build/QA receipt only; does not assert all possible visual or scientific limitations are resolved.",
+  "validation": {
+    "pytest": "169 passed in 11.84s",
+    "py_compile": "Runner, analyzer, and report builder compiled successfully.",
+    "report_build": "Tectonic 0.17.0; 10-page PDF."
+  },
+  "post_release_validation": {
+    "pytest": "169 passed in 27.72s after the scope-metadata and README clarification edits.",
+    "py_compile": "Runner, analyzer, and report builder compiled successfully.",
+    "config_json": "Valid JSON; decision_effect_evaluation is present and human_study is absent.",
+    "phase2_docx_sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "experiment_snapshot": "Existing 720-cell primary and 1,440-cell sensitivity locks remain complete and unchanged."
+  }
+}

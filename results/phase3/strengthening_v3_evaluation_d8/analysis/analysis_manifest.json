@@ -1,0 +1,32 @@
+{
+  "analyzer_sha256": "d3bc6561742b7a5bd2c3662e31a9d05a500d1601b81d14cb2a997b52ef03cac3",
+  "bootstrap_replicates": 2000,
+  "bootstrap_unit": "independent seed",
+  "completed_cells": 720,
+  "files": {
+    "analysis_manifest.json": "a19861fad0ef27d193ccf7d9cde6ac3afef4808a4d618a731f7a12d878261e34",
+    "delayed_verification_per_seed.csv": "3dcc04beede82ed435edec26741d7f9ed4807724b3e941eebf27c5760b63bb94",
+    "delayed_verification_summary.csv": "ffd0190a2a611825ede65a7a346b736ef576660cf8ed64a4405bb183fa970684",
+    "detection_per_seed.csv": "4566a7616d73504b911c1c0f3d5b856add2e378fd7853f41259659333ac18b80",
+    "detection_summary.csv": "4f1506c2f7c75aecab75203546618c516add5d633c5f0b6945fb48719b7c75c3",
+    "estimation_per_seed.csv": "4d9dcec7cd8b9d44229b5c1856837bf516dec24dc4bdf5bcd2a9eef59fbb9cd5",
+    "estimation_summary.csv": "cde2beb8e2690c9d3f9c8e3dc71987af64f2e4a4ad32d6d2a52810ffa0a316bc",
+    "fig01_estimator_mae.png": "d2352bc447da35092fd1cdbea7784ddc8d80373087ee1479bba6361b093dba68",
+    "fig02_detection_and_accuracy_timeline.png": "3d3667a331b5f69f86f4c4e6bed47939cf2f789960ed18fcb397020255703661",
+    "fig03_delay_verification.png": "b61e715be64f579015a4ea25acf443254516445b33e7d71486462a5d39e2c8f5",
+    "fig04_feature_localization.png": "46277d2e1e782c6f5696ed66a7a2e29b2688bc945fe6fa061f28ffd5e054056e",
+    "localization_per_seed_batch.csv": "405efe70b4c511866b856873d6b9d48e59467d40d6cc8b58be9763968ec30338",
+    "paired_estimator_tests.csv": "7b9596f711f71c6c6391002f989b2b641f135b9064748151bf102df0ea9fa79b",
+    "released_error_detection_per_seed.csv": "03cf27bc90d11d192c22f52dcf7ba9b307f34a8fffb28a62cea0b89495eb200a",
+    "released_error_detection_summary.csv": "c4efd4bbe4b330b4134f045708fa588108ff9c2b5dd81cea7c87ccec3a7ea898",
+    "released_error_detector_trace.csv": "b32c3d78a2392b57cb1eeea67a857d91a486d5bee02507ead7bb187704395909",
+    "temporal_per_seed.csv": "22eb63adf269cf575061a5cf489d1191fed74a72e8dff1f0813b084e58814be8"
+  },
+  "paired_tests": "two-sided seed-level sign-flip randomization; Holm across reported contrasts",
+  "protocol_lock_sha256": "a85e3dd89af995faf2e7153698f8eaa5c83878ef3b500a8774b493c147269b1c",
+  "released_error_detector": "ADWIN-style exact split scan of released cohort errors; not a River/official ADWIN implementation",
+  "released_error_detector_sha256": "587e782e93cccef67cc980fec41873fa83eb8d2f6740dac31c0dba8140a19fe7",
+  "run_dir": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\results\\phase3\\strengthening_v3_evaluation_d8",
+  "run_state": "complete",
+  "decision_effect_evaluation": "not measured; the evidence does not support analyst decision-benefit claims"
+}

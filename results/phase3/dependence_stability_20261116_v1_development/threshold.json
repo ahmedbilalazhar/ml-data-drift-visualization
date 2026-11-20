@@ -1,0 +1,40 @@
+{
+  "protocol": "IDMVIZ_DEPENDENCE_STABILITY_20261116_V1",
+  "mode": "development",
+  "development_seeds": [
+    931000,
+    931029
+  ],
+  "batch_sizes": [
+    250,
+    500,
+    1000
+  ],
+  "quantile": 0.95,
+  "quantile_rule": "higher",
+  "threshold_by_batch_size": {
+    "250": 0.2098204758112551,
+    "500": 0.15638858322202173,
+    "1000": 0.12139687115176562
+  },
+  "development_burden": {
+    "250": {
+      "stationary_batches": 720,
+      "alarms": 36,
+      "alarms_per_24_batches": 1.2
+    },
+    "500": {
+      "stationary_batches": 720,
+      "alarms": 36,
+      "alarms_per_24_batches": 1.2
+    },
+    "1000": {
+      "stationary_batches": 720,
+      "alarms": 36,
+      "alarms_per_24_batches": 1.2
+    }
+  },
+  "protocol_sha256": "171df720f93fcf5604dc96694707954a4506b4ce6e34761aa1bd29844806bd1c",
+  "source_sha256": "e7dc76f5355fb525e4e12de603fc67efb73ab30958a35b9eb42ba1ee12877e1e",
+  "detector_sha256": "238003886754c7a7aa9044a0b6219ac010924ab9b134fc5bcbb4091bad455914"
+}

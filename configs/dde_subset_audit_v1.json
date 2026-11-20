@@ -1,0 +1,23 @@
+{
+  "protocol": "dde-style-subset-audit-v1",
+  "phase2_basis_sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+  "tasks": ["linear_probabilistic", "xor_nonlinear", "five_region"],
+  "dimensions": [32, 128],
+  "smoke_seed": 8732999,
+  "development_seeds": [8732001, 8732002, 8732003, 8732004, 8732005],
+  "validation_seeds": [8732101, 8732102, 8732103, 8732104, 8732105, 8732106, 8732107, 8732108, 8732109, 8732110],
+  "evaluation_seeds": [8732201, 8732202, 8732203, 8732204, 8732205, 8732206, 8732207, 8732208, 8732209, 8732210, 8732211, 8732212, 8732213, 8732214, 8732215, 8732216, 8732217, 8732218, 8732219, 8732220, 8732221, 8732222, 8732223, 8732224, 8732225, 8732226, 8732227, 8732228, 8732229, 8732230],
+  "development_mechanisms": ["M1_abrupt_nuisance", "M2_gradual_predictive", "M3_incremental_repeated_small", "M7_out_of_support"],
+  "evaluation_mechanisms": ["M0_stationary", "M1_abrupt_nuisance", "M2_gradual_predictive", "M3_incremental_repeated_small", "M7_out_of_support"],
+  "batch_size": 500,
+  "batches": 96,
+  "development_check_batches": [25, 32, 40, 41, 64, 80, 96],
+  "evaluation_check_batches": [12, 24, 25, 32, 40, 41, 52, 64, 65, 72, 80, 81, 88, 96],
+  "reference_rows": 2000,
+  "monitored_fraction": 0.25,
+  "null_quantile": 0.95,
+  "curve_correlation_bins": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+  "ranking_k": 3,
+  "truth_definition": "known generator marginal intervention: changed_marginal_features, active from batch 25 through stream end; stationary has empty target",
+  "claims": "exploratory DDE-style empirical co-drift proxy; not a reproduction of the original Domino pipeline"
+}

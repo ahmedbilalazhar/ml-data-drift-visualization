@@ -1,0 +1,25 @@
+{
+  "audit_id": "strengthening-v3-evaluation-seed-collision-audit-2026-11-16",
+  "evaluation_seed_count": 10,
+  "evaluation_seeds": [
+    73116401,
+    73116402,
+    73116403,
+    73116404,
+    73116405,
+    73116406,
+    73116407,
+    73116408,
+    73116409,
+    73116410
+  ],
+  "scanned_text_files": 3097,
+  "scanned_archive_metadata_members": 4248,
+  "excluded": [
+    "generated v3 run outputs containing their own reserved evaluation IDs",
+    "numeric arrays and binary data files",
+    "test code that cites seeds as negative collision cases"
+  ],
+  "matches_outside_reserved_config": [],
+  "result": "no exact evaluation-seed collisions found"
+}

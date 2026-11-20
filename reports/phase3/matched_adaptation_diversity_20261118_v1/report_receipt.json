@@ -1,0 +1,14 @@
+{
+  "status": "report_compiled",
+  "run_receipt_sha256": "2778eff63bf1d4880824ca870040892fcbb47c16fa816023d23372ab38eb0f55",
+  "run_protocol": "matched-clock-global-vs-cluster-local-refit-diversity-v1",
+  "reproduction_script_sha256": "ca6a4e0bd07c1011e06ea8ed796e47cc4093aa7c372365fd189f8d8a313a9863",
+  "output_sha256": {
+    "method_summary.csv": "f782e2d8127daf6e24b48ffd2b70cb80a93cc5329d64bb39f5e5aea754cc79cf",
+    "local_vs_global_accuracy_effects.csv": "b37eff386b197ae4341a69329b775502d0c12cde7e29c98cd853d245fd6f4895",
+    "adaptation_diversity_effects.pdf": "fffbeed4e3d9865dc867dc823247f3acf14c690dba6fe9854ae9ec796bc3aaf8",
+    "adaptation_diversity_effects.svg": "9ae0b73537b68b92d876a8465e373f57ddbc69b2775d1845560b3479b93d5d7d",
+    "matched_adaptation_diversity.tex": "10e27fba59ef41657e03cc622ce92211ef59c3bc7331d5cdbda41adb5c0cfcb0",
+    "matched_adaptation_diversity.pdf": "4efda573cb482673d3fd4f2477ace31a95a5261a6d3ae12492440d6f100d3472"
+  }
+}

@@ -23,15 +23,28 @@ AGG = ROOT / "results" / "aggregates"
 FIG = ROOT / "results" / "figures"
 WINDOW = 500
 
+
+def load_study(default_templates=None, default_rate=10.0):
+    import yaml
+    p = ROOT / "configs" / "scenarios" / "E1.yaml"
+    if p.exists():
+        cfg = yaml.safe_load(p.read_text())
+        return cfg.get("templates", default_templates or []), \
+            float(cfg.get("calibration", {}).get("target_alerts_per_1000",
+                                                 default_rate))
+    return (default_templates or
+            ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]), default_rate
+
 def onset_window(truth: dict) -> int | None:
     o = truth.get("onset_test_row")
     return None if o is None else int(o // WINDOW)
 
 def main():
+    templates, rate = load_study()
     s0 = pd.read_csv(RUNS / "E0-S0-s0.evidence.csv")
-    thr = calibrate_threshold(s0.ks_global_D.tolist(), 10.0)
+    thr = calibrate_threshold(s0.ks_global_D.tolist(), rate)
     rows = []
-    for tid in ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]:
+    for tid in templates:
         ev = pd.read_csv(RUNS / f"E0-{tid}-s0.evidence.csv")
         truth = json.loads((RUNS / f"E0-{tid}-s0.truth.json").read_text())
         alerts = ev[ev.ks_global_D >= thr].window_id.tolist()

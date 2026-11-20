@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "pdf_sha256": "041e048303fc9fcdef9ccd9ad32fc5b33ec3b787ce77d64fd59a09d073402c7a",
+  "pages_reviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "figures_reviewed": 4,
+  "checks": [
+    "all pages visually inspected",
+    "updated figure 1 and page 10 re-inspected",
+    "no clipping or overlapping report text",
+    "tables and references readable",
+    "release-time semantics reviewed"
+  ]
+}

@@ -17,6 +17,17 @@ OUT = ROOT / "results" / "aggregates"
 DECISION_W = 8
 
 
+def load_subset():
+    import yaml
+    p = ROOT / "configs" / "scenarios" / "E3.yaml"
+    if p.exists():
+        cfg = yaml.safe_load(p.read_text())
+        s = cfg.get("delay_subset")
+        if s:
+            return list(s)
+    return ["S0", "S1", "S2", "S6", "S7"]
+
+
 def decide(alert: bool, base: float, late: float) -> str:
     import math
     if not alert:
@@ -31,7 +42,7 @@ def decide(alert: bool, base: float, late: float) -> str:
 def main():
     e1 = pd.read_csv(OUT / "e1_detection.csv").set_index("template")
     rows = []
-    for tid in ["S0", "S1", "S2", "S6", "S7"]:
+    for tid in load_subset():
         ev = pd.read_csv(RUNS / f"E0-{tid}-s0.evidence.csv")
         base = float(ev.macro_f1.iloc[:3].mean())
         for d in [0, 2, 5]:

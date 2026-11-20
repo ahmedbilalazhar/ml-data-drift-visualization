@@ -1,0 +1,91 @@
+{
+  "review_date": "2026-11-06",
+  "source": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\docs\\submissions\\DAV_Phase2_Submission.tex",
+  "source_sha256": "ad6ea9ec4389b831e313e7517cfd1c564f219dff80bdfecd5f9940959f4648d1",
+  "source_checks": {
+    "environment_balance": "passed",
+    "brace_and_inline_math_balance": "passed",
+    "references": 26,
+    "citation_order_and_completeness": "passed",
+    "cross_references": "passed",
+    "methodology_steps": 12,
+    "deliverables": 4,
+    "selected_studies": 10,
+    "comparison_columns": 9,
+    "comparison_rows": 10,
+    "longtable_widths": [
+      {
+        "columns": 4,
+        "width_cm": 16.5435,
+        "available_cm": 17
+      },
+      {
+        "columns": 9,
+        "width_cm": 25.4979,
+        "available_cm": 25.7
+      },
+      {
+        "columns": 5,
+        "width_cm": 16.0544,
+        "available_cm": 17
+      },
+      {
+        "columns": 3,
+        "width_cm": 16.0326,
+        "available_cm": 17
+      }
+    ],
+    "selection_years_full_text_checksums_and_additionality": "passed",
+    "protected_word_files_unchanged": true,
+    "gate_reference_partial_identification_and_oracle_algebra": "passed",
+    "finite_gate_cases": 12,
+    "release_clock_cases": 27,
+    "oracle_union": {
+      "regime_classifier_risks_per_seed": 26,
+      "draws_per_risk": 239153,
+      "core_loss_evaluations": 71745900,
+      "full_loss_evaluations": 186539340
+    }
+  },
+  "mixed_design_and_validation_checks": {
+    "purpose": "Deterministic protocol checks; not study outcomes",
+    "posterior_risk_identity_cases": 48,
+    "risk_interval_cases": 96,
+    "canonical_core_input_laws": 5,
+    "canonical_full_input_laws": 13,
+    "total_regime_classifier_risks": 26,
+    "draws_per_risk": 239153,
+    "conditions_per_seed": 24,
+    "primary_correct_yield_range": 0.5,
+    "null_validation_exact_distribution_cases": 12,
+    "null_validation_largest_failure": 0.014124042446742495,
+    "zero_alert_trajectory_mean_upper": 0.16843347098308536,
+    "coverage_diagnostic_halfwidth": 0.030368073095415258,
+    "joint_mixture_posterior_check": "passed",
+    "status": "passed"
+  },
+  "ranking_metric_checks": {
+    "purpose": "Metric algebra checks; no project study data",
+    "tied_block_truth_cases": 124,
+    "perfect_single_feature_AP": 1,
+    "perfect_single_feature_precision_at_3": 0.3333333333333333,
+    "all_tied_single_feature_AP_bounds": [
+      0.2,
+      1
+    ],
+    "status": "passed"
+  },
+  "latex_compilation": {
+    "path": "C:/Users/hp/Desktop/University/2. DAV/3. Project/docs/submissions/DAV_Phase2_Submission.tex",
+    "mainDocument": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\docs\\submissions/DAV_Phase2_Submission.tex",
+    "kind": "success",
+    "message": "The current source compiled successfully with the desktop editor's compiler.",
+    "source_sha256": "ad6ea9ec4389b831e313e7517cfd1c564f219dff80bdfecd5f9940959f4648d1",
+    "compiled_at_utc": "2026-11-06 00:01:09 UTC",
+    "review_date": "2026-11-06"
+  },
+  "review_notes": "research_figures/phase2_review_20261106.md",
+  "no_project_experiments_run": true,
+  "full_submission_page_layout": "not inferred from compiler success; no separate submission PDF exported",
+  "word_files_unchanged": true
+}

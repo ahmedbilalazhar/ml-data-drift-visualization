@@ -1,0 +1,11 @@
+{
+  "status": "exploratory_complete",
+  "question": "How much of cohort accuracy variation is associated with changing class proportions, and does source calibration transfer?",
+  "protocol": "SENSITIVITY_QUESTION.md",
+  "calibration_n": 89,
+  "calibration_correct": 87,
+  "calibration_accuracy": 0.9775280898876404,
+  "reference_n": 89,
+  "reference_accuracy": 0.9438202247191011,
+  "interpretation": "Common-class standardization is descriptive, weights only classes present per cohort, and is not a causal decomposition. Absent classes are not estimated."
+}

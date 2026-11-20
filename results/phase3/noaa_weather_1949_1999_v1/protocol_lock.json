@@ -1,0 +1,38 @@
+{
+  "completed_cells": {
+    "evaluator_batch_metrics": {
+      "artifact": "evaluator/batch_metrics.csv",
+      "sha256": "fe869ec985fbdd9fc19a0a7cd235b51cdc4f3e26c161ba9d9ac0818ee704208b"
+    },
+    "label_free_online_scoring": {
+      "artifact": "online/batch_scores.csv",
+      "sha256": "74d316dbf42e3434afe241b6fe381a53a866bee75e44319670080000fca968c4"
+    },
+    "released_label_events": {
+      "artifact": "run/label_release_events.csv",
+      "sha256": "e184ed6f1804b555590d7909040e4d4c873f8614005c29263fea007e39e683cf"
+    },
+    "released_label_verification": {
+      "artifact": "evaluator/released_verification.csv",
+      "sha256": "10a49c656b1ee3c9688a0eefb4070b7813a30e290997d0f6e4c505a3b1c26241"
+    }
+  },
+  "completed_utc": "2026-11-16T23:49:36.243964+00:00",
+  "config_sha256": "2bf465e10e726ff564becc5b073a79572a4b0a226b660c6d1e3bd5d31e416cd0",
+  "expected_cells": [
+    "evaluator_batch_metrics",
+    "label_free_online_scoring",
+    "released_label_events",
+    "released_label_verification"
+  ],
+  "failure": null,
+  "source_sha256": {
+    "core": "c5e5b6dba259c200c4fb17564d3859776d70316ad0a22519028d635d4f3137cf",
+    "phase2_docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "processed_weather": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+    "replay": "652c450b878d88d1e12e01eed9d373ced69124a215c2e7b5a3e35cccb669bf5a",
+    "runner": "f2582080ffeb1177a568f378a18972f036cb7f964472c5b75c9053036b215df7",
+    "weather_manifest": "9d3360a644575cac900b80681e3e39f84b92482eb11d5b3a887f51be7ab42a1f"
+  },
+  "state": "complete"
+}

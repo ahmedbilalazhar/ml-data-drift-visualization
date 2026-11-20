@@ -1,0 +1,9 @@
+study: E1-detection
+templates: [S0, S1, S2, S3, S4, S5, S6, S7]
+seed: 0
+windows: {size: 500, stride: 500}
+reference: {rows: 5000, policy: fixed}
+detectors: [ks, wasserstein, js]
+calibration: {target_alerts_per_1000: 10, source: stationary-S0}
+outputs: [results/aggregates/e1_detection.csv, results/figures/E1_tradeoff.png]
+

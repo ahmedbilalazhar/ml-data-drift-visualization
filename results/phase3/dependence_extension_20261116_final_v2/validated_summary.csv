@@ -1,0 +1,15 @@
+condition,detector,seeds,onset_detection_rate,pre_onset_stream_false_alarm_rate,mean_alarms_per_24_batches
+C0,max_abs_correlation_change,30,0.4,0.4,1.7
+C0,marginal_plus_PCA_KS,30,0.13333333333333333,0.16666666666666666,0.8333333333333334
+C1,max_abs_correlation_change,30,0.4,0.4,1.7
+C1,marginal_plus_PCA_KS,30,1.0,0.16666666666666666,16.2
+C2,max_abs_correlation_change,30,0.4,0.4,1.7
+C2,marginal_plus_PCA_KS,30,1.0,0.16666666666666666,15.6
+C3,max_abs_correlation_change,30,0.4,0.4,1.7
+C3,marginal_plus_PCA_KS,30,0.13333333333333333,0.16666666666666666,0.8333333333333334
+C4,max_abs_correlation_change,30,0.4,0.4,1.7
+C4,marginal_plus_PCA_KS,30,0.13333333333333333,0.16666666666666666,0.8333333333333334
+C5,max_abs_correlation_change,30,0.4,0.4,1.7
+C5,marginal_plus_PCA_KS,30,0.13333333333333333,0.16666666666666666,0.8333333333333334
+C6,max_abs_correlation_change,30,1.0,0.4,16.5
+C6,marginal_plus_PCA_KS,30,0.5333333333333333,0.16666666666666666,2.4

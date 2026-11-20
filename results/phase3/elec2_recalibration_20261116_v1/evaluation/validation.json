@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "rows": 27188,
+  "batches": 55,
+  "label_time_guard_passed": true,
+  "same_classifier_predictions_across_methods": true,
+  "delay_summary": [
+    {
+      "delay": 0,
+      "method": "frozen",
+      "batches": 55,
+      "equal_batch_mae": 0.05857105713432565,
+      "equal_batch_bias": -0.010621648781345108,
+      "row_weighted_brier": 0.21597122027608034,
+      "equal_batch_ece10": 0.08012058456847297,
+      "interval_coverage": 23,
+      "mean_interval_width": 0.08389632495164415
+    },
+    {
+      "delay": 0,
+      "method": "released_label_isotonic",
+      "batches": 55,
+      "equal_batch_mae": 0.06280957943733192,
+      "equal_batch_bias": -0.00047451096548550034,
+      "row_weighted_brier": 0.21517685256641356,
+      "equal_batch_ece10": 0.08636628794226363,
+      "interval_coverage": 18,
+      "mean_interval_width": 0.08216324951644102
+    },
+    {
+      "delay": 5,
+      "method": "frozen",
+      "batches": 55,
+      "equal_batch_mae": 0.05857105713432565,
+      "equal_batch_bias": -0.010621648781345108,
+      "row_weighted_brier": 0.21597122027608034,
+      "equal_batch_ece10": 0.08012058456847297,
+      "interval_coverage": 23,
+      "mean_interval_width": 0.08389632495164415
+    },
+    {
+      "delay": 5,
+      "method": "released_label_isotonic",
+      "batches": 55,
+      "equal_batch_mae": 0.06371927288661858,
+      "equal_batch_bias": -0.0022709826143123848,
+      "row_weighted_brier": 0.2164013804777292,
+      "equal_batch_ece10": 0.08917879015188264,
+      "interval_coverage": 21,
+      "mean_interval_width": 0.08245415860735013
+    },
+    {
+      "delay": 20,
+      "method": "frozen",
+      "batches": 55,
+      "equal_batch_mae": 0.05857105713432565,
+      "equal_batch_bias": -0.010621648781345108,
+      "row_weighted_brier": 0.21597122027608034,
+      "equal_batch_ece10": 0.08012058456847297,
+      "interval_coverage": 23,
+      "mean_interval_width": 0.08389632495164415
+    },
+    {
+      "delay": 20,
+      "method": "released_label_isotonic",
+      "batches": 55,
+      "equal_batch_mae": 0.059131341696359425,
+      "equal_batch_bias": -0.0018162681993267094,
+      "row_weighted_brier": 0.21577603862079775,
+      "equal_batch_ece10": 0.08194149011231842,
+      "interval_coverage": 24,
+      "mean_interval_width": 0.08263597678916831
+    }
+  ],
+  "scope": "one stream sequence; exploratory recalibration tradeoff; no independent-sequence interval"
+}

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180mm" height="166.667mm" viewBox="0 0 1080 1000" role="img" aria-labelledby="title desc">
+<title id="title">Research workflow and experimental design</title>
+<desc id="desc">Original research workflow: twelve prescribed stages; numbered operations, explicit paired alternatives and complementary analyses. No measured outcomes.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<rect x="0" y="0" width="1080" height="1000" rx="0" fill="white" stroke="white" stroke-width="1.4"/>
+<text x="32" y="35" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#203047" text-anchor="start">Research workflow and experimental design</text>
+<text x="32" y="65" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#55657A" text-anchor="start">Proposed study | cohort-specific evidence reliability</text>
+<rect x="20" y="88" width="1040" height="164" rx="8" fill="#EEF3FA" stroke="#315C8B" stroke-width="1.1"/>
+<text x="36" y="116" font-family="Arial, Helvetica, sans-serif" font-size="22.5" font-weight="700" fill="#315C8B" text-anchor="start">a  Prepare observations and representations | Steps 1-4</text>
+<rect x="32" y="134" width="230" height="94" rx="6" fill="#FFFFFF" stroke="#315C8B" stroke-width="1.5"/>
+<text x="147.0" y="161" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">1 Research input</text>
+<text x="147.0" y="187" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Risk target + clocks</text>
+<text x="147.0" y="211" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Cohort / seed units</text>
+<rect x="294" y="134" width="230" height="94" rx="6" fill="#FFFFFF" stroke="#315C8B" stroke-width="1.5"/>
+<text x="409.0" y="161" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">2 Data collection</text>
+<text x="409.0" y="187" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Controlled streams</text>
+<text x="409.0" y="211" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Natural case studies</text>
+<rect x="556" y="134" width="230" height="94" rx="6" fill="#FFFFFF" stroke="#315C8B" stroke-width="1.5"/>
+<text x="671.0" y="161" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">3 Preprocessing</text>
+<text x="671.0" y="187" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Fit before final testing</text>
+<text x="671.0" y="211" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Freeze partitions</text>
+<rect x="818" y="134" width="230" height="94" rx="6" fill="#FFFFFF" stroke="#315C8B" stroke-width="1.5"/>
+<text x="933.0" y="161" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">4 Representation</text>
+<text x="933.0" y="187" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Marginal + joint scores</text>
+<text x="933.0" y="211" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Fixed feature map</text>
+<path d="M 262,181 L 294,181" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="294,181 286.0,177.2 286.0,184.8" fill="#374151"/>
+<path d="M 524,181 L 556,181" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="556,181 548.0,177.2 548.0,184.8" fill="#374151"/>
+<path d="M 786,181 L 818,181" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="818,181 810.0,177.2 810.0,184.8" fill="#374151"/>
+<rect x="20" y="296" width="1040" height="219" rx="8" fill="#F0F6EC" stroke="#547B43" stroke-width="1.1"/>
+<text x="36" y="324" font-family="Arial, Helvetica, sans-serif" font-size="22.5" font-weight="700" fill="#547B43" text-anchor="start">b  Specify the method and matched comparison | Steps 5-7</text>
+<rect x="32" y="347" width="310" height="94" rx="6" fill="#FFFFFF" stroke="#547B43" stroke-width="1.5"/>
+<text x="187.0" y="374" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">5 Evidence method</text>
+<text x="187.0" y="400" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Input alarm + loss interval</text>
+<text x="187.0" y="424" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Eligibility before verdict</text>
+<rect x="385" y="347" width="310" height="94" rx="6" fill="#FFFFFF" stroke="#547B43" stroke-width="1.5"/>
+<text x="540.0" y="374" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">6 Matched baselines</text>
+<text x="540.0" y="400" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Harm gate + proxy rules</text>
+<text x="540.0" y="424" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Shared evidence access</text>
+<rect x="738" y="347" width="310" height="94" rx="6" fill="#FFFFFF" stroke="#547B43" stroke-width="1.5"/>
+<text x="893.0" y="374" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">7 Experimental design</text>
+<text x="893.0" y="400" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">2 models; 6 mechanisms</text>
+<text x="893.0" y="424" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">30 seeds; paired streams</text>
+<path d="M 342,394 L 385,394" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="385,394 377.0,390.2 377.0,397.8" fill="#374151"/>
+<path d="M 695,394 L 738,394" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="738,394 730.0,390.2 730.0,397.8" fill="#374151"/>
+<path d="M 540,252 L 540,294" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="540,294 543.8,286.0 536.2,286.0" fill="#374151"/>
+<rect x="32" y="461" width="1016" height="38" rx="4" fill="#FFFFFF" stroke="#547B43" stroke-width="1.4"/>
+<text x="540" y="488" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#547B43" text-anchor="middle">Paired alternatives: fixed / rolling reference | label delay d = 0, 2, 5</text>
+<rect x="20" y="560" width="1040" height="182" rx="8" fill="#F3EFF8" stroke="#70548B" stroke-width="1.1"/>
+<text x="36" y="588" font-family="Arial, Helvetica, sans-serif" font-size="22.5" font-weight="700" fill="#70548B" text-anchor="start">c  Assess the same experiment records | Steps 8-11</text>
+<rect x="32" y="620" width="230" height="90" rx="6" fill="#FFFFFF" stroke="#70548B" stroke-width="1.5"/>
+<text x="147.0" y="647" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">8 Evaluate</text>
+<text x="147.0" y="673" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Correct / wrong yield</text>
+<text x="147.0" y="697" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Coverage + availability</text>
+<rect x="328" y="620" width="218" height="90" rx="6" fill="#FFFFFF" stroke="#70548B" stroke-width="1.5"/>
+<text x="437.0" y="647" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">9 Statistics</text>
+<text x="437.0" y="673" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Seed uncertainty</text>
+<text x="437.0" y="697" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Truth bounds</text>
+<rect x="578" y="620" width="218" height="90" rx="6" fill="#FFFFFF" stroke="#70548B" stroke-width="1.5"/>
+<text x="687.0" y="647" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">10 Ablations</text>
+<text x="687.0" y="673" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">One change at a time</text>
+<text x="687.0" y="697" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Same data + clocks</text>
+<rect x="828" y="620" width="220" height="90" rx="6" fill="#FFFFFF" stroke="#70548B" stroke-width="1.5"/>
+<text x="938.0" y="647" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">11 Failure analysis</text>
+<text x="938.0" y="673" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Enumerate all cases</text>
+<text x="938.0" y="697" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Versioned traces</text>
+<path d="M 540,515 L 540,558" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="540,558 543.8,550.0 536.2,550.0" fill="#374151"/>
+<path d="M 262,665 L 280,665 L 280,608 L 938,608" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M 437,608 L 437,620" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="437,620 440.8,612.0 433.2,612.0" fill="#374151"/>
+<path d="M 687,608 L 687,620" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="687,620 690.8,612.0 683.2,612.0" fill="#374151"/>
+<path d="M 938,608 L 938,620" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="938,620 941.8,612.0 934.2,612.0" fill="#374151"/>
+<rect x="20" y="794" width="1040" height="144" rx="8" fill="#F3EFF8" stroke="#70548B" stroke-width="1.1"/>
+<text x="36" y="822" font-family="Arial, Helvetica, sans-serif" font-size="22.5" font-weight="700" fill="#70548B" text-anchor="start">d  Synthesize evidence and limits | Step 12</text>
+<rect x="32" y="842" width="1016" height="86" rx="6" fill="#FFFFFF" stroke="#70548B" stroke-width="1.5"/>
+<text x="540.0" y="869" font-family="Arial, Helvetica, sans-serif" font-size="21.5" font-weight="700" fill="#203047" text-anchor="middle">12 Final research output</text>
+<text x="540.0" y="895" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Comparative evidence + failure catalogue + cohort-aligned report</text>
+<text x="540.0" y="919" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#203047" text-anchor="middle">Phase 2 specifies future experiments; no results are claimed</text>
+<path d="M 147,710 L 147,768" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M 437,710 L 437,768" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M 687,710 L 687,768" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M 938,710 L 938,768" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M 147,768 L 938,768" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M 540,768 L 540,842" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="540,842 543.8,834.0 536.2,834.0" fill="#374151"/>
+<path d="M 32,970 L 69,970" fill="none" stroke="#374151" stroke-width="1.6" stroke-linejoin="round"/>
+<polygon points="69,970 61.0,966.2 61.0,973.8" fill="#374151"/>
+<text x="82" y="977" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#55657A" text-anchor="start">Dependency; a branch denotes complementary analyses</text>
+<text x="1048" y="977" font-family="Arial, Helvetica, sans-serif" font-size="20.5" font-weight="400" fill="#55657A" text-anchor="end">Proposed protocol</text>
+</svg>

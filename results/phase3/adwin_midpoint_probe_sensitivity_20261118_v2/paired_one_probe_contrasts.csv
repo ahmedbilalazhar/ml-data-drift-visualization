@@ -1,0 +1,17 @@
+contrast,delay,cost_mode,metric,mean_difference,lower,upper,paired_seeds,bootstrap_replicates,bootstrap_unit
+early_midpoint_two_probe_minus_one_probe,0,exact_quota,episode_delta,0.1333333333333333,0.0746031746031746,0.2111111111111111,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,0,exact_quota,audit_delta,0.0,0.0,0.0,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,0,strict_cap,episode_delta,0.380952380952381,0.326984126984127,0.4571825396825396,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,0,strict_cap,audit_delta,1.2888888888888888,1.2857142857142856,1.295238095238095,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,5,exact_quota,episode_delta,0.2476190476190476,0.1936111111111111,0.3286111111111108,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,5,exact_quota,audit_delta,0.0,0.0,0.0,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,5,strict_cap,episode_delta,0.380952380952381,0.326984126984127,0.461904761904762,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,5,strict_cap,audit_delta,1.3841269841269837,1.3809523809523805,1.39047619047619,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,20,exact_quota,episode_delta,0.0333333333333333,0.0,0.1,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,20,exact_quota,audit_delta,0.0,0.0,0.0,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,20,strict_cap,episode_delta,0.0333333333333333,0.0,0.1,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,20,strict_cap,audit_delta,1.0,1.0,1.0,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,100,exact_quota,episode_delta,0.0,0.0,0.0,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,100,exact_quota,audit_delta,0.0,0.0,0.0,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,100,strict_cap,episode_delta,0.0,0.0,0.0,30,2000,seed after averaging seven matched conditions and three budgets
+early_midpoint_two_probe_minus_one_probe,100,strict_cap,audit_delta,1.0,1.0,1.0,30,2000,seed after averaging seven matched conditions and three budgets

@@ -1,0 +1,72 @@
+{
+  "audit_id": "dde-seed-collision-audit-20261118-v1",
+  "config": "configs/dde_subset_audit_v1.json",
+  "config_sha256": "4cf54b312c573eab9e28cad76ff27fd57c0a18ce6ed98fd5aaa7258bd9dbb84e",
+  "config_seed_banks": {
+    "development": [
+      8732001,
+      8732002,
+      8732003,
+      8732004,
+      8732005
+    ],
+    "validation": [
+      8732101,
+      8732102,
+      8732103,
+      8732104,
+      8732105,
+      8732106,
+      8732107,
+      8732108,
+      8732109,
+      8732110
+    ],
+    "evaluation": [
+      8732201,
+      8732202,
+      8732203,
+      8732204,
+      8732205,
+      8732206,
+      8732207,
+      8732208,
+      8732209,
+      8732210,
+      8732211,
+      8732212,
+      8732213,
+      8732214,
+      8732215,
+      8732216,
+      8732217,
+      8732218,
+      8732219,
+      8732220,
+      8732221,
+      8732222,
+      8732223,
+      8732224,
+      8732225,
+      8732226,
+      8732227,
+      8732228,
+      8732229,
+      8732230
+    ]
+  },
+  "smoke_seed": 8732999,
+  "seed_banks_pairwise_disjoint": true,
+  "smoke_seed_disjoint": true,
+  "searched_artifact_scope": "all existing JSON files under configs, studies, docs, results, reports, scripts and tests; exact integer-token matching",
+  "excluded": [
+    "configs/dde_subset_audit_v1.json",
+    "docs/phase3/DDE_SEED_COLLISION_AUDIT_20261118.json",
+    "results/phase3/dde_subset_audit_20261118_",
+    "reports/phase3/dde_subset_audit_20261118_"
+  ],
+  "scanned_json_count": 594,
+  "scanned_paths_sha256": "43eadbba957b09386ee2ecd84483f9ba1bb517b4bf1c487c1cba71cd54071217",
+  "collisions": [],
+  "status": "clear"
+}

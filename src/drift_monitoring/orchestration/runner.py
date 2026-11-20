@@ -31,14 +31,17 @@ class Registry:
 def run_stream_experiment(run_id: str, df: pd.DataFrame, truth: dict,
                           models: dict, outdir: Path,
                           window: int = 500, seed: int = 0) -> Path:
-    """E0 core loop: reference -> per-window KS/Wasserstein + frozen preds.
+    """E0 core loop: reference -> per-window KS/Wasserstein/JS + frozen preds.
 
     Evidence records carry run/dataset/scenario/model/ref versions, window
     ids, observation time, score+units, threshold=NULL (calibrated later),
     group counts, measured status, compute cost (roadmap Sec. 6.2).
+    js_global_JS added P0 (backward compatible: old evidence lacks the column).
     """
     from ..windows.replay import ReplayConfig, ReplayClock, make_windows
-    from ..detectors.drift_detectors import ks_window_score, wasserstein_window_score
+    from ..detectors.drift_detectors import (
+        ks_window_score, wasserstein_window_score, js_window_score,
+        adwin_window_score)
     from ..evaluation.metrics import window_macro_f1
 
     t0 = time.time()
@@ -70,6 +73,8 @@ def run_stream_experiment(run_id: str, df: pd.DataFrame, truth: dict,
             continue
         ks = ks_window_score(ref, seg, num)
         ws = wasserstein_window_score(ref, seg, num)
+        js = js_window_score(ref, seg, num)
+        aw = adwin_window_score(ref, seg, num)
         Xw = seg[num + ["cat"]]
         pred = models["tree"].predict(Xw)
         f1 = window_macro_f1(seg["label"].to_numpy(), pred)
@@ -78,6 +83,7 @@ def run_stream_experiment(run_id: str, df: pd.DataFrame, truth: dict,
             "run_id": run_id, "window_id": w["window_id"],
             "start": w["start"], "end": w["end"],
             "ks_global_D": ks["global_D"], "w_global_norm": ws["global_W_norm"],
+            "js_global_JS": js["global_JS"], "adwin_global": aw["global_ADWIN"],
             "macro_f1": f1, "label_status": "delayed-2w",
             "n": len(seg), "evidence_status": "measured",
             "template": truth["template"], "seed": truth["seed"],

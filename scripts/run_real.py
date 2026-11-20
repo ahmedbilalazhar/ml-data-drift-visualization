@@ -15,7 +15,9 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from drift_monitoring.detectors.drift_detectors import ks_window_score
+from drift_monitoring.detectors.drift_detectors import (
+    ks_window_score, wasserstein_window_score, js_window_score,
+    adwin_window_score)
 from drift_monitoring.evaluation.metrics import window_macro_f1
 from drift_monitoring.windows.replay import make_windows
 from sklearn.tree import DecisionTreeClassifier
@@ -29,20 +31,14 @@ AGG = ROOT / "results" / "aggregates"
 
 
 def load_split(name: str, drop_like: tuple = ("date",)):
-    df = pd.read_parquet(PROC / name).sort_values("event_id").reset_index(drop=True)
-    for c in df.columns:  # categoricals (e.g. Elec2 day-of-week) as codes, never dropped silently
-        if isinstance(df[c].dtype, pd.CategoricalDtype):
-            df[c] = df[c].cat.codes.astype(float)
-    feats = [c for c in df.columns if c not in ("event_id", "label")
-             and not any(d in c.lower() for d in drop_like)]
-    num = [c for c in feats if pd.api.types.is_numeric_dtype(df[c])]
-    rep = json.loads((ROOT / "data" / "interim" / "audit_report.json").read_text())
+    from drift_monitoring.data.real import load_real
     key = "elec2" if "elec2" in name else "covtype_subset"
-    sp = rep["splits"][key]
+    bundle = load_real(key, drop_like=drop_like)
+    df, num, sp = bundle["frame"], bundle["numeric"], bundle["splits"]
     n = len(df)
-    tr = df.iloc[:int(n * 0.2)];
-    ca = df.iloc[int(n * 0.2):int(n * 0.4)];
-    te = df.iloc[int(n * 0.4):].reset_index(drop=True)
+    tr = df.iloc[:sp["train"][1] + 1]
+    ca = df.iloc[sp["calib"][0]:sp["calib"][1] + 1]
+    te = df.iloc[sp["test"][0]:].reset_index(drop=True)
     return df, tr, ca, te, num
 
 
@@ -64,9 +60,15 @@ def run_stream(tag: str, te: pd.DataFrame, tr: pd.DataFrame, num: list[str],
             continue
         seg = te.iloc[w["start"]:w["end"]]
         ks = ks_window_score(ref[num], seg[num], num)
+        ws = wasserstein_window_score(ref[num], seg[num], num)
+        js = js_window_score(ref[num], seg[num], num)
+        aw = adwin_window_score(ref[num], seg[num], num)
         pred = models["tree"].predict(seg[num].to_numpy(float))
         recs.append({"run_id": tag, "window_id": w["window_id"],
                      "ks_global_D": ks["global_D"],
+                     "w_global_norm": ws["global_W_norm"],
+                     "js_global_JS": js["global_JS"],
+                     "adwin_global": aw["global_ADWIN"],
                      "macro_f1": window_macro_f1(seg.label.to_numpy(), pred),
                      "label_status": "retrospective-full", "n": len(seg),
                      "evidence_status": "measured"})

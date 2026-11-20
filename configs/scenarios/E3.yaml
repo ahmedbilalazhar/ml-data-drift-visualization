@@ -1,0 +1,10 @@
+study: E3-action-proxy
+templates: [S0, S1, S2, S3, S4, S5, S6, S7]
+delay_subset: [S0, S1, S2, S6, S7]
+inputs: [results/runs/E0-S*-s0.evidence.csv, results/aggregates/e1_detection.csv]
+rule:
+  no-alert: monitor
+  alert-plus-drop-ge-0.05x2w: evaluate-update
+  alert-no-drop: investigate/request-labels
+  S7-no-alert: request-labels-never-reassure
+outputs: [results/aggregates/e3_proxy.csv, results/aggregates/e3_delay.csv]

@@ -1,0 +1,14 @@
+{
+  "status": "report_compiled",
+  "run_receipt_sha256": "3f7fc8508d35cecc92a42560ad1e9a77226d851c91de7dbe247a91bfcee2194f",
+  "collision_audit_sha256": "0bd2f982a2fa6ad7a85bb744467406329866fbc2580ccdc49ed493ec8168ab87",
+  "source_script_sha256": "4b8c97a0ce460626f017954c1cd29334409c47dc3a479e65271cdf5e7b946946",
+  "reproduction_script_sha256": "3ce2cefe3e86218ef2d255639fa200d2a6f0d841d17bc99d7566010df9237c8b",
+  "output_sha256": {
+    "independent_seed_effects.csv": "ea13663a5d1bde1c9797ce1781367fa0c7565b55ecf36b372042db7bc29e07cb",
+    "independent_seed_effects.pdf": "d2563bd837e113ef1d0de068db2dd188e811434a752125b315b430eb2f8d6f55",
+    "independent_seed_effects.svg": "eaf39a3adf916c3166f5109e341620e7bb4fce194f3dd541c69baafb7e034981",
+    "adaptation_capacity_confirmation.tex": "7ff4755312eeff13f65ee5366857e88f9da68b5a6b71c876ae4a883ee2ad6c20",
+    "adaptation_capacity_confirmation.pdf": "e7cf6fef4075a88e141aae3713ed56d0447b9bdbe88a636d849c7013bcdbeeac"
+  }
+}

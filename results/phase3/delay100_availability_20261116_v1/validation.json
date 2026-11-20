@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "delay_batches": 100,
+  "streams": 210,
+  "cohorts": 5040,
+  "labels_available_at_input_end": 0,
+  "labels_unresolved_at_input_end": 5040,
+  "labels_released_after_drain": 5040,
+  "drain_final_clock": 124,
+  "online_truth_columns_absent": true,
+  "online_columns_not_in_evaluator": [
+    "n"
+  ],
+  "input_hashes": {
+    "online_batches.csv": "3c830d83a31a2f73ac46f44c23ce631757ea59622639afdd4a070a07be4900e3",
+    "evaluator_batches.csv": "168c79853fb3a96f96cd8ef5b6e7008c04500be42a1a4b59629552580126bff1",
+    "protocol_lock.json": "69ff966eb17df12e2459f796ccc07c5113fc767ed6becb6d41a53e04d627488e"
+  },
+  "scope": "label availability only; no adaptation or performance claim"
+}

@@ -1,0 +1,18 @@
+{
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "executable": "C:\\Users\\hp\\anaconda3\\python.exe",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "packages": {
+    "numpy": "2.1.3",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "pandas": "2.3.3",
+    "matplotlib": "3.10.8",
+    "pytest": "8.3.4",
+    "threadpoolctl": "3.5.0"
+  },
+  "memory_start": {
+    "rss_bytes": 166084608,
+    "peak_working_set_bytes": 167038976
+  }
+}

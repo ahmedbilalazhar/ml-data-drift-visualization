@@ -17,6 +17,17 @@ ROOT = Path(__file__).resolve().parents[1]
 RUNS = ROOT / "results" / "runs"
 OUT = ROOT / "results" / "aggregates"
 
+
+def load_templates():
+    import yaml
+    p = ROOT / "configs" / "scenarios" / "E3.yaml"
+    if p.exists():
+        cfg = yaml.safe_load(p.read_text())
+        t = cfg.get("templates")
+        if t:
+            return list(t)
+    return ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]
+
 def decide(alert: bool, f1_base: float, f1_late: float) -> str:
     import math
     if not alert:
@@ -32,7 +43,7 @@ def decide(alert: bool, f1_base: float, f1_late: float) -> str:
 def main():
     e1 = pd.read_csv(OUT / "e1_detection.csv").set_index("template")
     rows = []
-    for tid in ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]:
+    for tid in load_templates():
         ev = pd.read_csv(RUNS / f"E0-{tid}-s0.evidence.csv")
         base = float(ev.macro_f1.iloc[:3].mean())
         late = float(ev.macro_f1.iloc[6:9].mean())

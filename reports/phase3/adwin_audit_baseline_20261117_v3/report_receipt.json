@@ -1,0 +1,15 @@
+{
+  "status": "report_sources_complete",
+  "protocol_lock_sha256": "b3390d454fdbe5ac14003239763baf65fd25e77773a997c1baf8adafdfba7514",
+  "run_protocol": "river-adwin-delayed-budgeted-audit-v1",
+  "outputs_sha256": {
+    "adwin_paired_aggregate_effects.csv": "2395e876c6c540cc8de11fcf36d28273303edad11d8f84e38538a68cb7a24980",
+    "adwin_detection_summary.csv": "c3b4a684a038f5cb3b13e8c7a52840d211b78e9db6c31617d7a7966bc82afee5",
+    "adwin_delay_summary.csv": "b860f6b4e6f2ad50fb37e86cf779da0a622037629700506feb434621c70308e6",
+    "adwin_effects.png": "efa099251ae068e34e3b8acb686425bd4f91bf66b8a18f5e59dba002f6fefd87",
+    "adwin_effects.pdf": "a6a3ad51a5cf22af041ab1540ce2504262be71f8321763aaeec817aa4b7ee737",
+    "adwin_effects.svg": "097da27c55c9b2afca52354cfac5a4312fcfc6a2f1192c20df9a509c0f26bbdb",
+    "adwin_baseline.tex": "2dbe97d5a96c1791e3d69c1f572dbc5be69b0340e0dbc63ec4f6290b038222fa",
+    "adwin_baseline.pdf": "b5b2221d17305b2b751b8534c7d1627bfcdfa744eb9ca84397ecd2c2ad73a3e6"
+  }
+}

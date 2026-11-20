@@ -1,0 +1,13 @@
+{
+  "files_sha256": {
+    "evaluator/batch_metrics.csv": "fe869ec985fbdd9fc19a0a7cd235b51cdc4f3e26c161ba9d9ac0818ee704208b",
+    "evaluator/released_verification.csv": "10a49c656b1ee3c9688a0eefb4070b7813a30e290997d0f6e4c505a3b1c26241",
+    "online/batch_scores.csv": "74d316dbf42e3434afe241b6fe381a53a866bee75e44319670080000fca968c4",
+    "protocol_lock.json": "ccdda8ed5f0fff4996e270cf6cc251446bc1be1a7732d5387903a97d51cb2706",
+    "run/label_release_events.csv": "e184ed6f1804b555590d7909040e4d4c873f8614005c29263fea007e39e683cf",
+    "run_contract.json": "7ca72dc5409ecd4b4d88b1b56465109759b62483878c2537a09b7e4d651744cd",
+    "run_summary.json": "bc99298f1b7f31b3722660011473d17c221581bd8dd5cc5714664eaa9911a536"
+  },
+  "protocol_lock_sha256": "ccdda8ed5f0fff4996e270cf6cc251446bc1be1a7732d5387903a97d51cb2706",
+  "run_id": "noaa-weather-1949-1999-v2"
+}

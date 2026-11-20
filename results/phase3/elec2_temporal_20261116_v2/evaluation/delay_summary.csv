@@ -1,0 +1,4 @@
+delay,total_batch_labels,batches,verified_by_input_end,first_release,final_release,unresolved_at_input_end,labels_after_drain
+0,27188,55,55,1,55,0,27188
+5,27188,55,50,6,60,5,27188
+20,27188,55,35,21,75,20,27188

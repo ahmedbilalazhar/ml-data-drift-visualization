@@ -1,0 +1,14 @@
+{
+  "mode": "development",
+  "threshold": 0.16573987161012022,
+  "quantile": 0.95,
+  "quantile_method": "higher",
+  "seeds": [
+    930000,
+    930029
+  ],
+  "stationary_batch_scores": 720,
+  "protocol_sha256": "e5f21bd43006d0722f77fb93304bc2d8b6d028f21bda341949e0f2bf516aa518",
+  "source_sha256": "06f0f704e3de5fa6b6e0ee46b94cba43a1979cbad12112e12b43e37269dc567d",
+  "statistic": "maximum absolute pairwise Pearson correlation difference"
+}

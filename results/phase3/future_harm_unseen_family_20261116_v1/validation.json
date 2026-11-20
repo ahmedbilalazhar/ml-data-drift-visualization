@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "seed_n": 30,
+  "target_prevalence": 0.787719298245614,
+  "rows_per_model": 1710,
+  "condition": "C7_conditional_randomization_eta_0.70",
+  "metrics_by_model": {
+    "current_concern": {
+      "n": 1710,
+      "prevalence": 0.787719298245614,
+      "roc_auc": 0.5378895249314362,
+      "average_precision": 0.8165718410375342,
+      "brier": 0.7483373307925022,
+      "log_loss": 4.488717350269078
+    },
+    "development_prevalence": {
+      "n": 1710,
+      "prevalence": 0.787719298245614,
+      "roc_auc": 0.5,
+      "average_precision": 0.787719298245614,
+      "brier": 0.3059225130495411,
+      "log_loss": 0.8061514454293133
+    },
+    "full_released": {
+      "n": 1710,
+      "prevalence": 0.787719298245614,
+      "roc_auc": 0.941357286163927,
+      "average_precision": 0.9838409643733431,
+      "brier": 0.17560011934356987,
+      "log_loss": 0.5271466544389471
+    },
+    "last_released_harm": {
+      "n": 1710,
+      "prevalence": 0.787719298245614,
+      "roc_auc": 0.6087612304457819,
+      "average_precision": 0.8558933468534106,
+      "brier": 0.35297620996503465,
+      "log_loss": 4.472226487289859
+    },
+    "time_only": {
+      "n": 1710,
+      "prevalence": 0.787719298245614,
+      "roc_auc": 0.9975243424322184,
+      "average_precision": 0.9988059886166791,
+      "brier": 0.25330113764442314,
+      "log_loss": 0.6974960407736642
+    },
+    "unlabeled_monitor": {
+      "n": 1710,
+      "prevalence": 0.787719298245614,
+      "roc_auc": 0.9816856559112077,
+      "average_precision": 0.9953285594816759,
+      "brier": 0.18691767829367756,
+      "log_loss": 0.5554953959171393
+    }
+  },
+  "paired_seed_bootstrap": [
+    {
+      "contrast": "time_only minus unlabeled_monitor Brier",
+      "seed_n": 30,
+      "mean": 0.06638345935074562,
+      "lower_95": 0.05799439900131036,
+      "upper_95": 0.07511052042012198
+    },
+    {
+      "contrast": "unlabeled_monitor minus full_released Brier",
+      "seed_n": 30,
+      "mean": 0.011317558950107658,
+      "lower_95": 0.009221109765024538,
+      "upper_95": 0.013686364022867355
+    },
+    {
+      "contrast": "time_only minus full_released Brier",
+      "seed_n": 30,
+      "mean": 0.07770101830085328,
+      "lower_95": 0.06971183759465384,
+      "upper_95": 0.08611715623794094
+    },
+    {
+      "contrast": "full_released minus development_prevalence Brier",
+      "seed_n": 30,
+      "mean": -0.13032239370597132,
+      "lower_95": -0.1380260085909299,
+      "upper_95": -0.12292465032702475
+    }
+  ],
+  "feature_outcome_separation": true,
+  "release_clock_strict": true,
+  "target_window_verified": true,
+  "seed_disjoint": true,
+  "scope": "one manually designed held-out synthetic conditional-randomization law; not natural-domain or unseen-law generalization"
+}

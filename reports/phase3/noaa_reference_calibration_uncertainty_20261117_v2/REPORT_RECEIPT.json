@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "input_sha256": {
+    "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/audit_receipt.json": "3d5b4fb1506df580ab7cd052f0a9cc9537c17e58f141b8946904ae6f15dfbd62",
+    "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/uncertainty_summary.csv": "3d2a0f2c150f501465c1002ebbc063ac23aadf6503e0fe3703fa14d482406702",
+    "results/phase3/noaa_reference_calibration_uncertainty_20261117_v1/bootstrap_draws.csv": "0d8babee514ac534d3c75434f25272018200ec22359b4d28703005322ad2481e"
+  },
+  "output_sha256": {
+    "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/noaa_uncertainty.png": "186419f98af0d5f25be353b267edb074311dd94dda01b1686bdfa0b80fe521c9",
+    "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/noaa_uncertainty.svg": "ad8dfd98676b83c163e9a27ba587120b7be76706bc97dfda901184c95f84e6ad",
+    "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/NOAA_UNCERTAINTY.tex": "c6321ae6b807f7a7eb5cb97194021917e5568d8ca59107c68c37ca8f3249dfe6",
+    "reports/phase3/noaa_reference_calibration_uncertainty_20261117_v2/NOAA_UNCERTAINTY.pdf": "bb63a2239d4a725abf621f9fc5fcf5fbaac9fd259d72023c6bb4239fe79c33d3"
+  },
+  "scope": "conditional block-bootstrap uncertainty; one chronological stream"
+}

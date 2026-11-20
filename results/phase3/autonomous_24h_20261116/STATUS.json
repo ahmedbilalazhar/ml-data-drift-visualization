@@ -1,0 +1,70 @@
+{
+  "started_utc": "2026-11-16T07:32:52.457136+00:00",
+  "started_local": "2026-11-16T12:32:52.457184+05:00",
+  "elapsed_wall_seconds": 942.1,
+  "cumulative_compute_seconds": 704.27,
+  "stage": "complete",
+  "commands": [
+    {
+      "command": "C:\\Users\\hp\\anaconda3\\python.exe -m pytest tests -q",
+      "exit_code": 0,
+      "elapsed_seconds": 13.99
+    },
+    {
+      "command": "C:\\Users\\hp\\anaconda3\\python.exe scripts/package_phase3_v14.py",
+      "exit_code": 0,
+      "archive_sha256": "24bd91b8686ae972051d1437b9c4f2d39cae531576a63f5ed64ad3ca8dd47725"
+    }
+  ],
+  "exit_codes": {
+    "full_workspace_tests": 0,
+    "v14_packaging_and_clean_extraction": 0,
+    "final_protected_hash_audit": 0
+  },
+  "result_paths": [
+    "results/phase3/autonomous_24h_20261116/STATUS.json",
+    "results/phase3/autonomous_24h_20261116/STATUS.md",
+    "docs/phase3/AUTONOMOUS_24H_AUDIT_20261116.md",
+    "output/phase3/IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip",
+    "output/phase3/IDM_Viz_Phase3_Final_Strengthening_20261116_v14.receipt.json",
+    "reports/phase3/decision_strengthening_v5/REPORT.tex",
+    "reports/phase3/decision_strengthening_v5/REPORT.pdf",
+    "reports/phase3/future_harm_forecast_20261116_v10/FUTURE_HARM_FORECAST.tex",
+    "reports/phase3/future_harm_forecast_20261116_v10/FUTURE_HARM_FORECAST.pdf"
+  ],
+  "hashes_initial": {
+    "phase2_docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "implementation_pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "submitted_archive": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877",
+    "candidate_v13": "4010ca6baf3cd67ed7516e16fcffff31558c97e17cfc92409f08ef25e0d33c2f"
+  },
+  "failed_attempts": [
+    "Initial DOCX/PDF extraction attempt used unavailable python-docx and Poppler binaries; retried successfully with ZIP/XML and PyMuPDF.",
+    "One audit command initially used an incorrect exact-interval PDF filename; located and inspected the actual UCI224_EXACT_INTERVALS.pdf, with no artifact changes required."
+  ],
+  "completed_tests": [
+    {
+      "suite": "tests",
+      "result": "94 passed",
+      "elapsed_seconds": 13.99
+    },
+    {
+      "suite": "v14 extracted focused suite",
+      "result": "18 passed in 5.63 seconds"
+    },
+    {
+      "suite": "v14 clean extraction",
+      "result": "passed; 1,408 members; CRC and member hashes passed; fresh evaluator CSVs exactly matched; forecast TeX and figure regenerated identically"
+    }
+  ],
+  "exact_next_command": null,
+  "updated_utc": "2026-11-16T07:48:34.554497+00:00",
+  "hashes_final": {
+    "phase2_docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "implementation_pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "submitted_archive": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877",
+    "candidate_v13": "4010ca6baf3cd67ed7516e16fcffff31558c97e17cfc92409f08ef25e0d33c2f",
+    "candidate_v14": "24bd91b8686ae972051d1437b9c4f2d39cae531576a63f5ed64ad3ca8dd47725"
+  },
+  "hashes_preserved": true
+}

@@ -1,0 +1,14 @@
+{
+  "status": "report_compiled",
+  "run_protocol": "river-adwin-early-midpoint-probes-sensitivity-v1",
+  "run_lock_sha256": "eb5476461d51a2d9dbf19009b271a04447a37f260f31f9ec17be0fa749a420b6",
+  "outputs_sha256": {
+    "midpoint_detection_summary.csv": "5271e291540f0633ad266163c38bd1649fc42b04dddbb9982bbeed6849ed06ae",
+    "one_vs_midpoint_summary.csv": "ff213616b7f855f1a5c36ef29e0b3108e3bee0380d057d97a10a71dd8950fccc",
+    "midpoint_probe_effects.pdf": "c77cbb4c9bed4e42bd7881263506bcc984f3935dda6c7e62bbd040b871ae8471",
+    "midpoint_probe_effects.png": "c65f5cd26315eb0634c096fb8967cf6ecd32dcc42ca8c1419461ce6e1034665e",
+    "midpoint_probe_effects.svg": "0f3f0146340faa1cb0aed44651cabd51c9c9d944489aa470d2f201e1b03cdcad",
+    "adwin_midpoint_sensitivity.tex": "b8116e794cd65bb2a3c5df2d1261360094c631700502db8f5c68d3c0fed4857b",
+    "adwin_midpoint_sensitivity.pdf": "b82c1d1aa29f2ee7ed6536c3ccff8748ad1601c4ffaa2b88b081b524a397d215"
+  }
+}

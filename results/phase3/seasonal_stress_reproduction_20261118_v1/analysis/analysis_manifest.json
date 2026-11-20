@@ -1,0 +1,27 @@
+{
+  "study": "S1 seasonal nuisance stress; separate from primary matrix",
+  "run_dir": "results\\phase3\\seasonal_stress_reproduction_20261118_v1",
+  "run_state": "complete",
+  "cells": 90,
+  "tasks": 3,
+  "seeds_per_task": 30,
+  "batches": 96,
+  "batch_size": 500,
+  "seed_unit": "paired evaluation seed within task",
+  "bootstrap_replicates": 10000,
+  "bootstrap_unit": "seed within task",
+  "seasonal_feature": "index 7, additive amplitude 0.6, period 24 batches, begins at batch 1",
+  "outcome_law": "paired labels and rowwise expected label probabilities checked identical against M0",
+  "run_lock_sha256": "8b07de916b3b07cea99f605cf51f305fc344bbde58ecd3d4f1247e442f41bc0f",
+  "analysis_script_sha256": "dfc5bfa9c01d850f37f0e94eb6d7e0c9ad5e6c0a71049c00feb8bf5c8afe3641",
+  "artifacts_verified": true,
+  "files": {
+    "fig_seasonal_paired_accuracy.png": "b02598ed8712759872eda6d9dc278820047805a36d5ace24a51e3af9a9663a6e",
+    "fig_seasonal_paired_accuracy.svg": "61be179142ee60ce15123e106a6e4905c6c99bc5ca516946a8e61e1fba7f2c52",
+    "fig_seasonal_timeline.png": "151306c8b2b144ee4a7847124741fc7e33bd19027f353e6552f8ea47dc0cc963",
+    "fig_seasonal_timeline.svg": "b07870b3bb250487bb26266815367945ca2acdd817ead28e68914e4d1f0e42e3",
+    "seasonal_paired_per_seed.csv": "2177dc11a66ea247e26cf1c7014f29a63f8c87573a617c88091a49511e8018fb",
+    "seasonal_summary.csv": "e9d116a3b6474208b34078bbbeb0d60aa330b0d75aa31ebe3b6d28f4493fb75a",
+    "seasonal_temporal_per_seed.csv": "46444041f740256c999369cc38d8733ea785e365e2c3a7347449e51f49c91e17"
+  }
+}

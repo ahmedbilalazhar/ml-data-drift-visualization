@@ -1,0 +1,68 @@
+{
+  "status": "complete",
+  "protocol": "posthoc-targeted-localization-audit-v1",
+  "seed_bank": [
+    73116201,
+    73116202,
+    73116203,
+    73116204,
+    73116205,
+    73116206,
+    73116207,
+    73116208,
+    73116209,
+    73116210,
+    73116211,
+    73116212,
+    73116213,
+    73116214,
+    73116215,
+    73116216,
+    73116217,
+    73116218,
+    73116219,
+    73116220,
+    73116221,
+    73116222,
+    73116223,
+    73116224,
+    73116225,
+    73116226,
+    73116227,
+    73116228,
+    73116229,
+    73116230
+  ],
+  "cluster_counts": [
+    3,
+    5,
+    10
+  ],
+  "n_null_cohorts": 100,
+  "mapping_fit_data": "historical training rows only; no monitoring region IDs enter the map",
+  "pair_threshold_fit_data": "historical reference versus pseudo-current calibration cohorts only",
+  "config_sha256": "f0581f41563a2e3f30b8210d3182a3388a4eccc2a9544d650e6daff2b48a2995",
+  "source_sha256": {
+    "scripts/run_localization_audit.py": "3425fb7860dcb69d750d00d4f72d197cd3c727372ab1681bd5eedd20ca9b227a",
+    "configs/phase3_strengthening_v3.json": "f0581f41563a2e3f30b8210d3182a3388a4eccc2a9544d650e6daff2b48a2995",
+    "src/drift_monitoring/phase3/strengthening_generators.py": "a3efbbacbbab451ebf308bfefc42ac6227686ce4733c3b82ea7a652b538ad308",
+    "src/drift_monitoring/phase3/core.py": "c5e5b6dba259c200c4fb17564d3859776d70316ad0a22519028d635d4f3137cf",
+    "src/drift_monitoring/phase3/dependence.py": "76b8def16bd4b593d84918bb330a0ed5a23ea6d23c772a8181b891774e54f6a6"
+  },
+  "output_sha256": {
+    "results/phase3/localization_audit_20261117_v3/region_localization.csv": "dc3618328ccbac22379a1e42fda23b527466db90926e7141721603559ec053c0",
+    "results/phase3/localization_audit_20261117_v3/historical_cluster_mappings.json": "48c62a941df9b2e3af4803a9633e81a7448c9f1f6824c2cec2a2ed40685b6104",
+    "results/phase3/localization_audit_20261117_v3/dependence_pair_localization.csv": "93f284a4e3e15cabd6aae4bdfb937ef4f7b403a5303a5bf35579d2a468979525",
+    "results/phase3/localization_audit_20261117_v3/region_localization_summary.csv": "0cc2c372e1e1923f23ca25af2320b145743fd92b63fdea86a841fbbc4275c4e8",
+    "results/phase3/localization_audit_20261117_v3/dependence_pair_summary.csv": "c432bcdf4c8933eae1df0807bf2ee6f9ca77dcdf730dee867c11d881fbb82e62"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scipy": "1.17.0",
+    "scikit_learn": "1.8.0"
+  },
+  "scope_note": "exploratory diagnostic on already locked evaluation seeds; no threshold or model tuning on monitor truth"
+}

@@ -1,0 +1,38 @@
+% Paper 4 insert for Phase1_Drift_Report.tex (canonical file, 83-line version).
+% Style matches the canonical prose + longtable + thebibliography.
+% Integration: (a) update Selection sentence (three->four) and rubric status (3/8->4/8);
+% (b) paste TABLE ROW after row 3 + \\[5pt]; (c) append GAP sentences; (d) add BIBITEM.
+% Verify all numbers below against the publisher version (DOI 10.1007/s10115-025-02523-1);
+% this draft was grounded in the author copy (received 2023; journal version 2025).
+
+% ---------- 1. CRITICAL PARAGRAPH (paste after Guerrero paragraph, before Comparison) ----------
+% \textbf{Assis and Souza: unsupervised windowing.} ADWIN-U adapts ADWIN's variable-window
+% cut search to unlabeled streams by monitoring incremental descriptive statistics
+% (skewness, kurtosis) instead of error rate. Evaluation covers ten real USP repository
+% streams (Electricity 44,312 test rows; GasSensor; Insects Abrupt/Gradual/Incremental;
+% LADPU; Outdoor; Rialto; StarLightCurves; Yoga) with a Random Forest base learner and
+% $\delta=0.002$, against Blind, Persistent, KS-TEST, and supervised ADWIN (error/output)
+% baselines under rolling holdout validation \cite{assisu}. The paper also proposes BAR,
+% the harmonic mean of model accuracy and label frugality, to stop always-retrain
+% strategies from winning on accuracy alone. \emph{Author-stated limits:} statistic choice
+% trades compute against sensitivity; adaptive windows still need calibration; BAR weights
+% accuracy first. \emph{Our assessment:} the USP suite overlaps our Electricity/Insects
+% context, which strengthens external validity, but feature-level attribution and any
+% operator display are absent, and threshold/$\delta$ transfer across streams is untested.
+% Skewness/kurtosis summaries can miss dependence-only change, and rolling-holdout
+% coupling of detector and model makes isolated detector delay hard to read off.
+
+% ---------- 2. TABLE ROW 4 (paste after row 3, before \end{longtable}) ----------
+% 4 & ADWIN-U: adaptive windowing for unsupervised drift detection & 2025 (journal; manuscript received 2023) & Ten USP real streams incl.\ Electricity (44k test), Insects variants, GasSensor, Rialto. & Incremental skewness/kurtosis statistics; variable ADWIN windows; rolling holdout with Random Forest ($\delta=0.002$). & Accuracy, requested-label share, BAR (harmonic mean); Blind/Persistent/KS-TEST/supervised-ADWIN baselines. & Unsupervised ADWIN-U matches or beats supervised ADWIN on several streams at lower label cost; BAR penalizes always-retrain. & Statistic choice is a sensitivity trade-off; no feature attribution or operator view; $\delta$ transfer untested.\\[5pt]
+
+% ---------- 3. GAP EVIDENCE SENTENCES ----------
+% Gap 1 append: ADWIN-U adds a fourth unsupervised windowing score with label-cost
+% awareness, but like the other three it offers no joint timeline or ranked-feature view.
+% Gap 2 append: BAR is the only measure in the four papers that jointly scores accuracy
+% against label cost, yet ADWIN-U still does not overlay its score with classifier
+% $\Delta$F1/$\Delta$AUC on aligned windows under delayed labels.
+% Gap 3 append: Ten real streams strengthen breadth, but dependence-only shifts and
+% analyst-task evaluation remain untested for ADWIN-U as for the others.
+
+% ---------- 4. BIBITEM ----------
+% \bibitem{assisu} D.~N.~Assis and V.~M.~A.~Souza, ADWIN-U: adaptive windowing for unsupervised drift detection on data streams, \emph{Knowledge and Information Systems}, 67(11), 10005--10034, 2025. \url{https://doi.org/10.1007/s10115-025-02523-1}.

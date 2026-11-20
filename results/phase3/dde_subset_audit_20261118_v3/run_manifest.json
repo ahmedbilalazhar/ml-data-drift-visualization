@@ -1,0 +1,9 @@
+{
+  "config_path": "configs/dde_subset_audit_v1.json",
+  "config_sha256": "1a711b4644340cd2f08c009886a96de0643cabf6b8c62dcd55e1093ea1f9a1cc",
+  "note": "Preserved partial run; bins with zero development pair support were treated as zero scores. Final v4 falls back to the nearest lower supported bin and uses fresh seeds.",
+  "protocol": "dde-style-subset-audit-v1",
+  "smoke_only": false,
+  "started_unix": 1794967768.7108958,
+  "status": "interrupted_superseded_unsupported_curve_bins"
+}

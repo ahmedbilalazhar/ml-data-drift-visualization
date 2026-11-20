@@ -1,0 +1,77 @@
+{
+  "dataset": "elec2",
+  "source": "OpenML 'electricity' v1 (NSW market, normalized)",
+  "url": "https://www.openml.org/d/151",
+  "acquired": "2026-09-28",
+  "license": "OpenML terms (original: Harvill et al. electricity pricing)",
+  "n_rows": 45312,
+  "columns": [
+    "event_id",
+    "date",
+    "day",
+    "period",
+    "nswprice",
+    "nswdemand",
+    "vicprice",
+    "vicdemand",
+    "transfer",
+    "label"
+  ],
+  "class_counts": {
+    "0": 26075,
+    "1": 19237
+  },
+  "time_semantics": "file order = chronological market intervals (MUST hold for replay)",
+  "files": [
+    {
+      "path": "data\\raw\\openml\\openml.org\\api\\v1\\json\\data\\151.gz",
+      "bytes": 1543,
+      "sha256": "b280f5072ee542afd47d1818ad5ba005f3a94704b88dca4d222f9ba3c69acd3d"
+    },
+    {
+      "path": "data\\raw\\openml\\openml.org\\api\\v1\\json\\data\\features\\151.gz",
+      "bytes": 272,
+      "sha256": "00a3d72bb08240587735a306ba510e987df4bae2b4df6ea475a27043cf474d44"
+    },
+    {
+      "path": "data\\raw\\openml\\openml.org\\api\\v1\\json\\data\\list\\data_name\\electricity\\limit\\2\\data_version\\1.gz",
+      "bytes": 316,
+      "sha256": "2b195f8d4bd4c839cb9d905c61a4a1f10f327323f2a2dd7740f62ee66e6cd90d"
+    },
+    {
+      "path": "data\\raw\\openml\\openml.org\\api\\v1\\json\\data\\qualities\\151.gz",
+      "bytes": 1369,
+      "sha256": "deff9b5fc567b04672fee20419bc18b687c8ce61ac823bca872c3ba761566038"
+    },
+    {
+      "path": "data\\raw\\openml\\openml.org\\data\\v1\\download\\2419\\electricity.arff.gz",
+      "bytes": 714838,
+      "sha256": "60df61719ff2065ae144ae7788a2a1fca603e6c5bc83c5bd82bb3b63b0d28c74"
+    }
+  ],
+  "dataset_id": "elec2-openml-151-verified-v2",
+  "processed_file": {
+    "path": "data/processed/verified_v2/elec2_ordered.parquet",
+    "sha256": "4e67ce139b94daede4321518e4a4cda8917835b816ddd17087f3dc9b47092ea1",
+    "rows": 45312,
+    "columns": [
+      "event_id",
+      "date",
+      "day",
+      "period",
+      "nswprice",
+      "nswdemand",
+      "vicprice",
+      "vicdemand",
+      "transfer",
+      "label"
+    ],
+    "class_counts": {
+      "0": 26075,
+      "1": 19237
+    },
+    "readback_verified": true
+  },
+  "processing_note": "Rebuilt from byte-identical source ARFF recorded in the preserved v1 manifest; file-order event_id retained.",
+  "supersedes_for_new_runs": "unreadable legacy data/processed/elec2_ordered.parquet; legacy file preserved"
+}

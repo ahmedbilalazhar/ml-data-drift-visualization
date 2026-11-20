@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IDM-Viz | Evidence replay</title>
+<style>
+:root{font-family:Segoe UI,Arial,sans-serif;color:#193c39;background:#f0f3ef;font-size:15px}*{box-sizing:border-box}
+body{margin:0}main{max-width:1370px;margin:auto;padding:30px 36px}header{display:flex;justify-content:space-between;align-items:start;gap:20px}
+h1{font-size:38px;letter-spacing:-1.5px;margin:2px 0 4px}h2{font-size:18px;margin:0 0 12px}p{line-height:1.5}small,.muted{color:#5c726e}
+.eyebrow{font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase}.tag{padding:8px 13px;border:1px solid #bacac3;border-radius:30px;font-size:12px;white-space:nowrap}
+.controls{display:grid;grid-template-columns:100px 220px 100px 1fr 1fr;gap:18px;background:#fff;padding:20px;margin:24px 0;border-radius:12px;border:1px solid #d9e2da}
+label{display:block;font-size:12px;font-weight:650}select,input{width:100%;margin-top:9px;accent-color:#14645c}select{padding:8px;border:1px solid #bbcbc6;border-radius:6px;background:white;color:#193c39}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px}.panel{background:white;border:1px solid #d9e2da;border-radius:12px;padding:22px}.caption{font-size:12px;margin:10px 0 0}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}.metric{background:#eaf1eb;border-radius:7px;padding:11px}.metric strong{display:block;font-size:22px;font-weight:650;margin-top:5px}
+.status{padding:12px;background:#eff3ed;border-left:3px solid #14645c;margin:15px 0;line-height:1.5;font-size:13px}.warn{border-color:#bd5c30;background:#fcf1e9}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 3px;text-align:left;border-bottom:1px solid #e7ece6}th{font-size:11px;color:#617970}li{margin:7px 0}
+svg{display:block;width:100%;height:auto}svg text{font-family:Segoe UI,Arial,sans-serif;fill:#526c66;font-size:11px}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;margin:5px 0 18px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+footer{font-size:12px;color:#5c726e;line-height:1.6;padding:16px 0 0}.selected{font-weight:700;color:#193c39}button{cursor:pointer}#chart [data-batch]{cursor:pointer}
+@media(max-width:1000px){main{padding:20px}.grid{grid-template-columns:1fr}.controls{grid-template-columns:repeat(3,1fr)}header .tag{display:none}}
+</style>
+<main><header><div><div class="eyebrow">IDM-Viz / Phase 3 research prototype</div><h1>Follow the evidence.</h1><div class="muted">A named batch. One model. Evidence available at the selected clock.</div></div><div class="tag">Frozen logistic classifier · 30 seeds</div></header>
+<div class="controls">
+<label>Seed<select id="seed" aria-label="Seed"></select></label>
+<label>Condition<select id="condition" aria-label="Condition"></select></label>
+<label>Label delay<select id="delay" aria-label="Label delay"><option>0</option><option selected>5</option><option>20</option></select></label>
+<label>As-of clock <span id="clockValue"></span><input id="clock" aria-label="As-of clock" type="range" min="1" max="44" value="16"></label>
+<label>Selected batch <span id="batchValue"></span><input id="batch" aria-label="Selected batch" type="range" min="1" max="24" value="9"></label>
+</div>
+<div class="grid"><section class="panel"><h2 id="chartTitle">Coordinated batch evidence</h2><div class="legend"><span><i class="dot" style="background:#14645c"></i>Estimated accuracy / input score</span><span><i class="dot" style="background:#bd5c30"></i>Released-label accuracy</span><span>Shading: plug-in prediction interval</span></div><div id="chart"></div><p class="caption">Click any batch column to coordinate the detail panel. Feature heatmap: marginal KS distance, 0 to .6. Input cutoff: Holm-adjusted p = .05. Dashed vertical line: intervention begins at batch 9.</p></section>
+<aside class="panel"><div class="eyebrow">Selected cohort</div><h2 id="cohort" style="margin-top:8px"></h2><div id="detail"></div></aside></div>
+<footer><strong>Offline retrospective replay.</strong> This file contains release records for replay; every displayed accuracy, F1 and harm result is filtered by its scheduled release time. Unknown labels remain unresolved. The concern score is a plug-in model quantity, not a certified probability of harm. An absent alarm or concern flag does not establish safety. Feature ranks and frozen clusters are descriptive; no causal or human-benefit claim is made.</footer></main>
+<script>
+const DATA=/*__DATA__*/;
+const names={C0:'Stationary',C1:'Nuisance mean',C2:'Predictive mean',C3:'Abrupt conditional',C4:'Gradual conditional',C5:'Recurring conditional',C6:'Dependence'};
+const $=id=>document.getElementById(id), ns='http://www.w3.org/2000/svg';
+const releaseMap=new Map(DATA.releases.map(r=>[`${r.cohort}:${r.delay}`,r]));
+function visibleVerification(row,delay,clock){const v=releaseMap.get(`${row.cohort}:${delay}`);return row.batch<=clock&&v&&v.available_at<=clock?v:null}
+function viewRows(seed,condition,delay,clock){return DATA.online.filter(r=>r.seed===seed&&r.condition===condition&&r.batch<=clock).map(r=>({...r,verified:visibleVerification(r,delay,clock)}))}
+window.IDM={viewRows,visibleVerification,data:DATA};
+[...new Set(DATA.online.map(r=>r.seed))].sort((a,b)=>a-b).forEach(s=>{$('seed').add(new Option(s,s))});
+Object.entries(names).forEach(([c,n])=>$('condition').add(new Option(`${c} · ${n}`,c)));$('condition').value='C3';
+const fmt=(x,n=3)=>x===null||x===undefined?'unresolved':Number(x).toFixed(n);
+function node(tag,attrs,text){const n=document.createElementNS(ns,tag);Object.entries(attrs||{}).forEach(([k,v])=>n.setAttribute(k,v));if(text!==undefined)n.textContent=text;return n}
+function render(){
+const seed=+$('seed').value,condition=$('condition').value,delay=+$('delay').value,clock=+$('clock').value,batch=+$('batch').value;
+$('clockValue').textContent=`${clock} / ${24+delay}`;$('batchValue').textContent=batch;$('clock').max=24+delay;
+const all=DATA.online.filter(r=>r.seed===seed&&r.condition===condition),rows=viewRows(seed,condition,delay,clock);
+$('chartTitle').textContent=`${condition} · ${names[condition]} | ${rows.length} observed batches | clock ${clock}`;
+const W=900,H=640,L=80,R=20,step=(W-L-R)/24,x=b=>L+(b-.5)*step;
+const svg=node('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Coordinated input, feature, accuracy and release evidence'});
+const line=(x1,y1,x2,y2,color='#e1e8e2',dash='')=>svg.append(node('line',{x1,y1,x2,y2,stroke:color,'stroke-dasharray':dash}));
+const text=(xx,y,t,attrs={})=>svg.append(node('text',{x:xx,y,...attrs},t));
+svg.append(node('rect',{x:x(batch)-step/2,y:15,width:step,height:590,fill:'#edf1d9'}));
+if(clock<24)svg.append(node('rect',{x:L+clock*step,y:15,width:(24-clock)*step,height:590,fill:'#f1f3f1'}));
+line(L+8*step,15,L+8*step,605,'#899a92','4 4');
+text(0,35,'INPUT');text(0,50,'-log10 p');
+const iy=v=>112-Math.min(4,-Math.log10(Math.max(v,1e-30)))*20;
+for(let y of [0,2,4]){line(L,112-y*20,W-R,112-y*20);text(L-12,116-y*20,y,{'text-anchor':'end'})}
+line(L,iy(.05),W-R,iy(.05),'#bd5c30','4 4');text(W-R,iy(.05)-5,'p=.05',{'text-anchor':'end'});
+let path=rows.map((r,i)=>`${i?'L':'M'}${x(r.batch)},${iy(r.min_adjusted_p)}`).join(' ');svg.append(node('path',{d:path,fill:'none',stroke:'#14645c','stroke-width':2}));
+text(0,151,'FEATURES');
+for(let j=0;j<8;j++){text(L-12,175+j*17,`X${j}`,{'text-anchor':'end'});for(const r of rows){let v=Math.min(1,r[`x${j}_ks`]/.6);const color=`rgb(${Math.round(239-219*v)},${Math.round(246-146*v)},${Math.round(228-124*v)})`;svg.append(node('rect',{x:x(r.batch)-step/2+.5,y:162+j*17,width:step-1,height:16,fill:color,'data-batch':r.batch}))}}
+text(0,330,'ACCURACY');const ay=v=>480-(v-.1)/.8*155;
+for(const y of [.2,.4,.6,.8]){line(L,ay(y),W-R,ay(y));text(L-12,ay(y)+4,y.toFixed(1),{'text-anchor':'end'})}
+if(rows.length){const poly=[...rows.map(r=>`${x(r.batch)},${ay(r.cal_lower)}`),...rows.slice().reverse().map(r=>`${x(r.batch)},${ay(r.cal_upper)}`)].join(' ');svg.append(node('polygon',{points:poly,fill:'#14645c',opacity:.14}));
+svg.append(node('path',{d:rows.map((r,i)=>`${i?'L':'M'}${x(r.batch)},${ay(r.cal_estimate)}`).join(' '),fill:'none',stroke:'#14645c','stroke-width':2}));
+const ref=rows[0].reference_accuracy-.05;line(L,ay(ref),W-R,ay(ref),'#7d8d87','2 4');}
+let known=rows.filter(r=>r.verified);svg.append(node('path',{d:known.map((r,i)=>`${i?'L':'M'}${x(r.batch)},${ay(r.verified.accuracy)}`).join(' '),fill:'none',stroke:'#bd5c30','stroke-width':2}));
+known.forEach(r=>svg.append(node('circle',{cx:x(r.batch),cy:ay(r.verified.accuracy),r:3,fill:'#bd5c30','data-batch':r.batch})));
+text(0,530,'RELEASE');text(0,546,'clock');
+rows.forEach(r=>{const yy=585-(r.batch+delay)/(24+delay)*55;svg.append(node('rect',{x:x(r.batch)-4,y:yy-4,width:8,height:8,fill:r.verified?'#14645c':'#bfcac4','data-batch':r.batch}));text(x(r.batch),yy-9,r.batch+delay,{'text-anchor':'middle','font-size':9})});
+line(L,590,W-R,590);
+for(let b=1;b<=24;b++){text(x(b),610,b,{'text-anchor':'middle'});const hit=node('rect',{x:x(b)-step/2,y:15,width:step,height:590,fill:'transparent','data-batch':b});hit.addEventListener('click',()=>{$('batch').value=b;render()});svg.append(hit)}
+text((L+W-R)/2,636,'Named input batch · 500 observations',{'text-anchor':'middle'});$('chart').replaceChildren(svg);
+const r=all.find(r=>r.batch===batch),v=visibleVerification(r,delay,clock);$('cohort').textContent=r.cohort;
+if(batch>clock){$('detail').innerHTML='<div class="status">Input has not arrived at this clock.</div>';return}
+const order=Array.from({length:8},(_,j)=>j).sort((a,b)=>r[`x${a}_rank`]-r[`x${b}_rank`]);
+const status=v?`Verified at clock ${v.available_at}. Observed harm: ${v.harm?'yes':'no'}.`:`Labels unresolved. Scheduled release: clock ${batch+delay}.`;
+$('detail').innerHTML=`<div class="status ${r.cal_concern_flag?'warn':''}">${r.cal_concern_flag?'High proxy concern.':'No high proxy flag; harm remains possible.'}<br>${status}</div>
+<div class="metrics"><div class="metric"><small>Estimate</small><strong>${fmt(r.cal_estimate)}</strong></div><div class="metric"><small>Verified</small><strong id="verifiedValue">${v?fmt(v.accuracy):'—'}</strong></div><div class="metric"><small>Concern</small><strong>${fmt(r.cal_concern)}</strong></div></div>
+<p class="caption">Plug-in interval [${fmt(r.cal_lower)}, ${fmt(r.cal_upper)}]. Input alarm: <strong>${r.input_alarm?'yes':'no'}</strong>. Historical accuracy: ${fmt(r.reference_accuracy)}. Evidence age: ${clock-batch} batches.${v?` Macro-F1: ${fmt(v.macro_f1)}.`:''}</p>
+<h2 style="margin-top:24px">Feature evidence</h2><table><thead><tr><th>Rank</th><th>Feature</th><th>KS D</th><th>Flag</th></tr></thead><tbody>${order.slice(0,3).map((j,i)=>`<tr><td>${i+1}</td><td>X${j}</td><td>${fmt(r[`x${j}_ks`])}</td><td>${r[`x${j}_flag`]?'yes':'no'}</td></tr>`).join('')}</tbody></table>
+<p class="caption">A top rank alone is not a significant feature flag.</p><h2 style="margin-top:24px">Frozen clusters</h2><table><thead><tr><th>Cluster</th><th>n</th><th>Mean q</th></tr></thead><tbody>${[0,1,2].map(j=>`<tr><td>${j}</td><td>${r[`cluster${j}_n`]}</td><td>${r[`cluster${j}_n`]<20?'suppressed':fmt(r[`cluster${j}_q`])}</td></tr>`).join('')}</tbody></table>`;
+}
+function updateControls(){if(+$('clock').value>24+(+$('delay').value))$('clock').value=24+(+$('delay').value);render()}
+for(const id of ['seed','condition','delay','clock','batch']){
+  $(id).addEventListener('input',updateControls);
+  $(id).addEventListener('change',updateControls);
+}
+render();
+</script></html>

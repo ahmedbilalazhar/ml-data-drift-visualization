@@ -1,0 +1,23 @@
+{
+  "study": "UCI 224 delayed cohort-label replay",
+  "version": "uci224-delayed-replay-v1",
+  "status": "complete",
+  "source_run": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\results\\phase3\\external_uci224_day2_v2",
+  "source_run_lock_sha256": "9dad171b8ad5a0461e13970334bf2d8dabd44740585874450ca915e21f5733f1",
+  "dataset_archive_sha256": "91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4",
+  "runner_sha256": "29e8254228128462e3ef9c12a2036764bcbbbe21ee50aa9825aed1c8816f6229",
+  "delays_in_whole_cohort_steps": [
+    0,
+    1,
+    2
+  ],
+  "forecast_clock": "forecast batch b before release; source j eligible iff j+delay < b",
+  "classifier_and_preprocessing_frozen": true,
+  "historical_calibration_only_from_batch1": true,
+  "updated_component": "one-dimensional logistic correctness calibrator only",
+  "online_prediction_artifacts_exclude_truth": true,
+  "truth_isolated_under": "evaluator_truth/",
+  "current_future_label_invariance_test": "see tests/phase3/test_uci224_delayed_replay.py",
+  "caveat": "offline simulation of coarse cohort releases, not observed label-arrival timestamps",
+  "evaluator_sha256": "91f1c82279edcfe8ec07b2d82f9a466ed1123c270312284499515035fb4e81d8"
+}

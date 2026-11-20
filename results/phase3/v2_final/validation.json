@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "expected_online_batches": 17280,
+  "model_streams": 720,
+  "verification_rows": 51840,
+  "instance_id_joins_checked": 8640000,
+  "queue_drainage_checked": true,
+  "online_truth_columns_absent": true,
+  "model_specific_harm_checked": true,
+  "calibration_identity_checked": true,
+  "v1_logistic_extension_comparison": {
+    "status": "passed",
+    "streams": 210,
+    "historical_partitions": 30,
+    "truth_streams": 210,
+    "arrays_compared": 1680,
+    "array_values_compared": 25210080,
+    "v1_source": "results/phase3/final_v1",
+    "comparison": "exact logistic prediction/proxy/cache and scientific batch evidence"
+  }
+}

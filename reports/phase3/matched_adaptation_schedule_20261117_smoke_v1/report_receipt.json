@@ -1,0 +1,13 @@
+{
+  "status": "report_sources_complete",
+  "run_receipt_sha256": "87527b30f8eb2d89c23e730db62d9008f6cc16d1a78a1b23604fa50b59012678",
+  "run_protocol": "matched-clock-global-vs-cluster-local-refit-v1",
+  "output_sha256": {
+    "policy_means.csv": "b789157b3fd264e9aeff5b74e70118405cd167ba1cd050de29779a907108c9f0",
+    "paired_seed_differences.csv": "1236f2eb897bc7adb3d4cda695ba8a3d9ba63a3633b27ee61749292b1456fe6f",
+    "matched_adaptation_schedule.tex": "a47d50dde53897e5e0ed9857ec4cd0ee0456a1d93be108bf494c461eb82e4866",
+    "matched_adaptation_effects.png": "a5409b511851216e399c24a29248a49d4bfb53a42f69e687f571cd57e6d31b2a",
+    "matched_adaptation_effects.pdf": "49946a3c4c2c78cdab58ddbbb672abef20811dd139f9c5cb55fbba4138045052",
+    "matched_adaptation_effects.svg": "9a932e5afafe5b4c9c1932c63cf86262614cf9f98d7fda92073f7da95819c245"
+  }
+}

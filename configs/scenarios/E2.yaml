@@ -1,0 +1,9 @@
+study: E2-localization
+templates: [S0, S1, S2, S3, S4, S5, S6, S7]
+seed: 0
+reference_rows: 1000
+window_pick: post-onset-6
+rankers: [ks, js]
+metrics: [precision@3, recall@3, f1@3, AP]
+outputs: [results/aggregates/e2_localization.csv]
+notes: S7-empty-truth and S6-joint reported with limits, never forced

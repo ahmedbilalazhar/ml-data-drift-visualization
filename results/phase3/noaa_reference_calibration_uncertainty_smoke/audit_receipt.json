@@ -1,0 +1,34 @@
+{
+  "status": "complete",
+  "protocol": "NOAA-fixed-classifier-30day-moving-block-reference-calibrator-bootstrap-v1",
+  "bootstrap_replicates_per_component": 10,
+  "block_length_rows": 30,
+  "components": [
+    "calibrator_only",
+    "reference_only",
+    "joint"
+  ],
+  "classifier": "frozen original chronological training fit; its parameter uncertainty is not bootstrapped",
+  "calibrator": "isotonic refit on resampled chronological calibration confidence/correctness pairs",
+  "reference": "reference accuracy resampled from chronological correctness blocks",
+  "monitoring_labels": "evaluator-only scoring and descriptive coverage comparisons; no fit or threshold selection",
+  "dataset_scope": "one NOAA station and chronological same-day classification holdout; bootstrap is conditional, not external replication",
+  "source_sha256": {
+    "scripts/run_noaa_reference_calibration_uncertainty.py": "43581970bc56958698dc51ac183a7f5bc9b50b2331e354361a6d340ab98deb81",
+    "data/processed/weather_noaa_1949_1999_v2/weather_ordered.csv": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+    "data/processed/weather_noaa_1949_1999_v2/weather_manifest.json": "9d3360a644575cac900b80681e3e39f84b92482eb11d5b3a887f51be7ab42a1f",
+    "src/drift_monitoring/phase3/core.py": "c5e5b6dba259c200c4fb17564d3859776d70316ad0a22519028d635d4f3137cf",
+    "scripts/run_noaa_weather_transfer.py": "f2582080ffeb1177a568f378a18972f036cb7f964472c5b75c9053036b215df7"
+  },
+  "output_sha256": {
+    "results/phase3/noaa_reference_calibration_uncertainty_smoke/bootstrap_draws.csv": "deca62d692e6c25dcb2e0caea459e49ffd16958c847af90413b1a87731175266",
+    "results/phase3/noaa_reference_calibration_uncertainty_smoke/uncertainty_summary.csv": "7c0c69048b6c54c569a9ac27f81548da461942d9ee3008bc0d2b5efbca1e8725"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scipy": "1.17.0",
+    "scikit_learn": "1.8.0"
+  }
+}

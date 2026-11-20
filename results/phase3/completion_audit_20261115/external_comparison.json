@@ -1,0 +1,24 @@
+{
+  "csv_comparisons": [
+    {
+      "file": "class_metrics.csv",
+      "rows": 60,
+      "columns": 8,
+      "exact_match": true
+    },
+    {
+      "file": "cohort_metrics.csv",
+      "rows": 10,
+      "columns": 18,
+      "exact_match": true
+    },
+    {
+      "file": "input_tests.csv",
+      "rows": 1310,
+      "columns": 5,
+      "exact_match": true
+    }
+  ],
+  "prediction_arrays_exact": 40,
+  "prediction_values_exact": 121986
+}

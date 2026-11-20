@@ -1,0 +1,20 @@
+dataset:
+  name: covtype-subset100k
+  source: UCI Covertype direct (figshare mirror 403, see docs/incidents/001_covtype_figshare_403.md)
+  url: https://archive.ics.uci.edu/ml/machine-learning-databases/covtype/covtype.data.gz
+  time_semantics: subsample-sorted source order (EXPLICITLY constructed, NOT natural time)
+  label: multiclass Cover_Type 1-7
+  contract:
+    - event_id ascending = subsample order
+    - columns: event_id, label + 10 numeric + 44 binary indicators
+    - splits: 20/20/60 on event_id order (see audit_report.json)
+  processed: data/processed/covtype_subset100k.parquet
+  manifest: data/manifests/covtype_subset_manifest.json
+reference:
+  rows: 5000
+  policy: fixed
+windows:
+  size: 500
+  stride: 500
+truth:
+  events: intervention-only  # shift point + cols known for S2-like runs; natural drift NOT claimed

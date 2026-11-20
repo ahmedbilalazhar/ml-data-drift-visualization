@@ -23,9 +23,22 @@ from drift_monitoring.explanations.localization import rank_features, localizati
 
 MS = ROOT / "results" / "runs" / "_multiseed"
 AGG = ROOT / "results" / "aggregates"
-TIDS = ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]
+_FALLBACK_TIDS = ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "S7"]
 SEEDS = [0, 1, 2, 3, 4]
 WINDOW = 500
+
+
+def load_templates():
+    import yaml
+    p = ROOT / "configs" / "scenarios" / "e0_core.yaml"
+    if p.exists():
+        t = (yaml.safe_load(p.read_text()) or {}).get("templates")
+        if t:
+            return list(t)
+    return list(_FALLBACK_TIDS)
+
+
+TIDS = load_templates()
 
 
 def main():

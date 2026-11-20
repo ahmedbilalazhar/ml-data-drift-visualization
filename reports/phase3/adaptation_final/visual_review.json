@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "pdf": "23I-2581_23I-2604_Phase3_Adaptation_Report.pdf",
+  "pages": 3,
+  "reviewed_pages": [1, 2, 3],
+  "reviewed_on": "2026-11-15",
+  "pdf_sha256": "cff9c62f461f7dbff8892f0091915320b179fc0f0ad1349277941f80b38139e6",
+  "report_source_sha256": "801bf318e36852af28faaeb88bb280841743db8b9ce37b764dca652febc5b384",
+  "checks": [
+    "page text is legible",
+    "table headers and values fit the page",
+    "figures and axes are legible",
+    "reproduction results and final limitations are visible",
+    "no visible clipping or text overlap"
+  ]
+}
