@@ -1,0 +1,4 @@
+# Preserve input bytes used by the locked reproduction receipts.
+/data/external/uci224_source/uci224_curl.zip -text
+/data/processed/weather_noaa_1949_1999_v2/weather_ordered.csv -text
+/data/processed/weather_noaa_1949_1999_v2/weather_manifest.json -text
