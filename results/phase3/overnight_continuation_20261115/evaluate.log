@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "mode": "final",
+  "seeds_per_task": 1500,
+  "online_rows": 864000,
+  "evaluator_rows": 864000,
+  "per_seed_rows": 147000,
+  "paired_seed_vectors": 1500,
+  "online_truth_columns_absent": true,
+  "realized_harm_exact_check": "passed",
+  "paired_input_evidence_identical": true,
+  "calibrated_identity": true,
+  "finite_scores": true,
+  "bootstrap_replicates": 2000,
+  "resampling_unit": "complete seed vector",
+  "analysis_source_sha256": "9066b88d90cad051dbe54a7d12c16768e7538980916503c17e7e99ab93144f75",
+  "locked_analysis_source_sha256": "2038360fbb2e0bb52fa1e8ee06b61b15c8d5341f83d1d379655d587d8ac4fd93",
+  "analysis_source_amendment": "A post-start output-label correction preserves the metric name in paired-bootstrap rows; it does not change metrics, resampling, run data, predictions or conditions."
+}

@@ -1,0 +1,19 @@
+{
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "executable": "C:\\Users\\hp\\anaconda3\\python.exe",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "packages": {
+    "numpy": "2.1.3",
+    "scikit-learn": "1.8.0",
+    "pandas": "2.3.3",
+    "threadpoolctl": "3.5.0",
+    "psutil": "5.9.0"
+  },
+  "thread_limits": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "v1_final_archive_sha256": "0baba912c5f3e48a8a08a606e2a77a303f67e884ddccfef0907046d94dca5519"
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "C:\\Users\\hp\\anaconda3\\python.exe",
+    "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\scripts\\compare_phase3_large_seed_sample.py",
+    "--run",
+    "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\results\\phase3\\large_seed_robustness_final",
+    "--out",
+    "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\reports\\phase3\\overnight_robustness_20261115\\sample_reproduction"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 99.16623830795288,
+  "cwd": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project"
+}

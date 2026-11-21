@@ -1,0 +1,217 @@
+{
+ "checksum_issues": {
+  "covtype_manifest.json": [],
+  "elec2_manifest.json": [],
+  "elec2_verified_v2_manifest.json": [],
+  "covtype_subset_verified_v2_manifest.json": [],
+  "weather_noaa_manifest.json": []
+ },
+ "audits": {
+  "elec2": {
+   "dataset": "elec2",
+   "rows": 45312,
+   "cols": [
+    "event_id",
+    "date",
+    "day",
+    "period",
+    "nswprice",
+    "nswdemand",
+    "vicprice",
+    "vicdemand",
+    "transfer",
+    "label"
+   ],
+   "missing_total": 0,
+   "dup_event_id": 0,
+   "dup_rows": 0,
+   "class_counts": {
+    "0": 26075,
+    "1": 19237
+   }
+  },
+  "covtype_subset": {
+   "dataset": "covtype_subset",
+   "rows": 83665,
+   "cols": [
+    "event_id",
+    "Elevation",
+    "Aspect",
+    "Slope",
+    "Horizontal_Distance_To_Hydrology",
+    "Vertical_Distance_To_Hydrology",
+    "Horizontal_Distance_To_Roadways",
+    "Hillshade_9am",
+    "Hillshade_Noon",
+    "Hillshade_3pm",
+    "Horizontal_Distance_To_Fire_Points",
+    "Wilderness_Area1",
+    "Wilderness_Area2",
+    "Wilderness_Area3",
+    "Wilderness_Area4",
+    "Soil_Type1",
+    "Soil_Type2",
+    "Soil_Type3",
+    "Soil_Type4",
+    "Soil_Type5",
+    "Soil_Type6",
+    "Soil_Type7",
+    "Soil_Type8",
+    "Soil_Type9",
+    "Soil_Type10",
+    "Soil_Type11",
+    "Soil_Type12",
+    "Soil_Type13",
+    "Soil_Type14",
+    "Soil_Type15",
+    "Soil_Type16",
+    "Soil_Type17",
+    "Soil_Type18",
+    "Soil_Type19",
+    "Soil_Type20",
+    "Soil_Type21",
+    "Soil_Type22",
+    "Soil_Type23",
+    "Soil_Type24",
+    "Soil_Type25",
+    "Soil_Type26",
+    "Soil_Type27",
+    "Soil_Type28",
+    "Soil_Type29",
+    "Soil_Type30",
+    "Soil_Type31",
+    "Soil_Type32",
+    "Soil_Type33",
+    "Soil_Type34",
+    "Soil_Type35",
+    "Soil_Type36",
+    "Soil_Type37",
+    "Soil_Type38",
+    "Soil_Type39",
+    "Soil_Type40",
+    "label"
+   ],
+   "missing_total": 0,
+   "dup_event_id": 0,
+   "dup_rows": 0,
+   "class_counts": {
+    "1": 14285,
+    "2": 14285,
+    "3": 14285,
+    "4": 2747,
+    "5": 9493,
+    "6": 14285,
+    "7": 14285
+   }
+  },
+  "weather_noaa_gsod": {
+   "dataset": "weather_noaa_gsod",
+   "rows": 18210,
+   "cols": [
+    "timestamp",
+    "row_id",
+    "temp",
+    "dewp",
+    "slp",
+    "visib",
+    "wdsp",
+    "mxspd",
+    "max",
+    "min",
+    "label_rain"
+   ],
+   "missing_total": 0,
+   "dup_event_id": 0,
+   "dup_rows": 0,
+   "class_counts": {
+    "0": 12464,
+    "1": 5746
+   }
+  }
+ },
+ "splits": {
+  "elec2": {
+   "train": [
+    0,
+    9061
+   ],
+   "calib": [
+    9062,
+    18123
+   ],
+   "test": [
+    18124,
+    45311
+   ]
+  },
+  "covtype_subset": {
+   "train": [
+    0,
+    16732
+   ],
+   "calib": [
+    16733,
+    33465
+   ],
+   "test": [
+    33466,
+    83664
+   ]
+  },
+  "weather_noaa_gsod": {
+   "train": [
+    0,
+    3641
+   ],
+   "calibration": [
+    3642,
+    5462
+   ],
+   "reference": [
+    5463,
+    7283
+   ],
+   "monitoring": [
+    7284,
+    18209
+   ]
+  }
+ },
+ "verdicts": {
+  "elec2": {
+   "status": "ADMITTED-WITH-NOTES",
+   "notes": [
+    "no verified drift-event catalog \u2014 burden/association only",
+    "file order assumed chronological \u2014 timestamp column unverified"
+   ]
+  },
+  "covtype_subset": {
+   "status": "ADMITTED-WITH-NOTES",
+   "notes": [
+    "minority classes (esp. 4: n=2747) \u2014 suppress small-group stats per rule"
+   ]
+  },
+  "weather_noaa_gsod": {
+   "status": "ADMITTED-WITH-NOTES",
+   "notes": [
+    "no verified drift-event catalog \u2014 alarm burden is not false-alarm rate",
+    "same-day retrospective classification, not a forecast or independent replication"
+   ]
+  }
+ },
+ "audit_load_errors": {},
+ "weather_contract": {
+  "timestamp_strictly_increasing_unique": true,
+  "expected_schema_exact": true,
+  "target_leakage_columns_absent": true,
+  "rows": 18210,
+  "tail_rows_after_complete_batches": 426,
+  "complete_monitor_batches_after_20_10_10_60_split": 21,
+  "split_counts": {
+   "train": 3642,
+   "calibration": 1821,
+   "reference": 1821,
+   "monitoring": 10926
+  }
+ }
+}

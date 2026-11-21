@@ -1,0 +1,80 @@
+{
+ "checksum_issues": {
+  "covtype_manifest.json": [],
+  "elec2_manifest.json": [],
+  "weather_noaa_manifest.json": []
+ },
+ "audits": {
+  "weather_noaa_gsod": {
+   "dataset": "weather_noaa_gsod",
+   "rows": 18210,
+   "cols": [
+    "timestamp",
+    "row_id",
+    "temp",
+    "dewp",
+    "slp",
+    "visib",
+    "wdsp",
+    "mxspd",
+    "max",
+    "min",
+    "label_rain"
+   ],
+   "missing_total": 0,
+   "dup_event_id": 0,
+   "dup_rows": 0,
+   "class_counts": {
+    "0": 12464,
+    "1": 5746
+   }
+  }
+ },
+ "splits": {
+  "weather_noaa_gsod": {
+   "train": [
+    0,
+    3641
+   ],
+   "calibration": [
+    3642,
+    5462
+   ],
+   "reference": [
+    5463,
+    7283
+   ],
+   "monitoring": [
+    7284,
+    18209
+   ]
+  }
+ },
+ "verdicts": {
+  "weather_noaa_gsod": {
+   "status": "ADMITTED-WITH-NOTES",
+   "notes": [
+    "no verified drift-event catalog \u2014 alarm burden is not false-alarm rate",
+    "same-day retrospective classification, not a forecast or independent replication"
+   ]
+  }
+ },
+ "audit_load_errors": {
+  "elec2": "OSError: Repetition level histogram size mismatch",
+  "covtype_subset": "OSError: Repetition level histogram size mismatch"
+ },
+ "weather_contract": {
+  "timestamp_strictly_increasing_unique": true,
+  "expected_schema_exact": true,
+  "target_leakage_columns_absent": true,
+  "rows": 18210,
+  "tail_rows_after_complete_batches": 426,
+  "complete_monitor_batches_after_20_10_10_60_split": 21,
+  "split_counts": {
+   "train": 3642,
+   "calibration": 1821,
+   "reference": 1821,
+   "monitoring": 10926
+  }
+ }
+}

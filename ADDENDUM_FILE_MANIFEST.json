@@ -1,0 +1,639 @@
+{
+  "package_id": "idm-viz-postdeadline-addendum-20261117-v1",
+  "base_package": "IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip",
+  "base_package_sha256": "24bd91b8686ae972051d1437b9c4f2d39cae531576a63f5ed64ad3ca8dd47725",
+  "created_utc": "2026-11-17T01:05:41.903338+00:00",
+  "overlay_file_count": 157,
+  "overlay_files": {
+    "configs/datasets/weather.yaml": {
+      "sha256": "decd4d3c1648011ea89fd5a652d2c5abb844528bbe3b2556a936bfa27b282a98",
+      "bytes": 1703
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/benchmark_comparison_20261117.json": {
+      "sha256": "8c7c946597074fa17aaf9c4973dc572a5e098e92fd722af67cc3f1b95fe1dc96",
+      "bytes": 1168
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1949.csv": {
+      "sha256": "9a2d8337a7293dda0450ad065a43c4d37ad6c75df3c7bb5db4cc0af37eebfd1f",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1950.csv": {
+      "sha256": "4a74939515e039415164a28e4e16b70315eb8e3e51895b464ea10050d8903b3f",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1951.csv": {
+      "sha256": "1ec44832bd851a4f44c5d8e9bd80d40422f6b36fb95bcb33c67083b5219d6f74",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1952.csv": {
+      "sha256": "8de81817edfc38db94c66f18c3377ae308a1bd7c2f50e2407921da02fc308aad",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1953.csv": {
+      "sha256": "927939467bd7589067b407ac9ab78fe0db388051331607751b137eac92f4383c",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1954.csv": {
+      "sha256": "6a2c292bc3204b8e513c7e1f89eff9f6e048a71e791ce5c1c323fed37fb7562c",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1955.csv": {
+      "sha256": "a62cff5262c399b9223df03f45e3779cf303066391b88a44299c7f14d866d703",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1956.csv": {
+      "sha256": "629fbcb1eb62e40c4c033794b8ff30ab8b99e64f3769c3608a4074fac85d3bce",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1957.csv": {
+      "sha256": "0279bcbf277821566de201cd651801bc3ffc6760afc9405dd65f72c9117a242c",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1958.csv": {
+      "sha256": "7ff8feb6ac0a9520cefda1166d0276917d4270c30ef1d2bd258db30a3e5f59d4",
+      "bytes": 87305
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1959.csv": {
+      "sha256": "1fbcc8f158039fa19fb91b55d795d2939556f769a51c2c18ce608fdd396b8be2",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1960.csv": {
+      "sha256": "aa4bd2ead3640c5f020e5c3a2c6a858c3ae02cf66be84a43120d1ed2273a9a2d",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1961.csv": {
+      "sha256": "515c9b5c90b028de4f64382b2eda54c41c02f450a9c7c4338f938fd8af5abcbf",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1962.csv": {
+      "sha256": "3084302bf49ce0d76b85e3b1a0a652da060c1986e4778889e1929945283ae15a",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1963.csv": {
+      "sha256": "a5df09ee236130112c9026c951128524ca41f63041fe3b56802cf084a87494e0",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1964.csv": {
+      "sha256": "4b21d0a7d34bbffde1b3fb30e59cdd1a5048becbefbc93a912723e863f817f64",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1965.csv": {
+      "sha256": "30d4830046dc86dc4e52c079ad9fb04b653640649f6cb918d8abc2b91aaa90c4",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1966.csv": {
+      "sha256": "3d2b14d16609499cb8fb18605816f3e4ad286112b11d94f3fb5a353bb43f27bf",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1967.csv": {
+      "sha256": "06732d1f68831bc7c4a00da4648f55ae63c395c6706c2e2b22fdc9cc6e85ed99",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1968.csv": {
+      "sha256": "7bc7dc63bd466eded3d7400d19ae9d77416de4f43dc30d4a3337161078f59061",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1969.csv": {
+      "sha256": "8e50b10352344a7bb4681ecc4e487ce5bfb8630b7a270f3a579ac9540f3938b2",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1970.csv": {
+      "sha256": "da4162cc9bbdd3037aca8e76931a3f98c5fd12cb04f9916bbdf6ba2275698a70",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1971.csv": {
+      "sha256": "1680aac9c87e041e781e3f1b64c7d33833ad8e22f7cd8ecf3cc000efbcc564de",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1972.csv": {
+      "sha256": "1a0f66db80b45a312042272e36e9e33201d44c2f530c0661bd9ff97e1958ef7f",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1973.csv": {
+      "sha256": "5a23a39940a6f4d66e1b332a169d0848c7c45c3d349038bfa47e136ffa6446b5",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1974.csv": {
+      "sha256": "d0fa2f4f8f078dbe92f702531c8fdd41504e66356d63ce15d655cf4a00019b7e",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1975.csv": {
+      "sha256": "e293b947dd77d0e28e944d36c78dce892f7c7858bfe87c1a05487752e553e360",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1976.csv": {
+      "sha256": "749e60a02e58ee1ddec3028298cb4e5ee29cf62838783e5d844e191ca0cc6d7c",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1977.csv": {
+      "sha256": "467941b2d310944c28e0e65d3d3f76c7cf2065000eeba44c4f714225d4ea74fe",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1978.csv": {
+      "sha256": "052ef1fc3876b25ee432582a0df6d147affffb905fe08449df62427e44f5027e",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1979.csv": {
+      "sha256": "25698835c13c224b60c8981777d40ab05ff30e3768120c25dd2cd518f5907445",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1980.csv": {
+      "sha256": "82a3343fb93e906d9ba1181b97296cff54f388a7c9d1efe61d86791303a6018f",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1981.csv": {
+      "sha256": "0a83795b838f3fb069e6fea5397b5c03c3f942ba0d768aa4b956cc158b1e57e0",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1982.csv": {
+      "sha256": "e11f5510f59cb4144688ef4f204b4f5d61c8d75c72cebec07e696546a9f52a0d",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1983.csv": {
+      "sha256": "410681ede4038b41ca896467434926e941e6ef0b83ba375e8523fc42596b3d85",
+      "bytes": 72965
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1984.csv": {
+      "sha256": "56b811d7a2a8c170bda079d5a6cff60dd3e20593b8eb2694b03dd3fc97c6d081",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1985.csv": {
+      "sha256": "1e1c6416328d448961ec4690df0f214c0d79299268234412e87c9661863b7876",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1986.csv": {
+      "sha256": "8db9693a7534f93981bae36b7a51b8853a325bb4babd22a12428d5f6c66dcb0e",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1987.csv": {
+      "sha256": "bb0640956a76bfa18191fe6245b1c9c9f0a7d20412ac8be2e1e429af44939c95",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1988.csv": {
+      "sha256": "a990ba03901a0cc292c781059bb13de9672d98cb357491e176860a14895df954",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1989.csv": {
+      "sha256": "3c0bd30360d1a5d16cf3c11b0be4c71951c8f6f2ee637ce252cf0372d6d280d6",
+      "bytes": 14410
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1990.csv": {
+      "sha256": "597aa699152428a7cedb4db7ce55aaaa78dc7e9ba0d93205ff5edd1418094d06",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1991.csv": {
+      "sha256": "301b36a3f7dca3fa4e4283197b51c7e3a89fffd964bfef76b3e4dc6a5264a3ff",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1992.csv": {
+      "sha256": "1df214b623b700512ba5562b28fad6c9a056d4bea4fc743ad3a0de3f7c4e1299",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1993.csv": {
+      "sha256": "057a2c680932fdc07f53c63400ec9ccd8fecd6993ebec135dc932c1c5d0587a2",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1994.csv": {
+      "sha256": "0981fa10c421564422c82ed1107cabb0ad5cb3c48eb96e2f5ce8ac0795dfec4f",
+      "bytes": 77984
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1995.csv": {
+      "sha256": "6525c2e9260fd4fd366714af5c2c02d49e8fc27b807fe61ac2c88d5695312239",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1996.csv": {
+      "sha256": "5ea1cdc0617474b1fd22a2023ea36e2b72cbdc8ef0c40d38716975fd679cc9ab",
+      "bytes": 87783
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1997.csv": {
+      "sha256": "3bee2fa6bf18f83d42cbea803150252e3ca8af8a50caafcd4727861e18ac104b",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1998.csv": {
+      "sha256": "5ba1b7ce9484cb6bd44dc23e488c35b7cc84017f27ab597db7657bd9df105932",
+      "bytes": 87544
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1999.csv": {
+      "sha256": "1636827c01dcd53f7e8c28cdd7368ee2af3242c6e57c7b83e45039de49486156",
+      "bytes": 87305
+    },
+    "data/external/noaa_gsod_weather_1949_1999_v1/reference/scikit_multiflow_weather.csv": {
+      "sha256": "3c38f05bdc5c4cb115f122414c66976e3662c875d96d7199d9e47fc46aff150e",
+      "bytes": 772138
+    },
+    "data/interim/audit_all_datasets_20261117.json": {
+      "sha256": "96abcbf429913ca2101d1fc5ba7eca2500fab36a66e870a4032568c5727168b4",
+      "bytes": 4141
+    },
+    "data/interim/audit_weather_noaa_20261117.json": {
+      "sha256": "c398b8e21ac83e5b8631c4d51db1fd8c5c66142b7c36cf94172f6ba5693f1978",
+      "bytes": 1611
+    },
+    "data/manifests/covtype_manifest.json": {
+      "sha256": "eb76763d3f54722651ebd8c9d384a07e3684ae08d3162267449e877c49e4cedf",
+      "bytes": 543
+    },
+    "data/manifests/covtype_subset_manifest.json": {
+      "sha256": "ef6ea40723f795add2fba67895c24059672e4b6fc72e47b32ad9ec4bd477482a",
+      "bytes": 377
+    },
+    "data/manifests/covtype_subset_verified_v2_manifest.json": {
+      "sha256": "50264671f0361f6bb578848d9e598b0df430bbad35bc1c8969cbb320767a7833",
+      "bytes": 875
+    },
+    "data/manifests/elec2_manifest.json": {
+      "sha256": "c51554fe884978d2c49c6dab0622f14f6174461c80846789567eead3dc6042f8",
+      "bytes": 1587
+    },
+    "data/manifests/elec2_verified_v2_manifest.json": {
+      "sha256": "6f26edf948540077d567f152a8b452f473d21c35247d88cadcaf3515b9268d88",
+      "bytes": 2484
+    },
+    "data/processed/verified_v2/covtype_source_row_ids.csv": {
+      "sha256": "c247269ed6ba262879db60ac366df6eb4f9b0d04feea158674a7e102e143e141",
+      "bytes": 1140197
+    },
+    "data/processed/verified_v2/covtype_subset100k.parquet": {
+      "sha256": "c7d6c07d9e1ff22c8c5d0352896b1601433376df7dd8df2a2a7c46cf74a7c500",
+      "bytes": 1320866
+    },
+    "data/processed/verified_v2/elec2_ordered.parquet": {
+      "sha256": "4e67ce139b94daede4321518e4a4cda8917835b816ddd17087f3dc9b47092ea1",
+      "bytes": 539489
+    },
+    "data/processed/weather_noaa_1949_1999_v1/REJECTED_INTERMEDIATE.md": {
+      "sha256": "5e1621189a6d21798c0908ad7c98820c02aed6fd816c11460b6657e5d136d010",
+      "bytes": 661
+    },
+    "data/processed/weather_noaa_1949_1999_v2/weather_manifest.json": {
+      "sha256": "9d3360a644575cac900b80681e3e39f84b92482eb11d5b3a887f51be7ab42a1f",
+      "bytes": 14798
+    },
+    "data/processed/weather_noaa_1949_1999_v2/weather_ordered.csv": {
+      "sha256": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+      "bytes": 1001557
+    },
+    "data/raw/covtype/covtype.data.gz": {
+      "sha256": "614360d0257557dd1792834a85a1cdebfadc3c4f30b011d56afee7ffb5b15771",
+      "bytes": 11240707
+    },
+    "data/raw/openml/openml.org/data/v1/download/2419/electricity.arff.gz": {
+      "sha256": "60df61719ff2065ae144ae7788a2a1fca603e6c5bc83c5bd82bb3b63b0d28c74",
+      "bytes": 714838
+    },
+    "docs/23i-2604_23i-2581DAV-phase2.docx": {
+      "sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+      "bytes": 529303
+    },
+    "docs/Phase 03 - Implementation.pdf": {
+      "sha256": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+      "bytes": 190512
+    },
+    "docs/phase3/LOCALIZATION_AUDIT_20261117.md": {
+      "sha256": "b4c708481858f4429e114fd64481aab551696feae8db4a88ced093e1b1bbabf1",
+      "bytes": 3432
+    },
+    "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.json": {
+      "sha256": "5658583d1b2ff71dadd2349078f89fd2d7c2cf7320003427d4ab8dd91b829230",
+      "bytes": 28786
+    },
+    "docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.md": {
+      "sha256": "a9d1691aba90833bbcbd88fb8122ac800172cf07dea941431edc69cffd1317ed",
+      "bytes": 5166
+    },
+    "docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md": {
+      "sha256": "5d9b320041b58f373a9366ab5e1b6d2128c72a43515dd285f24d46d303498d28",
+      "bytes": 8267
+    },
+    "docs/phase3/WEATHER_PROVENANCE_AUDIT_20261117.md": {
+      "sha256": "b59df5f9a90fb09b0f696b56f2e5244c5600e4490c8919537b38765885393c4e",
+      "bytes": 5244
+    },
+    "reports/phase3/localization_audit_20261117_v4/LOCALIZATION_AUDIT.tex": {
+      "sha256": "15a1e6fb7fb69943f898eccca7adb4cc4095a693eb467bfc269ca61834a0c248",
+      "bytes": 2960
+    },
+    "reports/phase3/localization_audit_20261117_v4/cluster_mapping_seed_bootstrap.csv": {
+      "sha256": "77e67b13a3366115ca1db799fbf729d44ccf3b5047246c8b0251f06cf8652802",
+      "bytes": 1414
+    },
+    "reports/phase3/localization_audit_20261117_v4/dependence_detection.png": {
+      "sha256": "6f8b385466dc354f72ea6d635bd739d24d28f922cb1add2f6051d30f2f60eac5",
+      "bytes": 102195
+    },
+    "reports/phase3/localization_audit_20261117_v4/dependence_detection.svg": {
+      "sha256": "3b8a746edf2f10e31611717ef76d53a55e1a1c05d948a50f81599146a6f84331",
+      "bytes": 58790
+    },
+    "reports/phase3/localization_audit_20261117_v4/intervened_region_seed_bootstrap.csv": {
+      "sha256": "1c2f9bb3d443391c3bf464c200ce3d8fbf359bc6c246790e10c9230575ab3d76",
+      "bytes": 1785
+    },
+    "reports/phase3/localization_audit_20261117_v4/pair_localization_seed_bootstrap.csv": {
+      "sha256": "2dd5bd98bbb59cfe4d7363e1b1ce133bfadcb975132d5b2d6f69531d3f9489a4",
+      "bytes": 2898
+    },
+    "reports/phase3/localization_audit_20261117_v4/region_localization.png": {
+      "sha256": "015e8d264b25c33df079c5270bae31e568af9d0092c50594bc76018b2d5809a9",
+      "bytes": 103545
+    },
+    "reports/phase3/localization_audit_20261117_v4/region_localization.svg": {
+      "sha256": "651314292de607a05e2fe245234af76c956c6775de0e39ebeb9d780b022777f1",
+      "bytes": 63499
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/README.md": {
+      "sha256": "e6331a41ce4aa266fbef562a136fad2e302368fc39cae7dd0d9bdcbc6676ff93",
+      "bytes": 3106
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/REPORT.aux": {
+      "sha256": "a4903e51f7aa5dbb42a157b7c66ca88b4c7cd97bab2de369e6fc7c016a1123d0",
+      "bytes": 4534
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/REPORT.log": {
+      "sha256": "8ae6f110f93cc8a9373d87a2dbb4c9e4acb46d28a943060027878977958c742f",
+      "bytes": 26686
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/REPORT.out": {
+      "sha256": "65aeddd1ddbeb64aad72f88bf0603d2b6f70daab0b6efbc8c6c313c84a4d5228",
+      "bytes": 1660
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/REPORT.pdf": {
+      "sha256": "4915fb5c7b0128a3c5e82fc1f77853fa16ba25b2238a3b98733f3d2bc552c99d",
+      "bytes": 969655
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/REPORT.tex": {
+      "sha256": "a9a25678d5fcaa4476b386b637d75648cc61c8fbe24d5dbc5f6753c3bf11015d",
+      "bytes": 15114
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/REPORT.toc": {
+      "sha256": "95010a1e651e8f39ef13015a2f66fd9cb91014cd7c5ee93a5fb0e5905998fedd",
+      "bytes": 707
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/figures/fig01_estimator_mae.png": {
+      "sha256": "d2352bc447da35092fd1cdbea7784ddc8d80373087ee1479bba6361b093dba68",
+      "bytes": 108279
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/figures/fig02_detection_and_accuracy_timeline.png": {
+      "sha256": "3d3667a331b5f69f86f4c4e6bed47939cf2f789960ed18fcb397020255703661",
+      "bytes": 599903
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/figures/fig03_delay_verification.png": {
+      "sha256": "b61e715be64f579015a4ea25acf443254516445b33e7d71486462a5d39e2c8f5",
+      "bytes": 145551
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/figures/fig04_feature_localization.png": {
+      "sha256": "46277d2e1e782c6f5696ed66a7a2e29b2688bc945fe6fa061f28ffd5e054056e",
+      "bytes": 102814
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/figures/fig05_dimension_sensitivity.png": {
+      "sha256": "402ce21502f559341403f0aa7459d940da369f354fb10054321291e594433c2d",
+      "bytes": 139416
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/pdf_build_receipt.json": {
+      "sha256": "8499ab465d6ddcbc980a033d128872f070e0e6f22eaf496a26d6941509e21d58",
+      "bytes": 2872
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-01.png": {
+      "sha256": "af90277f24fd4d3f0e22a48fb3f4ea221e2addce82a4cef564eb2e9d5a1cc181",
+      "bytes": 68854
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-02.png": {
+      "sha256": "542d7515f6ef8990503bd18b13cdaafd6e2ecfabb2fdd8ad6154674ece11bece",
+      "bytes": 50946
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-03.png": {
+      "sha256": "e4d7db38b47e68f36b19e741789530292d81af3dbf8667675a30463b374f7ae7",
+      "bytes": 308769
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-04.png": {
+      "sha256": "bb2993a7e10c3ffd4af60d152609e8038e9fb3e95a8ce18722bcb692d2157b98",
+      "bytes": 273566
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-05.png": {
+      "sha256": "5aceb958321b29f5350f9043e7076c4860aa3db1a80e1c49c2f0f8bc09495407",
+      "bytes": 196531
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-06.png": {
+      "sha256": "5c1603bbb3b42e3fcabe34fa38673708013418ff32168e1998715d3680c13092",
+      "bytes": 253756
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-07.png": {
+      "sha256": "e92284b8298d41fa7039dbc449ca0ea4ad933be47fba81133ffef9618fed2705",
+      "bytes": 135189
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-08.png": {
+      "sha256": "bfb72d9d00c271eaf43e8a5bf084ca79c6fca88ef928f7f5ad8e36021b798d22",
+      "bytes": 83964
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-09.png": {
+      "sha256": "21a1ec20b673408c293fd95f234b9cea0a3cc46342e6ac2b551f287f1b707d0a",
+      "bytes": 282453
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-1.png": {
+      "sha256": "af90277f24fd4d3f0e22a48fb3f4ea221e2addce82a4cef564eb2e9d5a1cc181",
+      "bytes": 68854
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-10.png": {
+      "sha256": "58867d647bd725f7ea3135b04a4534eb0269c2acf375e2b5e3abbb62df954889",
+      "bytes": 53485
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-2.png": {
+      "sha256": "542d7515f6ef8990503bd18b13cdaafd6e2ecfabb2fdd8ad6154674ece11bece",
+      "bytes": 50946
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-3.png": {
+      "sha256": "e4d7db38b47e68f36b19e741789530292d81af3dbf8667675a30463b374f7ae7",
+      "bytes": 308769
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-4.png": {
+      "sha256": "bb2993a7e10c3ffd4af60d152609e8038e9fb3e95a8ce18722bcb692d2157b98",
+      "bytes": 273566
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-5.png": {
+      "sha256": "23ec93e6f336c11b6b8ab01b0da093763dbfbc2a27e784dc17ffb4d02424c2c0",
+      "bytes": 198021
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-6.png": {
+      "sha256": "4ca74fa41d4a306b2f1770461c68e9e4304e2a02058d7a2b4a28bdf6d6c88d44",
+      "bytes": 246416
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-7.png": {
+      "sha256": "e92284b8298d41fa7039dbc449ca0ea4ad933be47fba81133ffef9618fed2705",
+      "bytes": 135189
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-8.png": {
+      "sha256": "bfb72d9d00c271eaf43e8a5bf084ca79c6fca88ef928f7f5ad8e36021b798d22",
+      "bytes": 83964
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/qa_render/page-9.png": {
+      "sha256": "65e7483eee61772dcd407a564d43ab979fa6cb2f470430cf7b69f3bfc1d2de0a",
+      "bytes": 262729
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/report_build_receipt.json": {
+      "sha256": "693e1dff787a94e8551a2593cb49011523c2a8fde26d3049d603b7bc5484115e",
+      "bytes": 1189
+    },
+    "reports/phase3/strengthening_v3_evaluation_with_sensitivity_20261117/tables.tex": {
+      "sha256": "350ff13b66c640e6828275fb9df6a0dbf3597d3418165025bdf86186283bbc2b",
+      "bytes": 4507
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/README.md": {
+      "sha256": "6c87079a09c7d7144bb8aae9fae22408ec39ea5d8638c17bfe921677d413a742",
+      "bytes": 295
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/REPORT.pdf": {
+      "sha256": "85eccf2fb94967e13f99e113974095af260998b7a6240801f9b430f26c3c95d1",
+      "bytes": 70386
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/REPORT.tex": {
+      "sha256": "1225c27e726d0225827879f91615492618197aefaae433d4bbb87207f777181f",
+      "bytes": 8081
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/figures/weather_holdout_timeline.pdf": {
+      "sha256": "64bfb5b58baaaaf8835d82edc935c0f9f96c58a66d1776121c26ae911d3b9c44",
+      "bytes": 27896
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/figures/weather_holdout_timeline.png": {
+      "sha256": "646e00e67915c57a41e5c9af0a6e4593e6576f7fbb35e5eba57b53b2f72c4f81",
+      "bytes": 265859
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/qa_render/page-1.png": {
+      "sha256": "489750ae09097763a305d4fbd6ab13d80d45f8eb68463aa5279e9f2aefebc62c",
+      "bytes": 77240
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/qa_render/page-2.png": {
+      "sha256": "d9b50d0251e9e56f47a71958965efa07a820cfba9a92b6bc90e16a2ec2c3fa53",
+      "bytes": 324185
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/qa_render/page-3.png": {
+      "sha256": "c1ea2c757bfa49d8ff52039399e57759e246a6f8c5f5932fce483e5f58bdfbeb",
+      "bytes": 181165
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/qa_render/page-4.png": {
+      "sha256": "049cc807ddfc5f5b3957dfab119419dc1e96dfe64f413e6e0d495dfb26e5d24e",
+      "bytes": 78385
+    },
+    "reports/phase3/weather_noaa_1949_1999_v2/report_build_receipt.json": {
+      "sha256": "3237b94139bd477ae95ecd2da9c913c4da2d2b439360d687d9edd0262f25f5d7",
+      "bytes": 885
+    },
+    "results/phase3/localization_audit_20261117_v2/audit_receipt.json": {
+      "sha256": "e69c944b634b92dd6a0916d18328ec7ba66abd1e7535e716809bb12564e75594",
+      "bytes": 1049
+    },
+    "results/phase3/localization_audit_20261117_v2/dependence_pair_localization.csv": {
+      "sha256": "93f284a4e3e15cabd6aae4bdfb937ef4f7b403a5303a5bf35579d2a468979525",
+      "bytes": 1938624
+    },
+    "results/phase3/localization_audit_20261117_v2/dependence_pair_summary.csv": {
+      "sha256": "c432bcdf4c8933eae1df0807bf2ee6f9ca77dcdf730dee867c11d881fbb82e62",
+      "bytes": 787
+    },
+    "results/phase3/localization_audit_20261117_v2/historical_cluster_mappings.json": {
+      "sha256": "48c62a941df9b2e3af4803a9633e81a7448c9f1f6824c2cec2a2ed40685b6104",
+      "bytes": 57559
+    },
+    "results/phase3/localization_audit_20261117_v2/region_localization.csv": {
+      "sha256": "1d92b65c258e96c58d0669731d88c7a5684062ba53860a50f8db4e2648e4595a",
+      "bytes": 2274794
+    },
+    "results/phase3/localization_audit_20261117_v2/region_localization_summary.csv": {
+      "sha256": "0cc2c372e1e1923f23ca25af2320b145743fd92b63fdea86a841fbbc4275c4e8",
+      "bytes": 1584
+    },
+    "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv": {
+      "sha256": "fe869ec985fbdd9fc19a0a7cd235b51cdc4f3e26c161ba9d9ac0818ee704208b",
+      "bytes": 6279
+    },
+    "results/phase3/noaa_weather_1949_1999_v1/evaluator/released_verification.csv": {
+      "sha256": "10a49c656b1ee3c9688a0eefb4070b7813a30e290997d0f6e4c505a3b1c26241",
+      "bytes": 3582
+    },
+    "results/phase3/noaa_weather_1949_1999_v1/integrity_manifest.json": {
+      "sha256": "1e89030bef3e5977285475c93e4a87bd8c53e428190080ce73cb9cf79a4813ca",
+      "bytes": 858
+    },
+    "results/phase3/noaa_weather_1949_1999_v1/online/batch_scores.csv": {
+      "sha256": "74d316dbf42e3434afe241b6fe381a53a866bee75e44319670080000fca968c4",
+      "bytes": 25243
+    },
+    "results/phase3/noaa_weather_1949_1999_v1/protocol_lock.json": {
+      "sha256": "ccdda8ed5f0fff4996e270cf6cc251446bc1be1a7732d5387903a97d51cb2706",
+      "bytes": 1606
+    },
+    "results/phase3/noaa_weather_1949_1999_v1/run/label_release_events.csv": {
+      "sha256": "e184ed6f1804b555590d7909040e4d4c873f8614005c29263fea007e39e683cf",
+      "bytes": 3044
+    },
+    "results/phase3/noaa_weather_1949_1999_v1/run_contract.json": {
+      "sha256": "7ca72dc5409ecd4b4d88b1b56465109759b62483878c2537a09b7e4d651744cd",
+      "bytes": 600
+    },
+    "results/phase3/noaa_weather_1949_1999_v1/run_summary.json": {
+      "sha256": "bc99298f1b7f31b3722660011473d17c221581bd8dd5cc5714664eaa9911a536",
+      "bytes": 1917
+    },
+    "scripts/audit_datasets.py": {
+      "sha256": "aa452a2d625b0b1f855485708995869dea3ad9f3a70df0eff34e43e396d4e941",
+      "bytes": 8619
+    },
+    "scripts/compare_weather_benchmark_mirror.py": {
+      "sha256": "e40fa2f159804bd8c044d0259acaa658cef810b32ad07dd0e3fc79265865f20f",
+      "bytes": 3874
+    },
+    "scripts/download_datasets.py": {
+      "sha256": "00b9c8205000bc87478523c630a66b1827df1e465ef495ef735cc5f46caaa3da",
+      "bytes": 7336
+    },
+    "scripts/package_phase3_addendum.py": {
+      "sha256": "2059e447d984a62ca012d6967ccc60fcdc66e83799a7e670cd263b7e06b88edc",
+      "bytes": 8959
+    },
+    "scripts/prepare_noaa_weather.py": {
+      "sha256": "dd5b6665f9cda3bc2bc0a814e5c59852f57eb0ba2d575a7929d771ff2f5e6efc",
+      "bytes": 10321
+    },
+    "scripts/rebuild_processed_datasets_v2.py": {
+      "sha256": "9be6436ca2b1a0e1728975f42e34a2a53a81158e0b10e741f850bda7b10aa8df",
+      "bytes": 7597
+    },
+    "scripts/report_noaa_weather.py": {
+      "sha256": "574384b25b408d8d0bed87b9b80db18a0de7d8a24fcff056d09478378595f50d",
+      "bytes": 15210
+    },
+    "scripts/reproduce_noaa_weather.ps1": {
+      "sha256": "9422ca86f3f23ed068d4573b3753d0787aeacd84d2fc52e5c2db41477b1cef83",
+      "bytes": 1283
+    },
+    "scripts/run_localization_audit.py": {
+      "sha256": "b6f255fa7f780282de0e29dd593ea53fa7fc849e21976d500e9b38f26cc9ddbb",
+      "bytes": 10229
+    },
+    "scripts/run_noaa_weather_transfer.py": {
+      "sha256": "f2582080ffeb1177a568f378a18972f036cb7f964472c5b75c9053036b215df7",
+      "bytes": 13595
+    },
+    "scripts/summarize_localization_audit.py": {
+      "sha256": "c850173ebc5ea329e9c90d275b4b2a8da2e1b7b9a9cbcf9cb2c0de2e9dcf93be",
+      "bytes": 12418
+    },
+    "src/drift_monitoring/data/real.py": {
+      "sha256": "381cba043dc6f1ddc36f5f4a7384110fcf2d015faf07256601a0c72e5d7d9579",
+      "bytes": 3071
+    },
+    "src/drift_monitoring/phase3/strengthening_generators.py": {
+      "sha256": "a3efbbacbbab451ebf308bfefc42ac6227686ce4733c3b82ea7a652b538ad308",
+      "bytes": 10199
+    },
+    "tests/phase3/test_localization_audit_contract.py": {
+      "sha256": "95c6a9d9d70a05f616c35b2498141cb35d2aedeb9a2b7f1b3c151e51197035ad",
+      "bytes": 2582
+    },
+    "tests/phase3/test_noaa_weather_contract.py": {
+      "sha256": "e0c15698ecaef556199c37d4bf4f91b6554412504fdb7f3a77b1587b7c892fef",
+      "bytes": 2311
+    }
+  },
+  "phase2_docx_sha256": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+  "predeadline_zip_sha256": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877"
+}

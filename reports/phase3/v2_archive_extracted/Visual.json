@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "pdf": "23I-2581_23I-2604_Phase3_Report.pdf",
+  "pages": 6,
+  "reviewed_pages": [1, 2, 3, 4, 5, 6],
+  "reviewed_on": "2026-11-15",
+  "pdf_sha256": "2408b46b46847896db03b6ee7b8b079cb806347ec83f2a2111419e94f70b6fa8",
+  "report_source_sha256": "368d710dd468e9e760668bb389608f273e8e1cb266f0ce4bb3f3555a71a1e993",
+  "checks": [
+    "page text is readable",
+    "figure labels and axes are legible",
+    "no visible text or figure clipping",
+    "title and roll-number author line are present",
+    "closing limitations and reproduction instructions are visible"
+  ],
+  "notes": "Pages 3 and 4 are figure-dense; plot labels and plotted evidence were reviewed at rendered A4 scale."
+}

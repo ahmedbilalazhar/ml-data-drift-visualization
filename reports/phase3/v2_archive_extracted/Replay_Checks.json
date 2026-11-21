@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checks": [
+    "same-cohort panel refresh",
+    "input/change event handling",
+    "future inputs hidden",
+    "delay changes update every panel",
+    "unreleased accuracy and F1 hidden",
+    "release-clock reveal",
+    "queue drainage through clock 44",
+    "evidence age at release",
+    "task/seed/condition switching"
+  ]
+}

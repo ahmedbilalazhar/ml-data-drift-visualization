@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "feature_streams": 60,
+  "delay_streams": 180,
+  "model_batch_records": 8640,
+  "prediction_instance_joins": 4320000,
+  "scheduled_release_events": 4320,
+  "released_label_rows": 2160000,
+  "released_id_checks": 2160000,
+  "adapter_fit_rows": 4320,
+  "exact_available_budget_checked": true,
+  "future_label_fit_check": true,
+  "online_truth_columns_absent": true,
+  "prediction_persisted_before_release": true,
+  "same_delay_release_ids_match": true,
+  "queue_drainage_checked": true,
+  "calibration_or_harm_claims_added": false
+}
