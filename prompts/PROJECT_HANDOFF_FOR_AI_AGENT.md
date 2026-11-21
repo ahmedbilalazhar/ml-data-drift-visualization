@@ -1,124 +1,140 @@
-# Project Handoff Prompt for an AI Agent
+# Project Location Map & Pointer Registry for AI Agent / Collaborator
 
-You are continuing an existing university Data Analytics and Visualization project. Treat the repository as the source of truth. Do not assume every experiment or report is final: identify status from the evidence and mark contradictions, superseded runs, and missing artifacts explicitly.
+This document is the authoritative **pointer registry** for the research project **Explainable Visualization and Monitoring of ML Data Drift (IDM-Viz)** (Ahmed Bilal 23I-2581 & Umar Behram 23I-2604).
+It maps the exact file locations of all scientific findings, implementation code, protocols, experimental registries, reports, weakness dispositions, and dataset artifacts.
 
-## Project identity and goal
+---
 
-The project is **Explainable Visualization and Monitoring of ML Data Drift**. It builds a reproducible framework to detect, localize, explain, and evaluate data/concept drift and its impact on ML systems. The repository README describes an E0 pilot and a reproducible harness, with later E1–E6 work and a substantial Phase 3 research/evaluation trail.
+## 1. Quick Navigation & Source of Truth
 
-## Start here
+- **Primary Repository Entrypoint & Layout**: [`README.md`](../README.md)
+- **Experiment Pointers & Metric Locations**: [`EXPERIMENTS.md`](../EXPERIMENTS.md)
+- **Phase 3 Run Index & Registry**: [`PHASE3_RUN_INDEX.md`](PHASE3_RUN_INDEX.md)
+- **Project Goals & Evolution**: [`plan.md`](../plan.md) and [`docs/research_notes/project-plan.md`](../docs/research_notes/project-plan.md)
+- **Architecture & Technical Design**: [`docs/architecture/research-project-architecture-and-roadmap.md`](../docs/architecture/research-project-architecture-and-roadmap.md)
+- **Research Charter & Questions**: [`experiments/protocols/research_charter.md`](../experiments/protocols/research_charter.md)
+- **Run Execution Log**: [`experiments/registries/runs.csv`](../experiments/registries/runs.csv)
 
-Open [experiment results and reproduction](../EXPERIMENTS.md) first. It maps the pilot experiments and each retained Phase 3 run to its saved metrics, status or validation records, and gives the exact location of replay inputs.
+---
 
-1. `README.md` — quickstart and high-level repository map.
-2. `plan.md` and `docs/research_notes/project-plan.md` — overall plan and project intent.
-3. `docs/architecture/research-project-architecture-and-roadmap.md` — architecture and roadmap (planning, not results).
-4. `experiments/protocols/research_charter.md`, `experiments/protocols/protocol_outline.md`, and `experiments/protocols/experiment_cards/` — research questions and experiment protocols.
-5. `experiments/registries/` — run registry/logs; reconcile it with actual results.
-6. `reports/progress/claim_to_evidence.md`, `evidence_bundle.md`, `failure_catalog.md`, `real_exec.md`, and `multiseed_exec.md` — progress, evidence, execution, and known failure context.
-7. Latest relevant Phase 3 decision/protocol docs under `docs/phase3/`, then their matching reports under `reports/phase3/` and result/status artifacts under `results/phase3/`.
-8. `src/drift_monitoring/`, `scripts/`, `configs/`, and `tests/` — implementation, commands, config, and scientific invariants.
+## 2. Codebase & Scientific Implementation Map
 
-## Repository structure
+The Python implementation package is located under `src/drift_monitoring/`:
 
-- `src/drift_monitoring/`: core package. README says it includes simulation, replay/windows, detectors (KS, Wasserstein, JS, ADWIN-inspired, RBF-MMD, joint logistic regression), explanation/ranking and DDE scores, frozen models, evaluation, visualization, orchestration, and real-data loading. Inspect code to confirm current behavior.
-- `configs/`: datasets, scenarios, methods, and study YAML files used by runners.
-- `scripts/`: smoke, multi-seed, real-data, E1 detection, E2 localization, E3 impact/proxy/delay, E6 reference/sensitivity, heatmap/dashboard export, demos, and dataset audit/download utilities. Use `python scripts\... --help` where supported before running expensive commands.
-- `tests/`: unit and phase-specific tests, including leakage, label timing, and resume invariants. Read tests to understand intended behavior; run only targeted tests when asked or needed for a change.
-- `experiments/protocols/`, `experiments/registries/`: protocol cards and run records.
-- `data/`: raw (intended immutable and gitignored), processed, manifests, and interim data. Never overwrite raw inputs. Check manifests and dataset cards for provenance/licensing.
-- `docs/`: charter, problem statement, data cards, architecture, decisions, protocols, and Phase 3 extensions/audits.
-- `reports/`: progress, literature, manuscript, and many Phase 3 reports. Multiple versioned reports exist; do not treat every version as current. Follow decision logs and explicit validation/status documents to identify the latest valid result.
-- `references/`: literature notes and supplied paper texts/assets. Pushed to remote git.
-- `notebooks/`: interactive/Colab workflows.
-- `research_figures/`: figures and plotting support.
-- `studies/`: course requirements/tasks and rubrics.
-- `prompts/`: previous research/review agent prompts and run indices.
-- `output/`: compiled PDFs, logs, `.receipt.json` audit files, and submission packages <= 100 MB (including official course submission archives). Large monolithic evaluation archives (> 100 MB) are omitted from git due to GitHub's file limit, but all underlying sources, scripts, and reproducible outputs are tracked.
-- `results/`, `tmp/`, `artifacts/`: generated run logs, predictions, caches, and intermediate metrics. Kept compact on git; reproducible directly via scripts.
+- **Drift Detectors (Univariate KS, Wasserstein, JS, ADWIN-style, RBF-MMD, Joint Logistic)**:
+  - Implementation: [`src/drift_monitoring/detectors/drift_detectors.py`](../src/drift_monitoring/detectors/drift_detectors.py)
+  - Unit tests: [`tests/unit/test_p0_detectors.py`](../tests/unit/test_p0_detectors.py), [`tests/unit/test_p2_detectors.py`](../tests/unit/test_p2_detectors.py)
+- **Explanations, Localization & DDE Scoring**:
+  - Implementation: [`src/drift_monitoring/explanations/localization.py`](../src/drift_monitoring/explanations/localization.py)
+  - Synthetic Demo: [`scripts/demo_dde.py`](../scripts/demo_dde.py)
+- **Frozen Models & Calibrators (Isotonic, Platt, Logistic Recalibration)**:
+  - Implementation: [`src/drift_monitoring/models/frozen_models.py`](../src/drift_monitoring/models/frozen_models.py)
+  - Unit tests: [`tests/unit/test_t10_calibration.py`](../tests/unit/test_t10_calibration.py)
+- **Orchestration, Timing Windows & Evaluation Harness**:
+  - Implementation: [`src/drift_monitoring/orchestration/runner.py`](../src/drift_monitoring/orchestration/runner.py)
+  - Real Data Loader: [`src/drift_monitoring/data/real.py`](../src/drift_monitoring/data/real.py)
+- **Aligned Views & Heatmap Visualization**:
+  - Implementation: [`src/drift_monitoring/visualization/aligned_views.py`](../src/drift_monitoring/visualization/aligned_views.py)
+  - Export Utility: [`scripts/export_heatmap.py`](../scripts/export_heatmap.py)
+- **Phase 3 Core Simulation, Replay & Evaluation**:
+  - Core Modules: [`src/drift_monitoring/phase3/core.py`](../src/drift_monitoring/phase3/core.py), [`src/drift_monitoring/phase3/evaluation.py`](../src/drift_monitoring/phase3/evaluation.py), [`src/drift_monitoring/phase3/adaptation.py`](../src/drift_monitoring/phase3/adaptation.py), [`src/drift_monitoring/phase3/replay.py`](../src/drift_monitoring/phase3/replay.py)
+  - Invariant Contracts & Tests: [`tests/phase3/`](../tests/phase3/)
 
-## Large Zip Packages & Output Contents Audit
+---
 
-The project contains several compiled ZIP packages in `output/phase3/` and `docs/phase3/`. For the next phase handoff:
-1. **Pushed to GitHub**:
-   - Course submissions & canonical packages under 100 MB: `output/phase3/23I-2581_23I-2604_Phase3.zip` (~10 MB), `23I-2581_23I-2604_Phase3_Research_Complete.zip` (~17.6 MB), `output/phase3/IDM_Viz_Phase3_v1_submission.zip`, day-wise validation packages, and all corresponding `.receipt.json` checksum files.
-   - Compiled research PDFs and LaTeX build logs in `output/pdf/` and `reports/`.
-2. **Contents of Monolithic Zips (> 100 MB, excluded from git push)**:
-   - Example `output/phase3/23I-2581_23I-2604_Phase3_Research_Full.zip` (1.14 GB): Contains 13,572 files — primarily raw numpy prediction arrays (`.npz` files, ~11,610 items), evaluation batch caches (`.csv` files, ~1,765 items), and redundant copies of the codebase (`Code/`) and visual assets (`Figures/`).
-   - These `.npz` arrays are generated intermediate prediction states that can be regenerated from `scripts/` using locked seeds. They are not needed for code execution or report verification since the summary metrics and reports are tracked in Git.
+## 3. Findings, Reports & Manuscripts Directory
 
-## Current known state at handoff
+Over 148 compiled research PDFs, LaTeX sources, and standalone reports are tracked in Git:
 
-The GitHub main branch contains the curated project snapshot. Use the [Phase 3 run index](PHASE3_RUN_INDEX.md) for exact paths to status, protocols and output tables for each retained run. The original laptop copy contains superseded reports and runs, versioned ZIP packages, third-party literature copies and large generated traces. A retained manifest may mention an artifact that was left on the laptop. Record those dependencies when assessing reproducibility.
+### A. Academic Manuscripts & Submission Reports
+- **Phase 1 Literature & Drift Report**:
+  - LaTeX Manuscript: [`reports/manuscript/phase1/Phase1_Drift_Report.tex`](../reports/manuscript/phase1/Phase1_Drift_Report.tex)
+  - Compiled PDF: [`reports/manuscript/phase1/Phase1_Drift_Report.pdf`](../reports/manuscript/phase1/Phase1_Drift_Report.pdf)
+  - Literature Review: [`reports/literature/deep-research-report.md`](../reports/literature/deep-research-report.md) & [`deep-research-report-phase1.pdf`](../reports/literature/deep-research-report-phase1.pdf)
+- **Phase 2 Research Report & Followup**:
+  - Review Notes: [`reports/manuscript/phase2_review_notes.md`](../reports/manuscript/phase2_review_notes.md)
+  - Submission Document: [`docs/submissions/DAV_Phase2_Revised_Report.md`](../docs/submissions/DAV_Phase2_Revised_Report.md) & [`docs/23i-2604_23i-2581DAV-phase2.docx`](../docs/23i-2604_23i-2581DAV-phase2.docx)
+- **Phase 3 Comprehensive Manuscript & Evidence**:
+  - Core V2 Research Report: [`reports/phase3/v2_archive_extracted/Report.md`](../reports/phase3/v2_archive_extracted/Report.md) & [`Report.pdf`](../reports/phase3/v2_archive_extracted/Report.pdf)
+  - Adaptation & Retraining Report: [`reports/phase3/v2_archive_extracted/Adaptation.md`](../reports/phase3/v2_archive_extracted/Adaptation.md) & [`Adaptation.pdf`](../reports/phase3/v2_archive_extracted/Adaptation.pdf)
+  - Decisions Log: [`reports/phase3/v2_archive_extracted/Decisions.md`](../reports/phase3/v2_archive_extracted/Decisions.md)
+  - Protocol Specification: [`reports/phase3/v2_archive_extracted/Protocol.md`](../reports/phase3/v2_archive_extracted/Protocol.md)
+  - Clean Reproduction Instructions: [`reports/phase3/v2_archive_extracted/Reproduce.md`](../reports/phase3/v2_archive_extracted/Reproduce.md)
+  - Interactive Replay Dashboard: [`reports/phase3/v2_final/23I-2581_23I-2604_Phase3_Evidence_Replay.html`](../reports/phase3/v2_final/23I-2581_23I-2604_Phase3_Evidence_Replay.html)
 
-The latest visible documentation includes dated Phase 3 extensions and audits through 2026-11-18. Use actual `STATUS.md`, validation docs, decision logs, and run manifests to state which results are valid, which are exploratory/superseded, and what remains. Avoid asserting all phases are complete simply because many reports exist.
+### B. Detailed Phase 3 Experiment Reports
+- **Decision Strengthening (v2–v5)**: [`reports/phase3/decision_strengthening_v5/REPORT.pdf`](../reports/phase3/decision_strengthening_v5/REPORT.pdf)
+- **UCI Gas Sensor (Split Model Sensitivity & Exact Intervals)**:
+  - Exact Intervals: [`reports/phase3/uci224_exact_intervals_20261116/UCI224_EXACT_INTERVALS.pdf`](../reports/phase3/uci224_exact_intervals_20261116/UCI224_EXACT_INTERVALS.pdf)
+  - Split Sensitivity: [`reports/phase3/uci224_split_model_sensitivity_20261116_v2/UCI224_SPLIT_MODEL_SENSITIVITY.pdf`](../reports/phase3/uci224_split_model_sensitivity_20261116_v2/UCI224_SPLIT_MODEL_SENSITIVITY.pdf)
+  - Delayed Replay: [`reports/phase3/uci224_delayed_replay_20261116_v5/REPORT.pdf`](../reports/phase3/uci224_delayed_replay_20261116_v5/REPORT.pdf)
+- **ELEC2 Calibration Family & Recalibration**:
+  - Calibration Family: [`reports/phase3/elec2_calibration_family_20261116_v1/ELEC2_CALIBRATION_FAMILY.pdf`](../reports/phase3/elec2_calibration_family_20261116_v1/ELEC2_CALIBRATION_FAMILY.pdf)
+  - Delayed Recalibration: [`reports/phase3/elec2_recalibration_20261116/ELEC2_RECALIBRATION.pdf`](../reports/phase3/elec2_recalibration_20261116/ELEC2_RECALIBRATION.pdf)
+- **NOAA Weather Experiments**:
+  - Holdout & Transfer Timeline: [`reports/phase3/weather_noaa_1949_1999_v2/REPORT.pdf`](../reports/phase3/weather_noaa_1949_1999_v2/REPORT.pdf)
+  - Selective Label Replay: [`reports/phase3/noaa_selective_label_replay_20261117_v3/NOAA_SELECTIVE_LABEL_REPLAY.pdf`](../reports/phase3/noaa_selective_label_replay_20261117_v3/NOAA_SELECTIVE_LABEL_REPLAY.pdf)
+  - Training Uncertainty: [`reports/phase3/noaa_training_uncertainty_20261117_v3/NOAA_TRAINING_UNCERTAINTY.pdf`](../reports/phase3/noaa_training_uncertainty_20261117_v3/NOAA_TRAINING_UNCERTAINTY.pdf)
+- **Future Harm Forecasting & Unseen Families**:
+  - Forecast Evaluation: [`reports/phase3/future_harm_forecast_20261116_v10/FUTURE_HARM_FORECAST.pdf`](../reports/phase3/future_harm_forecast_20261116_v10/FUTURE_HARM_FORECAST.pdf)
+  - Balanced Onset Unseen Family: [`reports/phase3/future_harm_unseen_family_balanced_20261116_v1/FUTURE_HARM_UNSEEN_FAMILY.pdf`](../reports/phase3/future_harm_unseen_family_balanced_20261116_v1/FUTURE_HARM_UNSEEN_FAMILY.pdf)
+- **Large-Seed Robustness & Adaptation Schedule**:
+  - Robustness Report: [`reports/phase3/large_seed_robustness_final/23I-2581_23I-2604_Phase3_Robustness_Report.pdf`](../reports/phase3/large_seed_robustness_final/23I-2581_23I-2604_Phase3_Robustness_Report.pdf)
+  - Adaptation Schedule Audit: [`reports/phase3/adaptation_schedule_audit_20261118_v19/adaptation_schedule_audit.pdf`](../reports/phase3/adaptation_schedule_audit_20261118_v19/adaptation_schedule_audit.pdf)
+  - Capacity Control: [`reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.pdf`](../reports/phase3/adaptation_capacity_control_20261118_v9/adaptation_capacity_control.pdf)
+  - Seasonal Stress: [`reports/phase3/seasonal_stress_20261118_v1/REPORT.pdf`](../reports/phase3/seasonal_stress_20261118_v1/REPORT.pdf)
 
-## What to do next
+---
 
-1. Build a concise status map: completed implementation, validated findings, exploratory/superseded work, and open tasks. Cite exact files and sections/commands. Start with the source files listed above and search for `TODO`, `FIXME`, `STATUS`, `validation`, `superseded`, and `limitations`.
-2. Verify which result/report is canonical for each claim using protocol, run registry, status/validation, and evidence-to-claim files. Flag inconsistent sample sizes, seeds, data provenance, metrics, or conclusions instead of silently reconciling them.
-3. Identify missing reproducibility elements: environment/dependency pins, dataset acquisition instructions, checksums/manifests, random seeds, configs, command lines, expected outputs, and license/provenance notes.
-4. Propose a prioritized next-work list with rationale, acceptance criteria, and the exact files to edit. Keep scientific claims scoped to observed evidence.
-5. For any code changes, make minimal changes, preserve raw data and existing final artifacts, document commands, and report what was and was not verified. Do not run costly full experiments unless explicitly authorized.
+## 4. Empirical Weaknesses & Methodological Boundaries
 
-## Working style and output
+The project maintains an explicit weakness disposition log at [`docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md`](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md). Here is where each investigated weakness is located:
 
-Be evidence-led. Prefer links/paths and executable commands over vague summaries. Distinguish implementation status from scientific validation. When files disagree, report the disagreement and the evidence needed to resolve it. Deliver:
+| Weakness Area | Pointer to Evidence & Implementation | Observed Empirical Status |
+| :--- | :--- | :--- |
+| **Label Leakage Prior to Release** | [`docs/phase3/E3_DELAY_AUDIT.md`](../docs/phase3/E3_DELAY_AUDIT.md), [`tests/phase3/test_scientific_contract.py`](../tests/phase3/test_scientific_contract.py) | **Resolved in code**: Evaluator and online loops strictly separated via release queues. |
+| **Marginal Shift Confound in C6** | [`docs/phase3/DEPENDENCE_EXTENSION_PROTOCOL_20261116.md`](../docs/phase3/DEPENDENCE_EXTENSION_PROTOCOL_20261116.md), [`reports/phase3/dependence_extension_20261116/`](../reports/phase3/dependence_extension_20261116/) | **Characterized**: Targeted max-correlation detector achieved 30/30 detection; stationary false alarms increased from 0.83 to 1.70 per 24 batches. |
+| **Normal Interval Approximation** | [`docs/phase3/UCI224_EXACT_INTERVAL_EXTENSION_20261116.md`](../docs/phase3/UCI224_EXACT_INTERVAL_EXTENSION_20261116.md) | **Evaluated**: Exact Poisson-binomial intervals are narrower (0.0234 vs 0.0258), but both failed to cover 0/9 cohorts due to miscalibration under shift. |
+| **Delayed Recalibration Transfer** | [`docs/phase3/ELEC2_CALIBRATION_FAMILY_EXTENSION_20261116.md`](../docs/phase3/ELEC2_CALIBRATION_FAMILY_EXTENSION_20261116.md) | **Characterized Failure**: Isotonic and Platt updates reduced signed bias but failed to reduce MAE or ECE on ELEC2 stream. |
+| **Prospective Harm Prediction** | [`docs/phase3/FUTURE_HARM_UNSEEN_FAMILY_PROTOCOL_20261116.md`](../docs/phase3/FUTURE_HARM_UNSEEN_FAMILY_PROTOCOL_20261116.md) | **Bounded**: Time-only AUC dropped from 0.998 to 0.875 when onset times were balanced; monitor features improved Brier score. |
+| **Causal Attribution & Identifiability** | [`docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md`](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md) | **Open Limit**: Drift localization remains descriptive (correlation/KS rankings), not causal. Unlabeled accuracy under arbitrary shift is mathematically non-identifiable. |
 
-- a one-paragraph project summary;
-- a folder map;
-- a status table (done / in progress / missing or uncertain, each with file evidence);
-- a prioritized next-steps list;
-- reproducibility and publication risks;
-- exact commands to reproduce the smallest relevant checks.
+---
 
-## Experiment-by-experiment result map (inspect canonical artifacts)
+## 5. Artifacts, Submission Bundles & Archives
 
-The repository has a large, evolving experiment matrix, so this map is a guide to the source-of-truth files, not a claim that every run is publication-ready. For each experiment, read its protocol first, then the matching `results/phase3/<run>/` manifest/status/summary and the report folder. Compare versions and explicitly report the final disposition and headline numeric results from the actual artifacts.
+- **Official Verified Phase 3 Submission Package**:
+  - File: [`output/phase3/23I-2581_23I-2604_Phase3.zip`](../output/phase3/23I-2581_23I-2604_Phase3.zip) (10.35 MB)
+  - Receipt: [`output/phase3/23I-2581_23I-2604_Phase3.receipt.json`](../output/phase3/23I-2581_23I-2604_Phase3.receipt.json)
+- **Research Complete Package**:
+  - File: [`output/phase3/23I-2581_23I-2604_Phase3_Research_Complete.zip`](../output/phase3/23I-2581_23I-2604_Phase3_Research_Complete.zip) (17.59 MB)
+  - Receipt: [`output/phase3/23I-2581_23I-2604_Phase3_Research_Complete.receipt.json`](../output/phase3/23I-2581_23I-2604_Phase3_Research_Complete.receipt.json)
+- **Clean Submission Baseline Archive**:
+  - File: [`output/phase3/IDM_Viz_Phase3_v1_submission.zip`](../output/phase3/IDM_Viz_Phase3_v1_submission.zip) (4.90 MB)
+- **Day-Wise Validated Packages (Days 1–3)**:
+  - Day 1: [`output/phase3/IDM_Viz_Phase3_Day1_v1.1_Validated.zip`](../output/phase3/IDM_Viz_Phase3_Day1_v1.1_Validated.zip)
+  - Day 2: [`output/phase3/IDM_Viz_Phase3_Day2_External_Evaluation_v1.3_Validated.zip`](../output/phase3/IDM_Viz_Phase3_Day2_External_Evaluation_v1.3_Validated.zip)
+  - Day 3: [`output/phase3/IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.4_Validated.zip`](../output/phase3/IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.4_Validated.zip)
+- **Addenda Manifest & Audit Files**:
+  - Addendum Manifest: [`ADDENDUM_FILE_MANIFEST.json`](../ADDENDUM_FILE_MANIFEST.json)
+  - Addendum Readme: [`ADDENDUM_README.md`](../ADDENDUM_README.md)
+  - Status Register: [`output/phase3/IDM_Viz_Phase3_Addendum_Package_Status_20261117.json`](../output/phase3/IDM_Viz_Phase3_Addendum_Package_Status_20261117.json)
+- **Monolithic Caches (> 100 MB, retained locally on laptop)**:
+  - `output/phase3/23I-2581_23I-2604_Phase3_Research_Full.zip` (1.14 GB): Raw `.npz` arrays. All constituent reports, PDFs, decisions, and protocol files are extracted and tracked under [`reports/phase3/v2_archive_extracted/`](../reports/phase3/v2_archive_extracted/).
 
-- E0 integrity/pilot: `experiments/protocols/experiment_cards/E0_integrity.md`; run IDs/config hashes/statuses in `experiments/registries/runs.csv`; smoke command in `README.md` (`python scripts\smoke_e0.py`).
-- E1 detection: `experiments/protocols/experiment_cards/E1_detection.md`; inspect `scripts/` E1 runners, `configs/`, matching result tables, and Phase 2/3 traceability docs.
-- E2 localization: `experiments/protocols/experiment_cards/E2_localization.md`; audit and reports under `results/phase3/localization_audit_*` and `reports/phase3/localization_audit_*`; consult `docs/phase3/LOCALIZATION_AUDIT_20261117.md` for current adjudication.
-- E3 impact, delayed labels, and proxy/future harm: `experiments/protocols/experiment_cards/E3_impact.md`; related result families include `delay100_availability_*`, `future_harm_forecast_*`, `future_harm_unseen_family_*`, `uci224_delayed_replay_*`, and `noaa_selective_label_replay_*`. Find the canonical protocols in `docs/phase3/` (notably `DELAY100_AVAILABILITY_EXTENSION_20261116.md`, `FUTURE_HARM_FORECAST_EXTENSION_20261116.md`, `FUTURE_HARM_ONSET_RANDOMIZED_FOLLOWUP_20261116.md`, `FUTURE_HARM_UNSEEN_FAMILY_PROTOCOL_20261116.md`, and `UCI224_DELAYED_REPLAY_PROTOCOL_20261116.md`).
-- E6 ablations/reference/sensitivity: `experiments/protocols/experiment_cards/E6_ablations.md`; inspect `scripts/` E6 runners and matching output tables; do not equate exploratory smoke runs with full evaluations.
-- Phase 3 reproduction/versioning: `docs/phase3/V2_DECISION_LOG.md`, `V2_EXTENSION_MANIFEST.md`, `REPRODUCTION.md`, `reports/phase3/v2_final/`, `reports/phase3/v2_reproduction/`, and matching `results/phase3/v2_*` folders.
-- Large-seed robustness: `docs/phase3/LARGE_SEED_ROBUSTNESS_PROTOCOL.md`, `results/phase3/large_seed_robustness_final/`, and `reports/phase3/large_seed_robustness_final_reprowording_v1/`.
-- Strengthening v3 and high-dimensional sensitivity: `docs/phase3/STRENGTHENING_V3_PROTOCOL_20261116.md`; `results/phase3/strengthening_v3_evaluation*`; report variants in `reports/phase3/strengthening_v3_evaluation*`. Reconcile expected/completed cells and checksums against `docs/phase3/SCIENTIFIC_EXTENSION_RECONCILIATION_20261118.json`; that reconciliation says the d32/d128 run has all 1,440 expected cells hash-verified, while retaining a historical lock replacement PermissionError in metadata.
-- Dependence extension/stability: `docs/phase3/DEPENDENCE_EXTENSION_PROTOCOL_20261116.md`, `DEPENDENCE_STABILITY_PROTOCOL_20261116_v1.md`, result run folders `dependence_extension_*` and `dependence_stability_*`, and corresponding reports.
-- ELEC2 calibration/recalibration/temporal extensions: `ELEC2_CALIBRATION_FAMILY_EXTENSION_20261116.md`, `ELEC2_DELAYED_RECALIBRATION_20261116.md`, `ELEC2_TEMPORAL_EXTENSION_20261116.md`; match result folders `elec2_*` and report folders with same stem.
-- NOAA/weather provenance and reproduction: `WEATHER_PROVENANCE_AUDIT_20261117.md`, `weather_noaa_1949_1999_v2/README.md`, `weather_reproduction_v2/README.md`, results under `noaa_*` and `weather_*`, and `reports/phase3/weather_*`. Track source provenance and whether each dataset is real, synthetic, or reconstructed.
-- Selective-label and calibration uncertainty audits: protocols/audits in `docs/phase3/`, results in `selective_label_audit_*`, `noaa_reference_calibration_uncertainty_*`, and `noaa_training_uncertainty_*`, with corresponding report directories. Check seed-collision audit JSONs before interpreting independent replication.
-- Adaptation policies/capacity/schedule/diversity: `docs/phase3/ADAPTATION_PROTOCOL.md`, `ADAPTATION_SEED_REPLICATION_PROTOCOL.md`; results/reports under `adaptation_*`, `matched_adaptation_*`, `labelbroker_*`, and `feature_truth_*`. Many similarly named smoke, development, audit, and confirmation runs exist. Read `STATUS.md`, protocol locks, seed-collision audits, and canonical confirmation outputs; do not select a version by date/name alone.
-- Seasonal stress extension: `results/phase3/seasonal_stress_evaluation_20261118_v1/`, `results/phase3/seasonal_stress_reproduction_20261118_v1/`, `reports/phase3/seasonal_stress_20261118_v1/`, and `docs/phase3/SCIENTIFIC_EXTENSION_RECONCILIATION_20261118.json`. The reconciliation records both 90/90-cell runs complete and exact equality of their seed-level outcome data/figures; it reports three synthetic task families with input alarm excess around 0.744–0.768, feature-7 alarm excess around 0.791, and paired accuracy deltas near zero. Scope this claim to the stated synthetic families and verify report/table details before reuse.
-- Automated/prolonged work: `results/phase3/autonomous_24h_20261116/STATUS.md`, `autonomous_extension_20261116/STATUS.md`, and `docs/phase3/AUTONOMOUS_24H_AUDIT_20261116.md`. Treat these as audit trails, not as a substitute for validating each contained experiment.
+---
 
-For every run being summarized, make a row with: experiment question; protocol path; exact run directory; state and expected/completed cells; dataset/provenance; seeds/sample size; primary metric and numeric result with uncertainty; report path; validation/reproduction status; known limitation or supersession. If a run lacks one of these, state `not found` and continue the audit. The CSV registry is a run index, not a scientific results table; obtain outcomes from result summaries/tables and reports.
+## 6. Dataset Provenance & Locked Manifests
 
-## Reported outcomes to anchor the handoff
-
-| Experiment | Reported outcome and scope | Evidence |
-| --- | --- | --- |
-| E0 integrity | Pilot took 25.5 seconds and peaked at 33 MB. Confirm the execution environment before comparing runtime. | [Pilot claim map](../reports/progress/claim_to_evidence.md), [run registry](../experiments/registries/runs.csv) |
-| E1 detection | Controlled S1–S6 input changes detected at delay 0–1 at the pilot threshold of 0.097. S0 alarmed in 1 of 12 windows. Conditional-only S7 remained silent with a 0.19 F1 drop. | [Pilot claim map](../reports/progress/claim_to_evidence.md), [E1 protocol](../experiments/protocols/experiment_cards/E1_detection.md) |
-| E2 localization | Pilot recall and average precision were both 1.0. Correlated proxies diluted precision at 3. S6 ground truth is defined at the group level. Review later localization audits for finer distinctions. | [Pilot claim map](../reports/progress/claim_to_evidence.md), [localization audit](../docs/phase3/LOCALIZATION_AUDIT_20261117.md) |
-| E3 delayed action | Pilot S6 changed from update at delay 0 to investigate at delay 2. At delay 5 the policy continued monitoring during hidden S7 harm. The separate delay-100 experiment measured availability (0 of 5,040 labels by input end, all released by clock 124). | [Pilot claim map](../reports/progress/claim_to_evidence.md), [delay-100 extension](../docs/phase3/DELAY100_AVAILABILITY_EXTENSION_20261116.md) |
-| E6 window sensitivity | On S2, windows of 250, 500 and 1,000 all alarmed, with KS max of 0.61, 0.54 and 0.54. The primary window remained fixed at 500. | [Pilot claim map](../reports/progress/claim_to_evidence.md), [E6 protocol](../experiments/protocols/experiment_cards/E6_ablations.md) |
-| C6 dependence intervention | Targeted max-correlation detector alarmed in 30 of 30 held-out seeds versus 16 of 30 for KS/PCA. Stationary alarms rose from 0.83 to 1.70 per 24 batches. | [Weakness register](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md), [protocol](../docs/phase3/DEPENDENCE_EXTENSION_PROTOCOL_20261116.md) |
-| UCI224 interval coverage | Mean widths were 0.0234 exact versus 0.0258 normal, with 0 of 9 cohorts covered by either on the evaluated replay. | [Interval extension](../docs/phase3/UCI224_EXACT_INTERVAL_EXTENSION_20261116.md), [weakness register](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md) |
-| UCI224 delayed replay | On one ordered stream, equal-cohort MAE was 0.545 frozen versus 0.169, 0.227 and 0.283 with cumulative logistic recalibration at delays 0, 1 and 2. This is a simulated release clock across nine unequal target cohorts. | [Replay protocol](../docs/phase3/UCI224_DELAYED_REPLAY_PROTOCOL_20261116.md), [weakness register](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md) |
-| ELEC2 calibration family | Matched cumulative isotonic and Platt updates reduced signed bias. Neither lowered MAE or ECE at the evaluated delays 0, 5 and 20. | [Calibration family protocol](../docs/phase3/ELEC2_CALIBRATION_FAMILY_EXTENSION_20261116.md), [weakness register](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md) |
-| Unseen-family harm forecasting | Time-only AUC was 0.998 in the aligned-onset pilot and 0.875 in the balanced-onset follow-up. Monitor features improved Brier score over time alone in the follow-up. Released labels had no clear Brier improvement. | [Unseen-family protocol](../docs/phase3/FUTURE_HARM_UNSEEN_FAMILY_PROTOCOL_20261116.md), [weakness register](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md) |
-| Seasonal stress | 90 of 90 cells completed in both the canonical evaluation and clean reproduction, with exact equality of compared outcome fields. In three synthetic families, excess input alarm rates were 0.744–0.768 and paired accuracy deltas stayed within 0.000025 of zero. | [Aggregate results](../results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv), [reconciliation](../docs/phase3/SCIENTIFIC_EXTENSION_RECONCILIATION_20261118.json) |
-
-## Ordered external follow-up
-
-Use the [external replay report](../reports/phase3/external_future_harm_replay_20261120/REPORT.md) for five-cohort accuracy forecasting on ELEC2, NOAA and UCI224. Treat it as reuse of existing streams. UCI224 had four five-cohort origins and zero with released labels at delay 5, so report the availability limit separately from error.
-
-## Open work to assess first
-
-Read the [20 November forecast stress and replay report](../reports/phase3/six_hour_strengthening_20261120/REPORT.md) before updating any future-harm claims. Fresh synthetic results include a conditional-reversal gain (+0.0453 Brier) and a boundary-concentration failure (−0.3337). Conditional-only inputs produced exactly the stationary control's unlabeled probabilities on matched seeds, so the score gains cannot establish discrimination of conditional shift. The report also records the UCI224 and ELEC2 replay checks.
-
-1. Trace Phase 2 requirements to implemented and evaluated features. Start with [Phase 2 traceability](../docs/phase3/PHASE2_TRACEABILITY.md) and the [implementation audit](../docs/phase3/PHASE3_IMPLEMENTATION_SPEC_AUDIT_20261117.md). Check later experiments against the dated [weakness register](../docs/phase3/PHASE3_REMAINING_WEAKNESSES_20261116.md) before calling a weakness open or resolved.
-2. Reconcile newest adaptation capacity, matched schedules, diversity and DDE subset runs against their seed audits and confirmation outputs. Report policy comparisons alongside their label, retraining and information budgets.
-3. Specify the evidence that would justify claims about human decisions, operational cost, cross-domain performance, or calibrated probabilities. The current scope supports descriptive localization and controlled replay findings. Causal attribution, decision benefits and broad transfer still require independent evidence.
-4. Reproduce the smallest relevant result using its documented data, seeds and runner. Quote the observed number separately from the original report, and flag absent run artifacts or differences in source versions explicitly.
+- **ELEC2 (Australian New South Wales Electricity Market)**:
+  - Config: [`configs/datasets/elec2.yaml`](../configs/datasets/elec2.yaml)
+  - Manifest: [`data/manifests/elec2_verified_v2_manifest.json`](../data/manifests/elec2_verified_v2_manifest.json)
+- **Covertype (Forest Cover Type / USGS)**:
+  - Config: [`configs/datasets/covtype.yaml`](../configs/datasets/covtype.yaml)
+  - Manifest: [`data/manifests/covtype_subset_verified_v2_manifest.json`](../data/manifests/covtype_subset_verified_v2_manifest.json)
+- **NOAA GSOD Weather (1949–1999)**:
+  - Config: [`configs/datasets/weather.yaml`](../configs/datasets/weather.yaml)
+  - Audit Notes: [`docs/phase3/WEATHER_PROVENANCE_AUDIT_20261116.md`](../docs/phase3/WEATHER_PROVENANCE_AUDIT_20261116.md)
+- **UCI Gas Sensor Drift (Array 224)**:
+  - Source Readme: [`data/external/uci224_source/README.md`](../data/external/uci224_source/README.md)
+  - Compressed Inputs: [`data/external/uci224_source/uci224_curl.zip`](../data/external/uci224_source/uci224_curl.zip)
