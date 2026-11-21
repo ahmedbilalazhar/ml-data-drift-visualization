@@ -29,12 +29,23 @@ Open [experiment results and reproduction](../EXPERIMENTS.md) first. It maps the
 - `data/`: raw (intended immutable and gitignored), processed, manifests, and interim data. Never overwrite raw inputs. Check manifests and dataset cards for provenance/licensing.
 - `docs/`: charter, problem statement, data cards, architecture, decisions, protocols, and Phase 3 extensions/audits.
 - `reports/`: progress, literature, manuscript, and many Phase 3 reports. Multiple versioned reports exist; do not treat every version as current. Follow decision logs and explicit validation/status documents to identify the latest valid result.
-- `references/`: literature notes and supplied paper texts/assets. Respect source/license restrictions.
+- `references/`: literature notes and supplied paper texts/assets. Pushed to remote git.
 - `notebooks/`: interactive/Colab workflows.
 - `research_figures/`: figures and plotting support.
 - `studies/`: course requirements/tasks and rubrics.
-- `prompts/`: previous research/review agent prompts.
-- `output/`, `results/`, `tmp/`, `artifacts/`: generated outputs, data, packages, and temporary checks. These contain many large archives and versioned experiments. Do not commit additional bulky generated data by default; prefer tracked source, compact summaries, manifests, and reproducible commands. Preserve submitted/final packages unless explicitly asked to clean them.
+- `prompts/`: previous research/review agent prompts and run indices.
+- `output/`: compiled PDFs, logs, `.receipt.json` audit files, and submission packages <= 100 MB (including official course submission archives). Large monolithic evaluation archives (> 100 MB) are omitted from git due to GitHub's file limit, but all underlying sources, scripts, and reproducible outputs are tracked.
+- `results/`, `tmp/`, `artifacts/`: generated run logs, predictions, caches, and intermediate metrics. Kept compact on git; reproducible directly via scripts.
+
+## Large Zip Packages & Output Contents Audit
+
+The project contains several compiled ZIP packages in `output/phase3/` and `docs/phase3/`. For the next phase handoff:
+1. **Pushed to GitHub**:
+   - Course submissions & canonical packages under 100 MB: `output/phase3/23I-2581_23I-2604_Phase3.zip` (~10 MB), `23I-2581_23I-2604_Phase3_Research_Complete.zip` (~17.6 MB), `output/phase3/IDM_Viz_Phase3_v1_submission.zip`, day-wise validation packages, and all corresponding `.receipt.json` checksum files.
+   - Compiled research PDFs and LaTeX build logs in `output/pdf/` and `reports/`.
+2. **Contents of Monolithic Zips (> 100 MB, excluded from git push)**:
+   - Example `output/phase3/23I-2581_23I-2604_Phase3_Research_Full.zip` (1.14 GB): Contains 13,572 files — primarily raw numpy prediction arrays (`.npz` files, ~11,610 items), evaluation batch caches (`.csv` files, ~1,765 items), and redundant copies of the codebase (`Code/`) and visual assets (`Figures/`).
+   - These `.npz` arrays are generated intermediate prediction states that can be regenerated from `scripts/` using locked seeds. They are not needed for code execution or report verification since the summary metrics and reports are tracked in Git.
 
 ## Current known state at handoff
 
