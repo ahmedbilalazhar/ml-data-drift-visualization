@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "online_truth_columns_absent": true,
+  "expected_seed_count_per_task": 5,
+  "unique_seed_count": 5,
+  "online_batches": 2880,
+  "evaluator_batches": 2880,
+  "per_seed_condition_rows": 490,
+  "all_finite_scores": true,
+  "paired_model_rows": true,
+  "online_evaluator_join_keys_unique": true,
+  "queue_delays_not_replayed": true,
+  "seed_vector_unit": "seed"
+}

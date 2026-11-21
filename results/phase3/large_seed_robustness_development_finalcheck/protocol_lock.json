@@ -1,0 +1,64 @@
+{
+  "protocol": "large-seed robustness replication of frozen model/task extension",
+  "status": "complete",
+  "mode": "development",
+  "started_at_utc": "2026-11-15T17:36:34.917781+00:00",
+  "seeds_by_task": {
+    "v1_synthetic": [
+      990001,
+      990002,
+      990003,
+      990004,
+      990005
+    ],
+    "xor_synthetic": [
+      990001,
+      990002,
+      990003,
+      990004,
+      990005
+    ]
+  },
+  "conditions_by_task": {
+    "v1_synthetic": [
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "xor_synthetic": [
+      "X0",
+      "X1",
+      "X2",
+      "X3",
+      "X4"
+    ]
+  },
+  "models": [
+    "logistic",
+    "shallow_tree"
+  ],
+  "seed_count_per_task": 5,
+  "manifest_sha256": "f300365fc0d46d28a250d02353a42d794a7ec04c5307f9ba4eded13f8db42113",
+  "source_sha256": {
+    "src/drift_monitoring/phase3/v2.py": "c0b7e07cfe5ec7ece4e2ead48c2dfec23122738e97da2a9240e6c0b2ce8e71b5",
+    "src/drift_monitoring/phase3/core.py": "9150ce891804659107715df8dd2441d0fd34a8dd5cca80ea358972f884ea6667",
+    "scripts/run_phase3_large_seed.py": "bfa0e5cad401852db44c9ccbc46a2bc812e65f44e88cab3accb6fad5c5c5008f",
+    "docs/phase3/LARGE_SEED_ROBUSTNESS_PROTOCOL.md": "f300365fc0d46d28a250d02353a42d794a7ec04c5307f9ba4eded13f8db42113"
+  },
+  "thread_limit": 1,
+  "output_contract": "online batch features-only; evaluator batch truth separate",
+  "cache_policy": "aggregate-only deterministic regeneration; no per-instance cache",
+  "ended_at_utc": "2026-11-15T17:37:26.858683+00:00",
+  "elapsed_seconds": 51.841648100000384,
+  "streams": 60,
+  "model_streams": 120,
+  "online_batches": 2880,
+  "evaluator_batches": 2880,
+  "monitoring_rows": 720000,
+  "per_seed_condition_rows": 490,
+  "failed_seeds": []
+}

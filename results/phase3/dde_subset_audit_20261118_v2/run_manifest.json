@@ -1,0 +1,9 @@
+{
+  "config_path": "configs/dde_subset_audit_v1.json",
+  "config_sha256": "fbb96dcc1a56dba31db3ea1341080a984c53303824227e46186cf5dee0e57bf9",
+  "note": "Preserved partial run; its proposed evaluation bank contained a seed already used by a smoke run. Fresh v3 seed banks are collision-audited.",
+  "protocol": "dde-style-subset-audit-v1",
+  "smoke_only": false,
+  "started_unix": 1794967091.7365084,
+  "status": "interrupted_superseded_seed_collision"
+}

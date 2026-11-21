@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "seed_count": 2,
+  "forecasts_per_model": 570,
+  "outcome_mutation_checks": 570,
+  "strict_release_clock": true,
+  "source_sha256": {
+    "results/phase3/future_harm_forecast_20261116_v1/predictions/online_features.csv": "062ec063eb5fa75410d3779d66e1db63f92c685615f498dcf5691f0ea559e3fd",
+    "results/phase3/future_harm_forecast_20261116_v1/evaluator_truth/future_targets.csv": "9809847223e9144cd1d3e5a47f81578ead9f5aba3049e3a77ede6fe504cbf3c2",
+    "results/phase3/future_harm_forecast_20261116_v1/protocol_lock.json": "9b959ab5cb39587ce09418cfdca28b4f596168ab1dd38e146b81c839738aecf0",
+    "docs/phase3/SIX_HOUR_STRENGTHENING_20261120.md": "fba45bdb6d5331b31cfc7f57ed17291944beee691e90b4ba01d974ae803e5759",
+    "scripts/run_phase3_six_hour_forecast.py": "a61b99cd966238427697687399581fb0f1e3e0a3f3008f3ff76b0d2bdb85042c",
+    "scripts/run_future_harm_unseen_family.py": "8b4087fddc202228369b49cdd3fb735491281e3687c1d76eab98d9660086849e",
+    "src/drift_monitoring/phase3/core.py": "c5e5b6dba259c200c4fb17564d3859776d70316ad0a22519028d635d4f3137cf"
+  },
+  "output_sha256": {
+    "evaluator_targets.csv": "7d01852e67aa7cbf9897ce2eec471f047599d647809ec2e6cbed8fb5f230e5d8",
+    "forecast_probabilities.csv": "61224f79b7ccbbdcdca62d2b256e11ff9aaa417c394c1104bce391a5fab12633",
+    "metrics_by_family_delay.csv": "924d853a754e6e696787116ce50ca00445bdd8c7f3dc5995b56465162cb1f252",
+    "online_features.csv": "763efd5b92f7b42f1755c4a497035e31c2abae55da5196583edb28c5e97fced3",
+    "paired_seed_gains.csv": "2729028b86fb05a994634d5b91e94005cdc8ff4f80f1c50634bf79dac2bb438e",
+    "simultaneous_contrasts.csv": "b11a2f15fd37079f994850af1fcffef4cf80eae08dce7424e53981eca2bc98a2"
+  },
+  "elapsed_seconds": 24.650170399982017
+}

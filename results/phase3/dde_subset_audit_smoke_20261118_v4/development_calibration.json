@@ -1,0 +1,76 @@
+{
+  "config_sha256": "fbb96dcc1a56dba31db3ea1341080a984c53303824227e46186cf5dee0e57bf9",
+  "curve_fit": "pooled pair counts from development intervention streams; no generator truth used",
+  "threshold_fit": "95th percentile of development stationary per-batch maximum KS D",
+  "training_seed_bank": [
+    8711001,
+    8711002,
+    8711003,
+    8711004,
+    8711005
+  ],
+  "values": {
+    "linear_probabilistic|32": {
+      "both_drifted_count": [
+        50,
+        35,
+        35,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "correlation_bins": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "curve_training_uses_evaluator_truth": false,
+      "dde_curve": [
+        0.0007522869523350987,
+        0.26119402985074625,
+        0.26119402985074625,
+        0.25925925925925924,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "development_seed_bank": [
+        8711001,
+        8711002,
+        8711003,
+        8711004,
+        8711005
+      ],
+      "episodes_used": 134,
+      "null_max_count": 120,
+      "null_quantile": 0.95,
+      "pair_count": [
+        66464,
+        134,
+        134,
+        27,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "threshold": 0.09100000000000008
+    }
+  }
+}

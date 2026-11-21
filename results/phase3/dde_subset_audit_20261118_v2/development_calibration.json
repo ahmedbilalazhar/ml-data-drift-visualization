@@ -1,0 +1,386 @@
+{
+  "config_sha256": "fbb96dcc1a56dba31db3ea1341080a984c53303824227e46186cf5dee0e57bf9",
+  "curve_fit": "pooled pair counts from development intervention streams; no generator truth used",
+  "threshold_fit": "95th percentile of development stationary per-batch maximum KS D",
+  "training_seed_bank": [
+    8711001,
+    8711002,
+    8711003,
+    8711004,
+    8711005
+  ],
+  "values": {
+    "five_region|128": {
+      "both_drifted_count": [
+        40,
+        28,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "correlation_bins": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "curve_training_uses_evaluator_truth": false,
+      "dde_curve": [
+        3.728227153424004e-05,
+        0.2641509433962264,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "development_seed_bank": [
+        8711001,
+        8711002,
+        8711003,
+        8711004,
+        8711005
+      ],
+      "episodes_used": 132,
+      "null_max_count": 120,
+      "null_quantile": 0.95,
+      "pair_count": [
+        1072896,
+        106,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "threshold": 0.10650000000000004
+    },
+    "five_region|32": {
+      "both_drifted_count": [
+        56,
+        29,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "correlation_bins": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "curve_training_uses_evaluator_truth": false,
+      "dde_curve": [
+        0.0008241111372733694,
+        0.2636363636363636,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "development_seed_bank": [
+        8711001,
+        8711002,
+        8711003,
+        8711004,
+        8711005
+      ],
+      "episodes_used": 137,
+      "null_max_count": 120,
+      "null_quantile": 0.95,
+      "pair_count": [
+        67952,
+        110,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "threshold": 0.09350000000000003
+    },
+    "linear_probabilistic|128": {
+      "both_drifted_count": [
+        39,
+        35,
+        35,
+        21,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "correlation_bins": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "curve_training_uses_evaluator_truth": false,
+      "dde_curve": [
+        3.55424321959755e-05,
+        0.25925925925925924,
+        0.25925925925925924,
+        0.25925925925925924,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "development_seed_bank": [
+        8711001,
+        8711002,
+        8711003,
+        8711004,
+        8711005
+      ],
+      "episodes_used": 135,
+      "null_max_count": 120,
+      "null_quantile": 0.95,
+      "pair_count": [
+        1097280,
+        135,
+        135,
+        81,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "threshold": 0.09849999999999998
+    },
+    "linear_probabilistic|32": {
+      "both_drifted_count": [
+        50,
+        35,
+        35,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "correlation_bins": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "curve_training_uses_evaluator_truth": false,
+      "dde_curve": [
+        0.0007522869523350987,
+        0.26119402985074625,
+        0.26119402985074625,
+        0.25925925925925924,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "development_seed_bank": [
+        8711001,
+        8711002,
+        8711003,
+        8711004,
+        8711005
+      ],
+      "episodes_used": 134,
+      "null_max_count": 120,
+      "null_quantile": 0.95,
+      "pair_count": [
+        66464,
+        134,
+        134,
+        27,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "threshold": 0.09100000000000008
+    },
+    "xor_nonlinear|128": {
+      "both_drifted_count": [
+        35,
+        35,
+        35,
+        28,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "correlation_bins": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "curve_training_uses_evaluator_truth": false,
+      "dde_curve": [
+        3.213509225525914e-05,
+        0.21739130434782608,
+        0.26119402985074625,
+        0.2616822429906542,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "development_seed_bank": [
+        8711001,
+        8711002,
+        8711003,
+        8711004,
+        8711005
+      ],
+      "episodes_used": 134,
+      "null_max_count": 120,
+      "null_quantile": 0.95,
+      "pair_count": [
+        1089152,
+        161,
+        134,
+        107,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "threshold": 0.10549999999999998
+    },
+    "xor_nonlinear|32": {
+      "both_drifted_count": [
+        53,
+        35,
+        35,
+        14,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "correlation_bins": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "curve_training_uses_evaluator_truth": false,
+      "dde_curve": [
+        0.0008095063538611926,
+        0.26515151515151514,
+        0.26515151515151514,
+        0.2692307692307692,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "development_seed_bank": [
+        8711001,
+        8711002,
+        8711003,
+        8711004,
+        8711005
+      ],
+      "episodes_used": 132,
+      "null_max_count": 120,
+      "null_quantile": 0.95,
+      "pair_count": [
+        65472,
+        132,
+        132,
+        52,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "threshold": 0.09350000000000003
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "completed_cells_sha256": {
+    "evaluation_seed_8711201_linear_probabilistic_d32.csv": "ef6128b8d5f7ed06a05461b78f6e57d0f1099f1f3f543731794f83ae0407913d"
+  },
+  "config_path": "configs/dde_subset_audit_v1.json",
+  "config_sha256": "fbb96dcc1a56dba31db3ea1341080a984c53303824227e46186cf5dee0e57bf9",
+  "environment": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.13.5",
+    "scikit_learn": "1.8.0",
+    "scipy": "1.17.0"
+  },
+  "evaluation_cells_completed": 1,
+  "finished_unix": 1794967081.8372493,
+  "protocol": "dde-style-subset-audit-v1",
+  "smoke_only": true,
+  "source_sha256": {
+    "config": "fbb96dcc1a56dba31db3ea1341080a984c53303824227e46186cf5dee0e57bf9",
+    "dde_primitives": "e7371c12c6cfe1761a35ac566796e323995f381a5c197cd65d25ae352976987e",
+    "generator": "9efbe260fd6bcaeac2940a2253372129aa570c986d43ff5540ade5a7bcd07391",
+    "runner": "352eb5bf2b7ff4c0466ff53b95e2fc80e7f163da53f83eb09d55a4cf805bbf05"
+  },
+  "started_unix": 1794967063.0622473,
+  "status": "smoke_complete",
+  "temporal_sampling": {
+    "development_batches": [
+      25,
+      32,
+      40,
+      41,
+      64,
+      80,
+      96
+    ],
+    "interpretation": "predefined temporal checkpoints, not a per-batch exhaustive trajectory",
+    "validation_and_evaluation_batches": [
+      12,
+      24,
+      25,
+      32,
+      40,
+      41,
+      52,
+      64,
+      65,
+      72,
+      80,
+      81,
+      88,
+      96
+    ]
+  },
+  "validation_cells_completed": 0
+}

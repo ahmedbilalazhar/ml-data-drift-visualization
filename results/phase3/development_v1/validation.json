@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "streams": 7,
+  "unique_cohorts": 168,
+  "monitoring_rows": 84000,
+  "delay_schedules": 3,
+  "instance_id_joins_checked": 84000,
+  "queue_drainage_checked": true,
+  "calibrated_ac_identity_checked": true,
+  "delay_truth_invariance_checked": true,
+  "online_truth_columns_absent": true
+}

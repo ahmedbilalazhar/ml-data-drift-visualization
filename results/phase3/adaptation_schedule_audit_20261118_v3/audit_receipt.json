@@ -1,0 +1,83 @@
+{
+  "status": "complete",
+  "protocol": "matched-cap-global-and-region-local-released-error-trigger-adaptation-v3-labelbroker",
+  "seed_bank": [
+    73116201,
+    73116202,
+    73116203,
+    73116204,
+    73116205,
+    73116206,
+    73116207,
+    73116208,
+    73116209,
+    73116210,
+    73116211,
+    73116212,
+    73116213,
+    73116214,
+    73116215,
+    73116216,
+    73116217,
+    73116218,
+    73116219,
+    73116220,
+    73116221,
+    73116222,
+    73116223,
+    73116224,
+    73116225,
+    73116226,
+    73116227,
+    73116228,
+    73116229,
+    73116230
+  ],
+  "task": "linear_probabilistic",
+  "mechanisms": [
+    "M0_stationary",
+    "M4_abrupt_conditional_reversal"
+  ],
+  "delays": [
+    0,
+    5,
+    20
+  ],
+  "batch_size": 500,
+  "periodic_clocks": [
+    25,
+    49,
+    73
+  ],
+  "max_update_fits": 3,
+  "max_recent_label_rows_per_fit": 2000,
+  "global_trigger": "both most recent released source cohorts exceed calibration error + 0.10; threshold uses calibration only; 8-clock cooldown",
+  "label_clock": "LabelBroker releases are consumed at clock forecast_batch-1 before scoring; source_batch + delay <= release_processed_clock; same-clock labels are unavailable before scoring; post-stream queue drain is logged without an adaptation opportunity",
+  "label_release_event_rows": 69120,
+  "label_release_event_sha256": "f39808632b6f181d598931a780b3193c3df5b29320e1cc723b2db90935908a05",
+  "training_data": "frozen training scaler; initial training plus the most recent at most 2000 released rows per update",
+  "monitoring_labels": "used for outcomes only after each prediction and for detector input only at scheduled release",
+  "adaptation_scope": "global trigger and frozen-training-KMeans three-region local trigger; local error baselines use calibration rows only, require at least 20 calibration rows per region and at least 20 rows in each released cohort, trigger on two consecutive eligible cohorts exceeding region calibration error by 0.10, with 8-clock global cooldown and at most three total updates; each local refit uses only that region's historical training rows plus at most 2000 most recent released labels for that region, and routes other regions to the global frozen fallback",
+  "seed_bootstrap_replicates": 5000,
+  "bootstrap_unit": "seed; batch rows aggregated within each seed",
+  "seed_bootstrap_inference_valid": true,
+  "source_sha256": {
+    "scripts/run_adaptation_schedule_audit.py": "d336104ee15ca2d9064a23163e2c96cbc81a42dc658eea02ac3e198d4cb39178",
+    "configs/phase3_strengthening_v3.json": "f0581f41563a2e3f30b8210d3182a3388a4eccc2a9544d650e6daff2b48a2995",
+    "src/drift_monitoring/phase3/strengthening_generators.py": "9efbe260fd6bcaeac2940a2253372129aa570c986d43ff5540ade5a7bcd07391",
+    "src/drift_monitoring/phase3/replay.py": "dddc16a89af21b50965acf4a9c94ade0242f1e317a4fa4531d636d154ec17847"
+  },
+  "output_sha256": {
+    "results/phase3/adaptation_schedule_audit_20261118_v3/online_batch_audit.csv": "8d20d9877c5485ecc1f915916872e653f8a621372ae84e2e05b457efa4150472",
+    "results/phase3/adaptation_schedule_audit_20261118_v3/seed_metrics.csv": "a330adedd3d32ae33df60b3eb809e3ba9794a078ee9ac2dfeff9465e95cbd19a",
+    "results/phase3/adaptation_schedule_audit_20261118_v3/seed_bootstrap_summary.csv": "0511e249ac18eb055036ab899337c738c4c9a03dad15b463bd8e371c0959d28e",
+    "results/phase3/adaptation_schedule_audit_20261118_v3/label_release_events.csv": "f39808632b6f181d598931a780b3193c3df5b29320e1cc723b2db90935908a05"
+  },
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "scipy": "1.17.0",
+    "scikit_learn": "1.8.0"
+  }
+}

@@ -1,0 +1,1 @@
+{"status":"failed_partial_invalid","reason":"Initial runner stopped at the first batch because the shared impact helper returns (summary, pmf), while the caller expected only summary. No experiment was completed; this directory is not valid result evidence.","superseded_by":"results/phase3/elec2_temporal_20261116_v2"}

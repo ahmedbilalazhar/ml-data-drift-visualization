@@ -1,0 +1,36 @@
+{
+  "status": "complete",
+  "protocol": "NOAA-training-only-moving-block-full-pipeline-refit-v1",
+  "replicates": 200,
+  "training_block_length_rows": 30,
+  "training_rows": 3642,
+  "calibration_reference_and_monitor": "fixed original chronological partitions; only training partition resampled",
+  "refit_scope": "scaler, logistic model, PCA anchor, clusters, isotonic calibrator, and reference correctness are refit/recomputed for every training bootstrap draw",
+  "bootstrap_unit": "moving blocks of processed chronological training rows; model parameter/bootstrap spread is conditional on one station and one period",
+  "monitoring_labels": "used only after each draw's scores and impacts are computed to report retrospective batch accuracy; never used in fitting or thresholds",
+  "single_class_draws": "regenerated deterministically and attempt counts recorded; no fitted replicate silently dropped",
+  "rows_scored": 10500,
+  "batches": 21,
+  "unscored_monitoring_remainder": 426,
+  "baseline_reference_match": "original unresampled model is included in every row for paired comparison",
+  "source_sha256": {
+    "scripts/run_noaa_training_uncertainty.py": "ae99430a1e131e7a0275a0dd00317b4448e71e857fbe7a0abb11550a7f5421ec",
+    "data/processed/weather_noaa_1949_1999_v2/weather_ordered.csv": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+    "data/processed/weather_noaa_1949_1999_v2/weather_manifest.json": "9d3360a644575cac900b80681e3e39f84b92482eb11d5b3a887f51be7ab42a1f",
+    "src/drift_monitoring/phase3/core.py": "c5e5b6dba259c200c4fb17564d3859776d70316ad0a22519028d635d4f3137cf",
+    "scripts/run_noaa_weather_transfer.py": "f2582080ffeb1177a568f378a18972f036cb7f964472c5b75c9053036b215df7",
+    "scripts/run_noaa_reference_calibration_uncertainty.py": "fdc2001e7c6491d6720df384f9f15204fb8c59a4fdff23a5358e6f143213dcb1"
+  },
+  "output_sha256": {
+    "results/phase3/noaa_training_uncertainty_20261117_v1/training_bootstrap_draws.csv": "e5a69d418eed1fb190242e51bc2e0528ed6348fba9b912bb4264037bcfb56faf",
+    "results/phase3/noaa_training_uncertainty_20261117_v1/replicate_metadata.csv": "dd6e398c7c76a838109efa76f73d34fc83d3cf1c5e6dcdc0b5bb281236dfbbc2",
+    "results/phase3/noaa_training_uncertainty_20261117_v1/training_uncertainty_summary.csv": "2fce6051327bdc14a9c6639a1d877da8eb21f3f1c62a32ef0baa66271f531237"
+  },
+  "environment": {
+    "python": "3.14.0",
+    "numpy": "2.4.3",
+    "pandas": "3.0.1",
+    "scipy": "1.17.1",
+    "scikit_learn": "1.8.0"
+  }
+}

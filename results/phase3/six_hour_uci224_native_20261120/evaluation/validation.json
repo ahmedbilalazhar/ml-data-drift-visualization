@@ -1,0 +1,142 @@
+{
+  "status": "passed",
+  "forecast_rows": 108,
+  "target_cohorts": 9,
+  "delay_values": [
+    0,
+    1,
+    2
+  ],
+  "methods": [
+    "cumulative_released_logistic",
+    "frozen_calibration",
+    "historical_reference_accuracy",
+    "raw_average_confidence"
+  ],
+  "strict_release_clock_passed": true,
+  "online_prediction_cache_has_no_truth": true,
+  "same_predictions_across_methods_and_delays": true,
+  "interpretation": "one observationally ordered dataset sequence; cohort-level release simulation only",
+  "summary": [
+    {
+      "delay_cohorts": 0,
+      "method": "cumulative_released_logistic",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.16949507423765475,
+      "equal_batch_bias": 0.16949507423765475,
+      "row_weighted_brier": 0.2394532077907104,
+      "equal_batch_ece10": 0.1883055254821978
+    },
+    {
+      "delay_cohorts": 0,
+      "method": "frozen_calibration",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.544657889410022,
+      "equal_batch_bias": 0.544657889410022,
+      "row_weighted_brier": 0.5518640332349629,
+      "equal_batch_ece10": 0.544657889410022
+    },
+    {
+      "delay_cohorts": 0,
+      "method": "historical_reference_accuracy",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.5122796696580534,
+      "equal_batch_bias": 0.5122796696580534,
+      "row_weighted_brier": 0.5174800280133569,
+      "equal_batch_ece10": 0.5122796696580534
+    },
+    {
+      "delay_cohorts": 0,
+      "method": "raw_average_confidence",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.41091762721702874,
+      "equal_batch_bias": 0.41091762721702874,
+      "row_weighted_brier": 0.4015992421447588,
+      "equal_batch_ece10": 0.4119056177525542
+    },
+    {
+      "delay_cohorts": 1,
+      "method": "cumulative_released_logistic",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.2270087933472313,
+      "equal_batch_bias": 0.2270087933472313,
+      "row_weighted_brier": 0.26871643077300617,
+      "equal_batch_ece10": 0.2447948748652561
+    },
+    {
+      "delay_cohorts": 1,
+      "method": "frozen_calibration",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.544657889410022,
+      "equal_batch_bias": 0.544657889410022,
+      "row_weighted_brier": 0.5518640332349629,
+      "equal_batch_ece10": 0.544657889410022
+    },
+    {
+      "delay_cohorts": 1,
+      "method": "historical_reference_accuracy",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.5122796696580534,
+      "equal_batch_bias": 0.5122796696580534,
+      "row_weighted_brier": 0.5174800280133569,
+      "equal_batch_ece10": 0.5122796696580534
+    },
+    {
+      "delay_cohorts": 1,
+      "method": "raw_average_confidence",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.41091762721702874,
+      "equal_batch_bias": 0.41091762721702874,
+      "row_weighted_brier": 0.4015992421447588,
+      "equal_batch_ece10": 0.4119056177525542
+    },
+    {
+      "delay_cohorts": 2,
+      "method": "cumulative_released_logistic",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.2834204062296465,
+      "equal_batch_bias": 0.2834204062296465,
+      "row_weighted_brier": 0.27563019631534363,
+      "equal_batch_ece10": 0.29019477625078144
+    },
+    {
+      "delay_cohorts": 2,
+      "method": "frozen_calibration",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.544657889410022,
+      "equal_batch_bias": 0.544657889410022,
+      "row_weighted_brier": 0.5518640332349629,
+      "equal_batch_ece10": 0.544657889410022
+    },
+    {
+      "delay_cohorts": 2,
+      "method": "historical_reference_accuracy",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.5122796696580534,
+      "equal_batch_bias": 0.5122796696580534,
+      "row_weighted_brier": 0.5174800280133569,
+      "equal_batch_ece10": 0.5122796696580534
+    },
+    {
+      "delay_cohorts": 2,
+      "method": "raw_average_confidence",
+      "batches": 9,
+      "total_rows": 13465,
+      "equal_batch_mae": 0.41091762721702874,
+      "equal_batch_bias": 0.41091762721702874,
+      "row_weighted_brier": 0.4015992421447588,
+      "equal_batch_ece10": 0.4119056177525542
+    }
+  ]
+}
