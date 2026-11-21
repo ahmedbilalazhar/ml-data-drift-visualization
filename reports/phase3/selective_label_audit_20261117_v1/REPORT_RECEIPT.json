@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "bootstrap_replicates": 5000,
+  "bootstrap_unit": "evaluation seed",
+  "input_sha256": {
+    "results/phase3/selective_label_audit_20261117_v1/audit_receipt.json": "4ed251d6b8de842303fea78c9eb615ed8e4a475bbf7d9e477ce19a2dd66aa282",
+    "results/phase3/selective_label_audit_20261117_v1/batch_estimates.csv": "2fce7e9da492b8ed357f58dc5b3734d5bbe6beca844885bc8258155842a10ab7",
+    "results/phase3/selective_label_audit_20261117_v1/selected_label_log.csv": "99bc062a856603d03132dc37a9834a57bd79578f33fbfd6ecfa26bd4e66ba626"
+  },
+  "output_sha256": {
+    "reports/phase3/selective_label_audit_20261117_v1/seed_bootstrap_summary.csv": "12a5ecf081966ca8cab91df6cb3a7bbbf2c4a3657854f25628a875e1d4f09cfb",
+    "reports/phase3/selective_label_audit_20261117_v1/selective_label_bias.png": "dec36265397a2b123fb23e8bd7a277a7a058895e7656560a550bd29e0fcfd082",
+    "reports/phase3/selective_label_audit_20261117_v1/selective_label_bias.svg": "c3058ba50a9e5cd89d74f72aa582d2319aa2bef6a01b3e7a4b4905fbb7165506",
+    "reports/phase3/selective_label_audit_20261117_v1/SELECTIVE_LABEL_AUDIT.tex": "26f9ad2d7cb5a1983935f0f7e074a48e549e37b530a32c8b3a2267f097d99c3b",
+    "reports/phase3/selective_label_audit_20261117_v1/SELECTIVE_LABEL_AUDIT.pdf": "3f0a4e0b3e3631729ac126be69ded29646b54421b080fa67bbf2d9237bbce6e4"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-06",
+  "scope": "Focused critical follow-up during the user's continued research review; not an exhaustive systematic review",
+  "queries": [
+    "\"Schirmer\" \"risk monitoring\" 2025",
+    "\"risk monitoring\" \"delayed labels\" 2025 2026 conference",
+    "\"harmful distribution shifts\" 2025 \"unlabeled\"",
+    "\"Monitoring Risks in Test-Time Adaptation\" (official proceedings/OpenReview domains)",
+    "\"Sequential Harmful Shift Detection Without Labels\" (official proceedings/OpenReview domains)",
+    "\"On Continuous Monitoring of Risk Violations under Unknown Shift\" (PMLR/UAI/OpenReview domains)",
+    "\"WATCH: Adaptive Monitoring for AI Deployments\" (PMLR domain)",
+    "site.archive.ics.uci.edu \"Condition Based Maintenance of Naval Propulsion Plants\" simulated",
+    "Frozen classifiers, delayed labels, fixed versus rolling reference windows: monitoring excess prediction risk and distinguishing harmless input shift from model degradation year:2025-2026 domain:cs,math",
+    "site.itl.nist.gov quantile confidence interval order statistics binomial distribution"
+  ],
+  "selection_change": {
+    "study": "S8",
+    "included": "Timans et al., On Continuous Monitoring of Risk Violations under Unknown Shift, UAI 2025, PMLR 286:4204-4226",
+    "reason": "Direct bounded-loss risk monitoring is closer to the cohort-risk interpretation question than deliberate prediction-feedback identification.",
+    "former_selection": "Gower-Winter et al., Identifying Predictions That Influence the Future, AAAI 2025",
+    "former_selection_status": "Eligible original 2025 research retained as supporting feedback/imbalance context; not rejected as ineligible.",
+    "selected_count_after_revision": 10
+  },
+  "full_text_assessment": {
+    "Timans": "Published 23-page PDF reviewed: Sections 2-4 and 6, Appendix C and Table 1. Losses are observed, the null bounds conditional expected loss, and the time-uniform guarantee is per fixed decision threshold. Table 1 supplies the stated single-row-batch/50-step-window delay example.",
+    "Schirmer": "Published NeurIPS 2025 PDF retained and key methods/evaluation/limitations sections examined. Adapted-model running risk, proxy-error separability and threshold calibration differ from the frozen complete-label cohort estimand; not added to the ten-study selection.",
+    "WATCH": "Published ICML 2025 record and PDF retained for contextual screening. Adaptive weighted-conformal diagnostics are outside the fixed-interval gate contrast; no numerical findings imported into the submission.",
+    "Badea_2026_candidate": "Earlier publisher retrieval returned HTTP 429. Follow-up retrieved and retained the full article XML from the official Europe PMC endpoint; Introduction, Methods 3.1-3.8, Discussion 5.1-5.6 and limitations were reviewed. Added as supporting construct-validity context, not an eleventh selected paper. No journal-quartile claim or numerical project comparison is imported.",
+    "PRODEM": "Official ECML PKDD-hosted author PDF retained and reviewed: data, frozen XGBoost/meta-model construction, Tables 1-2 and Eqs. 17-18. Eq. 17 label access was visually checked. Quantitative claims are explicitly tied to this reviewed author version; the publisher confirms conference-paper status and metadata.",
+    "Drift2Act_candidate": "Consensus search/fetch and arXiv metadata screened the Drift-to-Action Controllers candidate. arXiv reports a CAO Workshop at ICLR 2026 paper, but independent venue confirmation/full-text critical assessment were not completed. Not selected or used for numerical claims.",
+    "NIST_quantile_guidance": "Primary NIST Technical Note 2119, Section 5.3, equations 30-31, verifies order-statistic/binomial quantile intervals and conservative discrete coverage. Supporting statistical guidance outside the ten selected papers."
+  },
+  "metadata_corrections": {
+    "Timans": "Use publisher PMLR 286 and its complete page span 4204-4226; do not copy the inconsistent volume 244 in the PDF opening footer.",
+    "Naval_data": "The UCI dataset and creator repository identify simulator-generated data; the reviewed paper's Naval sequence is described as a constructed simulation replay, not verified natural deployment chronology.",
+    "PRODEM": "Publisher recommended year is 2026; online date is 29 September 2025. Preserve author surname Srivasatava as printed in the publisher record, rather than silently normalizing its spelling."
+  },
+  "primary_sources": [
+    "https://proceedings.mlr.press/v286/timans25a.html",
+    "https://raw.githubusercontent.com/mlresearch/v286/main/assets/timans25a/timans25a.pdf",
+    "https://proceedings.neurips.cc/paper_files/paper/2025/hash/746960ad49ddb47248970a0e1404230c-Abstract-Conference.html",
+    "https://proceedings.mlr.press/v267/prinster25a.html",
+    "https://doi.org/10.24432/C5K31K",
+    "https://doi.org/10.15129/b34568f2-7f03-47e8-a3e5-5b810b5e354b",
+    "https://link.springer.com/chapter/10.1007/978-3-032-06118-8_16",
+    "https://ecmlpkdd-storage.s3.eu-central-1.amazonaws.com/preprints/2025/ads/preprint_ecml_pkdd_2025_ads_315.pdf",
+    "https://proceedings.mlr.press/v306/zhang26g.html",
+    "https://proceedings.mlr.press/v267/pouget25a.html",
+    "https://arxiv.org/abs/2603.08578",
+    "https://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.2119.pdf",
+    "https://pubmed.ncbi.nlm.nih.gov/42930643/",
+    "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13705775/fullTextXML"
+  ],
+  "limitations": "No reconstructed hit counts, exhaustive novelty claim, or claim of independent peer review is made.",
+  "last_updated_utc": "2026-11-06T01:21:50.536235+00:00",
+  "selection_changes": [
+    {
+      "study": "S8",
+      "included": "Timans et al., On Continuous Monitoring of Risk Violations under Unknown Shift, UAI 2025, PMLR 286:4204-4226",
+      "reason": "Direct bounded-loss risk monitoring is closer to the cohort-risk interpretation question than deliberate prediction-feedback identification.",
+      "former_selection": "Gower-Winter et al., Identifying Predictions That Influence the Future, AAAI 2025",
+      "former_selection_status": "Eligible original 2025 research retained as supporting feedback/imbalance context; not rejected as ineligible.",
+      "selected_count_after_revision": 10
+    },
+    {
+      "study": "S6",
+      "included": "Sethi et al., Proactive Detection of Model Degradation in Financial Fraud Prediction with Delayed Labels, Springer LNAI 16021:265-281, recommended citation 2026, first online 2025-09-29",
+      "reason": "Frozen fraud-model monitoring during label delay directly addresses evidence access and error prediction, closer to this question than adaptive energy regression.",
+      "former_selection": "Teixeira et al., Detecting Concept Drift with SHapley Additive ExPlanations for Intelligent Model Retraining in Energy Generation Forecasting",
+      "former_selection_status": "Eligible original proceedings chapter retained as supporting explanation/retraining context; not rejected as ineligible.",
+      "selected_count_after_revision": 10
+    }
+  ],
+  "discovery_tools": "Publisher/author-archive web searches and one focused Consensus search with fetched records; primary records and full texts determine claims. No external research agent was dispatched."
+}

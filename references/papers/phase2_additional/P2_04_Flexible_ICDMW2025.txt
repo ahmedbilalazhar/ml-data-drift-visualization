@@ -1,0 +1,1003 @@
+--- PAGE 1 ---
+Flexible and Efficient
+Drift Detection without Labels
+Nelvin Tan
+American Express
+thongcainelvin.tan@aexp.com
+Yu-Ching Shih
+American Express
+yuching.shih1@aexp.com
+Dong Yang
+American Express
+dong.yang@aexp.com
+Amol Salunkhe
+American Express
+amol.salunkhe@aexp.com
+Abstract—Machine learning models are being increasingly used
+to automate decisions in almost every domain, and ensuring the
+performance of these models is crucial for ensuring high quality
+machine learning enabled services. Ensuring concept drift is
+detected early is thus of the highest importance. A lot of research
+on concept drift has focused on the supervised case that assumes
+the true labels of supervised tasks are available immediately after
+making predictions. Controlling for false positives while monitor-
+ing the performance of predictive models used to make inference
+from extremely large datasets periodically, where the true labels
+are not instantly available, becomes extremely challenging. We
+propose a flexible and efficient concept drift detection algorithm
+that uses classical statistical process control in a label-less
+setting to accurately detect concept drifts. We shown empirically
+that under computational constraints, our approach has better
+statistical power than previous known methods. Furthermore, we
+introduce a new semi-supervised drift detection framework to
+model the scenario of detecting drift (without labels) given prior
+detections, and show our how our drift detection algorithm can
+be incorporated effectively into this framework. We demonstrate
+promising performance via numerical simulations.
+Index Terms—Concept drift, unsupervised learning, machine
+learning, time complexity, classification, big data
+I. INTRODUCTION
+Machine Learning has been adopted as a popular technique
+for providing data-driven prediction capabilities, and is at the
+core of several otherwise complicated or intractable tasks. The
+ability to generalize and extrapolate from data has made its
+usage attractive as a general approach to data driven problem
+solving. However, the generalizability of models relies on an
+important assumption of datastationarity, which states that
+the data points in the data stream should be identically and
+independently distributed (i.i.d.), i.e., datapoints are generated
+from the same distribution [1]. While this is a reasonable
+assumption, in practice it is often violated. The data that
+models work with in production might become significantly
+different than the static dataset that the model was trained on
+– a phenomenon namedconcept drift[2], [3].
+We consider theabruptdrift setting, where a new concept
+occurs in a short period of time (e.g. at the beginning of
+COVID-19 in March 2020, stock prices suddenly changed).
+Following the parlace of [4], we focus on non-online drift
+detection setting with whole-window detection, where the
+entire window is used in the detection. Most importantly, we
+consider the label-less (i.e., unsupervised) setting where labels
+of the new data (i.e., during production) are unavailable.
+A. Problem Setup
+Formally, a concept drift is the problem where there exists
+a timetsuch that
+Pt(x, y)̸=P t+1(x, y),(1)
+whereP t denotes the joint probability distribution of the
+featuresx∈R m and targety∈R. By the chain rule of
+probability, we have
+Pt(x, y) =P t(x)·P t(y|x),(2)
+which implies the following types of drift [5]:
+•Virtual drift.We haveP t(x)̸=P t+1(x)while
+Pt(y|x) =P t+1(y|x).
+•Real drift.We haveP t(y|x)̸=P t+1(y|x)while
+Pt(x) =P t+1(x).
+•Mixture drift.Mixture of virtual drift and actual drift,
+namely,P t(y|x)̸=P t+1(y|x)andP t(x)̸=P t+1(x).
+Without access to the labelsy, we can only detect virtual
+drift and mixture drift. Note that virtual drift may still
+cause problems for the inference model, since changes in
+Pt(y|x)may change the error of the inference model, even
+ifP t(y|x) =P t+1(y|x)[6]. In this paper, we mainly look at
+the following problem setup:
+Drift detection without labels (problem 1).Given a
+datastream, we have two windows, thereferencewindow/set
+SR and thedetectionwindow/setS D. Furthermore, we have
+access to thetrainingsetS T that was used to train the
+inference model and is of the same distribution asS R. The
+datapoints in the reference window are labeled whereas the
+datapoints in the detection window are unlabeled and may
+(or may not) have suffered a concept drift. Let us denote the
+distribution ofS T andS R asP R and the distribution ofS D
+asP D. The goal is to detect whetherP R(x) =P D(x).
+Drift detection with prior detections (problem 2).We
+also introduce a new distinct semi-supervised setting for drift
+detection: In this setting, we assume that prior detections
+have already taken place. Specifically, we have access to prior
+training, reference, and detection data that has been used for
+prior drift detection. Furthermore, we also have access to the
+result of the drift detection. Mathematically, we say that given
+
+S (i)
+T ,S (i)
+R ,S (i)
+D , z(i)	M
+i=1 wherei∈ {1, . . . , M},(3)
+arXiv:2506.08734v2  [stat.ML]  29 Sep 2025
+
+--- PAGE 2 ---
+where there areMprior drift detections and we used
+S (i)
+T ,S (i)
+R ,S (i)
+D for theith drift detection to identify the out-
+comez (i) ∈ {0,1}, where1signifies that a drift has taken
+place and0signifies otherwise. With prior knowledge (3), the
+goal is to detect a drift given a new triplet{S T ,S R, SD}(as
+explained in the point above).
+Remark.The motivation behind setup 2 is the scenario
+where a company has done many drift detections in the
+past using labeled data, which leads to high accuracy (which
+motivates the assumption of knowingz (i)) of detection but is
+unsustainable. Therefore, at some point of time, they decide
+to switch to drift detection with unlablled data. To the best
+of our knowledge, this framework has been applied to several
+scenarios [7] but not in concept drift detection.
+Big data regime.We consider the big data regime where
+there is a huge volume of data (e.g., finance). In this regime,
+the runtime of a drift detection approach becomes very impor-
+tant. We seek an approach that allows us to control the false
+positive rate, but at the sametime is statistically powerful and
+runtime efficient.
+Notation.Throughout the paper, the functionlog(·)has base
+e, and we make use of Bachmann-Landau asymptotic notation
+(i.e.,O).0 n denotes a vector of zeros of lengthn,1 n denotes
+a vector of ones of lengthn, andI n denotes then×nidentity
+matrix.
+B. Related Work
+a) Detection with labels:Popular methods for detecting
+concept drift rely on updating models as new data becomes
+available and when changes in data are detected. These meth-
+ods assume the availability of labeled data [2], [8]–[11] – we
+refer the interested reader to this survey [5].
+b) Detection without labels:While the use of labeled
+data for retraining and updating models is largely unavoidable,
+its use for the purpose of drift detection might be impractical as
+labeling is time consuming, expensive and in some cases, not
+a possibility at all [12], [13]. Moreover the need for constant
+validation of the learned model leads to wasted labels, which
+are discarded when the model is found to be stable [14]. This
+has motivated the development ofunlabeledorlabel-lessdrift
+detection techniques which monitor changes to the feature
+distribution, as an indicator of drift. To stick to the theme of
+non-online and whole-window drift detection without labels,
+we will review related work in this area below – we refer
+readers who are interested in other variants of the unsupervised
+drift detection to this survey [4].
+The most relevant work is that of [15], which surveyed
+and analyzed the suitability of various distance measures for
+quantifying concept drift. Their key findings are:
+•Wasserstein distance and maximum mean discrepancy
+(MMD) scale well to high feature dimensions, but are
+impractical for large volumes of data (i.e. large sample
+sizes) due to high runtime complexity that depends on
+the size of the data.
+•Hellinger distance, Kullback–Leibler divergence, Kol-
+mogorov–Smirnov distance, and total variation distance
+can be numerically approximated for univariate data of
+any size. However, they do not scale up well to higher
+feature dimensions. Kolmogorov–Smirnov distance can-
+not be extended beyond bivariate case, and the rest
+(Hellinger distance, Kullback–Leibler divergence, and
+total variation distance) are limited by the exponential
+complexity of frequency/density calculation. Hellinger
+distance and Kullback–Leibler divergence have a closed-
+form solution for the multivariate Gaussian, but not for
+general multivariate distributions.
+Overall, they recommended the Hellinger distance for drift
+detection in univariate or low-dimensional data. With the goal
+of improving efficiency for MMD, [16, Section 6] calculated
+MMD over pair of datapoints (instead of taking MMD between
+the two sets), then obtained their test statistic by taking the
+averaging the MMD – this has asymptotic Gaussian null
+distribution via the central liimt theorem. While this is very
+efficient, the test statistic has very high variance. To lower
+the variance, while still while retaining an asymptotically
+Gaussian null distribution, [17] introduce the idea of batching,
+where the algorithm calculates the MMD over batches of
+datapoints, and the obtain the test statistic by averaging the
+MMD. [18] followed this up by showing that specifically
+for the MMD with permutation testing and sub-exponential
+data distributions, there exists a sample compression technique
+that is able to improve efficiency while also maintaining
+power. Our batching approach works for high-dimensional
+data and any distance measure (not just for MMD), makes no
+distribution assumption, and is runtime efficient. Furthermore,
+our method is fully unsupervised, model independent, task
+independent (allows for classification or regression).
+Other related works on unsupervised drift detection include:
+[19] studied unlabeled drift detection for classification-type
+inference models, [20] studied drift detection with target class
+imbalance, [14] developed a drift detection that works with
+the SVM classifier and further improved it in [21] to work
+with an ensemble of classifiers, [22] focused on detecting
+drifts caused regional density changes, [23] studied unlabeled
+sequence anomaly in multi-dimensional sequences, and [24],
+[25] studied the use of Shapley values, which are obtained
+by processing the features, to detect and also explain drift
+detection.
+C. Main Contributions
+Our main contributions are as follows:
+•We introduce a flexible and efficient framework (Algo-
+rithm 1) that uses the idea of batching for drift detection
+without labels – the flexible choice being the option to
+choose the statistical distance between batches of data.
+We rigorously analyze the runtime complexity and show
+that it is more efficient compared to its non-batching
+counter parts, i.e., doing permutation testing on the dis-
+tances obtained from the entire window/set. Numerical
+simulations are conducted to shown that batching is
+statistically more powerful than not batching, given a
+computational/runtime constraint.
+
+--- PAGE 3 ---
+Fig. 1. Visualization of Algorithm 1.
+•We introduce a distinct semi-supervised framework for
+the case where the analyst has access to information about
+prior detections (see Section I-A). To this end, we provide
+an algorithm (Algorithm 3) for this problem, that builds
+upon our batching approach, and analyze its performance
+via simulations.
+II. ALGORITHM FORPROBLEM1
+Our framework and algorithm is presented in Algorithm 1,
+and a visual representation is presented in Figure 1. Some
+remarks are due:
+•Non parametric and parallelizable.Our algorithm does
+not make any distribution assumption on the data pro-
+vided. Our algorithm can be parallelized by computing
+the distances between batches in parallel.
+•Distance metric.Our algorithm is flexible in the sense
+that we can choose the distance metric to use – some
+examples are the Wasserstein-1 distance (also known as
+earth mover’s distance (EMD)), maximum mean discrep-
+ancy (MMD), and Kullback–Leibler (KL) divergence.
+•Paired test.We use the paired t-test instead of the 2-
+sample t-test because the two samples{d T R1 , . . . , dT Rn }
+and{d T D1 , . . . , dT Dn }are dependent of each other,
+through the involvement of the training setS T in their
+calculation.
+•Use of training set.One might point out that we could
+just compute batched distances between the (i) union of
+the training and reference sets, and (ii) the detection
+set, and then follow up with a one-sample t-test on
+the batched distances. This approach however is not as
+general as ours since certain distances, when computed,
+are always positive even for samples drawn from the same
+distribution (e.g., the computation of EMD [26]).
+a) Assumptions:Our algorithm assumptions follow from
+those of the one-sample t-test.
+•Independence.The differences in distancesd T R1 −
+dT D1 , . . . , dT Rn −d T Dn have to be independent of each
+other. This requires the datapoints in the batched triplets
+(ST1 ,S R1 ,S D1 ), . . . ,(STn ,S Rn ,S Dn )to be independent
+of each other.
+Algorithm 1Batched distance (BD) algorithm
+input:training setS T , reference setS R, detection setS D,
+significant levelα
+Partition training set intonbatches of sizek, denoted as
+{ST1 , . . . ,STn }.
+Partition reference set intonbatches of sizek, denoted as
+{SR1 , . . . ,SRn }.
+Partition detection set intonbatches of sizek, denoted as
+{SD1 , . . . ,SDn }.
+Pair the training set batches with the reference win-
+dow batches and the detection window batches in
+the following manner:(S T1 ,S R1 ), . . . ,(STn ,S Rn )and
+(ST1 ,S D1 ), . . . ,(STn ,S Dn ).
+foreach pairdo
+Compute a distance metric between the samples, denoted
+asd T R1 =dist(S T1 ,S R1 ), . . . , dT Rn =dist(S Tn ,S Rn )
+andd T D1 =dist(S T1 ,S D1 ), . . . , dT Dn =dist(S Tn ,S Dn )
+end for
+Conduct a paired two-tailed hypothesis t-test: Denoteµas
+the true mean ofd T R1 −d T D1 , . . . , dT Rn −d T Dn. Then we
+have:H 0 :µ= 0, H 1 :µ̸= 0.
+Drift is detected if the p-value of the t-test is belowα.
+•Normality.The difference of distance metrics
+
+dT Ri −
+dT Di
+	n
+i=1 have to follow the Gaussian distribution. Due
+to the robustness of the t-test, this does not matter too
+much when the number of batchesnis large since the
+mean of differences of distances approaches the Gaussian
+distribution via the central limit theorem.
+•Equally sized windows.Requiringnbatches of sizek
+fromS T ,S R, andS D imposes a constraint that all sets
+need to be of equal sizes. This is not particularly an issue
+since we can always generalize the algorithm to account
+for unequal sizes, this can be done by keeping the number
+of batches asnand dropping the requirement for the
+batch sizek. This results in paired batches of unequal
+sizes – if the distance measures can still be calculated,
+then our algorithm would still work.
+b) Runtime complexity:Given two samples of sizeNand
+feature dimensionm, let us define the runtime complexity of
+computing the distance metric asd(N, m). By observing the
+niterations of distance computation in Algorithm 1, we have
+the following runtime result.
+Lemma 2.1:The batched distance algorithm in Algorithm
+1 has a runtime complexity ofO
+ 
+n·d(k, m)
+
+, whereas a
+permuation tests withBpermutations (and without batching)
+gives a runtime complexity ofO
+ 
+B·d(nk, m)
+
+.
+Essentially, as long asd(N, m)is linear inmand polyno-
+mial inN, then batching will always have a lower runtime
+complexity compared to permutation testing without batching.
+We illustrate through some distance metric choices how batch-
+ing reduces the runtime complexity of drift detection.
+Choice of distances and motivation.We have selected 3
+distance metrics: (i) Earth mover’s distance, (ii) Maximum
+
+--- PAGE 4 ---
+mean discrepancy, and (iii) Kullback-Leibler divergence. We
+have included the earth mover’s distance and maximum mean
+discrepancy because they are known to work better for higher
+dimensions [15]. Note that our list of distance measures is
+non-exhaustive – see [15] for a survey of distance measures
+that can be used for drift detection.
+Earth mover’s distance.More generally, the integral prob-
+ability metric between two distributionsPandQis defined
+as
+dF (P, Q) = sup
+f∈F
+EX∼P [f(X)]−E Y∼Q [f(Y)]
+,(4)
+whereFis a class of functions to be chosen andf:R m →R.
+ChoosingFto be the class of 1-Lipschitz functions, i.e.,
+F={f:fcontinuous,|f(x)−f(y)| ≤ ∥x−y∥},
+where∥ · ∥is a norm, gives us the EMD. The EMD can be
+estimated but viewing it as an optimal transport problem and
+the solving it with linear programming [26].
+Lemma 2.2:Using the batched distance algorithm in Algo-
+rithm 1, the runtime complexity of using the earth mover’s dis-
+tance (EMD) drops fromO(B(n 3k3 +mn 2k2))toO(n(k 3 +
+mk2)), whereBis the number of iterations in permutation
+testing.
+Proof:It is known that for 2 samples of sizeN, EMD can
+be solved ind(N, m) =O(N 3 +mN 2)time [26].
+•Without batching, computing the p-value for EMD via
+permutation testing would require permutation which
+requiresBadditional iterations for each distance com-
+puted. As a result, computing the p-value for EMD via
+permutation testing would takeO(B(N 3 +mN 2)) =
+O(B(n 3k3 +mn 2k2)), where we setN=nk.
+•For the BD algorithm, settingd(k, m) =O(k 3 logk)in
+Lemma 2.1 gives us the runtime complexity.
+□
+Maximum mean discrepancy.ChoosingFin (4) to be
+the unit ball in a reproducing kernel Hilbert space gives us
+the MMD. We choose our kernel function to be the radial
+basis function kernel
+k(x,y) = exp
+
+− ∥x−y∥ 2
+2
+2σ2
+
+.
+Given a sample size ofn ∗, the MMD can be estimated by the
+U-statistic [16]:
+1
+n∗(n∗ −1)
+nX
+i=1
+X
+j̸=i
+k(xi,x j)
++ 1
+n∗(n∗ −1)
+nX
+i=1
+X
+j̸=i
+k(y i,y j)
+− 2
+n2∗
+nX
+i=1
+nX
+j=1
+k(xi,y i).(5)
+Lemma 2.3:Using the batched distance algorithm in Algo-
+rithm 1, the runtime complexity of using the maximum mean
+discrepancy (MMD) drops fromO(Bmn 2k2)toO(nmk 2),
+whereBis the number of iterations in permutation testing.
+Proof:It is known that for 2 samples of sizeN, MMD
+can be computed ind(N, m) =O(mN 2)time – this can be
+derived by observing (5).
+•Without batching, computing the p-value for MMD
+via permutation testing would takeO(BmN 2) =
+O(Bmn 2k2), where we setN=nk.
+•For the BD algorithm, settingd(k, m) =O(mk 2)in
+Lemma 2.1 gives us the runtime complexity.
+□
+Kullback-Leibler divergence.The KL divergence between
+two distributionsPandQis defined as
+DKL (P∥Q) =E X∼P
+h
+−log P(X)
+Q(X)
+i
+.(6)
+KL divergence can be computed by usingk-nearest-neighbour
+density estimation as an intermediate step [27].
+Lemma 2.4:Using the batched distance algorithm in Algo-
+rithm 1, the runtime complexity of using the maximum mean
+discrepancy (MMD) drops fromO(Bmn 2k2)toO(mnk 2),
+whereBis the number of iterations in permutation testing.
+Proof:It is known that for 2 samples of sizeN, KL
+divergence can be computed ind(N, m) =O(mN 2)time
+[27].
+•Without batching, computing the p-value for MMD
+via permutation testing would takeO(BmN 2) =
+O(Bmn 2k2), where we setN=nk.
+•For the BD algorithm, we haved(k, m) =O(mk 2)in
+Lemma 2.1 gives us the runtime complexity.
+□
+III. EXPERIMENTS FORPROBLEM1
+The code for all the experiments in this section is presented
+in [28].
+A. Comparing batch number and size
+We study how varyingk/naffects the performance of
+the batched distance algorithm. This study this via numerical
+simulations instead of analyzing the statistical power analyti-
+cally because the analytical approach is not feasible – namely
+it is difficult to characterize the formula for the variance
+of estimated distances (and this variance is required for a
+formula-type analysis of the power).
+We fix the total sizenk= 5000and vary the ratio
+k
+n =
+n 5
+1000 , 25
+200 , 50
+100 , 100
+50 , 200
+25 , 250
+20 , 500
+10
+o
+.
+For each ratio, we run 100 simulations to calculate the FPR
+and FNR. We setα= 0.05,m= 100, and sample the training
+set and reference set i.i.d. fromN(0 m,I m). We have chosen
+drifts that are difficult for the algorithm to detect, so that the
+changes will be more pronounced. We look at a few situations:
+1)No drift.The detection window is sampled i.i.d. from
+N(0 m,I m). Results are shown in Figure 2(a) – there is
+no clear relationship between FPR andk/n.
+2)Mean drift in all feature dimensions.The detection
+window is sampled i.i.d. fromN(0.03·1 m,I m). Results
+
+--- PAGE 5 ---
+Fig. 2. Plots of how the ratiok/naffects the BD algorithm.
+are shown in Figure 2(b) – for MMD, FNR decreases
+andk/nincreases. There is no clear relationship be-
+tween FNR andk/nfor EMD and KL.
+3)Variance drift in all feature dimensions.The detection
+window is sampled i.i.d. fromN(1 m,1.01·I m). Results
+are shown in Figure 2(c) – for both EMD and KL, as
+k/nis increased, FNR first drops and then increases.
+There is no clear relationship between FNR andk/n
+for MMD.
+4)Covariance drift in all feature dimensions.The de-
+tection window is sampled i.i.d. fromN(1 m,Σ m).
+The diagonal entries ofΣ m are all ones, and the off-
+diagonals are all0.07. Results are shown in Figure 2(d)
+– for MMD, FNR decreases andk/nincreases. There
+is no clear relationship between FNR andk/nfor EMD
+and KL.
+Overall, MMD works better with a higherk/nwhereas EMD
+and KL work better with a lowerk/n(around0.5to2). We
+also point out that increasingk/nmakes the BD algorithm
+run slower, and therefore recommendk/nto be around1to
+2.
+B. Comparing with other approaches
+We consider EMD, MMD, and KL divergence, and com-
+pare their performances on synthetic datasets with other ap-
+proaches, namely Kolmogorov–Smirnov test with Bonferroni
+correction (KS-BC), and permutation testing. Note that EMD,
+MMD, and KL divergence are estimated using the algorithms
+that we referenced in Lemma 2.2, Lemma 2.3, and Lemma
+2.4. We introduce other approaches that allow us to control
+the FPR:
+1)Kolmogorov–Smirnov test with Bonferroni correc-
+tion [29, Chapter 13.3].This approach uses mul-
+tiple univariate testing, with a test for each dimen-
+sion. For each dimensioni, we test, using the Kol-
+mogorov–Smirnov test, if the dataset from theith di-
+mension ofS T ∪ S R is equivalent to the dataset from
+theith dimension ofS D. If the p-value at any dimension
+is less than the significant levelα, then the algorithms
+detects a drift. We have chosen Bonferroni correction
+due to its simplicity and conservative nature – there are
+other correction methods [29, Chapter 13] that an analyst
+could consider.
+2)Permutation testing [29, Chapter 13.5].This ap-
+proach uses multivariate testing on all dimensions. This
+approach computes the chosen distance (e.g., EMD,
+MMD, KL) betweenS T ∪ SR andS D. The p-value is
+then obtained by carrying out a permutation test with
+B= 100permutations – see Algorithm 2.
+Algorithm 2Permutation testing
+input:training setS T , reference setS R, detection setS D,
+significant levelα
+Compute a distance metricd=dist(S T ∪ SR,S D).
+foriterationb∈ {1, . . . , B}do
+PermuateS T ∪ S R ∪ S D at random. Call the first2nk
+permuted observationsS ∗
+T ∪ S ∗
+R and call the remaining
+nkobservationsS ∗
+D.
+Computed ∗
+b =dist(S ∗
+T ∪ S ∗
+R,S ∗
+D).
+end for
+The p-value is given by 1
+B
+PB
+b=1 1{|d∗
+b | ≥ |d|}.
+Drift is detected if the p-value is belowα.
+Runtime of KS-BC.For completeness, we provide the run-
+time complexity of Kolmogorov–Smirnov test with Bonferroni
+correction (KS + BC), which isO(nklog(nk)). To see why,
+note that computing the KS test statistic for data of sizeO(nk)
+requires sorting allO(nk)observations and therefore takes
+O(nklog(nk))time [30]. Since we havemdimensions, the
+total runtime isO(mnklog(nk)).
+Experiment details.We study the following approaches: (i)
+batch distance algorithm with EMD, MMD, and KL (denoted
+as EMD-BD, MMD-BD, and KL-BD for short), (ii) permua-
+tion testing with EMD, MMD, and KL (denoted as EMD-PT,
+MMD-PT, and KL-PT for short), and (iii) KS-BC. Recall that
+we our focus is the big data regime, where we have limited
+time (i.e., computational resource) but large volumes of data.
+Therefore, in our experiments, we constrain the total number
+of iteration for each approach to around10 8, and restrict the
+number of feature dimensions tom= 100and the number
+of permutations toB= 100. The choices of the remaining
+parameters are shown in Table I.
+We run100simulations to calculate the false positive
+rate (FPR) and the false negative rate (FNR) for every case
+considered. In each simulation, we useα= 0.05. Furthermore,
+the training set and reference set are sampled i.i.d. from
+N(0 m,I m). We look at a few scenarios:
+1)No drift.The detection window is sampled i.i.d. from
+N(0 m,I m). The FNR will always be 0, therefore we
+will only compute the FPR.
+2)Mean drift in all feature dimensions.The detection
+window is sampled i.i.d. fromN(ζ·1 m,I m). We vary
+
+--- PAGE 6 ---
+TABLE I
+PARAMETER CHOICES FOR THE DIFFERENT APPROACHES SUCH THAT THE
+TOTAL NUMBER OF ITERATIONS IS AROUND10 8.
+Approach Complexity Parameters
+EMD-BD O(n(k3 +mk 2)) n= 50, k= 100
+EMD-PT O(B(n 3k3 +mn 2k2)) nk= 76
+MMD-BD O(mnk2) n= 100, k= 100
+MMD-PT O(Bmn 2k2) nk= 100
+KL-BD O(mnk2) n= 100, k= 100
+KL-PT O(Bmn 2k2) nk= 100
+KS-BC O(mnklog(nk)) nk= 87,900
+ζfrom the set{0.01,0.02,0.03,0.04}. The FPR will
+always be 0, therefore we will only compute the FNR.
+3)Variance drift in all feature dimensions.The detection
+window is sampled i.i.d. fromN(1 m, ζ·I m). We vary
+ζfrom the set{1.005,1.01,1.05,1.10}. The FPR will
+always be 0, therefore we will only compute the FNR.
+4)Covariance drift in all feature dimensions.The detec-
+tion window is sampled i.i.d. fromN(1 m,Σ m). The di-
+agonal entries ofΣ m are all ones, and the off-diagonals
+are allζ. We varyζfrom the set{0.05,0.06,0.07,0.08}.
+The FPR will always be 0, therefore we will only
+compute the FNR.
+The experiment results are displayed in Table II. To supple-
+ment the numerical results, we also provide visual plots for
+the results of mean drift in all feature dimensions (scenario
+2) in Figure 3(a), the results of variance drift in all feature
+dimensions (scenario 3) in Figure 3(b), and the results of
+Variance drift in all feature dimensions (scenario 4) in Figure
+3(c). We make the following observations:
+1)No drift.From Table II, we above that the FPRs are
+around0.05, indicating that it is well controlled.
+2)Mean drift in all feature dimensions.From Table II
+and Figure 3(a), we observe that KS-BC and MMD-
+BD both performed well, with MMD-BD significantly
+outperforming MMD-PT. The other approaches are less
+powerful, performing similarly.
+3)Variance drift in all feature dimensions.From Table
+II and Figure 3(b), we observe that EMD-BD and KL-
+BD performed the best, with EMD-BD, MMD-BD, and
+KL-BD outperforming EMD-PT, MMD-PT, and KL-PT.
+4)Covariance drift in all feature dimensions.From Table
+II and Figure 3(c), we observe that KL-BD performed
+the best, with KL-BD and MMD-BD significantly out-
+performing KL-PT and MMD-PT. In this setting EMD-
+PT outperformed EMD-BD. Also, as expected, KS-BC
+is unable to detect drifts between features.
+Overall observation.Each distance performed well for a
+different type of drift, and this implies the following recom-
+mendations: If mean drift is suspected, then using MMD-
+BD or KS-BC might be a viable option. If variance drift
+is suspected, then using EMD-BD or KL-BD might be a
+viable option. If covariance drift is suspected, then using KL-
+BD might be a viable option. Overall, whenever a distance
+Fig. 3. Plots comparing the different approaches.
+is effective at detecting a certain drift (i.e., mean, variance,
+or covariance), then using that particular distance with the
+batched distance algorithm outperforms permutation testing,
+validating the superiority of the batched distance algorithm.
+Why batching helps.When we have a runtime budget,
+batching leads to better statistical power as compared to
+permutation testing. This is because in order to meet the
+runtime budget, permutation testing has to reduce the size of
+its input datasets. The BD algorithm, being more efficient,
+can use a significantly larger input dataset to meet the same
+runtime budget. The ‘gain’ in dataset size for the BD algorithm
+leads to a better statistical power.
+Since each distance has its own strengths, one might wonder
+whether we could do better by combining the outputs of dif-
+ferent approaches. This spurs us in the direction of combining
+the outputs of several approaches to conduct drift detection,
+which leads us into the next part of the paper.
+IV. ALGORITHMS FORPROBLEM2
+Recall that under this setting, we have access to prior
+detections (see Section I-A). We do not use permutation testing
+to generate the p-values as they are impractical in the big
+data regime, especially in this setting (problem 2), since we
+are dealing with significantly more datasets (i.e., training,
+reference, and detection sets) compared to the previous setting
+
+--- PAGE 7 ---
+TABLE II
+EXPERIMENT RESULTS FOR VARIOUS METHODS FOR DRIFT DETECTION WITHOUT LABELS.
+Approach No drift (FPR) Mean drift with varyingζ(FNR) Var drift with varyingζ(FNR) Cov drift with varyingζ(FNR)
+0.01 0.02 0.03 0.04 1.005 1.01 1.05 1.10 0.05 0.06 0.07 0.08
+EMD-BD 0.04 0.96 0.96 0.91 0.89 0.7 0.16 0 0 0.93 0.95 0.9 0.91
+EMD-PT 0.04 0.96 0.96 0.93 0.95 0.95 0.93 0.4 0.09 0.76 0.78 0.61 0.53
+MMD-BD 0.03 0.96 0.85 0.25 0.01 0.97 0.96 0.83 0.08 0.63 0.4 0.03 0.03
+MMD-PT 0.04 0.94 0.93 0.96 0.84 0.95 0.95 0.93 0.89 0.92 0.92 0.86 0.89
+KL-BD 0.06 0.94 0.95 0.98 0.91 0.69 0.16 0 0 0.05 0 0 0
+KL-PT 0.04 0.92 0.93 0.95 0.93 0.93 0.9 0.5 0.04 0.97 0.99 0.99 1
+KS-BC 0.05 0 0 0 0 0.98 0.95 0 0 0.91 0.93 0.98 0.99
+Algorithm 3Classifier algorithm
+input:training setS T , reference setS R, detection set
+SD, prior detections
+
+S (i)
+T ,S (i)
+R ,S (i)
+D , z(i)	M
+i=1 wherei∈
+{1, . . . , M}, batch numbernand batch sizekfor BD
+algorithm, choice of classifier, and classifier thresholdξ.
+Initialize the classifier training setCand output type (p-
+values or test statistics).
+fori∈ {1, . . . , M}do
+Compute outputsp (i)
+1 , p(i)
+2 , p(i)
+3 using BD algorithm with
+EMD (forp (i)
+1 ), MMD (forp (i)
+2 ), KL (forp (i)
+3 ) on
+{S (i)
+T ,S (i)
+R ,S (i)
+D }.
+Compute outputp (i)
+4 using KS + BC on{S (i)
+T ,S (i)
+R ,S (i)
+D },
+where we output the minimum p-values amongst all the
+dimensions.
+Add{p (i)
+1 , p(i)
+2 , p(i)
+3 , p(i)
+4 , z(i)}toC.
+end for
+StandardizeCto give eC.
+Train the chosen classifier on eC.
+Compute outputs (p-values or test statistics)p 1, p2, p3 using
+BD algorithm with EMD (forp 1), MMD (forp 2), KL (for
+p3) on{S T ,S R,S D}.
+Compute output (p-value or test statistics)p 4 using KS +
+BC on{S T ,S R,S D}, where we choose the minimum output
+amongst all the dimensions.
+Standardize{p 1, p2, p3, p4}and feed it into the trained
+classifier to obtain the classifier probabilityp c.
+Drift is detected ifp c ≤ξ.
+(problem 1). We first consider two ways to threshold the
+combined p-values:
+•Taking average.The most obvious and naive approach
+is to take the average of the p-values of the different
+approaches. We then threshold the average p-value to
+make the decision, i.e., declare drift if the average p-
+value is below the significant levelα, and declare no
+drift otherwise.
+•Perceptron learningA slightly more sophisticated way
+is to use perceptron learning to learn the linear combina-
+tion of the p-values before thresholding. Specifically, the
+perceptron algorithm is used to learn the weightsw∈R 4
+from the p-valuesp∈R 4 (we have 4 p-values) such that
+z=1{w ⊤p+α >0}=
+(
+1if−w ⊤p< α
+0if−w ⊤p≥α.
+Note thatαhere is fixed, and would not be learnt by the
+algorithm.
+A more sophisticated way is to consider the general classifier
+algorithm presented in Algorithm 3, where we can choose
+whether to use p-values or test statistics as features. We do
+not use permutation testing to generate the outputs as they
+are inpractical in the big data regime. The main question
+is to determine if we can do better given that we have
+knowledge about prior detections and are allowed to combine
+the outputs of different approaches. We use the following
+choice of classifiers:
+•Logistic regression (LR).The algorithm predicts the
+probability of a binary outcome using a linear combina-
+tion of input features passed through a sigmoid function.
+The probability of a class can be predicted by calculating
+the sigmoid of a weighted sum of the input features.
+•K-nearest neighbour (kNN).Classifies or predicts data
+points based on the majority class or average value of its
+’k’ nearest neighbors in the feature space. The probability
+of a class can be predicted by the proportion of neighbors
+belonging to that class.
+•Multi-layer perceptron (MLP).A feedforward neural
+network with multiple layers that learns complex patterns
+by adjusting the weights of connections between neurons.
+The probability of a class can be predicted by applying
+the softmax function on the output layer’s activations.
+The FPR can be controlled by adjusting the probability thresh-
+old used in each of the algorithms presented above.
+V. EXPERIMENTS FORPROBLEM2
+The code for all the experiments in this section is presented
+in [28]. We first generate our training set and then generate
+our testing set before testing our classifier on the testing set.
+Training data generation.We setn= 50,k= 100,
+m= 100, and the training set and reference set are sampled
+i.i.d. fromN(0 m,I m). We look at the following scenarios
+(which are exactly the same as those used in Section III-B):
+1)No drift.The detection set is sampled i.i.d. from
+N(0 m,I m).
+
+--- PAGE 8 ---
+2)Mean drift in all feature dimensions.The detection
+window is sampled i.i.d. fromN(ζ·1 m,I m). We vary
+ζfrom the set{0.01,0.02,0.03,0.04}.
+3)Variance drift in all feature dimensions.The detection
+window is sampled i.i.d. fromN(1 m, ζ·I m). We vary
+ζfrom the set{1.005,1.01,1.05,1.10}.
+4)Covariance drift in all feature dimensions.The detec-
+tion window is sampled i.i.d. fromN(1 m,Σ m). The di-
+agonal entries ofΣ m are all ones, and the off-diagonals
+are allζ. We varyζfrom the set{0.05,0.06,0.07,0.08}.
+Training data generation.We sample 50 sets of
+{S (i)
+T ,S (i)
+R ,S (i)
+D }from scenario 1 withz (i) = 0, 40 sets of
+{S (i)
+T ,S (i)
+R ,S (i)
+D }from scenario 2 withz (i) = 1with 10 sets
+for eachζ, 40 sets of{S (i)
+T ,S (i)
+R ,S (i)
+D }from scenario 3 with
+z(i) = 1with 10 sets for eachζ, 40 sets of{S (i)
+T ,S (i)
+R ,S (i)
+D }
+from scenario 4 withz (i) = 1with 10 sets for eachζ.
+Testing data generation.We run 100 simulations for each
+scenario to calculate the FPR and the FNR for every case
+considered – the cases are exactly the same as those presented
+in the training data generation (see above). In each simulation,
+we usen= 50,k= 100, andα= 0.05.
+Classifier details.We use the following parameters for each
+of our classifiers.
+•Logistic regression (LR).We use thresholdξ= 0.8in
+Algorithm 3.
+•K-nearest neighbour (kNN).We use thresholdξ= 0.85
+in Algorithm 3, and set the number of nearest neighbour
+to10.
+•Multi-layer perceptron (MLP).We use thresholdξ=
+0.8in Algorithm 3, 2 hidden layers of sizes4and2, and
+the ReLU activation function.
+The thresoldsξare chosen to control the FPR to be around
+0.05. We use the following shorthands in our experiment
+results:
+•A VG for the average p-value approach, and PL for
+perceptron learning.
+•LR-p, kNN-p, MLP-p for logistic regression, k-nearest
+neighbour, and multi-layer perceptron, respectively, in
+Algorithm 3 using p-values as features.
+•LR-s, kNN-s, MLP-s for logistic regression, k-nearest
+neighbour, and multi-layer perceptron, respectively, in
+Algorithm 3 using test statistics as features.
+FPR and FNR.The experimental results for FPR and FNR
+are shown in Table III. To supplement the numerical results,
+we provide visual plots for the classifier approach in Figure
+4. We make the following observations.
+1)No drift.As expected, the FPR is kept low around
+0.05, since we have adjusted the classifier’s predicted
+probability threshold so that the FPR is comparable to
+those of previous experiments in problem 1.
+2)Mean drift in all feature dimensions.As expected, the
+more sophisticated approaches LR-s and MLP-s, along
+with KS-BC, performed the best. This shows that KS-BC
+is very suitable for mean drift detection and we cannot
+do significantly better with prior detection information.
+Fig. 4. Plots comparing the different approaches that utilize prior detection
+information.
+3)Variance drift in all feature dimensions.Overall,
+the most sophisticated approach, MLP-p, performed the
+best.
+4)Covariance drift, all off-diagonals.Overall, the most
+sophisticated approach, MLP-p, performed the best.
+Accuracy.The accuracy results for the various detection
+approaches are as follows are presented in Table IV. We
+observe that MLP-p is the best when p-values are used as
+features, and LR-s is the best when test statistics are used as
+features.
+As expected, approaches that use prior detection information
+generally perform better than those that do not use prior
+detection information. Furthermore, the most sophisticated
+classifier (MLP) performed the best in terms of accuracy.
+Remark.We admit that the classifier-based fusion of p-
+values and test statistics may be prone to overfitting. Hence,
+it would be interesting to design better approaches for this
+semi-supervised setting – we leave this as a future direction.
+VI. CONCLUSION
+We considered drift detection without labels in the big data
+regime where there is a huge volume of data, but there is a con-
+straint on the computational resources (i.e., runtime budget). In
+this regime, we introduce the batched distance algorithm and
+show experimentally that it outperforms permutation testing
+
+--- PAGE 9 ---
+TABLE III
+EXPERIMENT RESULTS FOR VARIOUS METHODS FOR DRIFT DETECTION WITH PRIOR DETECTIONS.
+Approach No drift (FPR) Mean drift with varyingζ(FNR) Var drift with varyingζ(FNR) Cov drift with varyingζ(FNR)
+0.01 0.02 0.03 0.04 1.005 1.01 1.05 1.10 0.05 0.06 0.07 0.08
+A VG 0 1 1 1 0.75 1 1 1 0 0.75 1 1 0.5
+PL 0.02 0.75 1 1 0.75 0.75 0.75 1 0 0.5 0 0.25 0
+LR-p 0.09 0.82 0.62 0.41 0.21 0.8 0.62 0.29 0.04 0.36 0.26 0.05 0.11
+kNN-p 0.06 0.89 0.73 0.61 0.48 0.88 0.64 0.25 0.04 0.47 0.31 0.14 0.14
+MLP-p 0.09 0.76 0.57 0.46 0.35 0.68 0.34 0.06 0.02 0.24 0.12 0.01 0.02
+LR-s 0.05 0.87 0.45 0.1 0 0.92 0.88 0.06 0 0.52 0.27 0.06 0.01
+kNN-s 0.07 0.91 0.65 0.2 0.02 0.94 0.91 0.01 0 0.57 0.28 0.06 0.02
+MLP-s 0.06 0.88 0.51 0.11 0 0.95 0.97 0.33 0 0.67 0.36 0.12 0.05
+EMD-BD 0.07 0.93 0.93 0.93 0.97 0.69 0.16 0 0 0.94 0.94 0.95 0.94
+MMD-BD 0.07 0.92 0.88 0.52 0.17 0.93 0.93 0.85 0.4 0.79 0.55 0.37 0.23
+KL-BD 0.04 0.96 0.98 0.97 0.93 0.82 0.46 0 0 0.3 0.06 0 0
+KS-BC 0.06 0.91 0.48 0.13 0 0.94 0.98 0.88 0.53 0.95 0.95 0.95 0.95
+TABLE IV
+ACCURACY RESULTS FOR THE VARIOUS DETECTION APPROACHES.
+Approach Accuracy
+A VG 23.1%
+PL 47.9%
+LR-p 64.0%
+kNN-p 56.6%
+MLP-p 71.4%
+LR-s 67.8%
+kNN-s 64.3%
+MLP-s 61.5%
+EMD-BD 35.0%
+MMD-BD 41.5%
+KL-BD 57.5%
+KS-BC 33.0%
+in terms of statistical power, while also keeping the false
+positive rate low. Furthermore, we introduced a new semi-
+supervised drift detection framework to model the scenario of
+detecting drift (without labels) given prior detections. Under
+this setting we showed that our drift detection algorithm can
+be incorporated effectively into this framework.
+REFERENCES
+[1] I. ˇZliobait˙e, “Change with delayed labeling: When is it detectable?”
+2010 IEEE International Conference on Data Mining Workshops, pp.
+843–850, 2010.
+[2] J. Gama, I. ˇZliobait˙e, A. Bifet, M. Pechenizkiy, and H. Bouchachia, “A
+survey on concept drift adaptation,”ACM Computing Surveys (CSUR),
+vol. 46, 04 2014.
+[3] H. Wang and Z. Abraham, “Concept drift detection for streaming data,”
+2015 International Joint Conference on Neural Networks (IJCNN), pp.
+1–9, 2015.
+[4] R. N. Gemaque, A. F. J. Costa, R. Giusti, and E. M. Dos Santos, “An
+overview of unsupervised drift detection methods,”Wiley Interdisci-
+plinary Reviews: Data Mining and Knowledge Discovery, vol. 10, p.
+e1381, 2020.
+[5] J. Lu, A. Liu, F. Dong, F. Gu, J. Gama, and G. Zhang, “Learning
+under concept drift: A review,”IEEE transactions on knowledge and
+data engineering, vol. 31, pp. 2346–2363, 2018.
+[6] T. R. Hoens, R. Polikar, and N. V . Chawla, “Learning from streaming
+data with concept drift and imbalance: an overview,”Progress in
+Artificial Intelligence, vol. 1, pp. 89–101, 2012.
+[7] D. Lopez-Paz and M. Oquab, “Revisiting classifier two-sample tests,”
+International Conference on Learning Representations, 2017.
+[8] J. Gama, P. Medas, G. Castillo, and P. Rodrigues, “Learning with drift
+detection,”Intelligent Data Analysis, vol. 8, pp. 286–295, 2004.
+[9] A. Bifet and R. Gavald `a, “Learning from time-changing data with adap-
+tive windowing,”Proceedings of the 7th SIAM International Conference
+on Data Mining, vol. 7, 2007.
+[10] M. Baena-Garcıa, J. del Campo- ´Avila, R. Fidalgo, A. Bifet, R. Gavalda,
+and R. Morales-Bueno, “Early drift detection method,” inFourth inter-
+national workshop on knowledge discovery from data streams, vol. 6,
+2006, pp. 77–86.
+[11] P. Gonc ¸alves Jr, S. Santos, R. Barros, and D. Vieira, “A comparative
+study on concept drift detectors,”Expert Systems with Applications,
+vol. 41, pp. 8144–8156, 12 2014.
+[12] E. Lughofer, E. Weigl, W. Heidl, C. Eitzinger, and T. Radauer, “Recog-
+nizing input space and target concept drifts in data streams with scarcely
+labelled and unlabelled instances,”Information Sciences, vol. 355, 03
+2016.
+[13] G. Krempl, I. Zliobaite, D. Brzezinski, E. H ¨ullermeier, M. Last,
+V . Lemaire, T. Noack, A. Shaker, S. Sievi, M. Spiliopoulou, and
+J. Stefanowski, “Open challenges for data stream mining research,”ACM
+SIGKDD Explorations Newsletter, 07 2014.
+[14] T. Sethi and M. Kantardzic, “Don’t pay for validation: Detecting drifts
+from unlabeled data using margin density,”Procedia Computer Science,
+vol. 53, pp. 103–112, 12 2015.
+[15] I. Goldenberg and G. I. Webb, “Survey of distance measures for
+quantifying concept drift and shift in numeric data,”Knowledge and
+Information Systems, vol. 60, no. 2, pp. 591–615, 2019.
+[16] A. Gretton, K. M. Borgwardt, M. J. Rasch, B. Sch ¨olkopf, and A. Smola,
+“A kernel two-sample test,”The Journal of Machine Learning Research,
+vol. 13, pp. 723–773, 2012.
+[17] W. Zaremba, A. Gretton, and M. Blaschko, “B-test: A non-parametric,
+low variance kernel two-sample test,”Advances in neural information
+processing systems, vol. 26, 2013.
+[18] C. Domingo-Enrich, R. Dwivedi, and L. Mackey, “Compress then test:
+Powerful kernel testing in near-linear time,”International Conference
+on Artificial Intelligence and Statistics, vol. 206, pp. 1174–1218, 2023.
+[19] S. A. Bashir, A. Petrovski, and D. Doolan, “A framework for unsuper-
+vised change detection in activity recognition,”International journal of
+pervasive computing and communications, vol. 13, no. 2, pp. 157–175,
+2017.
+[20] A. Maletzke, D. Reis, E. Cherman, and G. Batista, “On the need of class
+ratio insensitive drift tests for data streams,”International workshop on
+learning with imbalanced domains: theory and applications, pp. 110–
+124, 2018.
+[21] T. S. Sethi and M. Kantardzic, “On the reliable detection of
+concept drift from streaming unlabeled data,”Expert Systems
+with Applications, vol. 82, pp. 77–99, 2017. [Online]. Available:
+https://www.sciencedirect.com/science/article/pii/S0957417417302439
+[22] A. Liu, J. Lu, F. Liu, and G. Zhang, “Accumulating regional density
+dissimilarity for concept drift detection in data streams,”Pattern Recog-
+nition, vol. 76, pp. 256–272, 2018.
+[23] B. Li, Y .-j. Wang, D.-s. Yang, Y .-m. Li, and X.-k. Ma, “FAAD:
+an unsupervised fast and accurate anomaly detection method for a
+multi-dimensional sequence over data stream,”Frontiers of Information
+Technology & Electronic Engineering, vol. 20, no. 3, pp. 388–404, 2019.
+
+--- PAGE 10 ---
+[24] S. Zheng, S. Zon, M. Pechenizkiy, C. Campos, W. Ipenburg, and
+H. Harder, “Labelless concept drift detection and explanation,”NeurIPS
+2019 Workshop on Robust AI in Financial Services: Data, Fairness,
+Explainability, Trustworthiness, and Privacy, 2019.
+[25] S. M. Lundberg and S.-I. Lee, “A unified approach to interpreting
+model predictions,”Advances in Neural Information Processing Systems,
+vol. 30, 2017.
+[26] G. Peyr ´e and M. Cuturi, “Computational optimal transport: With appli-
+cations to data science,”Foundations and Trends® in Machine Learning,
+vol. 11, no. 5-6, pp. 355–607, 2019.
+[27] F. P ´erez-Cruz, “Kullback-leibler divergence estimation of continuous
+distributions,”IEEE international symposium on information theory, pp.
+1666–1670, 2008.
+[28] N. Tan, “Code for flexible and efficient drift detection without labels,”
+https://github.com/nelvintan/drift detect, 2025.
+[29] G. James, D. Witten, T. Hastie, R. Tibshirani, and J. Taylor, “An
+introduction to statistical learning,”Springer, vol. 112, no. 1, 2013.
+[30] T. Gonzalez, S. Sahni, and W. R. Franta, “An efficient algorithm for
+the kolmogorov-smirnov and lilliefors tests,”ACM Transactions on
+Mathematical Software (TOMS), vol. 3, no. 1, pp. 60–64, 1977.

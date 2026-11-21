@@ -1,0 +1,3 @@
+# UCI 224 split/model sensitivity
+
+Six stratified splits were run for logistic regression and a depth-6 tree under one- and two-cohort history windows. On shared cohorts 3--10, calibrated estimate MAE was 0.553 (logistic) and 0.374 (tree) with batch-1 history; 0.342 and 0.401 with batches 1--2. These are split sensitivities on one dataset, and history windows have different label budgets. See the TeX report and figure.

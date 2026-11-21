@@ -1,0 +1,486 @@
+--- PAGE 1 ---
+Detecting Concept Drift with SHapley 
+Additive ExPlanations for Intelligent 
+Model Retraining in Energy Generation 
+Forecasting 
+Brígida Teixeira1, Tiago Pinto2, and Zita V ale1(B)
+1 GECAD–Research Group on Intelligent Engineering and Computing for Advanced 
+Innovation and Development, LASI–Intelligent Systems Associate Laboratory, ISEP, 
+Polytechnic of P orto, R. Dr. António Bernardino de Almeida, 431,
+4249-015 Porto, Portugal
+{bct,zav}@isep.ipp.pt 
+2 Universidade de Trás-os-Montes e Alto Douro e INESC-TEC, Quin ta de Prados,
+5000-801 Vila Real, Portugal
+tiagopinto@utad.pt 
+Abstract. Accurate energy generation forecasting is essential for eﬀec-
+tive energy management. However, it remains a complex task due to the 
+inﬂuence of dynamic factors such as meteorological conditions, seasonal 
+variations, and evolving grid operations. Ensuring model reliability over 
+time requires continuous assessment to detect performance degradation. 
+Traditional retraining strategies, including periodic updates and statis-
+tical drift detection techniques, often struggle to balance model accu-
+racy with computational eﬃciency. This study introduces a novel app-
+roach that leverages SHapley Additive Explanations (SHAP) to dynam-
+ically detect concept drift by analyzing variations in feature importance. 
+The methodology establishes a baseline SHAP distribution and identiﬁes 
+deviations that indicate drift, prompting model retraining when neces-
+sary. A comparative evaluation is conducted against conventional meth-
+ods, including scheduled retraining, Adaptive Windowing (AD WIN), and
+the Kolmogorov-Smirnov (KS) test. Furthermore, a sensitivity analy-
+sis examines the impact of key conﬁguration parameters on detection
+accuracy and computational cost. The results demonstrate that SHAP-
+based drift detection improves forecasting accuracy, achieving a 26.67%
+to 35.29% reduction in Mean Squared Error, while maintaining an adap-
+tive retraining strategy. These ﬁndings underscore the potential of SHAP
+as an interpretable and eﬃcient approach for managing concept drift in
+energy forecasting applications.
+Keywords: Concept Drift · SHapley Additive exPlanations (SHAP) · 
+Energy Forecasting · In telligent Model Retraining · Explainable AI
+1 Introduction 
+Machine learning (ML) models have become essential in various ﬁelds, includ-
+ing healthcare, ﬁnance, and energy systems. In energy generation forecasting,
+c The Author(s) 2026 
+R. 
+Guidotti et al. (Eds.): xAI 2025, CCIS 2577, pp. 156–168, 2026. 
+https://doi.org/10.1007/978-3-032-08324-1_7
+
+--- PAGE 2 ---
+Concept Drift with SHAP for Intelligent Model Retraining 157
+accurate predictions are crucial for balancing supply and demand, optimizing 
+grid operations, and eﬃciently integrating renewable energy sources [ 1]. How-
+ever, one of the most signiﬁcant challenges in ML-based forecasting is ensuring 
+that models maintain their accuracy in dynamic and evolving environments [2]. 
+In this context, concept drift refers to changes in the statistical properties of 
+the target variable, which can degrade p redictive performance and lead to ineﬃ-
+cient energy management [3]. These drifts can arise from evolving weather con-
+ditions, seasonal variations, grid stability c hanges, or shifts in consumer demand
+[4]. Consequently, ensuring that forecasting models remain robust and adaptive 
+to these changes is fundamental for modern energy systems.
+Concept drift detection has been widely explored in power and energy sys-
+tems (PES), particularly in cybersecurity and fault detection. Recent studies 
+have proposed frameworks to distinguish genuine grid disturbances from cyber-
+attacks, leveraging dimensionality reduction techniques and deep learning [ 5]. 
+Additionally, real-time data stream analysis models have been applied to detect 
+anomalies in consumer energy behavior, diﬀerentiating deviations c aused by gen-
+uine shifts in consumption patterns from fraudulent activities [6]. 
+Retraining strategies are used to mitigate concept drift in energy forecasting. 
+A recent study introduced an Extreme Learning Machine (ELM)-based frame-
+work to address concept drift in wind energy forecasting, allo wing models to
+adjust dynamically to changing environmental conditions without frequent, com-
+putationally expensive reconﬁgurations [7]. Traditional statistical methods, such 
+as the Kolmogorov-Smirnov (KS) test and the Page-Hinkley test, remain widely 
+used for detecting drift in energy time series [ 8]. The KS test compares distri-
+butions over time to identify signiﬁcant shifts in data behavior, while the Page-
+Hinkley test detects gradual changes in average v alues, making it eﬀective for
+identifying slow-moving drifts in energy generation [9]. An alternative and widely 
+adopted approach for concept drift detection i s Adaptive Windowing (ADWIN)
+[10], which dynamically adjusts a sliding window based on detected changes in 
+the data stream. ADWIN has been employed in power systems to identify abrupt 
+and gradual shifts in load demand, weather conditions, and energy prices. These 
+techniques rely on monitoring error rates or applying statistical bounds to detect 
+distributional shifts. While eﬀective and theoretically grounded, these s tatistical
+approaches are more suited for classiﬁcation tasks and generally oﬀer limited
+interpretability, making it diﬃcult to identify the root causes of drift or deter-
+mine which features contribute most to performance degradation [11]. 
+Due to these limitations, Explainable AI (XAI) has gained prominence in
+energy forecasting [ 12]. Techniques such as SHapley A dditive ExPlanations
+(SHAP) [13] provide insights into how individual features inﬂuence model predic-
+tions over time. In energy forecasting, SHAP can highlight whic h meteorological
+or grid-related variables drive prediction errors as drift occurs [14]. This level of 
+interpretability is crucial for energy operators, as it enables them to identify and 
+address the underlying causes of model degradation rather than relying solely on 
+automated retraining. Integrating interpretability into drift detection represents
+a signiﬁcant advancement in energy forecasting, enhancing the adaptability of
+
+--- PAGE 3 ---
+158 B. Teixeira et al.
+predictive models while ensuring that energy generation forecasts remain accu-
+rate despite evolving patterns. Recent studies have demonstrated the beneﬁts of 
+SHAP in drift analysis, not only in energy forecasting but also in cybersecurity
+and complex time-series prediction tasks [14]. 
+This work presents a SHAP-based approach for detecting concept drift in 
+regression tasks by computing a drift score that quantiﬁes the deviation of SHAP 
+values from a dynamic reference distribution. The detection mechanism relies on 
+a rolling baseline of SHAP value statistics and uses a dynamic thresholding func-
+tion that adapts to recent drift score variability. Once drift is detected, the model 
+is retrained using a buﬀered window of recent observations, and the SHAP base-
+line is updated incrementally using an Exponential Moving Average (EMA) to 
+ensure smooth adaptation over time. This a pproach is applied to energy gen-
+eration forecasting and is compared against conventional retraining strategies,
+including periodic updates, ADWIN, and the KolmogorovâĂŞSmirnov test. A
+sensitivity analysis is also conducted to evaluate the inﬂuence of key conﬁgura-
+tion parameters on both detection accuracy and computational eﬃciency.
+The remainder of this paper is structured as follows: Sect. 2 details the 
+methodology. Section 3 describes the case study and e xperimental setup.
+Section 4 presents the results and discusses key ﬁndings. Finally, Sect. 5 con-
+cludes with an analysis of the proposed work and directions for future research.
+2 Methodology 
+The proposed methodology introduces an intelligent retraining framework that 
+leverages SHAP to detect concept drift in energy generation forecasting. The 
+approach dynamically monitors variations in feature importance, triggering
+retraining when signiﬁcant deviations from identiﬁed historical.
+The framework consists of several interconnected components: data pre-
+processing, initial model training, SHAP-based drift detection, adaptive model 
+retraining, and performance evaluation. Initially, the model is trained on histor-
+ical data and establishes a baseline SHAP distribution. During real-time opera-
+tion, SHAP values are continuously computed and compared against this baseline 
+using a dynamic thresholding mechanism. When a drift is detected, the model 
+is updated using an Exponential Moving A verage (EMA) to reﬁne the baseline
+and a buﬀered retraining process to incorporate new data. This ensures that the
+forecasting model remains accurate while minimizing unnecessary computational
+overhead. The workﬂow of the proposed methodology is illustrated in Fig.
+1, a n d 
+each component is detailed i n the following subsections.
+2.1 Data Preprocessing 
+A structured preprocessing pipeline is implemented to ensure an optimized 
+dataset for predictive modeling, comprising feature selection, normalization, and 
+data partitioning. The dataset contains historical energy generation records from
+2023, collected from a photovoltaic (PV) system and a meteorological station
+
+--- PAGE 4 ---
+Concept Drift with SHAP for Intelligent Model Retraining 159
+Fig. 1. Workﬂow of the proposed SHAP-based intelligent retraining framework.
+at an oﬃce building. It includes key environmental variables such as outdoor 
+temperature, humidity, solar radiation, wind speed, and atmospheric pressure, 
+which inﬂuence power generation. A derived feature, the period of the day (rang-
+ing from 0 to 143), is added to capture daily cyclic patterns. Normalization is 
+applied to rescale all features using Min-Max scaling to the range [0,1], ensuring 
+numerical stability and preventing features with larger magnitudes from domi-
+nating the learning process. The target variable, representing energy generation,
+undergoes the same normalization to maintain consistency. Finally, the dataset
+is split into training and testing subsets to enable model evaluation.
+2.2 Initial Model T raining 
+Once the data has been preprocessed, an initial forecasting model is trained 
+using a ML algorithm. During training, SHAP values are computed to establish a 
+reference distribution of feature importance. These SHAP values provide insight
+into how diﬀerent input features contribute to the model’s predictions, forming
+
+--- PAGE 5 ---
+160 B. Teixeira et al.
+the foundation for drift detection in subsequent steps. The trained model is then 
+deplo yed for real-time forecasting based on incoming data streams.
+2.3 SHAP-Based Concept Drift Detection 
+To maintain the reliability of the forecasting model over time, it is essential 
+to continuously monitor the evolution of relationships between input features 
+and the target variable, ensuring that any shifts do not compromise predictive 
+performance. This is achieved by continuously computing SHAP values for each
+new observation, which quantify the contribution of each feature at a given
+moment, allowing for direct comparison with past feature importance.
+Concept drift is identiﬁed by measuring the deviation of SHAP values from 
+a rolling baseline. This baseline represents the expected feature contributions 
+over a predeﬁned historical period and is constructed using a moving window of 
+n days_baseline past observations. The rolling mean and variance of SHAP values
+for each feature are computed as in Eq. 1, w h e r e N is the number of historical 
+instances in the baseline window. Each φi denotes the SHAP value vector of 
+the i-th instance, containing one value per input feature, which quantiﬁes the 
+contribution of each feature to the model’s prediction. The mean vector μp thus 
+represents the typical importance of each feature under stable conditions, while 
+the variance v ector σ2
+p captures how much those contributions ﬂuctuate across
+the baseline window. These statistics deﬁne a reference distribution used to assess
+whether new observations deviate signiﬁcantly from previously observed patterns
+of feature relevance.
+In Eq. 2, the SHAP Drift Score DSHAP(t) is computed as the Euclidean dis-
+tance between the current SHAP value vector φt a n d t h e b a s e l i n e m e a n v e c t o r 
+μp. This score reﬂects how much the feature importance proﬁle of the current 
+observation diverges from the historically expected pattern, providing a quanti-
+tative signal for potential concept drift. A drift even t is triggered when the SHAP
+Drift Score exceeds a dynamically computed threshold. Unlike traditional ﬁxed
+thresholds, this approach adapts its sensitivity based on recent ﬂuctuations in
+the observed drift scores. As deﬁned in Eq.3, the threshold at time t is calculated 
+as the rolling mean μDSHAP of past scores, plus a multiple of their rolling stan-
+dard deviation σDSHAP . The hyperparameter k controls how tolerant the method 
+is to deviations: lower values make the detector more reactive, while higher val-
+ues reduce sensitivity. T his adaptive mechanism helps prevent false positives by
+accounting for natural variability in the data and reacting only to statistically
+signiﬁcant changes.
+μp = 1 
+N 
+N
+i=1 
+φi,σ 2 
+p = 1 
+N 
+N
+i=1 
+(φi − μp)2 (1) 
+DSHAP(t) = ||φt − μp|| (2) 
+Threshold(t) = μDSHAP + k · σDSHAP (3)
+
+--- PAGE 6 ---
+Concept Drift with SHAP for Intelligent Model Retraining 161
+It is important to note that the SHAP vectors φt retain the sign of each fea-
+ture’s contribution, allowing the detection mechanism to capture both increases 
+and decreases in inﬂuence, including potential inversions in eﬀect direction. This 
+ensures that the Euclidean distance reﬂects not only the magnitude of change,
+but also meaningful directional shifts in feature behavior.
+2.4 Adaptive Model Retraining 
+When a drift event is detected, the model undergoes adaptive retraining to 
+incorporate the latest data distribution while minimizing unnecessary updates.
+The retraining mechanism consists of three key components.
+First, to keep the SHAP baseline representative of recent patterns, it is 
+updated incrementally using EMA rather than being recomputed from scratch. 
+This ensures a smooth adaptation to gradual changes without abruptly dis-
+carding past information. As shown in Eq. 4, the new baseline mean μnew 
+p and 
+baseline deviation σnew 
+p are updated by blending the previous baseline values 
+with the current SHAP vector φt. The parameter α ∈ [0, 1] controls the adapta-
+tion rate: higher values give more weight to recent observations, allowing faster 
+adaptation, while lower values emphasize stability by retaining more inﬂuence 
+from past data. Next, the training data buﬀer is updated, ensuring the retrain-
+ing process incorporates the most recent observations while discarding outdated 
+data beyond a set limit. This prevents excessive memory usage and ensures the 
+model remains focused on relevant patterns. Finally, the model is retrained using
+the updated dataset, allowing it to learn from recent patterns while retaining
+the predictive knowledge acquired in previous iterations. This approach opti-
+mizes computational eﬃciency while maintaining high forecasting accuracy by
+restricting retraining to only those instances where drift has been detected.
+Once the model has been retrained, it resumes forecasting, generating new 
+predictions that are evaluated against actual energy generation values. The 
+performance of the forecasting model is assessed using standard error m etrics,
+including Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and
+coeﬃcient of determination ( R
+2).
+μnew 
+p = ( 1 − α) · μp + α · φt,σ new 
+p = ( 1 − α) · σp + α ·| φt − μp| (4) 
+3 Case Study 
+This section presents the experimental evaluation of the SHAP-based drift detec-
+tion framework applied to energy generation forecasting. The objective is to 
+assess its ability to maintain high predictive accuracy while adapting to evolving 
+data distributions. The proposed method is compared against established drift 
+detection strategies: s cheduled retraining, ADWIN, the KS test, and a ﬁxed base-
+line without retraining. Experiments were conducted using the XGBRegressor
+from the xgboost library [15], chosen for its robustness in time-series regression
+
+--- PAGE 7 ---
+162 B. Teixeira et al.
+and ability to model nonlinear relationships. The model uses default settings: 
+100 boosting rounds (n_estimators=100), maximum depth 6, learning rate 0.3, 
+full subsampling of instances and features, and squared error as the objective.
+The dataset comprises 10-minute interval measurements from a photovoltaic 
+(PV) system and a local meteorological station at the GECAD research cen-
+ter (Porto, Portugal), spanning January 1 to September 15, 2023. It includes 
+12 input features, such as solar radiation, UV index, wind speed, and outdoor 
+temperature. The initial training set covers January 1 to July 31, while test 
+observations arrive incrementally from August 1 onward. Upon drift detection,
+retraining is triggered using the original training data extended with all test sam-
+ples up to the current time. This approach combines stability and adaptability
+by leveraging both historical and recent patterns.
+A sensitivity analysis was ﬁrst conducted over a constrained period 
+(August 1âĂŞ10) to explore the impact of four key hyperparameters: thresh-
+old multiplier (k_threshold ∈ {1.75, 2.0, 2.25, 2.5}), SHAP baseline window 
+(n_days_baseline ∈ {5, 10}), range of adjacent periods (range_periods ∈ 
+{4, 6, 8}), and EMA learning rate (αema ∈ {0.3, 0.5, 0.7}). A total of 72 con-
+ﬁgurations were evaluated to balance accuracy and computational cost. The 
+best conﬁguration was used in a full evaluation from August 1 to September
+15, comparing the SHAP-based approach to the alternative methods. Feature
+importance evolution was also tracked to highlight the necessity of adaptive
+modeling.
+4 Results and Discussion 
+This section presents the results of the SHAP-based drift detection methodology, 
+analyzing its impact on forecasting performance. First, a sensitivity analysis 
+identiﬁes the optimal parameter conﬁguration, balancing accuracy and retraining 
+eﬃciency. T hen, the full study evaluates the method’s eﬀectiveness in adapting
+to concept drift while maintaining reliable predictions.
+4.1 Sensitivity Analysis 
+To determine the optimal parameter conﬁguration for the SHAP-based concept 
+drift detection methodology, a sensitivity analysis was conducted across various 
+values of kthreshold, ndays_baseline, range_period, and αema. This analysis aimed 
+to identify a balance between predictive accuracy, measured through the RMSE 
+and computational eﬃciency, quantiﬁed by the number of model retrainings. A 
+comp osite score was formulated to evaluate the trade-oﬀ between these factors,
+where a lower RMSE and fewer retrainings contribute to a better performance.
+To determine the optimal parameter conﬁguration for the SHAP-based con-
+cept drift detection methodology, a sensitivity analysis was conducted across 
+various values of kthreshold, ndays_baseline, range_period, and αema. This analysis 
+aimed to identify a balance between predictive accuracy, measured through the 
+RMSE, and computational eﬃciency, quantiﬁed by the number of model retrain-
+ings. To combine both objectives into a uniﬁed metric, each was ﬁrst normalized
+
+--- PAGE 8 ---
+Concept Drift with SHAP for Intelligent Model Retraining 163
+Ta b l e 1 . Top 5 Conﬁgurations Ranked by Composite Score
+Parameter 1 2 3 4 5 
+kthreshold 2.0 2.0 2.0 2.0 2.0 
+ndays_baseline 5 5 5 5 5 
+range_period 6 6 4 6 4 
+αema 0.5 0.3 0.7 0.7 0.5 
+RMSE 0.0969 0.0958 0.0946 0.0982 0.0948 
+Retrainings 115 130 149 121 152 
+Composite Score -1.0486 -1.0392 -1.0305 -1.0177 -1.0070 
+Fig. 2. Heatmaps of RMSE (left) and Retrainings (right) for ndays_baseline =5 ,
+kthreshold =2 .0.
+to the range [0, 1] using min-max normalization. The number of retrainings was 
+inverted such that lower values contribute positively to the overall score. A com-
+posite score was then computed as a weighted average of the normalized metrics.
+The top ﬁve conﬁgurations, ranked by this composite score, a re presented in
+Table1. The best-performing conﬁguration was obtained with kthreshold = 2 .0, 
+ndays_baseline = 5 , range_period = 6 , a n d αema = 0 .5, achieving an RMSE of 
+0.0969 with 115 retrainings. The second-best conﬁguration retained the same 
+parameters except for αema = 0.3, resulting in a slightly lower RMSE of 0.0958 
+at the cost of 130 retrainings. A further reduction in RMSE was observed in 
+the third-ranked conﬁguration (range_period = 4, αema = 0.7), reaching 0.0946 
+RMSE, but with 149 retrainings. These results conﬁrm that lower RMSE values 
+often correlate with more frequent retraining, but the performance gains are
+not always proportional. This reinforces the value of using a composite score to
+capture the trade-oﬀ between accuracy and eﬃciency in real-world deployments.
+To further illustrate the impact of range_period and αema, two heatmaps are
+presented in Fig. 2. The left panel displays RMSE values, while the right panel 
+illustrates the corresponding number of retrainings. Both heatmaps consider 
+ndays_baseline = 5 and kthreshold = 2.0, as these v alues were identiﬁed as optimal
+based on the best-performing conﬁgurations in Table 1. 
+The heatmaps show that larger range_period values lead to fewer retrainings 
+while maintaining acceptable RMSE, suggesting that a broader temporal context 
+reduces sensitivity to noise and avoids overreacting to local changes. Lowerαema
+
+--- PAGE 9 ---
+164 B. Teixeira et al.
+Ta b l e 2 . Performance comparison of diﬀerent retraining strategies.
+Model MSE RMSE R2 Retrainings 
+SHAP 0.0077 0.0879 0.8741 717 
+Scheduled 0.0105 0.1023 0.8295 45 
+KS Test 0.0114 0.1069 0.8139 396 
+ADWIN 0.0116 0.1076 0.8113 26 
+Fixed 0.0119 0.1089 0.8068 0 
+Fig. 3. SHAP Drift Score and Dynamic Threshold Over Time.
+values (0.3 and 0.5) generally improve forecasting accuracy, while higher values 
+introduce instability by overemphasizing recent SHAP changes, increasing false 
+positives. Moderate αema values smooth updates, balancing responsiveness and 
+stability. These results highlight the trade-oﬀ between sensitivity and robustness: 
+overly reactive settings raise retraining frequency and noise ampliﬁcation, w hile
+overly conservative ones delay drift detection. A balanced conﬁguration oﬀers
+reliable detection and eﬃcient updates, emphasizing the importance of careful
+hyperparameter tuning in real-world use.
+4.2 Study Results 
+Following the sensitivity analysis, the best-performing hyperparameter conﬁgu-
+rations (ndays_baseline = 5, kthreshold = 2.0, range_period = 6, a n d αema = 0.5) 
+were used to evaluate the full forecasting study over an extended period from 
+August 1 to September 15, 2023. This section presents the results o f the SHAP-
+based retraining framework and compares its performance with alternative
+retraining strategies, including scheduled retraining, ADWIN, and the KS Test.
+Table 2 presents the performance of forecasting strategies using XGBRegres-
+sor. The SHAP-based approach achieved the lowest RMSE (0.0879) and highest 
+R2 (0.8741), conﬁrming its superior accuracy. In contrast, the ﬁxed model per-
+formed worst, highlighting the need for dynamic updates to handle concept drift.
+
+--- PAGE 10 ---
+Concept Drift with SHAP for Intelligent Model Retraining 165
+Fig. 4. SHAP Feature Importance: Baseline (left) vs. Final (right).
+Fig. 5. Evolution of SHAP Feature Importance for the Top 5 F eatures Across Retrain-
+ing Iterations.
+The SHAP method triggered 717 retrainings over 46 d due to its sensitivity to 
+subtle shifts in feature importance. While this ensures model alignment with 
+evolving data, it may lead to excessive updates in dynamic settings. In resource-
+constrained scenarios, mechanisms like minimum retraining intervals or stability
+
+--- PAGE 11 ---
+166 B. Teixeira et al.
+buﬀers may be needed. These trade-oﬀs will be addressed in future work. Figure3 
+shows the SHAP drift score and its adaptive threshold over time. Peaks in the 
+drift score correspond to shifts in feature contributions, and when exceeding the 
+threshold, they trigger retraining. This dynamic approach maintains a b alance
+between stability and adaptability, ensuring timely updates without overﬁtting
+to transient changes in energy generation patterns.
+To further assess the robustness of SHAP-based drift detection, Fig. 4 com-
+pares feature importance rankings at the start and end of the study. Solar radi-
+ation and UV index remained consistently important, while variables like wind 
+speed and outdoor temperature showed changes in their predictive roles. These
+variations support the need for adaptive retraining to capture evolving data
+patterns. Figure5 illustrates how SHAP values for the top ﬁve features changed 
+across iterations, with a decline in relevance for some (e.g., wind speed, indoor 
+temperature), while solar radiation remained a key predictor. The results con-
+ﬁrm that the SHAP-based drift detection framework consistently outperforms 
+baseline methods in maintaining forecasting accuracy while adapting to distri-
+bution shifts. Its retraining strategy oﬀers a strong balance between performance 
+and update frequency, reducing unnecessary model updates without sacriﬁcing 
+robustness. Observed shifts in feature importance reinforce t he need for adaptive,
+explainable models. A preliminary evaluation of alternative SHAP explainers
+(KernelExplainer and LinearExplainer) showed promising results, though Ker-
+nelExplainer’s high computational cost limits real-time use. Future work will
+focus on optimizing these explainers and evaluating their performance across
+diverse forecasting scenarios.
+5 Conclusion 
+This study proposed a SHAP-based drift detection framework for energy gener-
+ation forecasting, using feature importance variations to dynamically detect dis-
+tribution shifts. Results show that the SHAP-based method consistently outper-
+forms alternatives, achieving lower forecasting errors and maintaining adaptabil-
+ity to changing data patterns. Temporal analysis of feature importance empha-
+sized the need for adaptive, interpretable modeling, as key predictors ﬂuctuated 
+over time. Sensitivity analysis revealed that tuning hyperparameters, such as 
+baseline window size, threshold multiplier, and EMA learning rate, can balance 
+accuracy and computational eﬃciency. Although focused on energy forecasting, 
+the approach is generalizable to other time-dependent regression tasks. Pre-
+liminary tests with alternative SHAP explainers, like KernelExplainer, showed
+promise but highlighted the need for eﬃciency improvements. Future work will
+explore optimizing these explainers and integrating feature ranking dynamics
+into drift detection.
+Acknowledgments. This work has been developed in the frame of PRECISE
+project (PTDC/EEI-EEE/6277/2020), DOI: 10.54499/PTDC/EEI-EEE/6277/2020,
+that receiving funding from FEDER Funds through the COMPETE program and from
+
+--- PAGE 12 ---
+Concept Drift with SHAP for Intelligent Model Retraining 167
+National Funds. The authors used the facilities and equipment provided by the GECAD 
+research center (UIDB/00760/2020), DOI: 10.54499/UIDB/00760/2020. Brígida Teix-
+eira is supported by national f unds through FCT, Portugal government, with PhD
+grant reference 2020.08174.BD, DOI: 10.54499/2020.08174.BD.
+References 
+1. Yao, Z., et al.: Machine learning for a sustainable energy future. Nat. Rev. Mater.
+8, 202–215 (2023)
+2. Tolun, Ö., Zor, K., Tutsoy, O.: A comprehensive benchmark of machine learning-
+based algorithms for medium-term electric v ehicle charging demand prediction. J.
+Supercomputing 81, 475 (2025)
+3. Samarajeewa, C., et al.: An artiﬁcial intelligence framework for explainable drift 
+detection in e nergy forecasting. Energy AI 17, 100403 (2024)
+4. Shaer, I., Shami, A.: Thwarting cybersecurity attacks with explainable concept 
+drift. In: 2024 International W ireless Communications and Mobile Computing
+(IWCMC), pp. 1785–1790 (2024)
+5. Mehmood, T., et al.: DRIFTNET-EnVACK: adaptive drift detection in cloud 
+data streams with ensemble variational auto-encoder featuring contextual network.
+IEEE Access 12, 80020–80034 (2024)
+6. Wang, J., Cao, H., et. al.: An adaptive deep learning method integrating transfer 
+learning and concept drift detection for w ind power forecasting. In: 2024 43rd
+Chinese Control Conference (CCC), pp. 6275–6280 (2024)
+7. Lin, X., Chang, L., Nie, X., Dong, F.: Temporal attention for few-shot concept 
+drift detection in streaming data. Electronics 13, 2183 (2024)
+8. Agrahari, S., Singh, A.: Concept drift detection in data stream mining: a literature 
+review. J. King Saud Univ. Comput. Inf. Sci. 34, 9523–9540 (2022)
+9. Shahad, P., Raj, E.D.: Interpretability-based virtual drift detection and adap-
+tation algorithm: a case study on Tetouan’s energy data. In: 2024 International 
+Conference On Intelligent Computing and Emerging Communication Technologies
+(ICEC), pp. 1–6 (2024,11)
+10. Stojnev Ilić, A., Stojanović, D.: Concept drift detection and adaptation in IoT 
+data stream analytics. In: 2023 16th International Conference On Adv anced Tech-
+nologies, Systems And Services In Telecommunications (TELSIKS), pp. 211–214
+(2023)
+11. Zhou, Y., Ge, Y., Jia, L.: Double robust federated digital t win modeling in smart
+grid (2024)
+12. Machlev, R., et al.: Explainable Artiﬁcial Intelligence (XAI) techniques for energy 
+and power systems: review, c hallenges and opportunities. Energy AI 9, 100169
+(2022)
+13. Lundberg, S., Lee, S.: A uniﬁed approach to interpreting model predictions. In: 
+Advances in Neural Information Processing Systems, 2017-December, pp. 4766-
+4775 (2017)
+14. Abdulla, N., Demirci, M., Ozdemir, S.: Smart meter-based energy consumption 
+forecasting for smart cities using adaptive f ederated learning. Sustain. Energy,
+Grids Networks 38, 101342 (2024)
+15. Chen, T., Guestrin, C.: XGBoost: a scalable tree boosting system. In: Proceedings 
+of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and
+Data Mining, pp. 785–794 (2016)
+
+--- PAGE 13 ---
+Open Access 
+168 B. Teixeira et al. 
+This chapter is licensed under the terms of the Creative Commons 
+Attribution 4.0 International License (http://creativecommons.org/licenses/by/4.0/), 
+which permits use, sharing, adaptation, distribution and reproduction in any medium 
+or format, as long as you give appropriate credit to the original author(s) and the 
+source, provide a link to the Creative Commons license and indicate if changes were 
+made. 
+The images or other third party material in this chapter are included in the 
+chapter’s Creative Commons license, unless indicated otherwise in a credit line to t he 
+material. If material is not included in the chapter’s Creative Commons license and 
+your intended use is not permitted by statutory regulation or exceeds t he permitted 
+use, you will need to obtain permission directly from the copyright holder.

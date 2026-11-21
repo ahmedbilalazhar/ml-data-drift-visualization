@@ -1,0 +1,15 @@
+{
+  "pages": 4,
+  "render_seconds": 1.927149900002405,
+  "pdf_sha256": "2c9166f836e47106fe250062c8578fa75bae69c9f80adbaba7040726150f49a0",
+  "source_sha256": "571a55439c859ebc6b5a39ff4ef27961b3ae5f65991ccb62994e6e1249f464d1",
+  "renderer_sha256": "05d91f5701bac7322399de12752a37f14958e46606bffbc2d1760a40bc7f7454",
+  "page_text_characters": [
+    2284,
+    2139,
+    1532,
+    2536
+  ],
+  "visual_review": "passed",
+  "review_notes": "All four pages inspected. The formerly orphaned subsection is integrated into the last page; no isolated appendix page or clipped text remains."
+}

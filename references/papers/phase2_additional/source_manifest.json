@@ -1,0 +1,98 @@
+[
+  {
+    "id": "P2_01_Benchmark_KDD2026",
+    "source_url": "https://arxiv.org/pdf/2606.07789",
+    "publication_url": "https://doi.org/10.1145/3770855.3819070",
+    "pages": 12,
+    "sha256": "152984564c2f255f073ef3d9d070fd9a1f16193cb2e04fdf92f999fd96341430",
+    "characters": 63832
+  },
+  {
+    "id": "P2_02_WindowDilemma_IDA2026",
+    "source_url": "https://arxiv.org/pdf/2602.06456",
+    "publication_url": "https://doi.org/10.1007/978-3-032-23833-7_27",
+    "pages": 12,
+    "sha256": "f4b06990b504ec0dbefc451a6008c29460d5c36d690ace48ccab4c0d3a40f969",
+    "characters": 46529
+  },
+  {
+    "id": "P2_03_PUDD_AAAI2025",
+    "source_url": "https://ojs.aaai.org/index.php/AAAI/article/download/34105/36260",
+    "publication_url": "https://doi.org/10.1609/aaai.v39i18.34105",
+    "pages": 9,
+    "sha256": "f06d1e2358c6b6eed63f0a3870418db1299a71c05bc58a868c1442b08d0f8d64",
+    "characters": 42379
+  },
+  {
+    "id": "P2_04_Flexible_ICDMW2025",
+    "source_url": "https://arxiv.org/pdf/2506.08734",
+    "publication_url": "https://doi.org/10.1109/ICDMW69685.2025.00037",
+    "pages": 10,
+    "sha256": "52e62b7f51dcacd3cb965bda7b3e4d757abc485a7dc68c58e3e83ddd4ecb6898",
+    "characters": 44916
+  },
+  {
+    "id": "P2_05_Causal_ECMLPKDD2026",
+    "source_url": "https://link.springer.com/content/pdf/10.1007/978-3-032-19105-2_28.pdf",
+    "publication_url": "https://doi.org/10.1007/978-3-032-19105-2_28",
+    "pages": 17,
+    "sha256": "b0d955d777eb6faec80a2bbb671134aaaf057ebcd8d0b341567dc5a1cdac754c",
+    "characters": 43729
+  },
+  {
+    "id": "P2_06_PRODEM_ECMLPKDD2026",
+    "source_url": "https://ecmlpkdd-storage.s3.eu-central-1.amazonaws.com/preprints/2025/ads/preprint_ecml_pkdd_2025_ads_315.pdf",
+    "publication_url": "https://doi.org/10.1007/978-3-032-06118-8_16",
+    "pages": 16,
+    "sha256": "78d7ed78015b675fa92e9cbadaecebd2076bbf47a7e60c12ae0cf968c1249388",
+    "characters": 39779,
+    "reviewed_version": "Official ECML PKDD conference-hosted author version",
+    "checked_on": "2026-11-06"
+  },
+  {
+    "id": "P2_07_Conformal_COPA2025",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v266/main/assets/eliades25a/eliades25a.pdf",
+    "publication_url": "https://proceedings.mlr.press/v266/eliades25a.html",
+    "pages": 19,
+    "sha256": "db3c6f5606bc3ef31758cade2bc842ad683e018ce60b67541ccecb62e980f3a8",
+    "characters": 53373
+  },
+  {
+    "id": "P2_08_RiskViolations_UAI2025",
+    "source_url": "https://raw.githubusercontent.com/mlresearch/v286/main/assets/timans25a/timans25a.pdf",
+    "publication_url": "https://proceedings.mlr.press/v286/timans25a.html",
+    "pages": 23,
+    "sha256": "97f0b191fc9da8676b78d8a408df3ff6efc130da7748ab61bac2e1de36c9d3fe",
+    "characters": 93412,
+    "reviewed_version": "PMLR-linked published PDF",
+    "checked_on": "2026-11-06"
+  },
+  {
+    "id": "P2_09_PPRM_ICML2026",
+    "source_url": "https://arxiv.org/html/2602.02229v2",
+    "publication_url": "https://proceedings.mlr.press/v306/zhang26g.html",
+    "reviewed_version": "2602.02229v2",
+    "file": "P2_09_PPRM_ICML2026.md",
+    "format": "markdown",
+    "sha256": "4a6c734a0de769608cf38f82e8e46b0c5656d3acf94ab1341e347b690456b088",
+    "characters": 80519,
+    "checked_on": "2026-11-05",
+    "published_file": "P2_09_PPRM_ICML2026_published.pdf",
+    "published_sha256": "6db8b9e17b46d89557bca1c0b8427766968ddc7fe8b9edbf426de48fcf730afa",
+    "published_pages": 22
+  },
+  {
+    "id": "P2_10_Suitability_ICML2025",
+    "source_url": "https://arxiv.org/html/2505.22356v1",
+    "publication_url": "https://proceedings.mlr.press/v267/pouget25a.html",
+    "reviewed_version": "2505.22356v1",
+    "file": "P2_10_Suitability_ICML2025.md",
+    "format": "markdown",
+    "sha256": "07ba408ed033a384be039bf635ae99009cae940c710d4a4959d7b5f3ef9cb3fa",
+    "characters": 103079,
+    "checked_on": "2026-11-05",
+    "published_file": "P2_10_Suitability_ICML2025_published.pdf",
+    "published_sha256": "f6f19d886267fb1c656fa82f70e3bc04dc7afad7a70510351504944882adbe83",
+    "published_pages": 25
+  }
+]

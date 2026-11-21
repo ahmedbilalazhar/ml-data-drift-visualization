@@ -1,0 +1,13 @@
+task,condition,seeds,event,detected,null_alerts_mean,null_batches,null_alerts_per_1000,any_alert_seed_fraction
+v1_synthetic,C0,1500,False,0,1.026,24,42.75,0.576
+v1_synthetic,C1,1500,True,1500,0.33666666666666667,8,42.083333333333336,1.0
+v1_synthetic,C2,1500,True,1500,0.33666666666666667,8,42.083333333333336,1.0
+v1_synthetic,C3,1500,False,0,1.026,24,42.75,0.576
+v1_synthetic,C4,1500,False,0,1.026,24,42.75,0.576
+v1_synthetic,C5,1500,False,0,1.026,24,42.75,0.576
+v1_synthetic,C6,1500,True,563,0.33666666666666667,8,42.083333333333336,0.8233333333333334
+xor_synthetic,X0,1500,False,0,1.038,24,43.25,0.61
+xor_synthetic,X1,1500,True,1500,0.356,8,44.5,1.0
+xor_synthetic,X2,1500,True,1500,0.356,8,44.5,1.0
+xor_synthetic,X3,1500,False,0,1.038,24,43.25,0.61
+xor_synthetic,X4,1500,False,0,1.038,24,43.25,0.61

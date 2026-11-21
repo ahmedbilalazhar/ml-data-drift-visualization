@@ -1,0 +1,2307 @@
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful
+Distribution Shifts
+Guangyi Zhang 1 Yunlong Cai1 Guanding Yu1 Osvaldo Simeone 2
+Users
+In-distribution
+Inputs
+In-distribution
+Inputs
+Out-of-distribution
+Inputs
+Out-of-distribution
+Inputs
+Deployed 
+Model
+Model Outputs Inputs
+Predictor Imputed
+Labels
+True
+Labels
+PPRM 
+Risk Estimator
+Alarm
+Trigger
+< threshold
+> threshold
+Harmful Distribution
+ Shift (                       )
+Nominal 
+Behavior
+Labeled
+Stream
+Unlabeled
+Stream
+Inference Monitoring
+Figure 1. Over a discrete-time index, t = 1, 2, ..., a deployed system is monitored to detect harmful data distribution shifts that cause the
+running risk ¯Rt to exceed the nominal risk R0 by more than a maximum tolerated value ϵtol. Supervised risk monitoring (SRM) assumes
+access to a labeled dataset Dt for t = 0, 1, ... (with t = 0 corresponding to nominal behavior) of the form (x, y), where x is the input and
+y is the true label. In contrast, the proposed prediction-powered risk monitoring (PPRM) leverages both labeled data and unlabeled data
+˜D1, ˜D2, ..., including inputs ˜x only, by integrating an auxiliary pre-designed function fp(·), yielding synthetic labels ˜y.
+Abstract
+We study the problem of monitoring model per-
+formance in dynamic environments where la-
+beled data are limited. To this end, we propose
+prediction-powered risk monitoring (PPRM), a
+semi-supervised risk-monitoring approach based
+on prediction-powered inference (PPI). PPRM
+constructs anytime-valid lower bounds on the
+running risk by combining synthetic labels with
+a small set of true labels. Harmful shifts are
+detected via a threshold-based comparison with
+an upper bound on the nominal risk, satisfying
+assumption-free finite-sample guarantees on the
+type-I error. We demonstrate the effectiveness of
+PPRM through extensive experiments on image
+classification, large language model (LLM), and
+1College of Information Science and Electronic Engineering,
+Zhejiang University, Hangzhou 310027, China2Institute for Intelli-
+gent Networked Systems (INSI), Northeastern University London,
+One Portsoken Street, London E1 8PH, United Kingdom. Corre-
+spondence to: Yunlong Cai <ylcai@zju.edu.cn>.
+Proceedings of the 43 rd International Conference on Machine
+Learning, Seoul, South Korea. PMLR 306, 2026. Copyright 2026
+by the author(s).
+telecommunications monitoring tasks.
+1. Introduction
+Modern machine learning models have been widely de-
+ployed in dynamic real-world environments where the un-
+derlying data distribution may shift over time (Zawalski
+et al., 2025). In such scenarios, systems can experience
+performance degradation due to factors such as changed
+environmental conditions (Lipton et al., 2018), as well as
+evolving user preferences (Guan et al., 2025). This raises
+concerns about reliability and safety, particularly in critical
+applications such as autonomous driving (Sun et al., 2025),
+medical diagnosis (Zeb et al., 2024), and engineering (Sime-
+one et al., 2026). Consequently, there is a pressing need to
+continuously monitor the performance of deployed models.
+Once a monitoring system raises an alarm, the deployed ma-
+chine learning model may be deemed to require retraining
+or substitution. Given the cost associated with such extreme
+measures, recent works have suggested designing sequential
+testing frameworks that offer formal type-I error guaran-
+tees (Podkopaev & Ramdas, 2022; Amoukou et al., 2024;
+Schirmer et al., 2025). As shown in Figure 1, these methods
+1
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+aim to raise an alarm when the time-averaged accumulated
+expected risk exceeds a predefined threshold. The initial
+work (Podkopaev & Ramdas, 2022) introduced supervised
+risk monitoring (SRM), which is based on time-uniform con-
+centration bounds obtained from labeled calibration data.
+Thanks to the anytime-valid properties of such bounds, SRM
+guarantees assumption-free type-I error requirements.
+However, labeled data from deployed models are often
+scarce and costly to obtain, making conventional fully su-
+pervised monitoring challenging. Based on this observation,
+Amoukou et al. introduced purely unsupervised monitoring
+methodologies, which do not require labels for monitoring.
+However, in order to provide type-I error guarantees, purely
+unsupervised methods require assumptions about the cal-
+ibration of the deployed model, which is used to impute
+missing labels. These assumptions are difficult to validate.
+Furthermore, unsupervised approaches typically require a
+large number of samples to achieve reliable detection, which
+may not be practical in many real-world settings.
+To address these challenges, we proposeprediction-powered
+risk monitoring (PPRM), a framework that generalizes SRM
+to the semi-supervised setting based on prediction-powered
+inference (PPI) (Angelopoulos et al., 2023a). As illustrated
+in Figure 1, PPRM assumes the availability of both labeled
+data and unlabeled data at each monitoring round. Follow-
+ing PPI, PPRM utilizes predictions on unlabeled data as
+synthetic labels, while correcting the resulting bias using a
+small set of labeled samples. In this way, PPRM can pro-
+vide risk estimates with lower variance, and thus produces
+tighter confidence bounds than SRM. Therefore, as shown
+at the bottom of Figure 1, the lower bound can exceed the
+threshold earlier, while also providing a similar type-I error
+guarantee.
+We illustrate our procedure in three tasks, including image
+classification, large language model (LLM) monitoring via
+an LLM-as-a-judge (Zheng et al., 2023), and a channel
+equalization task in a telecommunication system (Zecchin
+et al., 2023).
+Our main contributions are as follows:
+• We introduce PPRM, a semi-supervised extension of
+SRM that combines synthetic labels from unlabeled
+data with a small number of true labels through PPI.
+• We prove that PPRM provides rigorous assumption-
+free statistical guarantees on the type-I error.
+• We further develop an online adaptive procedure to
+adjust the reliance on unlabeled data, improving effi-
+ciency while preserving statistical validity.
+• We validate our methods through multiple case studies,
+including LLM monitoring via an LLM-as-a-judge,
+showing that PPRM achieves more accurate and timely
+risk monitoring compared to existing supervised and
+unsupervised methods.
+2. Problem Formulation
+In this section, we formalize the problem of monitoring
+model performance over time with the aim of identifying
+harmful distribution shifts that cause an excessive degra-
+dation in performance. We also review the benchmark ap-
+proach introduced in (Podkopaev & Ramdas, 2022).
+2.1. Setting and Problem Formulation
+As illustrated in Figure 1, we focus on a standard multi-
+class classification framework, where the input domain is
+represented by a set X ⊆ RD and the output label space
+is Y = {1, . . . , C}, with C denoting the total number of
+classes. We study the problem of monitoring the perfor-
+mance of a deployed model f(x) ∈ O , while processing
+test data sequentially. The output space O refers to the label
+space Y or to the space of probability distributions over
+Y, depending on whether the prediction is deterministic or
+probabilistic. We fix a loss function ℓ : O × Y → R, which
+is assumed to be bounded in the interval [0, 1].
+Each data point (x, y) corresponds to an independent real-
+ization from an unknown joint probability distribution over
+the set X × Y . Prior to deployment, we assume access to
+a calibration dataset, whose data points are assumed to be
+sampled independently and identically from a fixed source
+distribution P0. This distribution represents nominal con-
+ditions under which the deployed model f(x) is known to
+perform satisfactorily. For instance, for a robotics applica-
+tion, calibration data may be collected in environments for
+which the robot has been extensively trained and validated.
+At deployment time, test data are received sequentially over
+a discrete time index t = 1 , 2, ..., and are assumed to be
+sampled from a potentially non-stationary test distribution,
+denoted by Pt for t = 1 , 2, ... No specific assumptions
+are imposed on the distributional shifts encoded by the se-
+quence {Pt}t≥1 over time. The goal is to quickly detect if
+the distributions Pt are sufficiently distinct from the nominal
+distribution P0 to cause a harmful shift, translating into an
+excessive degradation in model performance. Throughout
+this paper, the notation (xt, yt) ∼ Pt represents a generic
+input-output pair drawn from the distribution Pt, whereas
+the pair (xt,i, yt,i) corresponds to the i-th observed realiza-
+tion in the dataset Dt.
+In more detail, the calibration dataset D0 =
+{(x0,i, y0,i)}n0
+i=1 is assumed to be drawn i.i.d. from
+the source distribution P0. Furthermore, at each discrete
+test time t, a dataset Dt = {(xt,i, yt,i)}nt
+i=1 is obtained
+whose samples (xt,i, yt,i) are drawn i.i.d. from the test
+2
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+distribution Pt. The expected loss of the model f(·) at time
+t is given by
+Rt = E
+
+ℓ
+ 
+f(xt), yt
+
+, (1)
+with (xt, yt) ∼ Pt, for t = 0, 1, ...
+The quantity R0 corresponds to the source risk, i.e., to
+the expected loss when inputs are drawn from the source
+distribution P0. As mentioned, this serves as a benchmark
+nominal risk, and excessive positive deviations from it signal
+a harmful distribution shift.
+The test performance is evaluated by the running test risk
+(Podkopaev & Ramdas, 2022)
+¯Rt = 1
+t
+tX
+t′=1
+Rt′, (2)
+which measures the average test risk of the model across
+the first t test time steps. If, at some time point t∗, the
+running risk ¯Rt∗ exceeds the baseline source risk R0 by a
+pre-defined tolerance parameter ϵtol > 0, i.e., if
+¯Rt∗ > R 0 + ϵtol, (3)
+the risk monitor should ideally raise an alarm, indicating that
+deployment may be stopped and retraining or fine-tuning
+may be initiated.
+Accordingly, risk monitoring addresses the binary hypothe-
+sis test defined by the hypotheses
+H0 : ¯Rt ≤ R0 + ϵtol, ∀ t ≥ 1, (4a)
+H1 : ∃ t∗ ≥ 1 such that ¯Rt∗ > R 0 + ϵtol. (4b)
+The null hypothesis H0 stipulates that the running test risk
+never exceeds the nominal risk R0 by more than the toler-
+ance ϵtol, while the alternative hypothesis H1 covers cases
+in which the running risk exhibits a harmful degradation,
+i.e., ¯Rt∗ > R 0 + ϵtol for at least one time t∗.
+In practice, the nominal risks Rt, for all indices t = 0, 1, ...,
+are not directly accessible, but they can be estimated based
+on the available data via the empirical risks
+ˆRt = 1
+nt
+ntX
+i=1
+ℓ(f(xt,i), yt,i) (5)
+for t = 0, 1, ... Using these estimates, at each time step t, a
+sequential test processes the first t estimates ˆR0, ˆR1,..., ˆRt
+to output a decision
+Φt =
+(
+0, continue testing,
+1, reject hypothesis H0 (alarm). (6)
+Accordingly, a decision Φt = 1 indicates that there is
+enough evidence to reject the null hypothesis H0 that no
+harmful shift has occurred, while the decisionΦt = 0 causes
+the test to continue operating.
+The design goal for the decision rule is to control the type-I
+error, i.e., the probability of producing decision Φt = 1
+when the null hypothesis H0 of no harmful shifts holds
+true. The type-I error requirement can be formulated as the
+inequality
+PH0 (∃t ≥ 1 : Φt = 1) ≤ δ, (7)
+where δ ∈ (0, 1) is a user-defined value, and PH0 denotes
+any probability sequence P1, P2, ... satisfying the condition
+(4a).
+Besides guaranteeing the type-I error (7), one is also inter-
+ested in reducing the average time required for correctly
+detecting a harmful shift. Formally, since the earliest time
+an alarm is produced as min{t ≥ 1 : Φt = 1}, the average
+time to alarm under some sequence of distributions belong-
+ing to the alternative H1 is defined as the expected stopping
+time
+T = EH1 [min {t ≥ 1 : Φt = 1}] . (8)
+2.2. Supervised Risk Monitoring
+Given the estimated risks ˆR0, ˆR1, . . . , ˆRt in (5), the SRM
+method introduced in (Podkopaev & Ramdas, 2022) con-
+structs an upper bound U0 on the source risk R0 and a lower
+bound Lt on the running test risk ¯Rt as
+U0 = ˆR0 + w0, and Lt = ˆ¯Rt − wt , (9)
+where w0 and wt are finite-sample correction terms, and
+ˆ¯Rt = t−1Pt
+t′=1 ˆRt′ denotes the empirical estimates of
+running risk.
+The correction term w0 is selected so as to ensure that the
+true source risk R0 is upper bounded by U0 with probability
+no smaller than 1 − δS, i.e.,
+P (R0 ≤ U0) ≥ 1 − δS, (10)
+for a given probability δS ∈ (0, 1). For example, the con-
+stant w0 can be obtained using Hoeffding’s inequality as
+w0 =
+p
+ln (1/δS) /2n0, given that the loss is assumed to
+be bounded (Hoeffding, 1963; Einbinder et al., 2025).
+In contrast, the constants wt are chosen such that the se-
+quence {Lt}t≥1 forms an anytime-valid lower bound on the
+running test risk. Formally, this requirement is captured by
+the inequality
+P
+  ¯Rt ≥ Lt, ∀ t ≥ 1
+
+≥ 1 − δT, (11)
+for some confidence level δT ∈ (0, 1). This bound can be
+obtained by leveraging the following lemma.
+Lemma 2.1 (Theorem 4, Conjugate-mixture empirical
+Bernstein (CM-EB) adapted from (Howard et al., 2021)) .
+3
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+Consider a sequence of random variables {Zt}t≥1 with
+Zt ∈ [0, 1] for all t ≥ 1. Define the time-averaged
+mean µt = t−1Pt
+t′=1 E[Zt′], and the empirical mean
+ˆµt = t−1Pt
+t′=1 Zt′. Let { ˆZt}t≥1 be any predictable se-
+quence with ˆZt ∈ [0, 1], in the sense that each variable
+ˆZt is a function of the past variables Z1, . . . , Zt−1 only.
+Define the function u(Vt) = sup {S :
+R 1
+0 q(λ) exp(λS −
+ψE(λ)Vt) dλ <1/δT} for any distribution q(λ) on param-
+eter λ, where the supremum is taken over the scalar S,
+Vt =Pt
+t′=1
+ 
+Zt′ − ˆZt′
+2
+is the cumulative prediction error,
+ψE(λ)= − log(1−λ)−λ, and δT ∈ (0, 1) is a probability.
+Then, we have the inequality
+P
+
+∀t ≥ 1 : |µt − ˆµt| < u(Vt)
+t
+
+≥ 1 − 2δT. (12)
+In the context of SRM, the confidence sequence (12) in
+Lemma 2.1 can be leveraged to obtain an anytime-valid
+lower confidence bound (9) with the correction term wt =
+u(Vt)/t, where Vt becomes Vt =Pt
+t′=1
+  ˆRt′ − ˆ¯Rt′−1
+2
+.
+By combining both bounds, i.e., (10) and (11), SRM obtains
+the decision variable as
+Φt = 1 [Lt > U 0 + ϵtol] , (13)
+where 1 [·] is the indicator function. As shown in Figure 1,
+this decision rule triggers an alarm when the lower bound
+on the running test risk ¯Rt exceeds the upper bound on
+source risk R0 plus the tolerance margin ϵtol. Accordingly,
+the average earliest detection time (8) is given by
+T = E [min {t ≥ 1 : Lt > U 0 + ϵtol}] . (14)
+SRM controls the type-I error (7) as long as one chooses the
+probabilities in (10) and (11) as δ = δS + δT, as formalized
+in the following lemma.
+Lemma 2.2 (Type-I Error Guarantee of SRM (Podkopaev
+& Ramdas, 2022)). Given user-defined miscoverage levels
+δS, δT ∈ (0, 1), satisfying the condition δS + δT ∈ (0, 1),
+SRM provides the following guarantee on the type-I error:
+PH0 (∃t ≥ 1, Φt = 1) ≤ δS + δT. (15)
+3. Semi-Supervised Risk Monitoring
+In many real-world deployments, acquiring labeled feed-
+back is costly and time-consuming, while unlabeled test
+data are abundant and arrive continuously. As shown in
+Figure 1, this motivates a semi-supervised paradigm where
+the risk monitor can leverage a small set of labeled samples,
+together with a larger pool of unlabeled observations. To
+address this setting, in this section, we propose a gener-
+alization of SRM (Podkopaev & Ramdas, 2022) referred
+to as prediction-powered semi-supervised risk monitoring
+(PPRM), which can leverage both labeled and unlabeled
+data.
+3.1. Prediction-Powered Risk Estimates
+As shown in Figure 1, at each time step t = 1, 2, . . ., the
+monitor observes a labeled batch Dt = {(xt,i, yt,i)}nt
+i=1, as
+for SRM, along with an unlabeled batch ˜Dt = {˜xt,i}nt+Nt
+i=nt+1
+of Nt inputs with no associated labels. The main challenge
+in this setting lies in how to efficiently combine the labeled
+and unlabeled streams while controlling the type-I error (7).
+We emphasize that, unlike (Schirmer et al., 2025; Amoukou
+et al., 2024), we assume that the number of labeled data
+points, nt, is strictly positive. As we will see, this allows
+us to avoid the technical assumptions required in (Schirmer
+et al., 2025) about the error rates of the models used to
+generate synthetic labels for the unlabeled data.
+PPRM incorporates PPI-based estimates of the risks (An-
+gelopoulos et al., 2023a) into the SRM framework. Through
+PPI, PPRM constructs unbiased empirical estimates of the
+risks by: (i) using a predictive model fp(·) to generate syn-
+thetic labels for the unlabeled portion of the data; and then
+(ii) correcting for the systematic bias caused by the syn-
+thetic labels via calibration using the labeled samples. The
+labeling model fp(·) may be, for instance, a general-purpose
+expert, such as an LLM, or possibly the deployed model
+f(·) itself. As anticipated, unlike (Schirmer et al., 2025),
+we do not make any assumptions on the quality of the model
+fp(·).
+Write as ˜yt,i the synthetic labels for the unlabeled input ˜xt,i,
+i.e.,
+˜yt,i = arg max
+c
+fp (˜xt,i) [c], (16)
+where fp(·)[c] denotes the predicted probability assigned to
+class c by the predictive model fp(·). Using PPI, the source
+risk R0 is estimated as
+ˆRPP
+0 = η0
+N0
+n0+N0X
+j=n0+1
+ℓ
+ 
+f(˜x0,j), ˜y0,j
+
+| {z }
+ˆRU
+0
++ 1
+n0
+n0X
+i=1
+ℓ
+ 
+f(x0,i), y0,i
+
+− η0
+n0
+n0X
+i=1
+ℓ
+ 
+f(x0,i), ˜y0,i
+
+| {z }
+ˆRrect
+0
+,
+(17)
+where η0 ≥ 0 is a hyperparameter that controls the reliance
+of the estimate on the unlabeled data (Angelopoulos et al.,
+2023b). The first term ˆRU
+0 in (17) is the empirical risk evalu-
+ated only with the unlabeled synthetic data, while the second
+term ˆRrect
+0 estimates the bias introduced by the imputation.
+As proved in (Angelopoulos et al., 2023a), using PPI++,
+the empirical estimate ˆRPP
+0 is unbiased, in the sense that
+E[ ˆRPP
+0 ] = R0, for any choice of hyperparameter η0 ≥ 0.
+4
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+In a similar way, the running test risk ¯Rt is estimated as
+ˆ¯RPP
+t = 1
+t
+tX
+t′=1
+"
+ηt′
+Nt′
+nt′ +Nt′X
+j=nt′ +1
+ℓ(f(˜xt′,j), ˜yt′,j)
+| {z }
+ˆRU
+t′
++ 1
+nt′
+nt′X
+i=1
+ℓ(f(xt′,i), yt′,i) − ηt′
+nt′
+nt′X
+i=1
+ℓ(f(xt′,i), ˜yt′,i)
+| {z }
+ˆRrect
+t′
+#
+,
+(18)
+using both labeled and unlabeled data, where ηt plays the
+same role as in (17). Furthermore, as in (17), the first term
+ˆRU
+t in (18) denotes the empirical risk evaluated only with
+the unlabeled synthetic data at time step t, while the second
+term ˆRrect
+t estimates the bias introduced by the imputation.
+We write
+ˆRPP
+t = ˆRU
+t + ˆRrect
+t (19)
+for the contribution to the estimate (18) corresponding to
+each time step t.
+Lemma 3.1 (Unbiasedness of PPRM) . Assume that the
+hyperparameters {ηt}t≥1 form a predictable sequence, in
+the sense that each hyperparameter ηt is a function only
+of the data {Dt′, ˜Dt′, {˜yt′,i}nt′+Nt′
+i=1 }t−1
+t′= 1observed strictly
+before time t. Then, the quantity (18) is an unbiased estimate
+of the corresponding true risk, i.e.,
+E
+ ˆ¯RPP
+t
+
+= ¯Rt. (20)
+The proof can be found in Appendix A.1.
+3.2. Upper and Lower PPRM Bounds
+As in SRM, PPRM obtains an upper bound U PP
+0 on the
+source risk, as well as a lower confidence bound LPP
+t for
+t = 1, 2, . . ., which are denoted respectively by
+U PP
+0 = ˆRPP
+0 + wPP
+0 and LPP
+t = ˆ¯RPP
+t − wPP
+t . (21)
+The correction term wPP
+0 is designed to ensure the inequality
+P(R0 ≤ U PP
+0 ) ≥1−δS, and we adopt here the betting-based
+method from (Einbinder et al., 2025). Further details are
+provided in Appendix A.2. To compute the correction terms
+wPP
+t , we apply the confidence sequence bound in Lemma 2.1
+to the PPI-based risk estimates.
+To this end, since the prediction-powered estimates ˆRPP
+t take
+values in the interval [−ηt, ηt + 1], we first apply an affine
+normalization ga(·), i.e., ga(ℓ)=( ℓ+ηmax)/(1+2 ηmax), to
+the loss function ℓ so that each estimate ˆRPP
+t lies in the range
+[0, 1], where ηmax is the maximum permitted value for ηt.
+With the rescaled loss, the correction term wPP
+t is given by
+wPP
+t = u(V PP
+t )/t, with u(V PP
+t )=sup {S :
+R 1
+0 q(λ) exp(λS −
+ψE(λ)V PP
+t ) dλ <1/δT}, where
+V PP
+t =
+tX
+t′=1
+  ˆRPP
+t′ − ˆ¯RPP
+t′−1
+2
+. (22)
+The term V PP
+t in (22) is the cumulative squared prediction
+error for the estimate ˆRPP
+t′ in (19) when using the corre-
+sponding time-average up to time t′ −1, i.e., ˆ¯RPP
+t′−1 in (18),
+as the prediction.
+PPRM then applies the decision rule as
+ΦPP
+t = 1
+
+LPP
+t > U PP
+0 + ϵtol
+
+. (23)
+Following the same argument as Lemma 2.2, we have the
+following result.
+Theorem 3.2 (Type-I Error Guarantee of PPRM). Given
+user-defined miscoverage levels δS, δT ∈ (0, 1), satisfying
+the condition δS+δT ∈ (0, 1), let {ηt}t≥1 be any predictable
+sequence, as defined in Lemma 3.1. Then, PPRM provides
+the following guarantee on the type-I error:
+PH0
+ 
+∃ t ≥ 1 : Φ PP
+t = 1
+
+≤ δS + δT. (24)
+To prove this result, it suffices to note that, as long as the
+sequence {ηt}t≥1 is predictable, the prediction-powered
+risk estimates (17) and (18) are unbiased by Lemma 3.1.
+The proof then follows directly from Lemma 2.2.
+3.3. Optimizing the Reliance on Unlabeled Data
+The prediction-powered risk estimate ˆRPP
+t relies on the unla-
+beled data to an extent that depends on the hyperparameter
+ηt by leveraging the result in Lemma 3.1, which allows ηt
+to be a function of past data up to time t−1.
+To this end, we propose to minimize the average value of the
+prediction error V PP
+t in (22), which determines the tightness
+of the lower bound LPP
+t in (21). A tighter bound ensures
+that, when the alternative hypothesis (4b) holds, the PPRM
+test (23) signals a harmful degradation, setting ΦPP
+t =1, at
+an earlier time t.
+Lemma 3.3 (Optimal Choice of ηt for Variance Reduction).
+Let ˆRPP
+t (ηt) denote the prediction-powered empirical risk
+(19) at time t, which is parameterized by the hyperparameter
+ηt. The value of hyperparameter ηt that minimizes the
+variance, i.e.,
+η∗
+t = arg min
+ηt≥0
+E
+h  ˆRPP
+t (ηt) − ˆ¯RPP
+t−1
+2i
+, (25)
+is given by
+η∗
+t = Cov(ut, ˜uL
+t )
+(1 + nt
+Nt
+) Var(˜uU
+t ) , (26)
+where ut = ℓ(f(xt), yt) denotes the true risk on a labeled
+sample; ˜uL
+t = ℓ(f(xt), fp(xt)) and ˜uU
+t = ℓ(f(˜xt), fp(˜xt))
+5
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+denote the surrogate risk on a labeled sample and on an
+unlabeled sample, respectively; and Var(·) and Cov(·) rep-
+resent variance and covariance.
+The proof of this result, which follows in a manner similar
+to (Angelopoulos et al., 2023b), can be found in Appendix
+A.3.
+The hyperparameter η∗
+t in (26) depends on the true data dis-
+tribution, which is unknown. Thus, we propose to estimate
+it using the data up to time step t −1 based on a sliding-
+window approach with fixed window size L. This produces
+a predictable sequence {ηt}t≥1, satisfying the assumption
+of Theorem 3.2. Specifically, we consider the following
+plug-in estimator
+ηt =
+dCovHt−1(u, ˜u)
+1 + |Ht−1|
+| ˜Ht−1|
+
+dVar ˜Ht−1
+(˜u)
+, (27)
+where dCovHt−1(u, ˜u) anddVar ˜Ht−1
+(˜u) denote the empiri-
+cal estimates using the data
+Ht−1 =
+t−1[
+t′=t−L
+Dt′, and ˜Ht−1 =
+t−1[
+t′=t−L
+˜Dt′, (28)
+with |Ht−1| and | ˜Ht−1| denoting the total numbers of his-
+torical labeled and unlabeled samples available before time
+t, respectively.
+We further provide a theoretical analysis of the detection
+delay, under a simplified stationary regime with binary risks
+in Appendix A.4.
+4. Related Works
+Sequential Testing-Based Risk Monitoring: SRM was
+introduced by (Podkopaev & Ramdas, 2022) to tackle the
+problem of detecting harmful distribution shifts in a sequen-
+tial setting. SRM builds confidence bounds for model risk
+using labeled calibration data (Podkopaev & Ramdas, 2022)
+and incoming test data, and provides time-uniform guaran-
+tees on type-I error control. Subsequently, Amoukou et al.
+extended this line of work to the unlabeled production-data
+setting, while Schirmer et al. further explored scenarios
+involving test-time adaptation models without access to la-
+bels. Related approaches by (Bar et al., 2024) and (V ovk
+et al., 2021) focus on identifying changes in certain statis-
+tical properties. However, such changes do not necessarily
+indicate harmful deviations.
+Beyond tracking running risk, several studies have exam-
+ined the instantaneous true risk with similar type-I error
+guarantees (Xu et al., 2024; Zecchin et al., 2025; Timans
+et al., 2025; Shekhar & Ramdas, 2023; V ovk & Wang, 2021).
+These methods are built around the testing-by-betting frame-
+work (Ramdas & Wang, 2025). However, we target per-
+sistent performance degradation, while these methods are
+designed to detect instantaneous violations.
+Prediction-Powered Inference: In many practical set-
+tings, models can access large pools of unlabeled data but
+only a limited amount of costly ground-truth labels. PPI
+was introduced to make use of predictions from an auxiliary
+model to facilitate statistical inference. Its key idea is to
+construct prediction-powered estimators that remain unbi-
+ased for the target risk, while using predictive information
+to reduce variance. The framework has since been extended
+in several directions, including robust PPI++ (Angelopoulos
+et al., 2023b), local PPI (Gu & Xia, 2024), anytime-valid PPI
+(Kilian et al., 2025), active PPI (Zrnic & Cand`es, 2024), and
+FAB-PPI (Cortinovis & Caron, 2025). More recently, Csil-
+lag et al. introduced prediction-powered e-values (Shafer &
+V ovk, 2019) for sequential change-point detection (Shekhar
+& Ramdas, 2023; Shin et al., 2022). Their approach also
+builds on the testing-by-betting paradigm (Ramdas & Wang,
+2025), and therefore differs from our proposed PPRM both
+in the hypothesis being tested and in the experimental setup.
+LLM Performance Evaluation: Selecting an appropriate
+model from a number of candidates requires reliable esti-
+mates of each model’s performance. Traditional evaluation
+methods depend on deploying models and gathering em-
+pirical evidence through real-world testing, which is often
+expensive to deploy. To mitigate this burden, recent studies
+have investigated autoevaluation techniques that automate
+assessment using synthetic data or automated tools, thereby
+reducing the need for human involvement (Chaganty et al.,
+2018; Zheng et al., 2023). PPI has also been applied to im-
+prove the efficiency of model evaluation (Fisch et al., 2024;
+Park et al., 2025; Einbinder et al., 2025). Nonetheless, the
+problem of monitoring a deployed model using PPI has not
+been explored.
+5. Experiments
+In this section, we present two case studies, including image
+classification and LLM monitoring, and defer additional
+results including for a telecommunications task, to the ap-
+pendix.
+Baselines We compare PPRM to several baseline moni-
+tors:
+• Ideal PPRM: This is an idealized case where PPRM
+has full access to the true labels of both labeled dataset
+Dt and unlabeled dataset ˜Dt. This produces the perfor-
+mance upper bound corresponding to full label access.
+• SRM (Podkopaev & Ramdas, 2022): As discussed in
+Section 2.2, SRM uses only the labeled data Dt.
+6
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013/uni0000001b/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013/uni00000018
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000018
+/uni00000013/uni00000011/uni00000015/uni00000013
+/uni00000013/uni00000011/uni00000015/uni00000018
+/uni00000013/uni00000011/uni00000016/uni00000013/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000038/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000038/uni00000035/uni00000030/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000001a/uni00000013/uni00000013
+/uni0000001a/uni00000018/uni00000013
+/uni0000001b/uni00000013/uni00000013
+/uni0000001b/uni00000018/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+(a)
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013/uni0000001b/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013/uni00000019
+/uni00000013/uni00000011/uni00000013/uni0000001b
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000015
+/uni00000013/uni00000011/uni00000014/uni00000017
+/uni00000013/uni00000011/uni00000014/uni00000019
+/uni00000013/uni00000011/uni00000014/uni0000001b
+/uni00000013/uni00000011/uni00000015/uni00000013/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000001a/uni00000013/uni00000013
+/uni0000001a/uni00000015/uni00000013
+/uni0000001a/uni00000017/uni00000013
+/uni0000001a/uni00000019/uni00000013
+/uni0000001a/uni0000001b/uni00000013
+/uni0000001b/uni00000013/uni00000013
+/uni0000001b/uni00000015/uni00000013
+/uni0000001b/uni00000017/uni00000013
+/uni0000001b/uni00000019/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050 (b)
+Figure 2. Risk estimates as a function of time t and average time to alarm for an image classification task under increasing shift severity:
+(a) binary loss monitored with an external predictor; (b) squared loss monitored using labels produced by the deployed model itself.
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000016/uni00000013
+/uni00000013/uni00000011/uni00000016/uni00000018
+/uni00000013/uni00000011/uni00000017/uni00000013
+/uni00000013/uni00000011/uni00000017/uni00000018
+/uni00000013/uni00000011/uni00000018/uni00000013
+/uni00000013/uni00000011/uni00000018/uni00000018/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000017/uni00000013/uni00000013
+/uni00000017/uni00000018/uni00000013
+/uni00000018/uni00000013/uni00000013
+/uni00000018/uni00000018/uni00000013
+/uni00000019/uni00000013/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+Figure 3. Performance for the LLM QA task under prompt shifts
+introduced at time t = 200.
+• Unsupervised risk monitoring (URM) (Schirmer
+et al., 2025): This scheme uses only unlabeled data and
+is reviewed in Appendix B.
+We focus on binary 0–1 loss and squared loss. Unless other-
+wise specified, we set δ = δS + δT = 0.25, allocating most
+of the budget to controlling the test risk, i.e., δT = 0.2 and
+δS = 0.05. We set η0 = 1 in (17), and the window length
+L to obtain ηt in (27) is set to 60, numerical validations of
+these choices can be found in Appendix D.1. The numbers
+of labeled data samples and unlabeled data samples at each
+time step are set to 1 and 15. To compute all the lower
+bounds of the running risk, we adopt the CM-EB method
+reviewed in Lemma 2.1. For all figures, we show confidence
+intervals constructed spanning one standard deviation of the
+empirical distribution across all runs on both sides of the
+mean.
+5.1. Sequential Risk Monitoring on Image Data
+5.1.1. P ROBLEM FORMULATION
+We first consider the task of risk monitoring in the vision
+domain, replicating the setting of (Schirmer et al., 2025),
+where the CIFAR10-C (Hendrycks & Dietterich, 2019)
+/uni00000036/uni00000035/uni00000030
+/uni00000034/uni00000015/uni00000011/uni00000018/uni00000010/uni00000039/uni0000002f/uni00000016/uni00000025/uni00000034/uni00000015/uni00000010/uni00000039/uni0000002f/uni0000001a/uni00000025/uni0000002a/uni00000033/uni00000037/uni00000017/uni00000011/uni00000014/uni00000010/uni00000051/uni00000034/uni00000015/uni00000011/uni00000018/uni00000010/uni00000039/uni0000002f/uni00000016/uni00000015/uni00000025/uni0000002a/uni00000033/uni00000037/uni00000017/uni00000011/uni00000014/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000017/uni00000013/uni00000013
+/uni00000017/uni00000018/uni00000013
+/uni00000018/uni00000013/uni00000013
+/uni00000018/uni00000018/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+Figure 4. Average time to alarm for the LLM QA task using
+different predictors fp(·) to produce synthetic labels.
+dataset was considered. Accordingly, the test-time distri-
+bution is obtained by applying Gaussian noise with three
+levels of severity to the image distribution corresponding
+to the nominal condition. We monitor the performance of
+a ResNet-32 model (He et al., 2016) trained on nominal
+data. To generate synthetic labels for unlabeled samples, we
+employ the ResNet-1201 model trained on the same dataset.
+5.1.2. R ESULTS
+Monitoring with Drifting Data Distribution: To simu-
+late an increasing test risk, we gradually increase the severity
+level of Gaussian noise corruption from nominal data, i.e.,
+severity level 0, up to severity level2. Figure 2(a) shows the
+results of the estimated test risk and of the alarm decisions.
+As the corruption intensifies, the true risk exceeds the safe
+threshold at time t=600, PPRM raises an alarm at around
+time t=760 , whereas SRM reacts more slowly, at around
+time t=800 due to high estimation variance, and URM fails
+to trigger an alarm within the considered time period.
+Monitoring with Self-Synthetic Strategy: The proposed
+PPRM can also be applied when the model itself is used
+to provide label surrogates for the unlabeled data. For this
+setting, focusing on C-class classification, we consider the
+7
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+squared loss between labels and model confidence levels,
+i.e., ℓ(f(x), y) = 1
+2
+PC
+c=1(f(x)c − 1 [y = c])2, as the loss
+function. This squared loss corresponds to the Brier score
+when averaged across samples, and it was also adopted in
+(Schirmer et al., 2025).
+As seen in Figure 2(b), even without an additional predictor,
+PPRM can reduce the time to alarm by making use of the
+model’s intrinsic confidence signals. In particular, an alarm
+is raised at around time t = 760, while SRM requires t =
+790 time steps.
+5.2. Monitoring an LLM with Limited Human-Labeled
+Data
+5.2.1. P ROBLEM FORMULATION
+We now focus on an LLM deployed to address question-
+answering (QA) tasks. We draw from several established
+benchmarks, including MMLU (Hendrycks et al., 2021),
+CMExam (Liu et al., 2023), CommonsenseQA (Talmor
+et al., 2019), Social-IQA, and PubMedQA (Jin et al., 2019).
+We use Qwen2-VL-2B (Wang et al., 2024) as the deployed
+model whose performance we aim to monitor. For the moni-
+toring LLM, we experiment with a diverse set of both open-
+source and closed-source models.
+5.2.2. R ESULTS
+To simulate an environment in which risk increases over
+time, starting from timet=200, we introduce more complex
+prompts that the deployed model cannot answer correctly,
+causing the model’s performance to deteriorate. These com-
+plex prompts are obtained by retaining cases where a differ-
+ent model, namely Qwen2.5-VL-7B, fails to produce correct
+answers.
+Monitoring with Drifting Data Distribution: As shown
+in Figure 3, confirming the results in the previous example,
+PPRM significantly reduces the average time to alarm. In
+particular, while the true risk exceeds the allowed level at
+t = 280, PPRM raises an alarm at around time t = 500,
+whereas SRM raises an alarm at around time t=530.
+We then further assess how the accuracy of the LLM pre-
+dictor affects performance by testing a range of different
+labeling models, namely Qwen2.5-VL-3B (abbreviated as
+“Q2.5-VL3B”), Qwen2.5-VL-32B (abbreviated as “Q2.5-
+VL32B”) (Bai et al., 2025), Qwen2-VL-7B (abbreviated as
+“Q2-VL7B”) (Wang et al., 2024), GPT4.1-nano (abbreviated
+as “GPT4.1-n”), and GPT4.1 (Achiam et al., 2023).
+The results are shown in Figure 4 by ordering the models
+from least to most powerful. As seen in the figure, when
+the LLM predictor exhibits higher accuracy, i.e., for larger
+models, the estimated accuracy of synthetic labels increases,
+leading to a tighter bound on the monitored model’s running
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013/uni0000001b/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013/uni00000013
+/uni00000013/uni00000011/uni00000013/uni00000018
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000018
+/uni00000013/uni00000011/uni00000015/uni00000013
+/uni00000013/uni00000011/uni00000015/uni00000018/uni00000029/uni00000044/uni0000004f/uni00000056/uni00000048/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050/uni00000003/uni00000055/uni00000044/uni00000057/uni00000048
+/uni00000026/uni00000058/uni00000050/uni00000058/uni0000004f/uni00000044/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni00000029/uni00000044/uni0000004f/uni00000056/uni00000048/uni00000003/uni00000024/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000037/uni00000044/uni00000055/uni0000004a/uni00000048/uni00000057/uni00000003/uni0000004f/uni00000048/uni00000059/uni00000048/uni0000004f
+Figure 5. False-alarm rate as a function of time t for the LLM
+QA task. The dashed line indicates the target false-alarm rate
+δT = 0.15.
+Table 1. Average time to alarm for PPRM with a fixed or an
+adaptive hyperparameter ηt.
+Predictor fp(·) PPRM (Fixed) PPRM (Adaptive)
+Q2.5-VL3B 527.80 508 .83
+Q2-VL7B 519.08 498 .31
+GPT4.1-n 491.80 476 .98
+Q2.5-VL32B 486.22 471 .85
+GPT4.1 460.69 449 .88
+risk, and consequently to a lower average time to alarm.
+In Figure 5, we report the false-alarm rate as a function of
+time t for the LLM QA task. We run multiple independent
+trials under the null setting, and record the entire trajectory
+of the lower confidence bound over time. For each trial, we
+check at every time step whether the bound has crossed the
+risk threshold, and convert this trajectory into a cumulative
+indicator, which equals one once a crossing has occurred
+at any previous time. The reported curve is obtained by
+averaging these cumulative indicators across trials at each
+time step. The results illustrate that the false-alarm rate
+remains below the target level across all time steps, thereby
+validating the theoretical guarantees of PPRM.
+Effect of Hyperparameter Optimization: Table 1 re-
+ports the average time to alarm for PPRM with a fixed hy-
+perparameter ηt = 1 and with an adaptive hyperparameter
+ηt in (27). The two PPRM variants are identified as “PPRM
+(Fixed)” and “PPRM (Adaptive)”, respectively. We con-
+sider the different imputation predictors fp(·) considered in
+Figure 4. The table illustrates the benefits of the adaptive se-
+lection, particularly for small- and medium-sized predictors.
+For example, for the Qwen2-VL-7B model, the average time
+to alarm decreases from around 519 to around 498 thanks
+to adaptive hyperparameter selection. It is also observed
+that, as the predictor becomes stronger, the performance gap
+8
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+between PPRM with fixed and adaptive hyperparameters
+gradually narrows. This demonstrates that adaptive hyper-
+parameter selection, determining the reliance on unlabeled
+data, is particularly important for less effective imputation
+models.
+6. Conclusion
+In this work, we have presented a novel framework for
+sequential semi-supervised risk monitoring, extending clas-
+sical supervised approaches to leverage both labeled and
+unlabeled data. By integrating PPI, our method, termed
+PPRM, provided unbiased estimates of the running test risk,
+while maintaining rigorous statistical guarantees on the type-
+I error. Through extensive experiments on three tasks, we
+have demonstrated that the proposed approach consistently
+achieved timely detection of harmful distribution shifts and
+outperformed purely supervised or unsupervised baselines.
+Future work may consider methods that integrate PPRM
+with unsupervised techniques such as test-time adaptation.
+Other interesting research directions include applications to
+engineering problems, e.g., in robotics.
+Acknowledgements
+The work of Guangyi Zhang and Yunlong Cai was sup-
+ported in part by the National Natural Science Foundation
+of China under Grant 62571477, and in part by Zhejiang
+Provincial Key Laboratory of Multi-Modal Communication
+Networks and Intelligent Information Processing, Hangzhou
+310027, China. The work of Osvaldo Simeone was sup-
+ported by the European Research Council (ERC) under
+the European Union’s Horizon Europe Programme (grant
+agreement No. 101198347), by an Open Fellowship of
+the EPSRC (EP/W024101/1), and by the EPSRC project
+(EP/X011852/1).
+Impact Statement
+This paper presents work whose goal is to advance the field
+of machine learning. The impact of this paper may be more
+pronounced in engineering applications, such as telecom-
+munication and robotics.
+References
+Achiam, J., Adler, S., Agarwal, S., Ahmad, L., Akkaya, I.,
+Aleman, F. L., Almeida, D., Altenschmidt, J., Altman, S.,
+Anadkat, S., et al. GPT-4 technical report. arXiv preprint
+arXiv:2303.08774, 2023.
+Amoukou, S. I., Bewley, T., Mishra, S., Lecue, F., Maga-
+zzeni, D., and Veloso, M. Sequential harmful shift de-
+tection without labels. In Advances in Neural Informa-
+tion Processing Systems, volume 37, pp. 129279–129302,
+2024.
+Angelopoulos, A. N., Bates, S., Fannjiang, C., Jordan, M. I.,
+and Zrnic, T. Prediction-powered inference. Science, 382
+(6671):669–674, 2023a.
+Angelopoulos, A. N., Duchi, J. C., and Zrnic, T. PPI++:
+Efficient prediction-powered inference. arXiv preprint
+arXiv:2311.01453, 2023b.
+Bai, S., Chen, K., Liu, X., Wang, J., Ge, W., Song, S., Dang,
+K., Wang, P., Wang, S., Tang, J., et al. Qwen2.5-VL
+technical report. arXiv preprint arXiv:2502.13923, 2025.
+Bar, Y ., Shaer, S., and Romano, Y . Protected test-time adap-
+tation via online entropy matching: A betting approach.
+In Advances in Neural Information Processing Systems,
+volume 37, pp. 85467–85499, 2024.
+Chaganty, A., Mussmann, S., and Liang, P. The price of de-
+biasing automatic metrics in natural language evaluation.
+In Proceedings of the Annual Meeting of the Association
+for Computational Linguistics, pp. 643–653, 2018.
+Cortinovis, S. and Caron, F. FAB-PPI: Frequentist, assisted
+by bayes, prediction-powered inference. In Proceedings
+of the International Conference on Machine Learning ,
+volume 267, pp. 11328–11356. PMLR, Jul 2025.
+Csillag, D., Struchiner, C. J., and Goedert, G. T. Prediction-
+powered e-values. arXiv preprint arXiv:2502.04294 ,
+2025.
+Dietrich, F. A., Ivanov, T., and Utschick, W. Estimation of
+channel and noise correlations for MIMO channel estima-
+tion. In Proceedings of the International ITG Workshop
+on Smart Antennas, Ulm, Germany, Mar. 2006.
+Einbinder, B.-S., Ringel, L., and Romano, Y . Semi-
+supervised risk control via prediction-powered inference.
+IEEE Transactions on Pattern Analysis and Machine In-
+telligence, 47(12):11080–11090, 2025.
+Fisch, A., Maynez, J., Hofer, R. A., Dhingra, B., Globerson,
+A., and Cohen, W. W. Stratified prediction-powered infer-
+ence for effective hybrid evaluation of language models.
+In Advances in Neural Information Processing Systems,
+volume 37, pp. 111489–111514, 2024.
+Gu, Y . and Xia, D. Local prediction-powered inference.
+arXiv preprint arXiv:2409.18321, 2024.
+Guan, H., Bates, D., and Zhou, L. Keeping medical AI
+healthy and trustworthy: A review of detection and correc-
+tion methods for system degradation. IEEE Transactions
+on Biomedical Engineering, pp. 1–16, 2025.
+9
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+He, K., Zhang, X., Ren, S., and Sun, J. Deep residual learn-
+ing for image recognition. In Proceedings of the IEEE
+Conference on Computer Vision and Pattern Recognition,
+pp. 770–778, 2016.
+Hendrycks, D. and Dietterich, T. Benchmarking neural
+network robustness to common corruptions and perturba-
+tions. In International Conference on Learning Represen-
+tations, 2019.
+Hendrycks, D., Burns, C., Basart, S., Zou, A., Mazeika, M.,
+Song, D., and Steinhardt, J. Measuring massive multitask
+language understanding. In International Conference on
+Learning Representations, 2021.
+Hoeffding, W. Probability inequalities for sums of bounded
+random variables. Journal of the American statistical
+association, 58(301):13–30, 1963.
+Howard, S. R., Ramdas, A., McAuliffe, J., and Sekhon,
+J. Time-uniform Chernoff bounds via nonnegative su-
+permartingales. Probability Surveys, 17(none):257–317,
+2020.
+Howard, S. R., Ramdas, A., McAuliffe, J., and Sekhon, J.
+Time-uniform, nonparametric, nonasymptotic confidence
+sequences. The Annals of Statistics , 49(2):1055–1080,
+April 2021.
+Jin, Q., Dhingra, B., Liu, Z., Cohen, W., and Lu, X. Pub-
+medqa: A dataset for biomedical research question an-
+swering. In Proceedings of the 2019 conference on em-
+pirical methods in natural language processing and the
+9th international joint conference on natural language
+processing (EMNLP-IJCNLP), pp. 2567–2577, 2019.
+Kilian, V ., Cortinovis, S., and Caron, F. Anytime-valid,
+bayes-assisted, prediction-powered inference. In Bel-
+grave, D., Zhang, C., Lin, H., Pascanu, R., Koniusz, P.,
+Ghassemi, M., and Chen, N. (eds.), Advances in Neural
+Information Processing Systems, volume 38, pp. 900–918,
+2025.
+Lipton, Z., Wang, Y .-X., and Smola, A. Detecting and
+correcting for label shift with black box predictors. In
+Proceedings of the International Conference on Machine
+Learning, pp. 3122–3130. PMLR, 2018.
+Liu, J., Zhou, P., Hua, Y ., Chong, D., Tian, Z., Liu, A.,
+Wang, H., You, C., Guo, Z., Zhu, L., and Li, M. L. Bench-
+marking large language models on CMExam - a compre-
+hensive Chinese medical exam dataset. In Advances in
+Neural Information Processing Systems, volume 36, pp.
+52430–52452, 2023.
+Park, S., Zecchin, M., and Simeone, O. Adaptive prediction-
+powered autoeval with reliability and efficiency guar-
+antees. In Advances in Neural Information Processing
+Systems, volume 38, pp. 158758–158784, 2025.
+Podkopaev, A. and Ramdas, A. Tracking the risk of a
+deployed model and detecting harmful distribution shifts.
+In International Conference on Learning Representations,
+2022.
+Ramdas, A. and Wang, R. Hypothesis testing with e-values.
+Foundations and Trends ® in Statistics , 1(1-2):1–390,
+2025.
+Schirmer, M., Jazbec, M., Andersson Naesseth, C., and
+Nalisnick, E. Monitoring risks in test-time adaptation.
+In Advances in Neural Information Processing Systems,
+volume 38, pp. 80915–80948, 2025.
+Sellergren, A., Kazemzadeh, S., Jaroensri, T., Kiraly, A.,
+Traverse, M., Kohlberger, T., Xu, S., Jamil, F., Hughes,
+C., Lau, C., et al. Medgemma technical report. arXiv
+preprint arXiv:2507.05201, 2025.
+Shafer, G. and V ovk, V .Game-Theoretic Foundations for
+Probability and Finance. Wiley Series in Probability and
+Statistics. John Wiley & Sons, Hoboken, NJ, 2019.
+Shekhar, S. and Ramdas, A. Sequential changepoint detec-
+tion via backward confidence sequences. In Proceedings
+of the International Conference on Machine Learning ,
+volume 202, pp. 30908–30930. PMLR, 2023.
+Shin, J., Ramdas, A., and Rinaldo, A. E-detectors: A non-
+parametric framework for sequential change detection.
+arXiv preprint arXiv:2203.03532, 2022.
+Simeone, O., Park, S., and Zecchin, M. Conformal cali-
+bration: Ensuring the reliability of black-box AI in wire-
+less systems. IEEE Communications Magazine, pp. 1–9,
+2026.
+Sun, W., Lin, X., Shi, Y ., Zhang, C., Wu, H., and Zheng, S.
+Sparsedrive: End-to-end autonomous driving via sparse
+scene representation. In IEEE International Conference
+on Robotics and Automation, pp. 8795–8801, 2025.
+Talmor, A., Herzig, J., Lourie, N., and Berant, J. Com-
+monsenseqa: A question answering challenge targeting
+commonsense knowledge. In Proceedings of the 2019
+Conference of the North American Chapter of the Associ-
+ation for Computational Linguistics: Human Language
+Technologies, Volume 1 (Long and Short Papers) , pp.
+4149–4158, 2019.
+Timans, A., Verma, R., Nalisnick, E., and Naesseth, C. A.
+On continuous monitoring of risk violations under un-
+known shift. In Proceedings of the Forty-First Conference
+on Uncertainty in Artificial Intelligence, 2025.
+V ovk, V . and Wang, R. E-values: Calibration, combination
+and applications. The Annals of Statistics, 49(3):1736–
+1754, 2021.
+10
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+V ovk, V ., Petej, I., Nouretdinov, I., Ahlberg, E., Carlsson, L.,
+and Gammerman, A. Retrain or not retrain: Conformal
+test martingales for change-point detection. In Conformal
+and Probabilistic Prediction and Applications, pp. 191–
+210. PMLR, 2021.
+Wang, P., Bai, S., Tan, S., Wang, S., Fan, Z., et al. Qwen2-
+VL: Enhancing vision-language model’s perception of the
+world at any resolution. arXiv preprint arXiv:2409.12191,
+2024.
+Waudby-Smith, I. and Ramdas, A. Estimating means of
+bounded random variables by betting. Journal of the
+Royal Statistical Society: Series B (Statistical Methodol-
+ogy), 86(1):1–27, 2024.
+Xu, Z., Karampatziakis, N., and Mineiro, P. Active, anytime-
+valid risk controlling prediction sets. In Advances in
+Neural Information Processing Systems, volume 37, pp.
+60110–60132, 2024.
+Zawalski, M., Chen, W., Pertsch, K., Mees, O., Finn, C.,
+and Levine, S. Robotic control via embodied chain-of-
+thought reasoning. In Proceedings of the Conference on
+Robot Learning, volume 270, pp. 3157–3181. PMLR,
+Nov. 2025.
+Zeb, S., Nizamullah, F., Abbasi, N., and Fahad, M. AI in
+healthcare: revolutionizing diagnosis and therapy. Inter-
+national Journal of Multidisciplinary Sciences and Arts,
+3(3):118–128, 2024.
+Zecchin, M., Park, S., Simeone, O., Kountouris, M., and
+Gesbert, D. Robust bayesian learning for reliable wireless
+ai: Framework and applications. IEEE Transactions on
+Cognitive Communications and Networking , 9(4):897–
+912, 2023.
+Zecchin, M., Park, S., and Simeone, O. Adaptive learn-
+then-test: Statistically valid and efficient hyperparameter
+selection. In Proceedings of the International Conference
+on Machine Learning , volume 267, pp. 74018–74036.
+PMLR, 2025.
+Zheng, L., Chiang, W.-L., Sheng, Y ., Zhuang, S., Wu, Z.,
+Zhuang, Y ., Lin, Z., Li, Z., Li, D., Xing, E., et al. Judg-
+ing LLM-as-a-judge with MT-bench and chatbot arena.
+In Advances in neural information processing systems ,
+volume 36, pp. 46595–46623, 2023.
+Zrnic, T. and Cand`es, E. J. Active statistical inference. In
+Proceedings of the International Conference on Machine
+Learning, volume 235, pp. 62993–63010. PMLR, 2024.
+11
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+A. Proofs and Analysis
+A.1. Proof of Lemma 3.1
+We aim to show the equality E[ ˆ¯RPP
+t ] = ¯Rt = t−1Pt
+t′ =1 Rt′ , where Rt′ = E[ℓ(f(xt′), yt′)]. Recall that we have
+ˆ¯RPP
+t = 1
+t
+tX
+t′ =1
+h
+ˆRU
+t′ + ˆRrect
+t′
+i
+= 1
+t
+tX
+t′ =1
+
+ ηt′
+Nt′
+nt′ +Nt′
+X
+j=nt′ +1
+ℓ
+
+f(˜xt′ ,j), ˜yt′ ,j
+
++ 1
+nt′
+nt′
+X
+i=1
+ℓ
+
+f(xt′ ,i), yt′ ,i
+
+− ηt′
+nt′
+nt′
+X
+i=1
+ℓ
+
+f(xt′ ,i), ˜yt′ ,i
+
+
+ .
+(29)
+By linearity of expectation, we have
+E
+h ˆ¯RPP
+t
+i
+= 1
+t
+tX
+t′ =1
+E
+h
+ˆRU
+t′ + ˆRrect
+t′
+i
+. (30)
+For each term, we further have
+E[ ˆRU
+t + ˆRrect
+t ] = Eηt[E[ ˆRU
+t + ˆRrect
+t |ηt]]. (31)
+Since the hyperparameter ηt is only a function of data observed at times t′ = 1, ..., t − 1, it is independent of the data
+observed at time t, and we have
+E[ ˆRU
+t + ˆRrect
+t |ηt] = ηt · E[ℓ(f(˜xt), ˜yt)] + E[ℓ(f(xt), yt) − ηt · ℓ(f(xt), ˜yt)]
+= E[ℓ(f(xt), yt)] = Rt. (32)
+Then, this yields E[ ˆRU
+t + ˆRrect
+t ] = Eηt[Rt] = Rt. Therefore, the equality E[ ˆ¯RPP
+t ] = t−1Pt
+t′=1 Rt′ = ¯Rt holds. This
+completes the proof.
+A.2. Source Upper Bound
+The prediction-powered risk estimator on the source domain is given by (17), i.e.,
+ˆRPP
+0 = η0
+N0
+n0+N0X
+j=n0+1
+ℓ
+ 
+f(˜x0,j), ˜y0,j
+
+| {z }
+ˆRU
+0
++ 1
+n0
+n0X
+i=1
+ℓ
+ 
+f(x0,i), y0,i
+
+− η0
+n0
+n0X
+i=1
+ℓ
+ 
+f(x0,i), ˜y0,i
+
+| {z }
+ˆRrect
+0
+.
+(33)
+We partition the unlabeled set into n0 disjoint blocks, each containing N0/n0 points. The i-th labeled sample is paired with
+the unlabeled block j ∈ [(i − 1)N0/n0 + n0 + 1, iN 0/n0 + n0]. The block-wise estimator can be denoted as
+ˆRPP
+0 = 1
+n0
+n0X
+i=1
+
+
+n0
+N0
+i N0
+n0
++n0
+X
+j=(i−1) N0
+n0
++n0+1
+η0 · ℓ(f(˜x0,j), ˜y0,j) + ℓ(f(x0,i), y0,i) − η0 · ℓ(f(x0,i), ˜y0,i)
+
+ . (34)
+For convenience, define the per-sample risk
+zPP
+0,i = n0
+N0
+i N0
+n0
++n0
+X
+j=(i−1) N0
+n0
++n0+1
+η0 · ℓ(f(˜x0,j), ˜y0,j) + ℓ(f(x0,i), y0,i) − η0 · ℓ(f(x0,i), ˜y0,i). (35)
+Thus, the prediction-powered estimate (17) is given by the average ˆRPP
+0 = n0−1Pn0
+i=1 zPP
+0,i. Therefore, the upper bound can
+be obtained by the algorithms proposed in (Waudby-Smith & Ramdas, 2024). By viewing zPP
+0,i as new data points, we can
+naturally call the Betting algorithm to get the required upper bound of source risk. Since RPP
+0 is an unbiased estimate of R0,
+the resulting bound is naturally valid.
+12
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+/uni00000018/uni00000013/uni00000014/uni00000013/uni00000013/uni00000014/uni00000018/uni00000013/uni00000015/uni00000013/uni00000013/uni00000015/uni00000018/uni00000013/uni00000016/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000056/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000016
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000018
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001a/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000030/uni00000048/uni00000044/uni00000051/uni00000003PP = 91.74
+/uni00000030/uni00000048/uni00000044/uni00000051/uni00000003S = 231.96
+/uni00000037/uni0000004b/uni00000048/uni00000052/uni00000055/uni0000005c/uni00000003PP 89.0
+/uni00000037/uni0000004b/uni00000048/uni00000052/uni00000055/uni0000005c/uni00000003S 220.9
+= p
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047/uni00000003
+/uni00000037/uni00000055/uni00000058/uni00000048/uni00000003/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003p = 0.5
+/uni00000030/uni00000048/uni00000044/uni00000051/uni00000003PP = 91.74
+/uni00000030/uni00000048/uni00000044/uni00000051/uni00000003S = 231.96
+/uni00000037/uni0000004b/uni00000048/uni00000052/uni00000055/uni0000005c/uni00000003PP 89.0
+/uni00000037/uni0000004b/uni00000048/uni00000052/uni00000055/uni0000005c/uni00000003S 220.9
+Figure 6. Detection performance comparison between SRM and PPRM under a stationary regime. The true risk is p = 0.5 and the
+threshold is θ = 0.42. The dashed vertical lines indicate the time to alarm, while the solid vertical lines indicate the theoretical detection
+time computed using the approximations in (42).
+A.3. Proof of Lemma 3.3
+For a fixed ˆ¯RPP
+t−1, we have
+E
+  ˆRPP
+t (ηt) − ˆ¯RPP
+t−1
+2
+= Var
+  ˆRPP
+t (ηt)
+
++
+ 
+E[ ˆRPP
+t (ηt)] − ˆ¯RPP
+t−1
+2
+. (36)
+Using E[ ˆRPP
+t (ηt)] = Rt, this becomes
+E
+  ˆRPP
+t (ηt) − ˆ¯RPP
+t−1
+2
+= Var
+  ˆRPP
+t (ηt)
+
++
+ 
+Rt − ˆ¯RPP
+t−1
+2
+. (37)
+The second term depends only on Rt and ˆ¯RPP
+t−1, and is therefore independent of the hyperparameter ηt. Consequently, mini-
+mizing the expectation is equivalent to minimizing the variance term Var(ˆRPP
+t (ηt)). Noting that this variance minimization
+problem is the same as Example 6.1 of PPI++ (Angelopoulos et al., 2023b), we thus directly have the following optimal
+solution:
+η∗
+t = Cov(ut, ˜uL
+t )
+(1 + nt
+Nt
+) Var(˜uU
+t ) , (38)
+A.4. Theoretical Detection Time Comparison
+We next provide a theoretical analysis to illustrate when PPRM can lead to shorter detection delay. For clarity, as shown
+in Figure 6, we consider a stationary regime with binary risks, where the system is already in the harmful regime when
+monitoring begins, so that the distribution shift is present from t = 1 onward.
+Let ut = ℓ(f(xt), yt) denote the true risk on a labeled sample; ˜uL
+t = ℓ(f(xt), fp(xt)) and ˜uU
+t = ℓ(f(˜xt), fp(˜xt)) denote
+the surrogate risk on a labeled sample and on an unlabeled sample, respectively. We assume uU
+t ∼ Bernoulli(q) and
+uL
+t ∼ Bernoulli(q). Let ut ∼ Bernoulli(p), p > θ , with θ denoting the alarm threshold, and ∆ = p − θ > 0 the risk margin.
+Let γ = Cov(ut, ˜uL
+t ). We further assume fixed batch sizes nt = n and Nt = N, and use a fixed reliance parameter ηt = η.
+For SRM, the estimate ˆRt is the empirical mean of n labeled samples, so its variance is
+vS = p(1 − p)
+n . (39)
+13
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+For PPRM, the prediction-powered estimate ˆRPP
+t (η) has variance
+vPP(η) = η2 q(1 − q)
+N + 1
+n
+ 
+p(1 − p) + η2q(1 − q) − 2ηγ
+
+. (40)
+We consider the linear boundary associated with the sub-exponential transform ψE(λ) = − log(1 − λ) − λ, λ ∈ (0, 1)
+((Howard et al., 2020), Theorem 1)
+u(v) = log(1/δT)
+λ + ψE(λ)
+λ v. (41)
+In the considered scenario, ˆ¯Rt converges almost surely to p. Moreover, since the variance process Vt is formed from squared
+deviations around a predictable running mean that also converges to p, we use the large-t approximations
+ˆ¯Rt ≈ p, V t ≈ tvS. (42)
+For SRM, the lower confidence bound crosses the threshold when
+p − u(Vt)
+t > θ. (43)
+Substituting the linear boundary and solving for t gives the resulting detection delay
+τ S(λ) = log(1/δT)
+λ∆ − ψE(λ)vS . (44)
+For PPRM, the prediction-powered estimate ˆRPP
+t (η) lies in [−η, 1 + η]. Therefore, before applying the linear boundary (41),
+we affinely normalize it to [0, 1]. Let
+ˆXPP
+t =
+ˆRPP
+t (η) + η
+1 + 2η ∈ [0, 1]. (45)
+On this normalized scale, the mean, threshold, and risk margin are respectively given by
+E[ ˆXPP
+t ] = p + η
+1 + 2η , θ X = θ + η
+1 + 2η , ∆X = E[ ˆXPP
+t ] − θX = ∆
+1 + 2η . (46)
+The corresponding variance is
+vPP
+X (η) = vPP(η)
+(1 + 2η)2 . (47)
+Thus, under the same approximation as (42), we have
+ˆ¯XPP
+t ≈ p + η
+1 + 2η , V PP
+t,X ≈ t vPP(η)
+(1 + 2η)2 . (48)
+The alarm condition for PPRM should therefore be written on the normalized scale as
+ˆ¯XPP
+t −
+u(V PP
+t,X)
+t > θ X . (49)
+Solving for t gives the approximate delay
+τ PP(η) = log(1/δT)
+λ∆/(1 + 2η) − ψE(λ)vPP(η)/(1 + 2η)2 . (50)
+Our numerical results in Figure 6 show that the derived approximate detection delay is close to the empirical detection delay
+observed in simulations. We can now state the resulting conclusion.
+14
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+Proposition A.1 (Approximate delay improvement condition). Consider the above stationary regime, where distribution
+shift is present from t = 1 onward. Let the true labeled risk be binary with ut ∼ Bernoulli(p) and p > θ , and let the
+predicted risk satisfy ˜uL
+t ∼ Bernoulli(q) with γ = Cov(ut, ˜uL
+t ). Assume that the unlabeled predicted risk ˜uU
+t has the same
+marginal distribution as ˜uL
+t . Define the margin ∆ = p − θ > 0, fix the reliance parameter ηt = η ≥ 0, and consider the
+linear boundary ((Howard et al., 2020), Theorem 1) induced by ψE(λ) = − log(1 − λ) − λ for λ ∈ (0, 1). Let vS and
+vPP(η) denote the variances of the SRM and PPRM estimators, respectively. Then the approximate deterministic crossing
+time of PPRM is smaller than that of SRM, i.e.,
+τ PP(η, λ) < τ S(λ), (51)
+if and only if
+2η(1 + 2η)λ∆ < ψ E(λ)
+ 
+(1 + 2η)2vS − vPP(η)
+
+. (52)
+Specifically, an informative predictor can reduce the effective variancevPP(η) through its positive covariance with the true
+loss, thereby tightening the lower confidence sequence and accelerating detection. However, increasing η also enlarges
+the range of the prediction-powered estimate from [0, 1] to [−η, 1 + η], which incurs the normalization penalty (1 + 2η)2.
+Thus, PPRM improves the approximate detection delay when the induced variance reduction is large enough to offset this
+range-normalization penalty.
+B. Unsupervised Lower Confidence Sequences
+Unsupervised risk monitoring has been recently proposed as a technique to track the performance of methods in scenarios
+where only an unlabeled test stream ˜Dt = {˜xt,i}Nt
+i=1 is available. To address the lack of labels, the authors of (Schirmer
+et al., 2025) replace a sequence of supervised losses with a sequence of loss proxies that can be computed directly from the
+unlabeled test stream. This approach enables the derivation of an unsupervised lower bound on the running test risk, which
+can then be used to design an unsupervised alarm function.
+The core idea is to employ a proxy function g(·), serving as a loss proxy for the model f(·), defined as rt = g(xt, f). In
+addition to being unsupervised (i.e., depending only on inputs xt), the proxy should be at least partially informative about
+the corresponding loss variable. When g(·) satisfies the following assumption from (Schirmer et al., 2025), the running test
+risk can be lower bounded as follows.
+Assumption B.1 (Assumption 1, (Schirmer et al., 2025)). Given a sequence of losses u0:t, let the corresponding sequence of
+loss proxies r0:t and proxy thresholds β0, . . . , βt ∈ R, along with a loss threshold τ, be such that for all t ≥ 1, the following
+inequality holds:
+1
+t
+tX
+t′=1
+PPt′ (rt′ > β t′, rt′ ≤ τ)| {z }
+PFPt′
+≤ PP0 (r0 > β 0, u0 ≤ τ)| {z }
+PFP0
++1
+t
+tX
+t′=1
+PPt′ (rt′ ≤ βt′, ut′ > τ )| {z }
+PFNt′
+. (53)
+The running test risk can be lower bounded as
+¯Rt ≥ τ
+ 
+1
+t
+tX
+t′=1
+PPt′ (rt′ > β t′) − PP0(r0 > β 0, u 0 ≤ τ)
+!
+, ∀ t ≥ 1. (54)
+Specifically, the authors of (Schirmer et al., 2025) proposed online threshold calibration to select β0, . . . , βt ∈ R and τ
+by maximizing the F1 score based on the source model’s proxy. Importantly, this bound depends only on the test loss
+proxies and the source loss, which means that its corresponding lower-bound confidence sequence can be evaluated using a
+combination of unlabeled test data { ˜Dt′}t
+t′=1 = { {xt′,i}Nt′
+i=1 }t
+t′=1 and labeled source data D0. In practice, this requires
+computing an empirical estimate ofPPt′ (rt′ > β t′) at each step, followed by the construction of a lower confidence sequence
+relying on specific bounds. This makes it suitable for the final proposed unsupervised alarm:
+Φb
+t = 1 [Lt (r0:t, β0:t, u0, τ) > U 0(r0) + ϵtol] . (55)
+15
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013/uni0000001b/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013/uni00000018
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000018
+/uni00000013/uni00000011/uni00000015/uni00000013
+/uni00000013/uni00000011/uni00000015/uni00000018/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000019/uni0000001a/uni00000018
+/uni0000001a/uni00000013/uni00000013
+/uni0000001a/uni00000015/uni00000018
+/uni0000001a/uni00000018/uni00000013
+/uni0000001a/uni0000001a/uni00000018
+/uni0000001b/uni00000013/uni00000013
+/uni0000001b/uni00000015/uni00000018/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+(a)
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013/uni0000001b/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013/uni00000018
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000018
+/uni00000013/uni00000011/uni00000015/uni00000013
+/uni00000013/uni00000011/uni00000015/uni00000018
+/uni00000013/uni00000011/uni00000016/uni00000013
+/uni00000013/uni00000011/uni00000016/uni00000018/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000038/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000038/uni00000035/uni00000030/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000018/uni00000013/uni00000013
+/uni00000018/uni00000018/uni00000013
+/uni00000019/uni00000013/uni00000013
+/uni00000019/uni00000018/uni00000013
+/uni0000001a/uni00000013/uni00000013
+/uni0000001a/uni00000018/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050 (b)
+Figure 7. Risk estimates as a function of time t and average time to alarm for an image classification task: (a) under increasing shift
+severity (squared loss); (b) under a non-monotonic shift severity (binary loss).
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000015/uni00000018
+/uni00000013/uni00000011/uni00000016/uni00000013
+/uni00000013/uni00000011/uni00000016/uni00000018
+/uni00000013/uni00000011/uni00000017/uni00000013
+/uni00000013/uni00000011/uni00000017/uni00000018
+/uni00000013/uni00000011/uni00000018/uni00000013/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000016/uni00000018/uni00000013
+/uni00000016/uni0000001a/uni00000018
+/uni00000017/uni00000013/uni00000013
+/uni00000017/uni00000015/uni00000018
+/uni00000017/uni00000018/uni00000013
+/uni00000017/uni0000001a/uni00000018
+/uni00000018/uni00000013/uni00000013
+/uni00000018/uni00000015/uni00000018/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+(a)
+/uni00000036/uni00000035/uni00000030
+/uni00000034/uni00000015/uni00000011/uni00000018/uni00000010/uni00000039/uni0000002f/uni00000016/uni00000025/uni00000034/uni00000015/uni00000010/uni00000039/uni0000002f/uni0000001a/uni00000025/uni0000002a/uni00000033/uni00000037/uni00000017/uni00000011/uni00000014/uni00000010/uni00000051/uni0000002a/uni00000033/uni00000037/uni00000017/uni00000011/uni00000014/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000016/uni0000001a/uni00000018
+/uni00000017/uni00000013/uni00000013
+/uni00000017/uni00000015/uni00000018
+/uni00000017/uni00000018/uni00000013
+/uni00000017/uni0000001a/uni00000018
+/uni00000018/uni00000013/uni00000013
+/uni00000018/uni00000015/uni00000018
+/uni00000018/uni00000018/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050 (b)
+Figure 8. Performance for the LLM QA task under prompt shifts: (a) running risk lower bounds and average time to alarm; (b) average
+time to alarm using different predictors.
+C. Supplementary Experiments
+C.1. Sequential Risk Monitoring on Image Data
+In Figure 7(a), we evaluate image classification risk under increasing distribution shift severity, using the squared loss. We
+observe a consistent performance gain achieved by PPRM. In Figure 7(b), we further consider non-monotonic distribution
+shift scenarios, where PPRM continues to outperform all benchmark methods.
+C.2. Monitoring an LLM with Limited Human-Labeled Data
+In Figures 8(a) and (b), we report additional results for monitoring another lightweight model, namely the 4-bit quantized
+version of MedGemma-4B-IT (Sellergren et al., 2025), which is specialized for the medical domain. For the predictor
+fp(·), we employ the non-specialized model, Qwen2.5-VL-7B in Figure 8(a). The evaluation begins with medical questions
+and gradually incorporates queries from another domain. The results are consistent with those presented in the main text,
+demonstrating the generalization capability of PPRM.
+C.3. Detecting the Need for Channel Covariance Re-Estimation
+In wireless communication, reliable communication depends on accurate knowledge of the channel statistics, particularly
+the channel covariance matrix that determines both the quality of minimum mean-square error (MMSE) estimation and the
+performance of downstream decoders. However, in practical wireless systems, the propagation environment evolves over
+time due to user mobility and temporal variations in interference. These drifts cause a mismatch between the true channel
+16
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+distribution and the one assumed by the receiver, leading to degraded channel estimates and increased decoding errors. As a
+result, a central question is when the receiver should trigger covariance re-estimation or retraining of its model parameters.
+Re-estimating too frequently wastes pilot and computation resources, whereas re-estimating too late leads to significant
+performance loss. This motivates a principled mechanism that can continuously monitor the channel quality and reliably
+detect when a statistically significant covariance shift occurs. In this subsection, we examine a communication-inspired
+setting where the monitored model operates over a channel whose characteristics may drift over time.
+C.3.1. P ROBLEM FORMULATION
+We consider a standard uplink communication scenario with a base station (BS) equipped with M antennas and a single-
+antenna user equipment (UE). We assume block flat-fading channels, where each coherence block containsτc complex-valued
+samples. We denote by t the index associated with a single coherence block. Each block contains nf frames for data
+transmission, with each frame consisting of a codeword encoding a different message. For each frame i in a coherence
+block t, the M × 1 received signal at the BS is given by vt[i, j] = htst[i, j] + et[i, j], j = 1, . . . , nw, where nw is the
+codeword length, st[i, j] ∈ C is the information-bearing signal transmitted over channel use j, which is drawn from an
+existing constellation M, ht is the M × 1 channel vector, and et[i, j] ∼ CN (0, σ2IM) represents additive white Gaussian
+noise (AWGN) with zero mean and covariance σ2IM .
+The channel vectors are assumed to be conditionally Gaussian distributed given a set of parameters ψt, i.e., ht | ψt ∼
+CN (0, C(ψt)). The parameter ψt accounts for geometric and electromagnetic properties of the propagation environment
+that change slowly over the coherence interval index t. Furthermore, the covariance matrix can be expressed as
+Ct = C(ψt) =
+Z π
+−π
+g(θt; ψt) a(θt)aH(θt) dθt, (56)
+where g(θt; ψt) ≥ 0 is the power density function dictated by the parameters ψt and a(θt) denotes the array response vector
+at the BS for an angle of arrival θt.
+In order to support the estimation of the channel covariance matrix C0 and the channel noise σ2, at the first coherence block,
+indexed as t = 0, the UE sends nc ≤ τc pilots xc = [xc[1], . . . , xc[nc]]⊤ ∈ Cnc×1. In order to estimate the parameters C0
+and σ2, we adopt the positive semidefinite least squares estimate approach introduced in (Dietrich et al., 2006), and the
+estimated parameters are represented by bC0 and ˆσ2.
+At each coherence block t, excluding t = 0, nh pilots xt,h = [xt,h[1], xt,h[2], . . . , xt,h[nh]]⊤ ∈ Cnh×1 are transmitted to
+enable channel estimation. We consider MMSE channel estimation, and thus the estimated channel vector ˆht is given by
+ˆht = bC0ZH
+t,h
+
+Zt,hbC0ZH
+t,h + ˆσ2IM nh
+−1
+yt,h, (57)
+where Zt,h = xt,h ⊗ IM and yt,h = Zt,hht + et,h. At each block t, the BS carries out equalization using the estimated
+channel vector ˆht in (57). The MMSE equalized signal ˜st[i, j] is obtained as ˜st[i, j] =
+
+ˆhH
+t ˆht + ˆσ2
+−1
+ˆhH
+t vt[i, j]. The
+equalized symbols for each frame are processed by an NN-based decoder, f(·), to obtain an estimate of the transmitted
+symbol, ˆst[i, j] = arg maxm∈M f(˜st[i, j])m, where M denotes the modulation set. For risk monitoring, we additionally
+introduce nr pilots, xt,r = [xt,r[1], xt,r[2], . . . , xt,r[nr]]⊤ ∈ Cnr×1. The equalized pilot signals are denoted as ˜xt,r =
+[˜xt,r[1], ˜xt,r[2], . . . ,˜xt,r[nr]]⊤ ∈ Cnr×1. These signals are decoded by the decoder, and the decoded pilots are denoted as
+ˆxt,r = [ˆxt,r[1], ˆxt,r[2], . . . ,ˆxt,r[nr]]⊤ ∈ Cnr×1.
+At each coherence block t ≥ 1, we collect two sets of observations:
+• A labeled set from additional pilot symbols: Dt =
+
+(˜xt,r[k], xt,r[k])
+ k = 1, . . . , nr
+	
+, where xt,r[k] is the ground-
+truth transmitted pilot symbol.
+• An unlabeled set from data symbols: ˜Dt =
+
+˜st[i, j]
+ i = 1, . . . , nf , j = 1, . . . , nw
+	
+, for which the true symbol
+st[i, j] is unknown.
+Given a decoder f(·) producing the symbol estimate ˆst[i, j] = arg max m∈M f(˜st[i, j])m, the prediction-powered risk
+17
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+/uni00000013/uni00000018/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013/uni00000014/uni00000018/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013/uni00000019
+/uni00000013/uni00000011/uni00000013/uni0000001b
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000015
+/uni00000013/uni00000011/uni00000014/uni00000017
+/uni00000013/uni00000011/uni00000014/uni00000019/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000014/uni00000014/uni00000013/uni00000013
+/uni00000014/uni00000014/uni00000018/uni00000013
+/uni00000014/uni00000015/uni00000013/uni00000013
+/uni00000014/uni00000015/uni00000018/uni00000013
+/uni00000014/uni00000016/uni00000013/uni00000013
+/uni00000014/uni00000016/uni00000018/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+(a)
+/uni00000013/uni00000018/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013/uni00000019
+/uni00000013/uni00000011/uni00000013/uni0000001b
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000015
+/uni00000013/uni00000011/uni00000014/uni00000017
+/uni00000013/uni00000011/uni00000014/uni00000019
+/uni00000013/uni00000011/uni00000014/uni0000001b/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000001a/uni00000013/uni00000013
+/uni0000001a/uni00000018/uni00000013
+/uni0000001b/uni00000013/uni00000013
+/uni0000001b/uni00000018/uni00000013
+/uni0000001c/uni00000013/uni00000013
+/uni0000001c/uni00000018/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050 (b)
+Figure 9. Risk estimates as a function of time t and average time to alarm for the channel equalization task: (a) under increasing ψt ; (b)
+under a non-monotonic ψt.
+estimator at block t is given by
+ˆRPP
+t = ηt
+nwnf
+nfX
+i=1
+nwX
+j=1
+ℓ(f(˜st[i, j]), ˆst[i, j])
+| {z }
+ˆRU
+t
++ 1
+nr
+nrX
+k=1
+
+ℓ(f(˜xt,r[k]), xt,r[k]) − ηt · ℓ(f(˜xt,r[k]), ˆxt,r[k])
+
+| {z }
+ˆRrect
+t
+. (58)
+C.3.2. R ESULTS
+We consider a scenario for the simulation in which a BS with16 antennas receives uplink transmissions from a single-antenna
+UE. The BS antenna array is assumed to be a uniform linear array, with an inter-element spacing of half the wavelength.
+The codeword length is set to nw = 16, the number of frames per coherence block is nf = 2 and the signal-to-noise ratio is
+6 dB. Additionally, we set nc = 500, nh = 3, and nr = 1. For simplicity, we consider the 3GPP spatial channel model for a
+uniform linear array with only a single propagation path. In this case, we have only one parameter for the covariance matrix:
+the angle of the path center ψt ∈ [−π/2, π/2], which is uniformly distributed. The power density function of the angle of
+arrival is given by
+g(θt; ψt) = exp
+
+− d2π(θt, ψt)
+σASD
+
+, (59)
+where d2π(θt, ψt) is the wrap-around distance between θt and ψt, which can be thought of as |θt − ψt| for most (θt, ψt)
+pairs. In addition, σASD is the angular standard deviation, as it determines how large the deviations from the nominal angle
+are. We gradually change the parameter ψt to simulate an increase in risk. Besides, squared loss is selected as the risk
+function.
+Here we investigate a self-synthetic setting, where no additional models are needed to generate the synthetic labels. The
+results in Figure 9 demonstrate that PPRM can achieve earlier detection on average compared to SRM. These results highlight
+PPRM’s suitability for on-device model maintenance, where quick adaptation decisions are critical under bandwidth and
+labeling constraints.
+D. Additional Analysis
+D.1. Effect of Window Length
+We analyze how the choice of the window length L affects the performance of PPRM in terms of risk monitoring and
+detection delay. The results in Figure 10 show that PPRM is relatively robust to the choice of L. In addition, the results in
+the right panel show a clear trade-off. Smaller windows are better for abrupt changes, whereas larger windows exhibit better
+performance for gradual changes. Across most window sizes, PPRM achieves a shorter average time to alarm than the SRM
+baselines. These results suggest that a moderate window length offers a good balance between detection sensitivity and
+stability. According to these results, we select L = 60 for its good performance.
+18
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013/uni0000001b/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000056/uni00000057/uni00000048/uni00000053
+/uni00000013/uni00000011/uni00000014/uni00000018
+/uni00000013/uni00000011/uni00000015/uni00000013
+/uni00000013/uni00000011/uni00000015/uni00000018
+/uni00000013/uni00000011/uni00000016/uni00000013
+/uni00000013/uni00000011/uni00000016/uni00000018
+/uni00000013/uni00000011/uni00000017/uni00000013
+/uni00000013/uni00000011/uni00000017/uni00000018
+/uni00000013/uni00000011/uni00000018/uni00000013
+/uni00000013/uni00000011/uni00000018/uni00000018
+/uni00000013/uni00000011/uni00000019/uni00000013/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000036/uni00000046/uni00000048/uni00000051/uni00000044/uni00000055/uni0000004c/uni00000052/uni00000003/uni00000014/uni0000001d/uni00000003/uni00000024/uni00000045/uni00000055/uni00000058/uni00000053/uni00000057/uni00000003/uni00000046/uni0000004b/uni00000044/uni00000051/uni0000004a/uni00000048
+/uni00000036/uni00000046/uni00000048/uni00000051/uni00000044/uni00000055/uni0000004c/uni00000052/uni00000003/uni00000015/uni0000001d/uni00000003/uni0000002a/uni00000055/uni00000044/uni00000047/uni00000058/uni00000044/uni0000004f/uni00000003/uni00000046/uni0000004b/uni00000044/uni00000051/uni0000004a/uni00000048
+/uni00000013/uni00000015/uni00000013/uni00000017/uni00000013/uni00000019/uni00000013/uni0000001b/uni00000013/uni00000014/uni00000013/uni00000013
+/uni0000003a/uni0000004c/uni00000051/uni00000047/uni00000052/uni0000005a/uni00000003/uni00000036/uni0000004c/uni0000005d/uni00000048/uni00000003L
+/uni00000018/uni00000018/uni00000013
+/uni00000019/uni00000013/uni00000013
+/uni00000019/uni00000018/uni00000013
+/uni0000001a/uni00000013/uni00000013
+/uni0000001a/uni00000018/uni00000013
+/uni0000001b/uni00000013/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000024/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000036/uni00000046/uni00000048/uni00000051/uni00000044/uni00000055/uni0000004c/uni00000052/uni00000003/uni00000014/uni0000001d/uni00000003/uni00000024/uni00000045/uni00000055/uni00000058/uni00000053/uni00000057/uni00000003/uni00000046/uni0000004b/uni00000044/uni00000051/uni0000004a/uni00000048
+/uni00000036/uni00000046/uni00000048/uni00000051/uni00000044/uni00000055/uni0000004c/uni00000052/uni00000003/uni00000014/uni0000001d/uni00000003/uni00000036/uni00000035/uni00000030/uni00000003/uni00000045/uni00000044/uni00000056/uni00000048/uni0000004f/uni0000004c/uni00000051/uni00000048
+/uni00000036/uni00000046/uni00000048/uni00000051/uni00000044/uni00000055/uni0000004c/uni00000052/uni00000003/uni00000015/uni0000001d/uni00000003/uni0000002a/uni00000055/uni00000044/uni00000047/uni00000058/uni00000044/uni0000004f/uni00000003/uni00000046/uni0000004b/uni00000044/uni00000051/uni0000004a/uni00000048
+/uni00000036/uni00000046/uni00000048/uni00000051/uni00000044/uni00000055/uni0000004c/uni00000052/uni00000003/uni00000015/uni0000001d/uni00000003/uni00000036/uni00000035/uni00000030/uni00000003/uni00000045/uni00000044/uni00000056/uni00000048/uni0000004f/uni0000004c/uni00000051/uni00000048
+Figure 10. Comparison of running risk and average time to alarm under abrupt and gradual change scenarios for an image classification
+task.
+/uni00000013 /uni00000018/uni00000013/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013/uni00000018
+/uni00000013/uni00000011/uni00000014/uni00000013
+/uni00000013/uni00000011/uni00000014/uni00000018
+/uni00000013/uni00000011/uni00000015/uni00000013
+/uni00000013/uni00000011/uni00000015/uni00000018
+/uni00000013/uni00000011/uni00000016/uni00000013
+/uni00000013/uni00000011/uni00000016/uni00000018
+/uni00000013/uni00000011/uni00000017/uni00000013/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000038/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000038/uni00000035/uni00000030/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000016/uni00000018/uni00000013
+/uni00000017/uni00000013/uni00000013
+/uni00000017/uni00000018/uni00000013
+/uni00000018/uni00000013/uni00000013
+/uni00000018/uni00000018/uni00000013
+/uni00000019/uni00000013/uni00000013
+/uni00000019/uni00000018/uni00000013
+/uni0000001a/uni00000013/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+(a)
+/uni00000013/uni00000015/uni00000018/uni00000013/uni00000018/uni00000013/uni00000013/uni0000001a/uni00000018/uni00000013/uni00000014/uni00000013/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000016/uni00000013
+/uni00000013/uni00000011/uni00000016/uni00000018
+/uni00000013/uni00000011/uni00000017/uni00000013
+/uni00000013/uni00000011/uni00000017/uni00000018
+/uni00000013/uni00000011/uni00000018/uni00000013
+/uni00000013/uni00000011/uni00000018/uni00000018
+/uni00000013/uni00000011/uni00000019/uni00000013
+/uni00000013/uni00000011/uni00000019/uni00000018/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000036/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030/uni00000033/uni00000033/uni00000035/uni00000030/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000017/uni00000013/uni00000013
+/uni00000018/uni00000013/uni00000013
+/uni00000019/uni00000013/uni00000013
+/uni0000001a/uni00000013/uni00000013
+/uni0000001b/uni00000013/uni00000013
+/uni0000001c/uni00000013/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050 (b)
+Figure 11. Risk estimates as a function of time t under abrupt shifts: (a) for an image classification task; (b) for an LLM QA task.
+D.2. Monitoring the Risk under Abrupt Shifts
+In Figure 11, we evaluate the performance of PPRM under abrupt distribution shifts, where the risk suddenly increases at a
+certain time step. We observe that PPRM can quickly detect the shift and raise an alarm.
+D.3. Effect of Predictor Accuracy
+We further analyze how the accuracy of the predictor affects the performance of PPRM in terms of risk monitoring and
+detection delay. The results in Figure 12 show that as the accuracy of the predictor increases, PPRM achieves a tighter
+confidence sequence and faster detection compared to SRM. When the predictor is inaccurate, the adaptive version of PPRM
+performs comparably to SRM, while the non-adaptive PPRM may even underperform SRM due to the use of a poorly
+calibrated predictor. This demonstrates the benefit of the adaptive mechanism, which prevents PPRM from relying too
+heavily on an uninformative predictor. Moreover, in the right column of Figure 12, we also report the curve of the obtained
+ηt, which is selected by optimizing the variance reduction at each time step. We observe that the optimized ηt tends to be
+larger when the predictor is more accurate.
+In Figure 13, we report additional results for the image classification task, using predictors of different accuracies. The
+results show that PPRM can effectively leverage predictors of varying quality, where a more accurate predictor leads to a
+tighter confidence sequence and faster detection. Moreover, we also report the curve of cumulative squared prediction error
+V PP
+t in the right panel of Figure 13. From the result, we can see that the resulting V PP
+t of an accurate predictor is smaller
+than that of a less accurate predictor, which is consistent with the variance reduction analysis in Appendix A.3.
+19
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+/uni00000013/uni00000014/uni00000013/uni00000013/uni00000015/uni00000013/uni00000013/uni00000016/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000018/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000015/uni00000013/uni0000000f/uni00000003/uni00000049/uni0000004c/uni0000005b/uni00000048/uni00000047/uni00000003/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000015/uni00000013/uni0000000f/uni00000003/uni00000044/uni00000047/uni00000044/uni00000053/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000015/uni00000013/uni0000000f/uni00000003/uni00000049/uni0000004c/uni0000005b/uni00000048/uni00000047/uni00000003/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000015/uni00000013/uni0000000f/uni00000003/uni00000044/uni00000047/uni00000044/uni00000053/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003
+/uni00000014/uni00000013/uni00000013
+/uni00000014/uni00000018/uni00000013
+/uni00000015/uni00000013/uni00000013
+/uni00000015/uni00000018/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000013/uni00000014/uni00000013/uni00000013/uni00000015/uni00000013/uni00000013/uni00000016/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000018/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b
+/uni00000014/uni00000011/uni00000013t
+ /uni00000050/uni00000048/uni00000044/uni00000051/uni00000003t
+fixed
+/uni00000013/uni00000014/uni00000013/uni00000013/uni00000015/uni00000013/uni00000013/uni00000016/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000018/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000017/uni00000013/uni0000000f/uni00000003/uni00000049/uni0000004c/uni0000005b/uni00000048/uni00000047/uni00000003/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000017/uni00000013/uni0000000f/uni00000003/uni00000044/uni00000047/uni00000044/uni00000053/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000017/uni00000013/uni0000000f/uni00000003/uni00000049/uni0000004c/uni0000005b/uni00000048/uni00000047/uni00000003/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000017/uni00000013/uni0000000f/uni00000003/uni00000044/uni00000047/uni00000044/uni00000053/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003
+/uni00000014/uni00000013/uni00000013
+/uni00000014/uni00000015/uni00000018
+/uni00000014/uni00000018/uni00000013
+/uni00000014/uni0000001a/uni00000018
+/uni00000015/uni00000013/uni00000013
+/uni00000015/uni00000015/uni00000018
+/uni00000015/uni00000018/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000013/uni00000014/uni00000013/uni00000013/uni00000015/uni00000013/uni00000013/uni00000016/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000018/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b
+/uni00000014/uni00000011/uni00000013t
+/uni00000050/uni00000048/uni00000044/uni00000051/uni00000003t
+fixed
+/uni00000013/uni00000014/uni00000013/uni00000013/uni00000015/uni00000013/uni00000013/uni00000016/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000018/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000f/uni00000003/uni00000049/uni0000004c/uni0000005b/uni00000048/uni00000047/uni00000003/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000f/uni00000003/uni00000044/uni00000047/uni00000044/uni00000053/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000f/uni00000003/uni00000049/uni0000004c/uni0000005b/uni00000048/uni00000047/uni00000003/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000f/uni00000003/uni00000044/uni00000047/uni00000044/uni00000053/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003
+/uni00000014/uni00000013/uni00000013
+/uni00000014/uni00000015/uni00000018
+/uni00000014/uni00000018/uni00000013
+/uni00000014/uni0000001a/uni00000018
+/uni00000015/uni00000013/uni00000013
+/uni00000015/uni00000015/uni00000018/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000013/uni00000014/uni00000013/uni00000013/uni00000015/uni00000013/uni00000013/uni00000016/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000018/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b
+/uni00000014/uni00000011/uni00000013t
+/uni00000050/uni00000048/uni00000044/uni00000051/uni00000003t
+fixed
+/uni00000013/uni00000014/uni00000013/uni00000013/uni00000015/uni00000013/uni00000013/uni00000016/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000018/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000f/uni00000003/uni00000049/uni0000004c/uni0000005b/uni00000048/uni00000047/uni00000003/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000f/uni00000003/uni00000044/uni00000047/uni00000044/uni00000053/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000036/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000f/uni00000003/uni00000049/uni0000004c/uni0000005b/uni00000048/uni00000047/uni00000003/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000f/uni00000003/uni00000044/uni00000047/uni00000044/uni00000053/uni00000057/uni0000004c/uni00000059/uni00000048/uni00000003/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003/uni00000003
+/uni00000014/uni00000013/uni00000013
+/uni00000014/uni00000015/uni00000018
+/uni00000014/uni00000018/uni00000013
+/uni00000014/uni0000001a/uni00000018
+/uni00000015/uni00000013/uni00000013
+/uni00000015/uni00000015/uni00000018/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000013/uni00000014/uni00000013/uni00000013/uni00000015/uni00000013/uni00000013/uni00000016/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000018/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000013
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001b
+/uni00000014/uni00000011/uni00000013t
+/uni00000050/uni00000048/uni00000044/uni00000051/uni00000003t
+fixed
+Figure 12. Results under increasing shift severity for an image classification task, using predictors of different accuracies.
+D.4. Intermittent Label Streams
+In this section, we extend our analysis to the setting where labels are only observed at a subset of time steps, and evaluate
+the performance of PPRM under this intermittent label stream scenario. Specifically, we consider a setting where labels are
+observed at every k-th time step, i.e., at time steps t ∈ {k, 2k, 3k, . . .}, while at other time steps, only unlabeled data are
+available. We adapt the PPRM estimator to this setting by only updating the risk estimate at time steps where labels are
+observed, while using the prediction-powered estimates at all time steps.
+We now provide a simple derivation for the intermittent-label setting, in which labels are observed only everyk time steps.
+Let Lt = {k, 2k, . . . ,⌊t/k⌋k} denote the set of labeled time steps up to time t, and let Ut = {1, . . . , t} \ L t denote the
+unlabeled ones. Then, the running risk can be decomposed as
+¯Rt = 1
+t
+tX
+s=1
+Rs = 1
+t
+X
+s∈Lt
+Rs + 1
+t
+X
+s∈Ut
+Rs. (60)
+For unlabeled time steps s ∈ U t, we use the unsupervised lower-bound idea from Appendix B. Specifically, summing over
+20
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000014
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000016
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000018
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001a
+/uni00000013/uni00000011/uni0000001b/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001a/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001c/uni00000013/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000c/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001a/uni00000013/uni0000000c/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000c/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001c/uni00000013/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000014/uni00000013/uni00000013
+/uni00000014/uni00000015/uni00000013
+/uni00000014/uni00000017/uni00000013
+/uni00000014/uni00000019/uni00000013
+/uni00000014/uni0000001b/uni00000013
+/uni00000015/uni00000013/uni00000013
+/uni00000015/uni00000015/uni00000013/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013
+/uni00000014/uni00000013/uni00000013/uni00000013
+/uni00000015/uni00000013/uni00000013/uni00000013
+/uni00000016/uni00000013/uni00000013/uni00000013
+/uni00000017/uni00000013/uni00000013/uni00000013
+/uni00000018/uni00000013/uni00000013/uni00000013
+/uni00000019/uni00000013/uni00000013/uni00000013
+/uni0000001a/uni00000013/uni00000013/uni00000013
+/uni0000001b/uni00000013/uni00000013/uni00000013
+VPP
+t
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001a/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001c/uni00000013/uni0000000c
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013/uni00000011/uni00000014
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000016
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000018
+/uni00000013/uni00000011/uni00000019
+/uni00000013/uni00000011/uni0000001a
+/uni00000013/uni00000011/uni0000001b/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001a/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001c/uni00000013/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000035/uni0000004c/uni00000056/uni0000004e
+/uni00000035/uni0000004c/uni00000056/uni0000004e/uni00000003/uni00000037/uni0000004b/uni00000055/uni00000048/uni00000056/uni0000004b/uni00000052/uni0000004f/uni00000047
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000c/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001a/uni00000013/uni0000000c/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000c/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001c/uni00000013/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000018/uni00000013
+/uni0000001a/uni00000018
+/uni00000014/uni00000013/uni00000013
+/uni00000014/uni00000015/uni00000018
+/uni00000014/uni00000018/uni00000013
+/uni00000014/uni0000001a/uni00000018
+/uni00000015/uni00000013/uni00000013
+/uni00000015/uni00000015/uni00000018/uni00000024/uni00000059/uni00000048/uni00000055/uni00000044/uni0000004a/uni00000048/uni00000003/uni00000057/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000057/uni00000052/uni00000003/uni00000044/uni0000004f/uni00000044/uni00000055/uni00000050
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013/uni00000019/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003t
+/uni00000013
+/uni00000014/uni00000013/uni00000013/uni00000013
+/uni00000015/uni00000013/uni00000013/uni00000013
+/uni00000016/uni00000013/uni00000013/uni00000013
+/uni00000017/uni00000013/uni00000013/uni00000013
+/uni00000018/uni00000013/uni00000013/uni00000013
+/uni00000019/uni00000013/uni00000013/uni00000013
+VPP
+t
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni00000019/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001a/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001b/uni00000013/uni0000000c
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000b/uni00000044/uni00000046/uni00000046/uni00000020/uni00000013/uni00000011/uni0000001c/uni00000013/uni0000000c
+Figure 13. Results under increasing shift severity for an image classification task, using different predictors.
+all unlabeled time steps gives
+1
+t
+X
+s∈Ut
+Rs ≥ τ
+t
+
+
+tX
+s=1
+s mod k̸=0
+P(rs > β s) −
+ 
+t − ⌊t/k⌋
+
+PP0(r0 > β 0, u 0 ≤ τ)
+
+ , (61)
+where βs and τ are the proxy thresholds for the unlabeled time steps, which can be selected by maximizing the F1 score
+based on the source model’s proxy, as in (Schirmer et al., 2025). Combining the labeled and unlabeled terms, we get the
+following simplified lower bound for the running risk
+¯Rt ≥ 1
+t
+⌊t/k⌋X
+j=1
+Rjk + τ
+t
+
+
+tX
+s=1
+s mod k̸=0
+P(rs > β s) −
+ 
+t − ⌊t/k⌋
+
+PP0(r0 > β 0, u 0 ≤ τ)
+
+ . (62)
+Then, we can construct a lower confidence sequence for the running risk by applying the PPRM estimator to the labeled
+time steps and using the approximation in (Schirmer et al., 2025) to the unlabeled time steps. This expression also makes
+explicit that the intermittent-label setting interpolates between PPRM and unsupervised risk monitoring. When k = 1, all
+time steps are labeled and (62) reduces to the fully labeled/PPRM monitoring setting after replacing the risks by their PPRM
+estimates. In contrast, as k → ∞, labeled observations disappear and the bound reduces to a purely unsupervised lower
+bound based on the proxy scores.
+We evaluate the performance of PPRM under this intermittent label stream setting, and compare it with the standard SRM
+method that only updates the risk estimate at time steps where labels are observed. The results in Figure 14 show that PPRM
+can still effectively leverage the additional predictors to achieve faster detection compared to SRM.
+21
+
+Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003/uni00000057
+/uni00000013/uni00000011/uni00000013
+/uni00000013/uni00000011/uni00000014
+/uni00000013/uni00000011/uni00000015
+/uni00000013/uni00000011/uni00000016
+/uni00000013/uni00000011/uni00000017
+/uni00000013/uni00000011/uni00000018/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+k = 1
+/uni00000038/uni00000035/uni00000030
+/uni00000032/uni00000045/uni00000056/uni00000048/uni00000055/uni00000059/uni00000048/uni00000047/uni00000003/uni00000052/uni00000051/uni0000004f/uni0000005c/uni00000003/uni0000000b/uni00000036/uni00000035/uni00000030/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000bk = 1/uni0000000c
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003/uni00000057
+k = 2
+/uni00000038/uni00000035/uni00000030
+/uni00000032/uni00000045/uni00000056/uni00000048/uni00000055/uni00000059/uni00000048/uni00000047/uni00000003/uni00000052/uni00000051/uni0000004f/uni0000005c/uni00000003/uni0000000b/uni00000036/uni00000035/uni00000030/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000bk = 2/uni0000000c
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003/uni00000057
+/uni00000035/uni00000058/uni00000051/uni00000051/uni0000004c/uni00000051/uni0000004a/uni00000003/uni00000055/uni0000004c/uni00000056/uni0000004e/uni00000003/uni0000004f/uni00000052/uni0000005a/uni00000048/uni00000055/uni00000003/uni00000045/uni00000052/uni00000058/uni00000051/uni00000047
+k = 3
+/uni00000038/uni00000035/uni00000030
+/uni00000032/uni00000045/uni00000056/uni00000048/uni00000055/uni00000059/uni00000048/uni00000047/uni00000003/uni00000052/uni00000051/uni0000004f/uni0000005c/uni00000003/uni0000000b/uni00000036/uni00000035/uni00000030/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000bk = 3/uni0000000c
+/uni00000013/uni00000015/uni00000013/uni00000013/uni00000017/uni00000013/uni00000013
+/uni00000037/uni0000004c/uni00000050/uni00000048/uni00000003/uni00000036/uni00000057/uni00000048/uni00000053/uni00000003/uni00000057
+k = 4
+/uni00000038/uni00000035/uni00000030
+/uni00000032/uni00000045/uni00000056/uni00000048/uni00000055/uni00000059/uni00000048/uni00000047/uni00000003/uni00000052/uni00000051/uni0000004f/uni0000005c/uni00000003/uni0000000b/uni00000036/uni00000035/uni00000030/uni0000000c
+/uni0000002c/uni00000047/uni00000048/uni00000044/uni0000004f/uni00000003/uni00000033/uni00000033/uni00000035/uni00000030
+/uni00000033/uni00000033/uni00000035/uni00000030/uni00000003/uni0000000bk = 4/uni0000000c
+Figure 14. Risk estimates as a function of time t under increasing shift severity for an image classification task, in the intermittent label
+stream setting.
+D.5. Cost Analysis
+We further discuss the additional cost introduced by PPRM compared with SRM. One key component of PPRM is the
+estimation of the adaptive coefficient, which can be computed using simple empirical covariance and variance statistics
+from observed samples. This estimation is lightweight and incurs negligible overhead. In addition, the auxiliary predictor
+required by PPRM is flexible and does not necessarily introduce a heavy computational burden. It can be implemented as a
+lightweight model for efficient online deployment, as a stronger offline model when additional computation is available, or
+even as the deployed model itself, as demonstrated in our experiments.
+22

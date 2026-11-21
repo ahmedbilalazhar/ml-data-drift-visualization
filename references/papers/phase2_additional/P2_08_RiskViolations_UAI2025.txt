@@ -1,0 +1,1812 @@
+--- PAGE 1 ---
+On Continuous Monitoring of Risk Violations under Unknown Shift
+Alexander Timans*,1 Rajeev Verma∗,1 Eric Nalisnick2 Christian A. Naesseth1
+1UvA-Bosch Delta Lab, University of Amsterdam
+2Department of Computer Science, Johns Hopkins University
+Abstract
+Machine learning systems deployed in the real
+world must operate under dynamic and often
+unpredictable distribution shifts. This challenges
+the validity of statistical safety assurances on the
+system’s risk established beforehand. Common
+risk control frameworks rely on fixed assumptions
+and lack mechanisms to continuously monitor
+deployment reliability. In this work, we propose a
+general framework for the real-time monitoring of
+risk violations in evolving data streams. Leverag-
+ing the ‘testing by betting’ paradigm, we propose
+a sequential hypothesis testing procedure to detect
+violations of bounded risks associated with the
+model’s decision-making mechanism, while en-
+suring control on the false alarm rate. Our method
+operates under minimal assumptions on the
+nature of encountered shifts, rendering it broadly
+applicable. We illustrate the effectiveness of our
+approach by monitoring risks in outlier detection
+and set prediction under a variety of shifts.
+1 INTRODUCTION
+The increasing demand for reliable predictions from
+machine learning systems has driven the development of
+statistical frameworks for distribution-free risk control
+[Angelopoulos et al., 2025, Bates et al., 2021a]. Such frame-
+works rely on data-driven inference to achieve their goal,
+leveraging representative held-out data to determine suitable
+parameters guiding an application-specific risk, e.g. select-
+ing a threshold value for outlier flagging. The hope is that
+the user can then employ the determined settings indefinitely
+to aid in reliable decision-making. However, the common
+validation versus deployment mismatch in machine learning
+*Equal contributions. Corresponding authors:
+<a.r.timans@uva.nl, r.verma@uva.nl>
+systems has the potential to thwart any ‘quality assurance’
+stamp these methods derive from their static inference.
+Challenges like outliers, distribution shifts and feedback
+loops are commonplace [Koh et al., 2021]. In fact, van Ams-
+terdam et al. [2025] argue that an effective machine learning
+model should actively affect the real-world—distribution
+shift is then not merely an artifact or deployment challenge,
+but rather a manifestation of a successfully operating
+system. Hence, any decision-making parameters necessitate
+continuous monitoring during deployment, and the user
+should be notified when statistical reliability is faltering.
+We address this problem by proposing a general framework
+for the real-time continuous monitoring of bounded risks
+in evolving data streams, and raising a signal when desired
+risk levels are in danger of violation. Since alarm signals
+may trigger costly preventive measures, e.g. a production
+line stop in manufacturing or default loan denial in credit
+underwriting, it is crucial that false alarms are not raised too
+often, and our approach effectively controls this rate. We
+explicitly limit any assumptions on the deployment setting
+or nature of encountered data, rendering operability under
+arbitrary or unknown shifts. To achieve our goal we adopt
+the ‘testing by betting’ paradigm [Ramdas et al., 2023], and
+cast our monitoring task as a sequential hypothesis testing
+problem. Leveraging the framework’s natural error control
+properties, our resulting monitoring procedure remains
+both efficient and statistically rigorous. To summarize, our
+contributions include:
+• In § 3, we motivate sequential testing as a natural ap-
+proach to continuous risk monitoring, place it in the
+context of ‘testing by betting’ and re-interpret the prior
+method of Feldman et al. [2023] under this lens.
+• In § 4, we theoretically outline the statistical properties
+of our approach, including control over the false alarm
+rate, asymptotic consistency, and, under some conditions,
+bounds on the detection time of violations (Prop. 4.5).
+• In § 6, we demonstrate the efficacy of our approach
+against baselines for risk monitoring in outlier detection
+Proceedings of the 41st Conference on Uncertainty in Artificial Intelligence (UAI 2025), PMLR 244:4204–4226.
+
+--- PAGE 2 ---
+Figure 1: We consider an evolving data streamt = 1, . . . , T susceptible to distribution shifts, i.e. observations are drawn
+from a time-dependent distribution Pt at each step. A predictor ˆfψ is equipped with a decision-making mechanism governed
+by a threshold ψ (e.g. on outlier flagging). At deployment, we monitor each candidate ψ ∈ Ψ using a sequential testing
+process Mt(ψ) which collects evidence for or against risk violations. Risk-violating thresholds are then marked as unreliable.
+(§ 6.1) and set prediction tasks (§ 6.2), employing real-
+world datasets and different shift scenarios including
+natural temporal shifts.
+2 RISK AND PROBLEM FORMULATION
+We next describe our notation, problem setting and task in
+detail, highlighting some key distinctions to existing work.
+Notation and risk quantity. Let X ×Y denote the sample
+space with a data-generating distribution P over it, and
+x, y random variables with realizations x, y.1 We consider
+access to the outputs of a base predictor ˆf : X → S , where
+S ⊆ R|Y| for classification or S ⊆ R for regression. This
+model may have been explicitly trained by the user, but
+can in particular denote a pretrained model without internal
+access, e.g. accessible via an API. Next, similar to existing
+approaches for risk control [Angelopoulos et al., 2025,
+2024a, Feldman et al., 2023], we equip the model with a
+general decision-making mechanism of the form
+ˆfψ(x) = g( ˆf(x), ψ), (1)
+where ψ ∈ Ψ, Ψ ⊆ [0, 1] denotes a particular threshold
+value and g a generic operator instantiated for each
+task-specific thresholding mechanism. For example, we can
+define g as a binary decision on outlier flagging given some
+outlier score computed using ˆf (see § 6.1). Finally, a notion
+of error for ˆfψ and any particular threshold ψ is captured by
+a problem-specific supervised and bounded loss function
+ℓ : X × Y × Ψ → L , L ⊆ [0, 1], and the resulting true
+population risk is given by the expected loss
+R(ψ) = EP [ℓ( ˆfψ(x), y)]. (2)
+1Upright lettering denotes random variables and italic lettering
+their realizations. Boldening denotes multi-dimensional quantities.
+Because ℓ ∈ L is bounded it also follows thatR(ψ) ∈ [0, 1].
+Boundedness of the loss constitutes our key restriction, but
+we place no conditions on the particular distribution of
+losses within those bounds [Waudby-Smith and Ramdas,
+2024]. To simplify notation we additionally define z =
+ℓ( ˆfψ(x), y) as a random variable of the loss with realiza-
+tion z, and equivalently express the risk in Eq. 2 as R(ψ) =
+EP [z]. Crucially, R(ψ) denotes the quantity of interest for
+which safety assurances of some form are desired in order
+to robustify decisions made using ˆfψ (and indirectly, ˆf).
+Static risk control. Assume the deployment of ˆfψ on
+new i.i.d. test data Dtest ∼ P0, and access to representative
+labelled i.i.d. calibration data Dcal ∼ P0. Following
+existing frameworks of risk control such as RCPS [Bates
+et al., 2021a] or Learn-then-Test [Angelopoulos et al.,
+2025], Dcal can be leveraged to identify a subset ˆΨ ⊆ Ψ of
+risk-controlling thresholds which ensures a high-probability
+upper bound on the population risk. That is, for any ˆψ ∈ ˆΨ
+we may state thatP(R( ˆψ) ≤ ϵ) ≥ 1−δ holds. The risk level
+ϵ ∈ (0, 1) and probability level δ ∈ (0, 1) are user-specified,
+and dictate how tightly the risk is to be controlled. For
+instance, selecting low values for both ϵ and δ will enforce
+strong guarantees but may result in overly conservative
+decision-making on the basis of a chosen ˆψ. Crucially, these
+approaches operate in a static batch setting where the set ˆΨ
+is computed once and deployed indefinitely, and are limited
+by their assumption on a static distribution P0 over time.
+Data stream setting under shift. Instead, let us consider
+a more dynamic stream setting at deployment time. Given
+a time index set T = {1, . . . , T}, at every time step t ∈ T
+a covariate xt is obtained, a decision is made using ˆfψ(xt),
+and subsequently yt is revealed and the loss zt measured.
+Thus, the flow of information at each step follows as
+covariate → decision → label → loss, and at time t the
+observational history {(xi, yi, zi)}t−1
+i=1 is available. If we as-
+4205
+
+--- PAGE 3 ---
+sume that the test stream originates i.i.d (xt, yt)t∈T ∼ P0,
+risk control frameworks as above could be directly applied
+after observing sufficient samples, and we elaborate further
+on this simpler setting in § 3.1. In this work, we address
+the challenging extension to the stream case under time-
+dependent and unknown distribution shifts. Specifically, we
+consider a data stream observed as (xt, yt) ∼ Pt for t ∈ T ,
+where samples at every time step originate from a time-
+dependent distribution Pt which may shift, and in particular
+tends to deviate away from any initial P0. Our risk quantity
+of interest then becomes Rt(ψ) = EPt[zt], the time-
+dependent true population risk at any given time t, and any
+obtained threshold set ˆΨt ⊆ Ψ is similarly time-dependent.
+We suppose minimal knowledge and place no assumptions
+on the nature of the shift, which may be caused by a single
+static jump, gradual, etc., and originate in the covariates,
+labels, or both. Expectedly, the resulting high unpredictabil-
+ity on future risk development renders it substantially
+harder to provide safety assurances of any kind, but poses
+a commonly encountered problem setting in practice. Faced
+with such a challenge at deployment, we examine how to
+continuously monitor the true risk Rt(ψ) for candidates ψ
+and identify when violations of the form Rt(ψ) > ϵ occur.
+3 RISK MONITORING AS SEQUENTIAL
+TESTING BY BETTING
+We next outline our approach to risk monitoring leveraging
+sequential hypothesis testing. We motivate how such a
+testing framework naturally arises by recasting our stream
+setting as a forecasting ‘game’ between two agents—the
+forecaster and nature—and formalizing the collected
+evidence as an error accumulation process. The procedure is
+then placed in the context of sequential ‘testing by betting’
+[Ramdas et al., 2023], thereby enjoying the practicality as
+well as the rigour of the framework. Finally, we theoretically
+connect our approach to related methods in § 3.1.
+A sequential forecasting game. Consider a game
+between two agents, the forecaster and nature (i.e. the
+environment). The forecaster provides a guess πt for
+the true risk at time t given their knowledge of the
+observational history, formally encapsulated in the filtration
+Ft−1 = σ({(z1, π1), (z2, π2), . . . ,(zt−1, πt−1)}) (refer
+§ A.1 for technical definitions). Should the forecaster
+desire to minimize the mean squared prediction error
+EPt[(zt − πt)2 | Ft−1], their best guess is given by
+πt = EPt[zt | F t−1]. Nature then reveals the value of zt,
+leading to an observable discrepancy δt = zt − πt represent-
+ing the incurred forecasting error. As the game is repeated,
+a sequence of discrepancies (δt)t∈T is iteratively built. Cru-
+cially, if the forecaster continues to make their best guess at
+every step, the resulting discrepancy process forms a martin-
+gale difference sequence, i.e., EPt[δt | Ft−1] = 0 and hence
+asymptotically 1
+t
+Pt
+i=1 δi → 0 as t → ∞. Thus, under the
+forecaster’s best strategy asymptotic alignment between
+forecasts and actual outcomes is ensured, and systematic
+deviations in the discrepancies (i.e. error accumulation) can
+serve as evidence, or a testing signal, for such alignment.
+Adopting the game to our problem setting, assume the
+forecaster’s guess is upper-bounded asEPt [zt | Ft−1] ≤ ϵ.
+In general, nature has no obvious incentive to align its
+realizations of zt with the forecaster. However, in our
+setting the outcomes are directly affected by the choice
+of threshold ψ since zt = ℓ( ˆfψ(xt), yt), rendering the
+associated discrepancy process useful for testing. For each
+candidate ψ ∈ Ψ, a formal hypothesis test on alignment at
+risk level ϵ can be formulated as
+H0(ψ) : EPt [zt | Ft−1] ≤ ϵ ∀t ∈ T (risk controlled)
+H1(ψ) : ∃t ∈ T : EPt [zt | Ft−1] > ϵ, (risk violated)
+(3)
+and our game suggests that the threshold’s discrepancy
+process (δt)t∈T can provide the necessary testing evidence.
+Example test statistic. Given the sequential test in Eq. 3,
+how should the discrepancy sequence be leveraged to
+construct a test statistic? A straightforward choice is the cu-
+mulative process Mt(ψ) =Pt
+i=1 λi ·δi =Pt
+i=1 λi(zi −ϵ),
+where λt denotes a non-negative weight associated with the
+‘trust’ placed in the aggregated evidence at timet, dictating
+how Mt(ψ) evolves. Intuitively, ifH0(ψ) is true and the risk
+is indeed bounded by ϵ, then the forecaster’s guesses should
+be well aligned and discrepancies exhibit little systematic ef-
+fects. In that case,Mt(ψ) forms a supermartingale, meaning
+that it is not expected to increase since EPt[δt | F t−1] ≤ 0.
+On the other hand, consistent evidence indicating the risk’s
+growth beyond ϵ will accumulate and drive the growth of
+Mt(ψ), signaling evidence for rejection in favour of H1(ψ).
+Thus the cumulative process provides an viable test statistic
+for Eq. 3, and we further expand on this approach in § A.2.
+Test supermartingales and testing by betting. While
+the aforementioned summation statistic offers a valid
+testing procedure, it is not necessarily efficient in the sense
+of optimally accumulating evidence. That is, we want
+to accumulate the necessary evidence as fast as possible
+should a risk violation occur. To that end, a rich body
+of literature on sequential testing through the lens of
+‘testing by betting’ can be leveraged [Ramdas et al., 2023].
+Specifically, rather than via summation we may consider
+the multiplicative accumulation of discrepancies as
+Mt (ψ) =
+tY
+i=1
+(1 + λi · δi) =
+tY
+i=1
+(1 + λi (zi − ϵ)) , (4)
+yielding a universal representation of a test supermartingale
+if we ensure M0 = 1 and (λt)t∈T to be a predictable pro-
+cess based only on past observations [Ramdas and Wang,
+2024]. That is, λt may only depend on {zi}t−1
+i=1 (and is thus
+4206
+
+--- PAGE 4 ---
+measurable w.r.t.Ft−1). A game-theoretic interpretation can
+be given to the sequential test and each component in Eq. 42.
+The forecaster is actively betting against the null hypothesis
+starting from an initial wealth of M0 = 1, and Mt(ψ) de-
+scribes the wealth process at every subsequent betting round
+t. The betting rate λt denotes the proportion of wealth gam-
+bled at each step, and (zt − ϵ) the resulting pay-off once
+nature reveals zt. Should H0(ψ) hold, then no betting strat-
+egy is expected to systematically increase wealth. On the
+other hand, a betting strategy resulting in meaningful wealth
+accumulation points towards evidence against the null. A re-
+jection threshold can be employed to reach a final testing de-
+cision with stopping time τ(ψ) ∈ T , denoting the time step
+at which H0(ψ) has been ruled out by the wealth process.
+Constructing threshold confidence sets. Since the risk
+associated with every threshold needs to be monitored
+simultaneously, we instantiate a number of wealth processes
+Mt(ψ) in parallel, one for each candidateψ ∈ Ψ. Their joint
+behaviour can be encapsulated in a confidence set (ψ-CS)
+of valid thresholds at every time step t, constructed as
+C ψ
+t = {ψ ∈ Ψ : Mt (ψ) < 1/δ}. (5)
+That is, using the predefined risk control parameters ϵ, δ,
+the confidence set C ψ
+t denotes the set of thresholds at
+time t for which H0(ψ) has not yet been rejected. It
+is, in effect, the equivalent of the threshold set ˆΨt ⊆ Ψ
+described in § 2 using the particular rejection threshold
+1/δ. Crucially, by leveraging the stopping rule 1/δ and
+test martingale properties of Mt(ψ), any threshold that
+does not violate the risk level ϵ at time t is guaranteed to
+be included in C ψ
+t with high probability, i.e., it holds that
+PH0(∀t ∈ T : Mt(ψ) < 1/δ) > 1 − δ. We interpret this
+Type-I error control property as a false alarm guarantee on
+erroneous rejection, and elaborate upon it in § 4. In addition,
+the size of theψ-CS can be interpreted as an indicator for the
+stream’s shift intensity, and thus the underlying model’s de-
+ployment reliability. A constant set size indicates temporally
+stable threshold choices are available, whereas a shrinkage
+of C ψ
+t towards zero implies that all thresholds eventually
+signal risk violation, necessitating a more substantial model
+update using the observational history. Since we are pre-
+occupied with risk monitoring only, we leave the discussion
+on model updating, or safe adaptation, for future work.
+Practical considerations. An important distinction to
+stress is that any false alarm guarantee holds across time
+for every threshold, and not across thresholds at every
+time step. Thus no guarantees can be given on an adaptive
+strategy to select a particular ˆψt ∈ C ψ
+t at every step, unless
+multiple testing corrections (which we do not consider
+2The evidence collection process Mt(ψ) can be interchange-
+ably referred to as a test (super)martingale by its mathematical
+properties, wealth processby its betting interpretation, orE-process
+in the context of the sequential testing literature.
+here) are introduced to control for the multi-stream setting,
+e.g. drawing inspiration from Xu and Ramdas [2024],
+Dandapanthula and Ramdas [2025]. Empirically, one may
+adopt strategies such as selecting a stable threshold that
+persists over extended time horizons or a threshold to
+maximize significant results ( e.g. the minimum value).
+These choices also relate to the risk profile of Rt(ψ), which
+dictates if a ‘trivial’ stable solution (that may be very
+conservative) is available, and facilitates the interpretability
+of the obtained ψ-CS. A preferable risk profile will behave
+both monotonically across time ( e.g., limt→0 Rt(ψ) =
+0 and limt→T Rt(ψ) = 1 ) as well as across thresholds
+(e.g., limψ→0 Rt(ψ) = 0 and limψ→1 Rt(ψ) = 1 ). How-
+ever, we do not assume such conditions and our experiments
+in § 6 address non-monotonic behaviour in either argument.
+3.1 RELATION TO OTHER APPROACHES
+We next draw connections to other notions of risk control
+in the literature. Most notably, we leverage our formulation
+in terms of discrepancy processes to provide a novel inter-
+pretation of rolling risk control [Feldman et al., 2023] as an
+implicit, adaptive form of sequential testing with asymptotic
+guarantees (as opposed to finite-sample). We then contrast
+our shifting stream setting with the simpler i.i.d. case.
+Sequential testing and rolling risk control. Proposed by
+Feldman et al. [2023] as an extension of Gibbs and Candès
+[2021] to bounded risks beyond the miscoverage rate,
+rolling risk control(RRC) aims to track the running estimate
+1
+t
+Pt
+i=1 zi and ensure its asymptotic adherence to the risk
+level ϵ via the update rule ψt = ψ0 +Pt−1
+i=1 γ (zi − ϵ),
+where γ > 0 denotes a step size. The ‘calibration parameter’
+ψ governs the behaviour of their set predictor, rendering
+it an instantiation of our threshold model ˆfψ (see also
+§ 6.2). Procedurally, the model is initialized with value
+ψ0 and RRC incrementally updates the parameter at every
+time step following the rule. Leveraging our discrepancy
+process interpretation, we can directly observe that RRC
+accumulates evidence via discrepancies δt = zt − ϵ over
+time, and is mathematically analogous to the summation
+wealth process used as an example in § 3. More formally,
+we can denote the process ψt = ψt−1 + γ (zt−1 − ϵ), and
+under the null (Eq. 3) it follows that E [ψt | Ft−1] ≤ ψt−1
+indicates a risk-controlling parameter, whereas under the
+alternative E[zt|Ft−1] > ϵ, and ψt thus grows as a martin-
+gale accumulating evidence against the null. The ‘testing by
+betting’ interpretation helps clarify the key distinction to our
+approach—how the designed wealth process is subsequently
+utilized. Whereas we take a testing decision on the basis
+of a rejection threshold, RRC does not enforce such a
+stopping rule but re-invests the wealth in an update step to
+dynamically adjust prediction set sizes. While offering a
+convenient step towards model adaptation, the rule is tied
+to the explicit monotonicity assumption underlying RRC,
+4207
+
+--- PAGE 5 ---
+wherein a larger ψt reduces the risk by enlargening the
+prediction set and vice versa. Such monotonic behaviour
+in the thresholds is desirable, but not always available.
+Risk control under the i.i.d. data stream setting. In
+the simple case where the test stream originates i.i.d
+(xt, yt)t∈T ∼ P0 rather than from time-dependent
+distributions Pt, we obtain that Rt(ψ) = R0(ψ) is a
+time-independent risk, and the independence between
+samples further simplifies the risk definition (we detail our
+argument in § A.3). We may then conveniently reverse the
+hypotheses pair from Eq. 3 to form the test
+H0(ψ) : ∃t ∈ T : R0(ψ) > ϵ, H 1(ψ) : R0(ψ) ≤ ϵ ∀t ∈ T
+and define a reverse wealth process as Mt (ψ) =Qt
+i=1 (1 + λi (ϵ − zi)). The corresponding ψ-CS con-
+struction is given by C ψ
+t = {ψ ∈ Ψ : Mt (ψ) ≥ 1/δ}.
+Crucially, we can exploit the fact that P0 is static and thus
+any drawn test conclusions on non-violation of the risk
+(now formalized in H1(ψ)) hold indefinitely in the future.
+In other words, C ψ
+t will only grow as more thresholds are
+found to be safe, but never shrink. This permits leveraging
+the Type-I error control property of the wealth process to
+claim strong time-uniform risk control guarantees of the
+form P (∀t ∈ T : R0 (ψ) ≤ ϵ) ≥ 1 − δ, moving beyond
+static risk control assurances. This approach has been
+leveraged directly by Xu et al. [2024] to extend RCPS
+[Bates et al., 2021a] to the stream setting, and indirectly
+by Zecchin and Simeone [2025] to make Learn-then-Test
+[Angelopoulos et al., 2025] more adaptive. Naturally, such
+forward-looking assurances continue to only hold for the
+setting of a static distribution P0, and are not applicable in
+our challenging shift setting.
+4 THEORETICAL ANALYSIS
+Next, we establish the theoretical guarantees our approach
+enjoys. To summarize, we suggest monitoring the risk using
+the wealth process Mt(ψ) (Eq. 4) to detect risk violations
+and raise a signal when the stopping rule 1/δ is met.
+Running this procedure simultaneously for all candidates
+ψ ∈ Ψ, a set of thresholds C ψ
+t (Eq. 5) deemed non-violating
+is returned at every time step t. In turn, Ψ \C ψ
+t denotes the
+thresholds for which a test decision on risk violation at time
+t has been made. In the following series of statements we
+provide insights on the statistical validity and efficiency of
+our approach, deferring all proofs to § A.4. We begin by
+stating the essential martingale properties of the process
+Mt (ψ) which render it practical for risk monitoring.
+Lemma 4.1 (Valid wealth process). For any ψ ∈ Ψ such
+that EPt[zt | F t−1] ≤ ϵ ∀t ∈ T satisfies the null, the
+process Mt(ψ) in Eq. 4 is a valid test supermartingale for
+the predictable betting rate λt ∈ [0, 1/ϵ).
+This follows directly from satisfying the conditions of
+a valid test supermartingale (§ A.1), and λt ∈ [0, 1/ϵ)
+ensures that Mt(ψ) remains non-negative with its expected
+value upper-bounded by M0 = 1 under the considered null
+hypothesis H0 (ψ) (Eq. 3). We next characterize the false
+alarm guarantee that our procedure natively derives from
+Lemma 4.1 via its Type-I error control property, given as
+Lemma 4.2 (False alarm guarantee). For any ψ ∈ Ψ such
+that EPt[zt | F t−1] ≤ ϵ ∀t ∈ T satisfies the null, it holds
+that P (∃t ∈ T : Mt(ψ) ≥ 1/δ) ≤ δ.
+The result ensures that a false positive or false alarm—when
+Mt(ψ) crosses 1/δ and incorrectly signals risk violation
+as the threshold ψ is in fact risk-controlling—occurs with
+at most probability δ. Consequently, any threshold that
+does not violate the risk level ϵ at time t is guaranteed
+to be included in C ψ
+t with high probability, i.e., it holds
+that PH0(∀t ∈ T : Mt(ψ) < 1/δ) > 1 − δ. Such high-
+probability safety assurances can be given under the null
+hypothesis H0(ψ) but do not translate to the alternative (see
+also § 3.1 for the reverse hypotheses). Leveraging the proper-
+ties of Mt(ψ), what statements can be made with respect to
+H1(ψ), indicating true risk violation? First, we establish the
+method’s asymptotic consistency under regular conditions.
+Lemma 4.3 (Asymptotic consistency). For any ψ ∈ Ψ
+such that EPt [zt | Ft−1] ≤ ϵ for finitely many steps
+t ∈ T and EPt [zt | Ft−1] > ϵ otherwise, it holds that
+P(τ(ψ) < ∞) = 1, where τ(ψ) denotes the stopping time.
+In words, our hypothesis test aligns with the classical
+sequential test of power one [Darling and Robbins, 1968]
+and assures that a risk-violating threshold will be inevitably
+detected (with finite stopping time). While this ensures
+asymptotic correctness, a practical application demands
+more than eventual detection—it requires efficiency in
+the evidence accumulation. We borrow such a notion of
+statistical efficiency by directly leveraging the property
+of growth rate optimality to guide our betting rate λt.
+Informally, an adaptive strategy for the bets (λt)t∈T can
+be designed to directly maximize the growth of the wealth
+process under the alternative, ensuring efficient evidence
+accumulation [Waudby-Smith and Ramdas, 2024, Koolen
+and Grünwald, 2022]. We formally define the condition as
+Definition 4.4 (Growth rate optimality (GRO)). The betting
+rate λt is growth rate optimal if it satisfies the condition
+λt = arg maxλ∈[0,1/ϵ) EH1[log Mt(ψ)].
+We follow the GRO principle in our experiments (see § 6),
+and hence ensure our procedure retains maximal efficiency
+(or statistical power) among all possible wealth processes.
+Finally, under some additional conditions we propose
+characterizing the method’s stopping time behaviour, and by
+extension its detection delay denoting the practical utility.
+Defining τ∗(ψ) = inf{t ∈ T : EPt [zt | Ft−1] > ϵ} as the
+4208
+
+--- PAGE 6 ---
+(unknown) true stopping time of ψ (i.e., when the true risk
+is violated), and τ(ψ) = inf {t ∈ T : Mt (ψ) ≥ 1/δ} as
+our stopping signal, the method’s detection delay is given by
+τ (ψ) − τ∗ (ψ). We propose the following characterization:
+Proposition 4.5 (Detection delay bound) . A worst-case
+detection delay for the hypothesis pair in Eq. 3 and
+wealth process Mt(ψ) in Eq. 4 is characterized by
+(τ(ψ) − τ∗(ψ)) ≈ O((log(1/δ) + T )/(λ · µ)), where µ
+denotes the risk violation intensity andT a shift changepoint.
+We elaborate on Prop. 4.5 in § A.4, but can intuitively ob-
+serve (i) inverse proportionality to both the betting rateλ and
+the violation strength µ, indicating a faster detection when
+evidence grows adaptively and is strong; and (ii) direct pro-
+portionality to T , indicating a slower detection when shifts
+occur later in the stream as the initial evidence favouring
+H0(ψ) needs to be overcome (slowing the wealth’s growth).
+5 RELATED WORK
+Waudby-Smith and Ramdas [2024] offer an in-depth study
+on detecting deviations in the means of bounded quantities
+for stream settings, providing useful tools (e.g. in terms of
+betting rate design) for the testing of risks following Eq. 2.
+Very recently, Fan et al. [2025] explore some settings for
+additional bounds on the variance. Whereas they consider
+data to originate from a fixed source distribution P with
+unknown mean µ to be estimated, our observations originate
+from variable, time-dependent distributions Pt, and we
+simultaneously monitor multiple means (corresponding to
+the threshold-dependent risks Rt(ψ)). Thus our underlying
+hypothesis dictating the test design is subtly, but distinctly
+different. Yet, strong results on the universal representation
+of test martingales (e.g. stated by Waudby-Smith and Ram-
+das [2024], Prop. 3) render the process structure in Eq. 4
+useful for a wide range of testing problems. We attempt to
+intuitively motivate this via a ‘forecasting game’ in § 3.
+Sequential testing and risk monitoring. Xu et al. [2024],
+Zecchin and Simeone [2025] leverage above results on
+deviations in means to provide strong time-uniform risk
+control for i.i.d streams, discussed further in § 3.1. Closely
+related to our work, Podkopaev and Ramdas [2022] monitor
+a running risk of the form Rr(ψ) = 1
+t
+Pt
+i=1 EPi[zi] under
+the sequential testing framework, with similar false alarm
+guarantees. However, we consider the more challenging
+instantaneous true risk Rt(ψ) at any given time step, which
+can recover Rr(ψ) but not vice versa. Furthermore, their
+experimental design tends to distinguish between benign
+and harmful shifts caused by a dominant shift initiated at
+P0 (akin to changepoint detection), whereas we incorporate
+a broader variety of shifts. Finally, we do not impose
+sample independence. Their approach was reformulated by
+Amoukou et al. [2024] for unlabelled streams, and relatedly
+Bar et al. [2024] suggest an unsupervised covariate shift
+detector on the basis of entropy-matching. Particular to out-
+of-distribution detection, Vishwakarma et al. [2024], Sun
+et al. [2024] also leverage martingale-based constructions.
+Other sequential testing under shift. Stream data
+denotes a particular test setting under the ‘testing-by-
+betting’ framework, lending itself naturally to the use
+of test martingales 3 [Ramdas et al., 2023, Ramdas and
+Wang, 2024]. Within that framework, previous work
+has considered a variety of testing problems, such as on
+exchangeability [V ovk, 2021, Saha and Ramdas, 2024],
+independence [Podkopaev and Ramdas, 2023], two-sample
+testing [Shekhar and Ramdas, 2021, Pandeva et al., 2024a,b,
+Luo et al., 2024], or changepoint detection [Shekhar and
+Ramdas, 2023b, 2024, V ovk et al., 2021, V olkhonskiy
+et al., 2017, Shin et al., 2023]. Theses works differ from
+ours in terms of the hypotheses they address, their data
+settings (e.g. by simultaneously observing two separate data
+streams), or experimental designs ( e.g. detecting a single
+changepoint or shift). Additional related works on static
+risk control and extensions to stream settings not using
+sequential testing can be found in Appendix B.
+6 EMPIRICAL RESULTS
+We empirically validate our risk monitoring approach on
+two tasks, outlier detection (§ 6.1) and set prediction (§ 6.2).
+The first experiment induces shifts by mixture sampling
+in order to demonstrate monitoring behaviour for explicit
+scenarios, while the latter is based on naturally occuring
+temporal shifts. Evaluating diverse, real-world datasets,
+we find that the method ensures both timely detection
+of risk violations and a controlled false alarm rate. We
+next outline our baselines and practical design choices,
+followed by each experiment in more detail (see also
+Appendix C). Our code is publicly available at https:
+//github.com/alextimans/risk-monitor.
+Baselines. We compare our primary monitoring approach,
+the wealth process Mt(ψ) described by Eq. 4, to the
+following (empirical) risk tracking mechanisms:
+(i) An empirical estimate of the unobservable ora-
+cle or true population risk Rt(ψ), computed as
+ˆRt(ψ) = 1
+B∗
+PB∗
+b=1 zt,b, z t,b ∼ Pt for a batch draw B∗
+of large size (e.g. B∗ = 1000). We desire for Mt(ψ) to
+emulate the monitoring behaviour of ˆRt(ψ) as closely
+as possible while controlling false alarms by Lemma 4.2.
+(ii) An empirical estimate of the running risk Rr(ψ), accu-
+mulated over the data stream for a given time step t as
+ˆRr(ψ) = 1
+t
+Pt
+i=1 zi. This is the risk quantity evaluated
+both by Podkopaev and Ramdas [2022] as a tractable
+estimate of the running risk, and Feldman et al. [2023]
+3Also referred to therein as sequential anytime-valid inference.
+4209
+
+--- PAGE 7 ---
+Figure 2: Results for outlier detection with a stepwise shift (§ 6.1). From left to right: Visuals of the growing risk and
+wealth process behaviour with respective rejection thresholds ϵ and 1/δ, for a single threshold candidate (here ψ = 0.50);
+the behaviour of the valid threshold set ψ-CS (Eq. 5), which eventually shrinks to zero signalling a model update; and the
+empirical distributions of detection delays τ(ψ) − τ∗(ψ) across all ψ ∈ Ψ, including the false alarm region (FP). We also
+have B = 1, S = 50 and tout = 200, with results evaluated over R = 50 trials (mean and std. deviation).
+directly as a rolling risk target (§ 3.1). Note that since
+we are monitoring the more challenging instantaneous
+risk Rt(ψ), the estimator ˆRr(ψ) is nominally void of
+any false alarm guarantees.
+(iii) The summation wealth process illustrated in § 3, given
+by M SU M
+t (ψ) =Pt
+i=1 λi(zi − ϵ). This process retains
+the same false alarm guarantees as Mt(ψ), but tends to
+be less adaptive as evidence is accumulated additively.
+(iv) The predictably-mixed Empirical-Bernstein wealth pro-
+cess from Waudby-Smith and Ramdas [2024], given by
+M EB
+t (ψ) =Qt
+i=1 exp{λi (zi − ϵ) − vi ρ(λi)} where
+vi = 4 (zi − ˆµi−1)2, ρ(λi) = 1/4 (− log(1 − λi) − λi),
+and we use the predictable plug-in betting rate λEB
+i =
+min
+nq
+2 log(2 /δ)
+ˆσ2
+i−1 i log(1+i) , 1
+2
+o
+. A similar method is also de-
+rived by Podkopaev and Ramdas [2022] to estimate con-
+fidence bounds on Rr(ψ) in their problem setting, but
+we employ its direct form as a sequential test.
+Choice of betting rate. We follow the growth rate
+optimality (GRO) condition outlined in Definition 4.4
+to guide our choice of betting rate. Whereas selecting
+λt based on direct wealth maximization is possible, the
+approach can be computationally expensive to re-evaluate
+for every candidate ψ and time step t. Instead, we leverage
+a suggested approximation by Waudby-Smith and Ramdas
+[2024], yielding the closed-form expression
+λAGR
+t = max
+
+0, min
+ ˆµt−1 − ϵ
+ˆσ2
+t−1 + (ˆµt−1 − ϵ)2 , 1/2
+ϵ
+
+,
+where ˆµt−1 and ˆσ2
+t−1 denote the estimated running mean
+and variance over {zi}t−1
+i=1. Intuitively, the betting rate
+increases when the running mean is far fromϵ, and is further
+amplified by a small variance. λAGR
+t is approximately GRO
+[Shekhar and Ramdas, 2023a] and performs empirically
+similar to direct maximization. A range of other suitable
+bets is discussed in Waudby-Smith and Ramdas [2024], and
+we briefly touch upon this in Appendix C.
+Batching, sliding window and burn-in. Instead of a data
+stream where samples arrive individually at every time step,
+we may also consider the arrival of small batches of size
+B ≪ B∗, i.e. we sample {(xt,b, yt,b)}B
+b=1 ∼ Pt. The batch-
+wise evidence at every time step can be easily aggregated
+by, for instance, averaging, which tends to both reduce the
+variance of the tracking process and improve the detection
+delay τ(ψ) − τ∗(ψ) with respect to the true risk even for
+small batches (B = 10). Similarly, delays can be reduced
+by enhancing the adaptivity of any tracker via a sliding win-
+dow of size S, wherein only the most recent observations for
+time steps i ∈ [t − S, t] are considered. Intuitively, the obser-
+vational history is truncated by discarding past information
+deemed irrelevant for the current shift environment. This ren-
+ders the tracking process more reactive (e.g., via the betting
+rate parameters ˆµt−1, ˆσ2
+t−1) but also increases sensitivity to
+the retained samples, heightening the chance of false alarms
+if the resulting evidence is misleading. The choice of B and
+S can sometimes be delicate, and results for different com-
+binations are provided in Appendix D. Finally, we introduce
+an initial number of burn-in time steps tburn = ⌊100/B⌋
+during which any risk tracker (aside of the true risk) does
+not test for risk violation but merely accumulates samples,
+in order to stabilize any running quantities such as ˆRr(ψ).
+6.1 MONITORING THE TOTAL ERROR RATE
+FOR OUTLIER DETECTION
+We first consider the task of outlier detection, and
+instantiate the threshold predictor from Eq. 1 as
+ˆfψ(x) = 1 [out(x) ≥ ψ], where out : S → [0, 1]
+maps the predictor’s output to a bounded outlier score and
+1 [·] is the indicator function. When out(x) ≥ ψ evaluates
+4210
+
+--- PAGE 8 ---
+Figure 3: Results for set prediction with a temporal shift on FMoW (§ 6.2). From left to right: Visuals of the growing
+risk and wealth process behaviour with respective rejection thresholds ϵ and 1/δ, for a single threshold candidate (here
+ψ = 0.08); the behaviour of the valid threshold set ψ-CS (Eq. 5), which eventually tends to zero signalling a model update;
+and the empirical distributions of detection delays τ(ψ) − τ∗(ψ) across all ψ ∈ Ψ, including the false alarm region (FP). We
+also have B = 1 and S = 365 (one year), with results evaluated over R = 50 trials (mean and std. deviation).
+true we declare the sample an outlier. Given a classification
+setting, we define out as the normalized entropy of the
+base model’s predictive distribution ˆp(y | x)4. The target
+risk to monitor is given by the total error rate, accounting
+for both cases of inlier (false positives, FP) and outlier
+misclassification (false negatives, FN) via the loss variable
+zt =
+
+
+
+1, if out(xt) ≥ ψ and (xt, yt) ∼ Pin, (FP)
+1, if out(xt) < ψ and (xt, yt) ∼ Pout, (FN)
+0 else.
+Pin and Pout denote inlier and outlier distributions, and the
+shifting stream is characterized by a time-dependent outlier
+probability πout
+t such that (xt, yt) ∼ (1 − πout
+t ) Pin +
+πout
+t Pout for t ∈ T is generated by mixture sampling. We
+consider three distinct shift settings:(i) an i.i.d stream where
+trivially πout
+t = 0 across all time steps; (ii) an immediate
+stark outlier shift where πout
+t = 1 early on; and (iii) a
+stepwise shift with πout
+t ∈ {0, 0.05, 0.1, . . . ,1} increasing
+every tout time steps. Risk parameters are set to common
+values ϵ = 0 .1, δ = 0 .1, and we simulate for T = 1500
+steps. Pin and Pout are given by CIFAR-10 [Krizhevsky
+et al., 2009] and SVHN [Netzer et al., 2011] respectively,
+with a base classifier (ResNet-50) trained on CIFAR-10.
+Our results in Fig. 2 for the stepwise shift assert that
+as the shift intensity increases, so does the number of
+risk-violating thresholds, leading to a gradual shrinkage
+of the ψ-CS towards zero. Among risk trackers the
+running risk ˆRr(ψ) emulates the true risk well but tends to
+misinterpret evidence, resulting in an undesirable number
+of false alarms. In contrast, all martingale-based trackers
+uphold the guarantee, at the cost of increased detection
+delays. Among them, the monitoring behaviour of the
+wealth process Mt(ψ) most closely aligns with the true risk,
+4This is merely one possible choice, and can be easily swapped
+for other scoring mechanisms satisfying the required bounds.
+striking a good trade-off. Results for other shift settings can
+be found in Appendix D, where as anticipated(i) for the i.i.d
+case most thresholds remain valid and the ψ-CS stabilizes
+over the full data stream; and (ii) for the immediate shift
+all thresholds are rejected as soon as possible, correctly
+identifying ˆfψ as highly unreliable.
+6.2 MONITORING THE MISCOVERAGE RATE
+FOR SET PREDICTION
+Next we consider set prediction tasks on data subject to
+natural temporal shifts , both for the classification and
+regression setting.
+Functional Map of the World. For classification, we
+instantiate ˆfψ as a set predictor of the form
+ˆfψ(x) = {y ∈ Y : ˆp(y = y | x) ≥ ψ},
+and the base classifer once more returns a predictive
+distribution ˆp(y | x) used to determine class inclusion in
+the set. A natural risk to monitor here is the miscoverage
+rate with loss variable zt = 1 [yt /∈ ˆfψ(xt)], where yt
+denotes the true label. We consider the Functional Map
+of the World dataset (FMoW) [Christie et al., 2018], a
+large-scale satellite image dataset on building and land use
+over 16 years, and employ a time-dependent partitioning
+proposed by Yao et al. [2022]. Therein a natural shift
+occurs as the same satellite image locations capture land
+use changes over time. The classifier (DenseNet-121) is
+trained on the first 11 years, and we increase the test stream
+frequency by sampling chronologically from the final five
+years every 365 time steps (simulating daily observations).
+We again set ϵ = 0.1, δ = 0.1 and run for T = 2000 steps.
+Our results in Fig. 3 draw similar conclusions as in § 6.1,
+that is, the proposed wealth process Mt(ψ) produces
+4211
+
+--- PAGE 9 ---
+Figure 4: Results for set prediction with a temporal shift on Naval propulsion (§ 6.2). From left to right: Visuals of the
+growing risk and wealth process behaviour with respective rejection thresholds ϵ and 1/δ, for a single threshold candidate
+(here ψ = 0.005); the behaviour of the valid threshold set ψ-CS (Eq. 5), which eventually tends to zero signalling a model
+update; and the empirical distributions of detection delays τ(ψ) − τ∗(ψ) across all ψ ∈ H, including the false alarm region
+(FP). We also have B = 1 and S = 50, with results evaluated over R = 50 trials (mean and std. deviation).
+the lowest detection delays among all risk monitoring
+processes with false alarm control, while the running risk
+prematurely rejects some threshold candidates. Interestingly,
+the natural temporal shift induces a non-monotonic risk
+profile, wherein miscoverage for the second year slightly
+drops, but thereafter starkly increases. We elaborate on the
+connection between risk profiles and threshold behaviour
+in Appendix C, and provide complete results in Tab. 4.
+Naval propulsion system. For regression, the set predic-
+tor takes the interval form ˆfψ(x) = [ ˆf(x) − ψ, ˆf(x) + ψ],
+with ˆf(x) returning point estimates. The target risk
+remains the miscoverage rate, and we consider predictive
+maintenance data on naval gas turbine behaviour [Cipollini
+et al., 2018]. This tabular time series consists of ∼ 12 000
+recordings for various turbine system parameters, and an
+associated turbine compressor degradation coefficient de-
+noting the compressor’s health. Over time this degradation
+coefficient steadily increases, denoting a gradual equipment
+decay. We train a Random Forest regressor on the initial
+‘healthy’ compressor state (enriched via jittered resampling)
+which expectedly fails to extrapolate as the degradation
+worsens, resulting in decreased performance in line with
+a temporal shift. Once more we have ϵ = 0.1, δ = 0.1 and
+run our monitoring process for the full time series.
+Our results in Fig. 4 and summarized in Tab. 5 draw
+consistent conclusions with other experiments. Specifically,
+we observe (i) incurred false positives by the running risk,
+in particular for more adaptive tracking windows (smaller
+S); and (ii) lowest detection delays for the wealth process
+Mt(ψ) among all trackers with false alarm guarantees. Fur-
+thermore, the gap between running risk and wealth process
+remains fairy narrow under most realistic settings (i.e., small
+B and large S). Visually, the ψ-CS (Eq. 5) stabilizes during
+the initial healthy state, but consistently shrinks as turbine
+compressor degradation and thus distributional shift wors-
+ens. The visualized threshold, being very small, displays
+sensitive risk behaviour even during early time steps.
+7 DISCUSSION
+We investigate sequential testing-based approaches to mon-
+itor an unobservable, time-dependent bounded risk Rt(ψ)
+in a dynamic data stream setting, challenged by unknown
+and repeated distribution shifts. Motivated by the ‘testing
+by betting’ framework [Waudby-Smith and Ramdas, 2024],
+our martingale-based monitoring process ensures timely
+detection of risk violations whilst providing finite-sample
+control over the false alarm rate. This renders a statistically
+rigorous and yet practical procedure for risk monitoring.
+However, we are inherently limited in our safety assurances
+by the unpredictability of any occuring shift, and the
+minimal assumptions we impose on it. More informative
+forward-looking assurances can potentially be obtained if
+additional restrictions are considered, such as constraints
+on the shift origin or its intensity and growth rate. Similarly,
+rephrasing our problem statement in terms of a different
+hypothesis might simplify the task and offer more efficient
+or unsupervised monitoring, e.g. by drawing inspiration
+from Bar et al. [2024]’s entropy-matching idea or Amoukou
+et al. [2024]’s label-free quantile test. Possible unsupervised
+extensions may include recasting the task as two-sample
+testing [Pandeva et al., 2024a,b], using generalization
+estimation [Baek et al., 2022, Rosenfeld and Garg, 2023],
+or leveraging calibration properties [Gupta et al., 2020].
+Similarly, the model update step can be integrated into the
+framework, e.g. via test-time adapation [Schirmer et al.,
+2024] or online and continual learning principles [Wang
+et al., 2024]. Ultimately, the provision of practical safety
+assurances for robust model behaviour at deployment under
+arbitrary shift is a challenging problem [Fang et al., 2022].
+4212
+
+--- PAGE 10 ---
+Author Contributions
+AT and RV contributed together to ideation and method-
+ology. AT developed and conducted all experiments and
+led paper writing, while RV initiated the problem statement
+and the preliminary approach, developed the theoretical mo-
+tivation and proofs and co-authored sections of the paper.
+EN provided project guidance and general feedback. CN
+contributed to ideation, theoretical development, project
+guidance and general feedback.
+Acknowledgements
+We thank Teodora Pandeva for initial discussions that helped
+shape the project. Additionally, we thank Wouter Koolen
+and Yaniv Romano for insightful discussions. This project
+was generously supported by the Bosch Center for Artificial
+Intelligence. Eric Nalisnick did not use any resources from
+Johns Hopkins for this work.
+References
+Salim I Amoukou, Tom Bewley, Saumitra Mishra, Freddy
+Lecue, Daniele Magazzeni, and Manuela Veloso. Se-
+quential Harmful Shift Detection Without Labels. Neural
+Information Processing Systems, 2024.
+Anastasios N Angelopoulos, Stephen Bates, Clara Fan-
+njiang, Michael I Jordan, and Tijana Zrnic. Prediction-
+powered inference. Science, 2023a.
+Anastasios N Angelopoulos, Stephen Bates, et al. Confor-
+mal Prediction: A Gentle Introduction. Foundations and
+Trends® in Machine Learning, 2023b.
+Anastasios N Angelopoulos, Stephen Bates, Adam Fisch,
+Lihua Lei, and Tal Schuster. Conformal Risk Control.
+International Conference on Learning Representations,
+2024a.
+Anastasios N. Angelopoulos, Stephen Bates, Emmanuel J.
+Candès, Michael I. Jordan, and Lihua Lei. Learn Then
+Test: Calibrating Predictive Algorithms to Achieve Risk
+Control. The Annals of Applied Statistics, 2025.
+Anastasios Nikolas Angelopoulos, Rina Barber, and Stephen
+Bates. Online conformal prediction with decaying step
+sizes. International Conference on Machine Learning ,
+2024b.
+Christina Baek, Yiding Jiang, Aditi Raghunathan, and J Zico
+Kolter. Agreement-on-the-line: Predicting the perfor-
+mance of neural networks under distribution shift. Ad-
+vances in Neural Information Processing Systems, 2022.
+Yarin Bar, Shalev Shaer, and Yaniv Romano. Protected Test-
+Time Adaptation via Online Entropy Matching: A Betting
+Approach. Neural Information Processing Systems, 2024.
+Rina Foygel Barber, Emmanuel J Candes, Aaditya Ramdas,
+and Ryan J Tibshirani. Conformal prediction beyond
+exchangeability. The Annals of Statistics, 2023.
+Stephen Bates, Anastasios Angelopoulos, Lihua Lei, Jiten-
+dra Malik, and Michael Jordan. Distribution-free, Risk-
+controlling Prediction Sets. Journal of the ACM, 2021a.
+Stephen Bates, Emmanuel J. Candès, Lihua Lei, Yaniv Ro-
+mano, and Matteo Sesia. Testing for outliers with confor-
+mal p-values. The Annals of Statistics, 2021b.
+Gordon Christie, Neil Fendley, James Wilson, and Ryan
+Mukherjee. Functional Map of the World. Proceedings
+of the Conference on Computer Vision and Pattern Recog-
+nition, 2018.
+Francesca Cipollini, Luca Oneto, Andrea Coraddu,
+Alan John Murphy, and Davide Anguita. Condition-based
+maintenance of naval propulsion systems with supervised
+data analysis. Ocean Engineering, 2018.
+Sanjit Dandapanthula and Aaditya Ramdas. Multiple test-
+ing in multi-stream sequential change detection. arXiv
+Preprint (arXiv:2501.04130), 2025.
+Donald A Darling and Herbert Robbins. Some nonparamet-
+ric sequential tests with power one. Proceedings of the
+National Academy of Sciences, 1968.
+Yixuan Fan, Zhanyi Jiao, and Ruodu Wang. Testing the
+mean and variance by e-processes. Biometrika, 2025.
+Zhen Fang, Yixuan Li, Jie Lu, Jiahua Dong, Bo Han, and
+Feng Liu. Is out-of-distribution detection learnable? Ad-
+vances in Neural Information Processing Systems, 2022.
+Shai Feldman, Liran Ringel, Stephen Bates, and Yaniv Ro-
+mano. Achieving Risk Control in Online Learning Set-
+tings. Transactions on Machine Learning Research, 2023.
+Matteo Fontana, Gianluca Zeni, and Simone Vantini. Con-
+formal prediction: A unified review of theory and new
+challenges. Bernoulli, 2023.
+Isaac Gibbs and Emmanuel J. Candès. Adaptive Conformal
+Inference Under Distribution Shift. Neural Information
+Processing Systems, 2021.
+Leying Guan. Localized conformal prediction: A gen-
+eralized inference framework for conformal prediction.
+Biometrika, 2023.
+Chirag Gupta, Aleksandr Podkopaev, and Aaditya Ram-
+das. Distribution-free binary classification: prediction
+sets, confidence intervals and calibration. Advances in
+Neural Information Processing Systems, 2020.
+4213
+
+--- PAGE 11 ---
+Pang Wei Koh, Shiori Sagawa, Henrik Marklund,
+Sang Michael Xie, Marvin Zhang, Akshay Balsubramani,
+Weihua Hu, Michihiro Yasunaga, Richard Lanas Phillips,
+Irena Gao, et al. Wilds: A benchmark of in-the-wild dis-
+tribution shifts. International Conference on Machine
+Learning, 2021.
+Wouter M Koolen and Peter Grünwald. Log-optimal
+anytime-valid e-values. International Journal of Approxi-
+mate Reasoning, 2022.
+Alex Krizhevsky, Geoffrey Hinton, et al. Learning multiple
+layers of features from tiny images. Tech Report, 2009.
+Rikard Laxhammar and Göran Falkman. Inductive confor-
+mal anomaly detection for sequential detection of anoma-
+lous sub-trajectories. Annals of Mathematics and Artifi-
+cial Intelligence, 2015.
+Rachel Luo, Rohan Sinha, Yixiao Sun, Ali Hindy, Shengjia
+Zhao, Silvio Savarese, Edward Schmerling, and Marco
+Pavone. Online distribution shift detection via recency
+prediction. International Conference on Robotics and
+Automation, 2024.
+Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bis-
+sacco, Baolin Wu, Andrew Y Ng, et al. Reading dig-
+its in natural images with unsupervised feature learning.
+NeurIPS Workshop on Deep Learning and Unsupervised
+Feature Learning, 2011.
+Teodora Pandeva, Tim Bakker, Christian A. Naesseth, and
+Patrick Forré. E-Valuating Classifier Two-Sample Tests.
+Transactions on Machine Learning Research, 2024a.
+Teodora Pandeva, Patrick Forré, Aaditya Ramdas, and Shub-
+hanshu Shekhar. Deep anytime-valid hypothesis testing.
+International Conference on Artificial Intelligence and
+Statistics, 2024b.
+Aleksandr Podkopaev and Aaditya Ramdas. Distribution-
+free uncertainty quantification for classification under
+label shift. Uncertainty in Artificial Intelligence, 2021.
+Aleksandr Podkopaev and Aaditya Ramdas. Tracking the
+risk of a deployed model and detecting harmful distribu-
+tion shifts. International Conference on Learning Repre-
+sentations, 2022.
+Aleksandr Podkopaev and Aaditya Ramdas. Sequential Pre-
+dictive Two-Sample and Independence Testing.Advances
+in Neural Information Processing Systems, 2023.
+Drew Prinster, Samuel Don Stanton, Anqi Liu, and Suchi
+Saria. Conformal Validity Guarantees Exist for Any Data
+Distribution (and How to Find Them). International
+Conference on Machine Learning, 2024.
+Aaditya Ramdas and Ruodu Wang. Hypothesis Testing with
+E-values. arXiv Preprint (arXiv:2410.23614), 2024.
+Aaditya Ramdas, Peter Grünwald, Vladimir V ovk, and
+Glenn Shafer. Game-Theoretic Statistics and Safe
+Anytime-Valid Inference. Statistical Science, 2023.
+Elan Rosenfeld and Saurabh Garg. (Almost) Provable Error
+Bounds Under Distribution Shift via Disagreement Dis-
+crepancy. Advances in Neural Information Processing
+Systems, 2023.
+Aytijhya Saha and Aaditya Ramdas. Testing exchangeability
+by pairwise betting. International Conference on Artifi-
+cial Intelligence and Statistics, 2024.
+Mona Schirmer, Dan Zhang, and Eric Nalisnick. Test-time
+Adaptation with State-Space Models. ICML 2024 Work-
+shop on Structured Probabilistic Inference & Generative
+Modeling, 2024.
+Shubhanshu Shekhar and Aaditya Ramdas. Nonparametric
+Two-Sample Testing by Betting. IEEE Transactions on
+Information Theory, 2021.
+Shubhanshu Shekhar and Aaditya Ramdas. On the near-
+optimality of betting confidence sets for bounded means.
+arXiv Preprint (arXiv:2310.01547), 2023a.
+Shubhanshu Shekhar and Aaditya Ramdas. Sequential
+Changepoint Detection via Backward Confidence Se-
+quences. International Conference on Machine Learning,
+2023b.
+Shubhanshu Shekhar and Aaditya Ramdas. Reducing se-
+quential change detection to sequential estimation. Inter-
+national Conference on Machine Learning, 2024.
+Jaehyeok Shin, Aaditya Ramdas, and Alessandro Rinaldo.
+E-detectors: A Nonparametric Framework for Sequential
+Change Detection. The New England Journal of Statistics
+in Data Science, 2023.
+Sophia Huiwen Sun, Abishek Sankararaman, and Balakrish-
+nan Murali Narayanaswamy. Online Adaptive Anomaly
+Thresholding with Confidence Sequences. International
+Conference on Machine Learning, 2024.
+Ryan J Tibshirani, Rina Foygel Barber, Emmanuel Candes,
+and Aaditya Ramdas. Conformal Prediction Under Co-
+variate Shift. Advances in Neural Information Processing
+Systems, 2019.
+Wouter AC van Amsterdam, Nan van Geloven, Jesse H
+Krijthe, Rajesh Ranganath, and Giovanni Ciná. When
+accurate prediction models yield harmful self-fulfilling
+prophecies. Patterns, 2025.
+Jean Ville. Etude critique de la notion de collectif. Gauthier-
+Villars Paris, 1939.
+4214
+
+--- PAGE 12 ---
+Harit Vishwakarma, Heguang Lin, and Ramya Korlakai
+Vinayak. Taming False Positives in Out-of-Distribution
+Detection with Human Feedback. International Confer-
+ence on Artificial Intelligence and Statistics, 2024.
+Denis V olkhonskiy, Evgeny Burnaev, Ilia Nouretdinov,
+Alexander Gammerman, and Vladimir V ovk. Inductive
+conformal martingales for change-point detection. Con-
+formal and Probabilistic Prediction and Applications ,
+2017.
+Vladimir V ovk. Testing Randomness Online. Statistical
+Science, 2021.
+Vladimir V ovk, Ivan Petej, Ilia Nouretdinov, Ernst Ahlberg,
+Lars Carlsson, and Alex Gammerman. Retrain or not
+retrain: Conformal test martingales for change-point de-
+tection. Conformal and Probabilistic Prediction and
+Applications, 2021.
+Liyuan Wang, Xingxing Zhang, Hang Su, and Jun Zhu. A
+Comprehensive Survey of Continual Learning: Theory,
+Method and Application. IEEE Transactions on Pattern
+Analysis and Machine Intelligence, 2024.
+Ian Waudby-Smith and Aaditya Ramdas. Estimating means
+of bounded random variables by betting. Journal of the
+Royal Statistical Society Series B: Statistical Methodol-
+ogy, 2024.
+Ziyu Xu and Aaditya Ramdas. Online multiple testing
+with e-values. International Conference on Artificial
+Intelligence and Statistics, 2024.
+Ziyu Xu, Nikos Karampatziakis, and Paul Mineiro. Active,
+anytime-valid risk controlling prediction sets. Neural
+Information Processing Systems, 2024.
+Huaxiu Yao, Caroline Choi, Bochuan Cao, Yoonho Lee,
+Pang Wei W Koh, and Chelsea Finn. Wild-Time: A
+benchmark of in-the-wild distribution shift over time. Ad-
+vances in Neural Information Processing Systems, 2022.
+Margaux Zaffran, Olivier Féron, Yannig Goude, Julie Josse,
+and Aymeric Dieuleveut. Adaptive conformal predictions
+for time series. International Conference on Machine
+Learning, 2022.
+Matteo Zecchin and Osvaldo Simeone. Adaptive Learn-
+then-Test: Statistically Valid and Efficient Hyperparam-
+eter Selection. International Conference on Machine
+Learning, 2025.
+4215
+
+--- PAGE 13 ---
+On Continuous Monitoring of Risk Violations under Unknown Shift
+— Supplementary Material —
+CONTENTS
+1 Introduction 1
+2 Risk and Problem Formulation 2
+3 Risk Monitoring as Sequential Testing By Betting 3
+3.1 Relation to Other Approaches . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+4 Theoretical Analysis 5
+5 Related Work 6
+6 Empirical Results 6
+6.1 Monitoring the Total Error Rate for Outlier Detection . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+6.2 Monitoring the Miscoverage Rate for Set Prediction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+7 Discussion 9
+A Mathematical Details 14
+A.1 Definitions and Terminology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+A.2 Details on the Sum-Process . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+A.3 Risk Control under the i.i.d. Data Stream Setting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+A.4 Proofs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+B Additional Related Work 18
+C Additional Experimental Design 19
+D Additional Experimental Results 21
+4216
+
+--- PAGE 14 ---
+A MATHEMATICAL DETAILS
+We provide relevant mathematical details to complement the main text, including(i) on the terminology of (super)martingales
+and the associated measure-theoretic objects, (ii) a more detailed description of the summation wealth process, (iii) insights
+on risk control under the i.i.d data stream setting, and finally (iv) formal proofs for our main theoretical statements.
+A.1 DEFINITIONS AND TERMINOLOGY
+Given a sequence of random variablesut = (u1, u2, . . . ,ut), we denote the smallestσ-field generated by ut as Ft = σ (ut).
+The sequence of random variables then lead to the filtration F = (Ft)∞
+t=0 defined as the increasing sequence of generated σ-
+fields F0 ⊂ F 1 ⊂ F 2 ⊂ · · · , where F0 is the trivial σ-field. A sequence of random variables (Mt)∞
+t=0 is called a martingale
+if it is adapted to the filtration F, i.e. each Mt is Ft measurable, each Mt is integrable, and satisfies E [Mt | Ft−1] = Mt−1.
+If this equality is replaced with ≤, then we call (Mt)∞
+t=0 a supermartingale. Furthermore, we define a sequence (λt)∞
+t=0 as a
+predictable sequence if λt is Ft−1 measurable, meaning λt can only depend on the past information up to the time step
+t − 1. Finally, we define a random variableτ : Ω → N ∪ {∞} to be a stopping time with respect to the filtration F if, for
+every t ≥ 0, the event {τ ≤ t} belongs to the sigma-algebra Ft, i.e., {τ ≤ t} ∈ F t. This condition ensures that the decision
+to stop at time t can be made based only on the information available up to time t, meaning τ does not ‘see into the future’.
+We also make use of the following martingale concentration inequality in our results:
+Lemma A.1 (Azuma-Hoeffding Inequality). Let (vi)t
+i=1 be a martingale difference sequence adapted to a filtration(Fi)t
+i=0,
+meaning: E[vi|Fi−1] = 0 , ∀i. Suppose there exist constants ci such that for all i, |vi| ≤ ci almost surely. Then for any
+η > 0 we have that
+P
+ 
+tX
+i=1
+vi
+ ≥ η
+!
+≤ 2 exp
+ 
+− η2
+2Pt
+i=1 c2
+i
+!
+.
+There also exists one-sided version of the above inequality as follows:
+P
+ tX
+i=1
+vi ≥ η
+!
+≤ exp
+ 
+− η2
+2Pt
+i=1 c2
+i
+!
+and similarly P
+ tX
+i=1
+vi ≤ −η
+!
+≤ exp
+ 
+− η2
+2Pt
+i=1 c2
+i
+!
+.
+A.2 DETAILS ON THE SUM-PROCESS
+As stated in § 3 the summation wealth process is given as Mt (ψ) =Pt
+i=1 λi (zi − ϵ), with (λt)t∈T being the predictable
+betting rate. It is clear under the null H0 (ψ) (Eq. 3) this forms a supermartingale, and hence does not grow. Furthermore,
+it is easy to see that Mt(ψ) is a supermartingale sequence if EPt [zt (ψ) | Ft−1] < ϵ, ∀t ∈ T . Thus, we obtain an if and
+only if characterization of the risk control condition, and hence if one can deduce that Mt (ψ) is not a supermartingale,
+then this gives the evidence that the desired risk control assurance is violated. If Mt (ψ) was a martingale sequence,
+i.e. when EPt [zt (ψ) | Ft−1] = ϵ, we may apply the one-sided Azuma-Hoeffding inequality to argue that the martingale
+sequence does not grow beyond a certain limit with high-probability. However, considering a sequence (˜zt)t∈T such
+that EPt [˜zt | Ft−1] = ϵ, it can be argued that ˜Mt (ψ) = Pt
+i=1 λi (˜zt − ϵ) ≥ Pt
+i=1 λi (zt − ϵ), hence the one-sided
+Azuma-Hoeffding bound applied to ˜Mt (ψ) also extends to Mt (ψ). Thus we can argue that
+P
+ tX
+i=1
+λi (zi − ϵ) ≥ η
+!
+≤ exp
+
+− η2
+2t
+
+,
+where the bounded assumption z ∈ [0, 1] and ϵ ∈ [0, 1) result in boundedness of the difference sequence. Next, we can
+choose the threshold η =
+q
+2t log 1
+δ and argue that P (Mt (ψ) ≥ η) < δ . If Mt (ψ) does indeed grow above η, then one
+can raise the alarm while retaining a false alarm control guarantee, as under the null Mt (ψ) will not grow beyond η with
+probability of at least 1 − δ. We further note that with high-probability, Mt (ψ) will remain bounded as O(
+√
+t).
+A.3 RISK CONTROL UNDER THE I.I.D. DATA STREAM SETTING
+Consider the simpler setting where the test stream originates i.i.d from a non-shifting test distribution as (xt, yt)t∈T ∼ P0.
+The risk quantity to monitor from Eq. 3 directly simplifies due to independence as EPt [zt | Ft−1] = EPt [zt] = Rt(ψ), and
+4217
+
+--- PAGE 15 ---
+since P0 = Pt ∀t ∈ T is static we have Rt(ψ) = R0(ψ) as a time-independent risk. We can now conveniently reverse our
+hypotheses under the sequential testing framework to exploit the fact that P0 is static, and significant discoveries will thus
+hold even under future observations. That is, we can test for risk control directly by the hypothesis pair
+H0(ψ) : ∃t ∈ T : R0(ψ) > ϵ, H 1(ψ) : R0(ψ) ≤ ϵ ∀t ∈ T , (6)
+and use the following (reversed) wealth process and ψ-CS construction:
+Mt(ψ) =
+tY
+i=1
+(1 + λi (ϵ − zi)) and C ψ
+t = {ψ ∈ Ψ : Mt(ψ) ≥ 1/δ}. (7)
+Observe how once sufficient evidence is collected to support that the risk associated with a particular candidate ψ does not
+exceed the tolerated risk level ϵ, that candidate ψ can be added to C ψ
+t safely and indefinitely since the evidence collected
+remains meaningful under a static P0. We can then directly leverage the Type-I error control property under the sequential
+testing framework [Ramdas et al., 2023] (via Ville’s Inequality) to state strongtime-uniform or anytime-valid risk control
+guarantees. Specifically, it follows that for everyψ ∈ Ψ we have
+PH0(∃t ∈ T : Mt(ψ) ≥ 1/δ) ≤ δ ⇒ PH0(∃t ∈ T : R0(ψ) ≤ ϵ) ≤ δ ⇒ P(∀t ∈ T : R0(ψ) ≤ ϵ) ≥ 1 − δ. (8)
+In words, the probability of claiming risk control (H1) under risk violation (H0) is upper bounded by δ, whereas under risk
+control we may perhaps mistakingly claim violation (and thus be overly conservative by excluding the associatedψ) but will
+not invalidate the risk level ϵ. Thus, the overall probability of risk violation is controlled at level 1 − δ, rendering a strong
+safety assurance. Since Rt(ψ) is not truly time-dependent neither is C ψ
+t , which will initially grow as evidence for each ψ
+is collected and a decision on inclusion is made, and eventually stabilize. It is then straightforward to also recommend a
+particular threshold choice if the risk profile is monotonic or in some sense predictable, such as ˆψt := min C ψ
+t as the least
+conservative threshold in case of a monotonically increasing risk. In other words, ˆψt will quickly tend to an optimal fixed
+choice ˆψ after a sufficient number of observations are processed.
+A.4 PROOFS
+We provide proofs for our main theoretical statements from § 4 below. We first restate each result for self-containment.
+PROOF OF LEMMA 4.1.
+Lemma 4.1. (Valid wealth process). For any ψ ∈ Ψ such that EPt[zt | F t−1] ≤ ϵ ∀t ∈ T satisfies the null, the process
+Mt(ψ) in Eq. 4 is a valid test supermartingale for the predictable betting rate λt ∈ [0, 1/ϵ).
+Proof. For any ψ ∈ Ψ, we consider the test-statistic of the form Mt (ψ) = Qt
+i=1 (1 + λi (zi − ϵ)) where (λt)t∈T is a
+predictable process. We also have thatzt ∈ [0, 1] (i.e. we consider a bounded loss function; from § 2), and the restriction
+on λt ∈ [0, 1/ϵ) renders the term 1 + λt (zt − ϵ) to be non-negative. Furthermore, Mt (ψ) being adapated to the filtration
+follows from λt being predictable. Integrability of Mt (ψ) follows from the boundedness assumption. Next we verify the
+supermartingale condition EPt [Mt (ψ) | Ft−1] ≤ Mt−1. Since conditional on Ft−1 randomness only originates from zt,
+we have that EPt [Mt (ψ) |Ft−1] = Mt−1 (ψ) + λt · Mt−1 (ψ) · EPt [zt − ϵ | Ft−1] ≤ Mt−1 (ψ), where the last inequality
+follows from the fact that for a valid ψ we have EPt [zt − ϵ | Ft−1] ≤ 0. Hence, we have shown that Mt (ψ) is a valid test
+supermartingale (or wealth process) for ψ.
+It is also easy to verify the converse direction for the following corollary:
+Corollary. Mt(ψ) is a valid test supermartingale if and only if EPt[zt(ψ) | Ft−1] ≤ ϵ, ∀t ∈ T .
+Remark. So far in our approach, we have not put any restriction on the nature of stream, i.e. we can have arbitrary
+dependence between distributions Pt and Pt′, t ̸= t′. Thus, the highlighted approach encompasses general and realistic
+shift settings in the stream. However, in the scenario where the data stream under shift satisfies an independence assumption,
+i.e. when samples from Pt and Pt′ are independent, the considered hypothesis pair further simplifies to H0 (ψ) = Rt (ψ) ≤
+ϵ, ∀t ∈ T , H 1 (ψ) : ∃t ∈ T : Rt (ψ) > ϵ as then EPt [zt | Ft−1] = EPt [zt]. Hence, the hypothesis formulation in Eq. 3 is
+more general.
+4218
+
+--- PAGE 16 ---
+PROOF OF LEMMA 4.2.
+Lemma 4.2. (False alarm guarantee). For any ψ ∈ Ψ such that EPt[zt | F t−1] ≤ ϵ ∀t ∈ T satisfies the null, it holds that
+P (∃t ∈ T : Mt(ψ) ≥ 1/δ) ≤ δ.
+Proof. The above statement is a direct consequence of Ville’s inequality which we state below for completion:
+Ville’s inequality [Ville, 1939].Given a non-negative supermartingale sequence (Mt)t∈T such that M0 = 1, it holds that
+P(∃t ∈ T : Mt ≥ 1/δ) ≤ E[M0]
+1/δ = δ.
+Similar to the Azuma-Hoeffding inequality (§ A.2), Ville’s inequality gives probabilistic control on the growth of the
+supermartingale process. The false alarm guarantee then trivially follows from an interpretation of the obtained Type-I error
+control, as Lemma 4.1 asserts thatMt (ψ) is a valid supermartingale forψ ∈ Ψ such that EPt[zt(ψ) | F t−1] ≤ ϵ, ∀t ∈ T .
+PROOF OF LEMMA 4.3.
+Lemma 4.3. (Asymptotic consistency). For any ψ ∈ Ψ such that EPt [zt | Ft−1] ≤ ϵ for finitely many steps t ∈ T and
+EPt [zt | Ft−1] > ϵ otherwise, it holds that P(τ(ψ) < ∞) = 1, where τ(ψ) denotes the stopping time.
+Proof. This is a simple consequence of the property of sequential test of power one [Darling and Robbins, 1968] as stated in
+the main text. However, we provide a simple proof below based on the growth rate of Mt (ψ) under the alternative (H1 (ψ)).
+The proof closely follows the ideas outlined in the consistency results from Pandeva et al. [2024b] (Prop. 4.2 in the paper).
+For notational clarity, we suppress the dependence on ψ below.
+We first note that P{τ = ∞} = P{∩t≥1{τ > t }} ≤ P{τ > t }. Taking the limit, P{τ = ∞} ≤ lim supt→∞ P{τ > t }.
+Next, we will argue thet lim supt→∞ P{τ > t } goes to zero under the alternative almost surely. We have the wealth process
+Mt =Qt
+i=1 (1 + λi · δi), δi = zi − ϵ. Denoting vi = log(1 + λi · δi), we define St = log Mt =Pt
+i=1 vi. Furthermore, let
+us denote Ai = E[vi | Ft−1]. With this notation in place, we consider the event P{τ > t }, i.e. the stopping condition as
+follows.
+The stopping condition. The event P{τ > t } is the probability that the stopping time is greater than t which from our
+stopping condition and general monotonicity arguments is P{St < log(1/δ)}. Using our notation from above, we have
+St =Pt
+i=1 vi − Ai +Pt
+i=1 Ai which gives
+P{τ > t } = P
+(
+1
+t
+tX
+i=1
+vi − Ai + 1
+t
+tX
+i=1
+Ai < log( 1
+δ )
+t
+)
+.
+Martingale difference sequence. It is clear that the sequence (vi − Ai)i∈T is a martingale difference sequence, and
+following the boundedness assumptions |vi − Ai| ≤ λi. And hence, we can apply the Azuma-Hoeffding’s inequality to argue
+that P
+n
+| 1
+t
+Pt
+i=1 vi − Ai| > η
+t
+o
+≤ 2 exp
+
+−η2
+2 Pt
+i=1 λ2
+i
+
+for some η. Given λi ≤ λmax (leveraging bounded betting rates), then
+Pt
+i=1 λ2
+i = t · λ2
+max. Choosing η = √t log t, and defining the event Gc
+t =
+n
+| 1
+t
+Pt
+i=1 vi − Ai| > η
+t
+o
+to be an undesirable
+event where the martingale is overly fluctuating, we may state that P(Gc
+t) ≤ 2 exp{ − log t
+2λ2max
+} (a decaying rate in t). Defining
+Gt as a favourable event where the martingale difference remains controlled, we say taht Gt =
+n
+| 1
+t
+Pt
+i=1 vi − Ai| ≤ η
+t
+o
+.
+Then, we can write P{τ > t } using the law of total probability as below:
+P{τ > t } ≤ P
+ (
+1
+t
+tX
+i=1
+Ai < log 1/δ
+t + |1
+t
+tX
+i=1
+vi − Ai|
+)
+∩ Gt
+!
++ P{Gc
+t }
+≤ P
+ (
+1
+t
+tX
+i=1
+Ai < log 1/δ
+t +
+r
+log t
+t
+)
+∩ Gt
+!
++ P{Gc
+t }
+≤ P
+ (
+1
+t
+tX
+i=1
+Ai < log 1/δ
+t +
+r
+log t
+t
+)!
++ P{Gc
+t }.
+4219
+
+--- PAGE 17 ---
+Next, taking the limit P{τ = ∞} ≤ lim supt→∞ P{τ > t }, we can bound the first term in the above expression, i.e.
+P{τ = ∞} ≤ lim sup
+t→∞
+P{τ > t } ≤ P
+ (
+1
+t
+tX
+i=1
+Ai < log 1/δ
+t +
+r
+log t
+t
+)!
+.
+The alternative. We are given that E[zt − ϵ | Ft−1] > 0 for infintely many steps t, and E[zt − ϵ | Ft−1] ≤ 0 for finitely
+many steps t. Denote µ = inf t∈T EH1[zt − ϵ | F t−1] > 0. We assume that the betting rate λi is small, and using the
+approximation log(1 + x) ≈ x we write Ai = E[log(1 + λi · δi | F i−1] ≈ λi · E[zi − ϵ | F i−1]. We further make the
+approximation that λi is not exactly zero. By Cesàro means, we have lim inft→∞ 1
+t
+Pt
+i=1 Ai ≥ lim infi→∞ Ai = λµ > 0,
+where we use the definition of µ. Now, for sufficiently larget we have
+1
+t
+tX
+i=1
+Ai ≫ log 1/δ
+t +
+r
+log t
+t ,
+and hence 1
+t
+Pt
+i=1 Ai grows faster than the other two terms shrink, leading to the probability lim supP{τ > t } → 0.
+Therefore, we obtain PH1 {τ = ∞} = 0 and thus PH1 {τ < ∞} = 1.
+DETAILS OF DEFINITION 4.4.
+We refer to the relevant works such as Waudby-Smith and Ramdas [2024], Koolen and Grünwald [2022], Shekhar and
+Ramdas [2023a] on the notion of growth rate optimality and related betting rates. Waudby-Smith and Ramdas [2024] also
+refer to the condition as growth rate adaptive to the particular alternative (GRAPA), whereas Koolen and Grünwald [2022]
+label it the GROW criterion.
+PROOF OF PROPOSITION 4.5.
+Proposition 4.5. (Detection delay bound). A worst-case detection delay for the hypothesis pair in Eq. 3 and wealth process
+Mt(ψ) in Eq. 4 is characterized by (τ(ψ) − τ∗(ψ)) ≈ O((log(1/δ) + T )/(λ · µ)), where µ denotes the risk violation
+intensity and T a shift changepoint.
+Proof. We first provide more clarification on the statement of this result. We consider a simplistic setting of risk violations,
+i.e. for some ψ ∈ Ψ, ∃ T ∈ T such that EPt [zt | Ft−1] ≤ ϵ for t ≤ T (i.e. the risk is within control until time step T ),
+and EPt [zt | Ft−1] > ϵ for t > T (i.e. the risk gets violated after time step T ). Furthemore, we assume EPt [zt | Ft−1] =
+µ + ϵ, µ > 0, t > T , i.e. we assume that the mean deviates above ϵ with some fixed positive quantity µ. Our setting
+now closely resembles a changepoint detection scenario. The goal of our detection delay argument is to study when a risk
+violation alarm will be raised, and ideally we do not want significant detection delays after reaching time period T . Our
+result will help characterize the flexibility of the methodology we employ to control these delays.
+We first consider the simple summation test statistic described in § 3), and once more suppress dependency on ψ for
+notational clarity from now on. We then have the wealth process
+Mt =
+tX
+i=1
+λi(zi − ϵ) =
+TX
+i=1
+λi(zi − ϵ) +
+tX
+i=T +1
+λi (zi − ϵ) .
+Let us denotePT
+i=1 λi(zi − ϵ) to be MT , i.e. Mt = MT +Pt
+i=T +1 λi (zi − ϵ). For simplicity, we consider a fixed betting
+rate λ moving forward, and we express the pay-off term (zi − ϵ) as (zi − E[zi | Fi−1]) + (E[zi | Fi−1] − ϵ). Thus,
+Mt = MT +
+tX
+i=T +1
+λ (zi − E[zi | Fi−1]) +
+tX
+i=T +1
+λ (E[zi | Fi−1] − ϵ) .
+By the assumption in our setting, the last term resolves to λ · (t − T ) · µ, and hence the whole expression becomes
+Mt = MT + λµ(t − T ) +
+tX
+i=T +1
+λ(zi − E[zi | Fi−1]).
+4220
+
+--- PAGE 18 ---
+We employ the same decomposition for MT and obtain the following expression as
+Mt =
+TX
+i=1
+λ (E[zi | Fi−1] − ϵ)
+| {z }
+ET
++λµ (t − T ) +
+tX
+i=1
+λ (zi − E[zi | Fi−1])
+| {z }
+St
+.
+Now, it can be seen that (zi − E[zi | Fi−1)i∈T is a martingale difference sequence, and hence by use of Azuma-Hoeffding’s
+inequality (§ A.1) will be contained. For some pre-specified threshold b, we define the stopping time τ = inf{t : Mt ≥ b}.
+To argue for the detection delay, we consider the term(τ − T ) and raise an alarm when
+ET + λµ(τ − T ) + Sτ = b,
+⇔ λµ(τ − T ) = b − ET − Sτ ,
+⇔ τ − T = b − ET − Sτ
+λµ .
+Following this we can analyse the expectation of the detection delay (τ − T ) as E{τ − T } = b−ET
+λµ where E[Sτ] = 0 .
+Since ET < 0 surely, we have ET = 0 when E[zi | F i−1] = ϵ, ∀t ≤ T (the best case setting). In the worst case, when
+E[zi | Fi−1] = 0, ∀t ≤ T we obtain ET = −λT ϵ, leading to a worst-case expected detection delay of (τ − T ) ≈ O( b+T
+λµ ).
+We can also give a high-probability argument using a one-sided Azuma-Hoeffding bound. We then have
+P (St ≥ λ · η) ≤ exp
+ −η2
+2t
+
+,
+and taking η =
+√
+t/λ we get P
+ 
+St ≥
+√
+t
+
+≤ exp
+ 
+− 1
+2λ2
+
+. Considering the worst case setting, we have
+(τ − T ) = b+λT ϵ−Sτ
+λµ ≤ b+λT ϵ−√τ
+λµ with high-probability, which further results in (τ − T ) ≈ O
+
+b+λT ϵ
+λµ
+
+.
+We can adopt the exact same arguments for our primary wealth processMt =Qt
+i=1 (1 + λi (zi − ϵ)) (Eq. 4) by considering
+log Mt and using the approximationlog(1+ x) ≈ x, that is valid for small enoughλ. Considering log Mt ≈Pt
+i=1 λ (zi − ϵ)
+this then equates the sum-process considered in our argument above. In this case, b will be replaced with log 1/δ, giving
+(τ − T ) ≈ O
+
+log(1/δ)+T
+λµ
+
+. Some intituitive insights from this expression are that (i) the detection delay is directly
+proportional to T , the time step at which risk violation occurs—if the risk violations begin later, then a delay arises from
+overcoming the decay from the initial behavior; and (ii) the detection delay is inversely proportional to both the betting
+rate λ and the intensity of the violations µ. However, we note that our methodology comes with the flexibility to control
+these delays to some extent by leveraging a smart betting rate design.
+B ADDITIONAL RELATED WORK
+Static risk control. The framework of conformal prediction constructs set predictors with upper bounds specifically on
+the miscoverage risk under i.i.d. or exchangeable data, with a substantial recent body of literature (see, e.g., Angelopoulos
+et al. [2023b], Fontana et al. [2023]). The approach has been extended to more general bounded risks by Angelopoulos et al.
+[2024a] leveraging similar exchangeability arguments. Bates et al. [2021a] use concentration inequalities to provide high-
+probability assurances for monotonic expectation risks, and Angelopoulos et al. [2025] extend the idea to non-monotonic
+risks by reframing the task as a non-sequential multiple testing problem. Related in spirit, Angelopoulos et al. [2023a]
+propose the use of a hold-out unlabelled dataset to provide probability guarantees for confidence intervals on population-level
+parameters.
+Risk control for stream data and under shift. Recent work on conformal prediction includes addressing non-
+exchangeable data sequences such as time series, e.g. by tracking and updating the tolerated miscoverage rate [Gibbs
+and Candès, 2021, Angelopoulos et al., 2024b, Zaffran et al., 2022] or different weighting schemes [Barber et al., 2023,
+Guan, 2023]. Particular applications also include outlier detection [Bates et al., 2021b, Laxhammar and Falkman, 2015].
+Recent work on data shifts has included covariate shift [Tibshirani et al., 2019], label shift [Podkopaev and Ramdas, 2021]
+and their abstraction to more general shifts [Prinster et al., 2024]. All of the above work predominantly focuses on the
+miscoverage risk, with Feldman et al. [2023] being an interesting extension of Gibbs and Candès [2021] to more general
+bounded risks, discussed in § 3.1. Furthermore, obtainable guarantees are generally asymptotic or finite-sample only under
+relaxation (e.g., with respect to a permitted coverage deviation from the targeted guarantee).
+4221
+
+--- PAGE 19 ---
+C ADDITIONAL EXPERIMENTAL DESIGN
+Empirical-Bernstein wealth process. We directly adopt the formulation as a test supermartingale or wealth process
+described in Waudby-Smith and Ramdas [2024] (see Sec. 3.2 and Thm. 2 in their paper), given by
+M EB
+t (ψ) =
+tY
+i=1
+exp{λi (zi − ϵ) − vi ρ(λi)} (9)
+with vi = 4 (zi − ˆµi−1)2 and ρ(λi) = 1/4 (− log(1 − λi) − λi) for λi ∈ [0, 1), and using the suggested predictable plug-in
+betting rate λEB
+i = min{
+q
+2 log(2 /δ)
+ˆσ2
+i−1 i log(1+i) , c}. The estimates ˆµi−1 and ˆσ2
+i−1 denote the empirical running mean and variance
+over the observed loss sequence {z1, . . . , zi−1} up to time i − 1, thus rendering λEB
+i predictable at every time step. We
+select c = 1/2 as a recommended constant c ∈ (0, 1), and omit the bias terms of1/4 and 1/2 for ˆµi−1 and ˆσ2
+i−1 respectively,
+which are negligable for sufficiently large streams. Podkopaev and Ramdas [2022] leverage the process in its confidence
+sequence-equivalent form to estimate bounds on the running risk Rr(ψ) in their problem setting, motivating its inclusion as
+a baseline.
+Choice of betting rate. We refer to Waudby-Smith and Ramdas [2024] on the particular technical details of various
+betting rate designs, in particular their App. B.2 for GRO and App. B.3 for approximately GRO. In essence, a direct
+optimization of the GRO condition (Definition 4.4) can be achieved by exhaustive root-finding over a fine grid of possible
+values for λt ∈ [0, 1/ϵ). The approximation to GRO takes an additional Taylor approximation and truncation step to derive a
+closed-form solution for the root, thus being substantially more efficient. Our final betting rate expression takes this approach
+for a particular truncation aligned with our problem setting (i.e. the permitted range of λt). Other approximations to the
+GRO objective are also possible, such as solving for a lower-bound to the wealth (see their App. B.4 and following).
+Batched data stream. Assume we observe more than a single observation at every timet, i.e. the data stream with samples
+{(xt,b, yt,b)}B
+b=1 ∼ Pt for some batch size B ≪ B∗. Then we can average over the evidence in each batch to obtain a more
+robust measure of evidence for risk violations as
+Mt(ψ) =
+tY
+i=1
+1
+B
+BX
+b=1
+(1 + λi(zi,b − ϵ)), (10)
+leading to a reduced variance of the wealth process as well as reducing the detection delay τ(ψ) − τ∗(ψ) with respect to the
+true risk. However this does not necessarily equate lower sampling costs, since the total number of observations is B · t.
+False alarm rate. For a given experiment run or trial, a threshold candidate ψ raises a false alarm (or is labelled a false
+positive) if Rt(ψ) ≤ ϵ but Mt(ψ) ≥ 1/δ, thus erroneously claiming violation. Equivalently, we may state for the detection
+delay that (τ(ψ) − τ∗(ψ)) < 0 stops prematurely. The false alarm rate is then computed as the fraction of false alarms
+across R trials, i.e.
+%F P = 1
+R
+RX
+r=1
+1 [(τ(ψ) − τ∗(ψ)) < 0], (11)
+and compared to the tolerated false alarm rate δ ∈ (0, 1). If %F P > δ then the Type-I error under H0(ψ) is uncontrolled,
+resp. any error control property violated.
+Total error rate (TER). In § 6.1 the target risk to monitor is the total error rate (TER), accounting for both cases of inlier
+(false positives, FP) and outlier misclassification (false negatives, FN). That is, we define the true riskRt(ψ) = EPt[zt] with
+loss variable
+zt =
+
+
+
+1, if out(xt) ≥ ψ and (xt, yt) ∼ Pin, (FP)
+1, if out(xt) < ψ and (xt, yt) ∼ Pout, (FN)
+0 else.
+(12)
+The TER is a complex risk quantity that is both non-monotonic across time and thresholds, since the FP and FN terms
+introduce competing objectives in terms of what constitutes a ‘safe’ thresholdψ. Under a stepwise shift with increasing
+outlier fraction, the FP term initially weighs stronger, motivating a higher threshold choice (since the chance of an inlier
+mislabelling is reduced). However, as the outlier fraction increases the FN term becomes more relevant, motivating a lower
+threshold choice (i.e. increasing the chance of an outlier label). Therefore, no clear ‘trivial’ safe threshold selection is
+available except for ˆψ = 1 if πout
+t = 0 and ˆψ = 0 if πout
+t = 1.
+4222
+
+--- PAGE 20 ---
+Miscoverage rate (MCR). In § 6.2 the target risk to monitor is the miscoverage rate, accounting for set exclusion of
+the correct label yt. That is, we define the true risk Rt(ψ) = EPt[zt] with loss variable zt = 1 [yt /∈ ˆfψ(xt)]. In this case,
+the MCR is closer to monotonically increasing over time as the natural temporal shift caused by both FMoW and Naval
+propulsion degrades model performance, and clearly monotonic in the thresholds. For FMoW, an indefinitely valid ‘safe’
+threshold with zero risk is given by ˆψ = 0, resulting in a prediction set matching the full label space Y, and thus zt = 0 at
+every time step. For Naval propulsion, sinceY ⊆ [0, 1] and in practice yt ∈ [0.95, 1.0] we instantiate a fine grid of threshold
+candidates in the range Ψ := [0, 0.05]. Thus for a sufficiently well-trained regressor, ˆψ = 0.05 trivially ensures coverage
+(again returning the full response space) while thresholds towards zero place higher reliance on the prediction’s accuracy
+at the risk of miscoverage. Clearly, such ‘trival’ threshold solutions are generally impractical, but the MCR’s monotonic
+behaviour renders it a more interpretable quantity and easier to track than the TER in § 6.1.
+Functional Map of the World dataset. We consider the Functional Map of the World dataset (FMoW) [Christie et al.,
+2018], a large-scale satellite image dataset with 62 categories of building and land use, collected across various geographic
+regions and over 16 years (2002 – 2017). We consider the time-dependent partitioning of FMoW proposed by Yao et al.
+[2022], wherein a natural shift occurs as land use for the same satellite image locations, surveyed repeatedly over several
+years, changes over time. The predictor (a DenseNet-121) is trained on earlier years (2002 – 2012), and we increase the test
+stream frequency to simulate daily observations by sampling chronologically from data in 2013 – 2017 every 365 time steps
+(equating each passing year). This induces a (slow) step-wise shift, and we observe that the classifier’s predictive accuracy
+worsens as time progresses, in line with results reported by Yao et al. [2022].
+Naval propulsion system dataset. We consider predictive maintenance (or equipment monitoring) data on naval gas
+turbine behaviour [Cipollini et al., 2018]. This tabular time series consists of ∼ 12 000 recordings for various turbine system
+parameters, and an associated turbine compressor degradation coefficient denoting the compressor’s health. Over time this
+degradation coefficient steadily increases from 0.95 to 1.0, denoting a gradual equipment decay. We supplement the data via
+jittered resampling of early observations (the first 2000 samples) to enrich the initial ‘healthy’ compressor state, and train a
+Random Forest regressor on that data. Expectedly, as the compressor gradually degrades beyond its initial ‘healthy’ range
+the predictor fails to extrapolate, resulting in decreased performance in line with a temporal distribution shift.
+4223
+
+--- PAGE 21 ---
+D ADDITIONAL EXPERIMENTAL RESULTS
+Figure 5: Results for outlier detection with no shift (§ 6.1). From left to right: Visuals of the steady risk and wealth process
+behaviour with respective rejection thresholds ϵ and 1/δ, for a single threshold candidate (here ψ = 0.20); the behaviour of
+the valid threshold set ψ-CS (Eq. 5), which slightly shrinks by eliminating clearly violating thresholds and then stabilizes,
+signalling robust detection performance for the i.i.d. stream; and the empirical distributions of detection delays τ(ψ) − τ∗(ψ)
+across all ψ ∈ Ψ, including the false alarm region (FP). We also have B = 1 and S = 50, with results evaluated over
+R = 50 trials (mean and std. deviation).
+Figure 6: Results for outlier detection with an immediate shift early on (§ 6.1). From left to right: Visuals of the strongly
+growing risk and wealth process behaviour with respective rejection thresholds ϵ and 1/δ, for a single threshold candidate
+(here ψ = 0.90); the behaviour of the valid threshold setψ-CS (Eq. 5), which almost immediately collapses to zero signalling
+a highly unreliable model in need of updating; and the empirical distributions of detection delays τ(ψ) − τ∗(ψ) across all
+ψ ∈ Ψ, including the false alarm region (FP). Since the evidence for risk violation is very clear, no false alarms are incurred
+by any tracker. We also haveB = 1 and S = 50, with results evaluated over R = 50 trials (mean and std. deviation).
+4224
+
+--- PAGE 22 ---
+Table 1: Results for outlier detection with a stepwise shift (§ 6.1). We provide monitoring results of the total error rate
+for ϵ = 0.1, δ = 0.1 and different combinations of the two key tracking parameters, sliding window size S and batch size
+B. The delay quantity ¯τ(ψ) denotes the mean and std. deviation of detection delays τ(ψ) − τ∗(ψ) across repeated trials
+(R = 50), whereas %F P > 0 and %F P > δ denote the number of thresholds ψ ∈ Ψ (in %) whose false alarm rate (see
+Eq. 11) is non-zero or exceeds the desired rate δ, respectively.
+Params Running Risk ˆRr(ψ) Wealth ProcessMt(ψ) Wealth ProcessMSU Mt (ψ) Wealth ProcessMEBt (ψ)
+S B Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 FP> δ Delay¯τ(ψ) %FP>0 %FP> δ
+None 1 408±201 13.86% 3.96% 563±207 0.00% 0.00% 694±230 0.00% 0.00% 807±334 0.00% 0.00%
+None 10 393±214 6.93% 2.97% 441±210 0.00% 0.00% 495±219 0.00% 0.00% 708±307 0.00% 0.00%
+None 50 393±213 0.99% 0.00% 414±215 0.00% 0.00% 451±220 0.00% 0.00% 655±273 0.00% 0.00%
+200 1 180±84 25.74% 3.96% 355±110 0.00% 0.00% 469±128 0.00% 0.00% 831±337 0.00% 0.00%
+200 10 159±74 6.93% 2.97% 210±80 0.00% 0.00% 257±92 0.00% 0.00% 698±301 0.00% 0.00%
+200 50 156±70 0.99% 0.00% 171±73 0.00% 0.00% 200±75 0.00% 0.00% 604±240 0.00% 0.00%
+50 1 77±83 79.21% 71.29% 349±123 0.00% 0.00% 444±127 0.00% 0.00% 833±333 0.00% 0.00%
+50 10 68±46 15.84% 3.96% 176±83 0.00% 0.00% 214±79 0.00% 0.00% 695±300 0.00% 0.00%
+50 50 74±50 0.99% 0.00% 131±81 0.00% 0.00% 167±77 0.00% 0.00% 598±238 0.00% 0.00%
+10 1 37±79 80.20% 73.27% 394±151 0.00% 0.00% 465±139 0.00% 0.00% 865±326 0.00% 0.00%
+10 10 18±42 75.25% 27.72% 184±93 0.00% 0.00% 204±78 0.00% 0.00% 685±292 0.00% 0.00%
+10 50 41±29 5.94% 0.00% 120±86 0.00% 0.00% 160±78 0.00% 0.00% 598±239 0.00% 0.00%
+Table 2: Results for outlier detection with no shift (§ 6.1). We provide monitoring results of the total error rate for
+ϵ = 0.1, δ = 0.1 and different combinations of the two key tracking parameters, sliding window size S and batch size
+B. The delay quantity ¯τ(ψ) denotes the mean and std. deviation of detection delays τ(ψ) − τ∗(ψ) across repeated trials
+(R = 50), whereas %F P > 0 and %F P > δ denote the number of thresholds ψ ∈ Ψ (in %) whose false alarm rate (see
+Eq. 11) is non-zero or exceeds the desired rate δ, respectively.
+Params Running Risk ˆRr(ψ) Wealth ProcessMt(ψ) Wealth ProcessMSU Mt (ψ) Wealth ProcessMEBt (ψ)
+S B Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ
+None 1 53±277 17.82% 4.95% 176±437 0.00% 0.00% 197±463 0.00% 0.00% 185±446 0.00% 0.00%
+None 10 70±289 6.93% 0.00% 127±389 0.00% 0.00% 137±398 0.00% 0.00% 176±451 0.00% 0.00%
+None 50 84±319 2.97% 0.00% 112±373 0.00% 0.00% 118±376 0.00% 0.00% 180±463 0.00% 0.00%
+200 1 11±233 17.82% 11.88% 175±434 0.00% 0.00% 197±462 0.00% 0.00% 185±445 0.00% 0.00%
+200 10 56±243 6.93% 0.00% 127±389 0.00% 0.00% 137±398 0.00% 0.00% 176±451 0.00% 0.00%
+200 50 80±304 2.97% 0.00% 111±372 0.00% 0.00% 118±376 0.00% 0.00% 180±463 0.00% 0.00%
+50 1 −102±362 27.72% 21.78% 177±437 0.00% 0.00% 197±461 0.00% 0.00% 185±446 0.00% 0.00%
+50 10 13±107 8.91% 4.95% 127±390 0.00% 0.00% 135±395 0.00% 0.00% 177±452 0.00% 0.00%
+50 50 59±245 2.97% 0.00% 112±371 0.00% 0.00% 118±375 0.00% 0.00% 180±463 0.00% 0.00%
+10 1 −226±478 37.62% 33.66% 183±447 0.00% 0.00% 198±461 0.00% 0.00% 199±470 0.00% 0.00%
+10 10 −126±363 19.80% 17.82% 133±402 0.00% 0.00% 129±382 0.00% 0.00% 178±455 0.00% 0.00%
+10 50 12±73 7.92% 2.97% 111±370 0.00% 0.00% 118±373 0.00% 0.00% 180±463 0.00% 0.00%
+Table 3: Results for outlier detection with an immediate shift early on (§ 6.1). We provide monitoring results of the total
+error rate for ϵ = 0.1, δ = 0.1 and different combinations of the two key tracking parameters, sliding window size S and
+batch size B. The delay quantity ¯τ(ψ) denotes the mean and std. deviation of detection delays τ(ψ) − τ∗(ψ) across repeated
+trials (R = 50), whereas %F P > 0 and %F P > δ denote the number of thresholds ψ ∈ Ψ (in %) whose false alarm rate
+(see Eq. 11) is non-zero or exceeds the desired rate δ, respectively.
+Params Running Risk ˆRr(ψ) Wealth ProcessMt(ψ) Wealth ProcessMSU Mt (ψ) Wealth ProcessMEBt (ψ)
+S B Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ
+None 1 104±9 0.00% 0.00% 91±9 0.00% 0.00% 108±9 0.00% 0.00% 110±79 0.00% 0.00%
+None 10 38±9 0.00% 0.00% 28±10 0.00% 0.00% 40±12 0.00% 0.00% 49±11 0.00% 0.00%
+None 50 36±9 0.00% 0.00% 23±11 0.00% 0.00% 32±11 0.00% 0.00% 50±13 0.00% 0.00%
+200 1 104±9 0.00% 0.00% 91±9 0.00% 0.00% 108±9 0.00% 0.00% 110±79 0.00% 0.00%
+200 10 38±9 0.00% 0.00% 28±10 0.00% 0.00% 40±12 0.00% 0.00% 49±11 0.00% 0.00%
+200 50 36±9 0.00% 0.00% 23±11 0.00% 0.00% 32±11 0.00% 0.00% 50±13 0.00% 0.00%
+50 1 104±9 0.00% 0.00% 90±9 0.00% 0.00% 105±40 0.00% 0.00% 110±57 0.00% 0.00%
+50 10 38±9 0.00% 0.00% 27±9 0.00% 0.00% 37±9 0.00% 0.00% 48±11 0.00% 0.00%
+50 50 36±9 0.00% 0.00% 22±10 0.00% 0.00% 30±9 0.00% 0.00% 50±13 0.00% 0.00%
+10 1 104±9 0.00% 0.00% 90±10 0.00% 0.00% 110±88 0.00% 0.00% 110±57 0.00% 0.00%
+10 10 26±5 0.00% 0.00% 18±6 0.00% 0.00% 27±6 0.00% 0.00% 46±11 0.00% 0.00%
+10 50 25±3 0.00% 0.00% 11±4 0.00% 0.00% 22±5 0.00% 0.00% 48±12 0.00% 0.00%
+4225
+
+--- PAGE 23 ---
+Table 4: Results for set prediction with a temporal shift on FMoW (§ 6.2). We provide monitoring results of the
+miscoverage rate for ϵ = 0.1, δ = 0.1 and different combinations of the two key tracking parameters, sliding window size S
+and batch size B. The delay quantity ¯τ(ψ) denotes the mean and std. deviation of detection delays τ(ψ) − τ∗(ψ) across
+repeated trials (R = 50), whereas %F P > 0 and %F P > δ denote the number of thresholds ψ ∈ Ψ (in %) whose false
+alarm rate (see Eq. 11) is non-zero or exceeds the desired rate δ, respectively.
+Params Running Risk ˆRr(ψ) Wealth ProcessMt(ψ) Wealth ProcessMSU Mt (ψ) Wealth ProcessMEBt (ψ)
+S B Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ
+None 1 166±192 3.96% 1.98% 262±313 0.00% 0.00% 340±359 0.00% 0.00% 324±351 0.00% 0.00%
+None 10 82±196 1.98% 0.00% 103±263 0.00% 0.00% 126±281 0.00% 0.00% 213±380 0.00% 0.00%
+None 50 75±200 0.00% 0.00% 75±239 0.00% 0.00% 91±249 0.00% 0.00% 201±381 0.00% 0.00%
+365 1 137±121 3.96% 2.97% 239±280 0.00% 0.00% 314±322 0.00% 0.00% 329±364 0.00% 0.00%
+365 10 58±132 1.98% 0.00% 81±225 0.00% 0.00% 104±243 0.00% 0.00% 216±388 0.00% 0.00%
+365 50 52±140 0.00% 0.00% 52±190 0.00% 0.00% 68±203 0.00% 0.00% 200±381 0.00% 0.00%
+50 1 101±133 6.93% 5.94% 239±284 0.00% 0.00% 309±312 0.00% 0.00% 334±380 0.00% 0.00%
+50 10 35±54 3.96% 1.98% 75±223 0.00% 0.00% 94±230 0.00% 0.00% 217±391 0.00% 0.00%
+50 50 37±91 0.00% 0.00% 45±182 0.00% 0.00% 60±191 0.00% 0.00% 196±370 0.00% 0.00%
+10 1 89±180 6.93% 6.93% 258±296 0.00% 0.00% 327±314 0.00% 0.00% 384±469 0.00% 0.00%
+10 10 9±126 4.95% 4.95% 83±244 0.00% 0.00% 90±222 0.00% 0.00% 218±391 0.00% 0.00%
+10 50 25±28 1.98% 1.98% 47±191 0.00% 0.00% 61±195 0.00% 0.00% 195±368 0.00% 0.00%
+Table 5: Results for set prediction with a temporal shift on Naval propulsion (§ 6.2). We provide monitoring results of
+the miscoverage rate for ϵ = 0.1, δ = 0.1 and different combinations of the two key tracking parameters, sliding window
+size S and batch size B. The delay quantity ¯τ(ψ) denotes the mean and std. deviation of detection delays τ(ψ) − τ∗(ψ)
+across repeated trials (R = 50), whereas %F P > 0 and %F P > δ denote the number of thresholds ψ ∈ Ψ (in %) whose
+false alarm rate is non-zero or exceeds the desired rate δ, respectively.
+Params Running Risk ˆRr(ψ) Wealth ProcessMt(ψ) Wealth ProcessMSU Mt (ψ) Wealth ProcessMEBt (ψ)
+S B Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ Delay¯τ(ψ) %FP>0 %FP> δ
+None 1 1373±952 0.00% 0.00% 1416±957 0.00% 0.00% 1469±971 0.00% 0.00% 3527±2193 0.00% 0.00%
+None 10 1364±963 0.00% 0.00% 1401±969 0.00% 0.00% 1450±983 0.00% 0.00% 3216±1969 0.00% 0.00%
+None 50 1361±965 0.00% 0.00% 1400±970 0.00% 0.00% 1449±984 0.00% 0.00% 3169±1946 0.00% 0.00%
+200 1 293±453 0.00% 0.00% 419±540 0.00% 0.00% 492±660 0.00% 0.00% 1178±1076 0.00% 0.00%
+200 10 305±491 0.00% 0.00% 349±503 0.00% 0.00% 375±507 0.00% 0.00% 1104±992 0.00% 0.00%
+200 50 308±492 0.00% 0.00% 325±498 0.00% 0.00% 346±501 0.00% 0.00% 1074±990 0.00% 0.00%
+50 1 146±297 54.46% 8.91% 394±514 0.00% 0.00% 438±537 0.00% 0.00% 1077±1059 0.00% 0.00%
+50 10 204±430 0.00% 0.00% 318±505 0.00% 0.00% 342±507 0.00% 0.00% 1011±973 0.00% 0.00%
+50 50 232±482 0.00% 0.00% 284±498 0.00% 0.00% 312±501 0.00% 0.00% 915±866 0.00% 0.00%
+10 1 58±147 81.19% 60.40% 416±544 0.00% 0.00% 451±566 0.00% 0.00% 1024±1055 0.00% 0.00%
+10 10 99±186 1.98% 0.00% 330±511 0.00% 0.00% 336±507 0.00% 0.00% 985±968 0.00% 0.00%
+10 50 191±463 0.00% 0.00% 284±500 0.00% 0.00% 311±502 0.00% 0.00% 888±861 0.00% 0.00%
+4226

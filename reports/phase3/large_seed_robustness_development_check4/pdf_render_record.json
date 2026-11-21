@@ -1,0 +1,13 @@
+{
+  "pages": 4,
+  "render_seconds": 0.8568608999994467,
+  "pdf_sha256": "08b069aa444dc6feb1abc710cb427ca6e65121ec34b68261b5126ba5c61d8a53",
+  "source_sha256": "ab14fb73dfc635e67add59d2c7b51d339857fc2f453635fe3d522ea4df329148",
+  "renderer_sha256": "05d91f5701bac7322399de12752a37f14958e46606bffbc2d1760a40bc7f7454",
+  "page_text_characters": [
+    2237,
+    2009,
+    1327,
+    2243
+  ]
+}

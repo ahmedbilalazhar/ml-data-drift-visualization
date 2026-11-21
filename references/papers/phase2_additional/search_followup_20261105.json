@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-05",
+  "scope": "Focused follow-up to the retained S1-S8 corpus; not an exhaustive systematic search",
+  "sources": [
+    "PMLR publisher records and linked published PDFs",
+    "arXiv author versions and reference lists"
+  ],
+  "queries": [
+    "site:proceedings.mlr.press \"risk monitoring\" \"2025\"",
+    "site:proceedings.mlr.press \"accuracy degradation\" \"2025\" suitability",
+    "site:proceedings.mlr.press \"harmful distribution shifts\" \"2026\""
+  ],
+  "exact_title_checks": [
+    "Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts",
+    "Suitability Filter: A Statistical Framework for Classifier Evaluation in Real-World Deployment Settings"
+  ],
+  "included": [
+    "S9: PPRM, ICML 2026, PMLR 306",
+    "S10: Suitability Filter, ICML 2025, PMLR 267"
+  ],
+  "screening": "Published 2025-2026 original conference research; identifiable data, method and evaluation; direct risk/margin relevance; identities absent from retained Phase 1 bibliography.",
+  "limitations": "Search hits concerning model compression/training accuracy were outside the drift-monitoring question. No retrospective retrieval counts or exhaustive coverage are claimed.",
+  "full_text_checks": {
+    "PPRM": "Published PDF pp.7 and App.D.4 confirm alarm times, total error budget 0.25, one-SD figure bands and intermittent-label extension.",
+    "Suitability": "Published PDF Secs.4.2-4.4 and Table1 confirm calibration dependence, unadjusted-margin experiments and three model seeds."
+  }
+}

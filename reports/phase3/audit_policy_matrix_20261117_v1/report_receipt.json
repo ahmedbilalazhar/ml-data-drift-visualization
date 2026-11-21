@@ -1,0 +1,13 @@
+{
+  "status": "report_sources_complete",
+  "run_protocol_lock_sha256": "a9cef5b7c4b411815130df74259a95d9f6c5746501ae1d2f664fcebff81c10fd",
+  "run_protocol": "delayed-audit-policy-matrix-v1",
+  "outputs_sha256": {
+    "policy_means.csv": "0a9488bd68105c91769c58a777d38138c774af25d0959abc08af90990932088e",
+    "policy_summary_across_conditions.csv": "1a982b99fc7f2317642d7a205de91a93faa14940074f42a78c257dd69315e21f",
+    "audit_policy_effects.png": "7df9ef28db217087fb7cf82fb1c3d4bc8d2082e69e9e550d718714a99c68b1a8",
+    "audit_policy_effects.pdf": "47e15ea4cbc45e87afcbb52bc5f86741814e77ca40ad27c15189547eceb7258d",
+    "audit_policy_effects.svg": "a45739821e2e3c4c053d564f687dff339428e6238f449f8fa5c4796fe2dd03e4",
+    "audit_policy_matrix.tex": "bb1fd0df98b07cb4ff7283a28a47851d47cae50cb6c4be9695420444dcaf1f09"
+  }
+}

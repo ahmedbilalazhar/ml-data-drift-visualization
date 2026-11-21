@@ -1,0 +1,679 @@
+--- PAGE 1 ---
+Causal Explanation of Concept 
+Drift – A Truly Actionable Approach 
+David Komnick(B), Kathrin Lammers, Barbara Hammer , Valerie Vaquet , 
+and F abian Hinder
+Machine Learning Group, Bielefeld Universit y, Bielefeld, Germany
+{dkomnick,klammers,bhammer,vvaquet,fhinder}@techfak.uni-bielefeld.de 
+Abstract. In a world that constantly changes, it is crucial to understand 
+how those changes impact diﬀerent systems, such as industrial manufac-
+turing or critical infrastructure. Explaining critical changes, referred to 
+as concept drift in the ﬁeld of machine learning, is the ﬁrst step towards 
+enabling targeted interventions to avoid or correct model failures, as well 
+as malfunctions and errors in the physical world. Therefore, in this work, 
+we extend model-based drift explanations towards causal explanations, 
+which increases the actionability of the provided explanations. We eval-
+uate our explanation strategy on a number of use cases, demonstrating
+the practical usefulness of our framework, which isolates the causally rel-
+evant features impacted by concept drift and, thus, allows for targeted
+intervention.
+Keywords: Concept Drift · Explainable AI · Computational 
+Causality · Model-based Drift Explanations · Causal Explanations
+1 Introduction 
+Machine learning plays a considerable role in many aspects of life, ranging from 
+private usage through social media, chatbots, and recommender systems to many 
+use cases in industry, e.g., quality control, etc. Despite man y successful applica-
+tions, many challenges arise when applying machine learning in critical applica-
+tions. As identiﬁed in the European AI Act [6], a key aspect is the so-called black 
+box behavior of many machine learning models. With the increasing complexity 
+of models, the rationale for their predictions has become increasingly opaque. 
+To address this challenge, an entire ﬁeld focusing on explainable AI (XAI) has
+emerged in the last decade [
+1,3,20]. The goal is to understand model decisions 
+better and provide appropriate explanations to the users, potentially enabling
+suitable actions.
+Beyond their original role of enhancing the interpretability of machine learn-
+ing models, XAI methods increasingly demonstrate potential as tools for broader 
+data analysis tasks. This can be particularly useful if the data is complex and 
+time is scarce, as is the case in many real-world settings, where the underlying
+data distribution might change over time [7]. Here, a deeper understanding drift 
+c The Author(s) 2026 
+I. Koprinska et al. (Eds.): ECML PKDD 2025, CCIS 2842, pp. 396–412, 2026.
+https://doi.org/10.1007/978-3-032-19105-2_28
+
+--- PAGE 2 ---
+Causal Explanation of Concept Drift – A Truly Actionable Approach 397
+not only allows for the adaptation and improvement of stream learning algo-
+rithms, but is also crucial in system monitoring where changes can indicate the 
+necessity to take action, either by autonomous procedures or human operators
+overseeing complex systems. Hence, next to the mere detection of drifts, a suit-
+able explanation is frequently required [14]. In this paper, we will focus on the 
+latter assignment. We propose to extend the framework by [11] to provide causal 
+explanations that directly provide actionability.
+This work is structured as follows. First, we recap the deﬁnition of concept
+drift (Sect. 2) and summarize the related work on drift explanations (Sect. 3). 
+Before proposing causal drift explanations in Sect. 5, we describe the required 
+concepts from computational causality in Sect.4. We then evaluate the proposed 
+explanation pipeline experimentally (Sect. 6) and conclude the paper (Sect. 7). 
+Notation 
+In the following, we consider a data space X composed of multiple features. We 
+refer to the index set of all features as F, |F| < ∞. Every feature f ∈ F takes 
+values in the real numbers R, i.e., X = R F . For a subset F ⊂ F we write X F for 
+the subspace based on the features in F , and for a data p ointX, we writeX F
+for the projection ontoX F . In addition, ifPis a probability measure onXwe
+also writeP(X F =x)o rP |XF for the marginalization ofPontoX F .
+2 Concept Drift 
+In the classical batch learning setup, one assumes the data is given as ran-
+dom variables X1, . . . , Xn that are independent and identically distributed (iid) 
+according to some probability distribution D. In contrast, in many real-world 
+applications, w e encounter the issue that the data is not identically distributed
+but subject to change – a phenomenon referred to as concept drift [ 7,19]. This 
+can be due to the course of time, as in stream learning [ 7]; the data collection 
+process taking place at diﬀerent locations, as considered in the context of feder-
+ated learning [
+30]; changes in the used equipment or sensors, such as sensor drift
+or applications of transfer learning [23], or combinations thereof. As poin ted out
+by [14], formally, all these cases can be modelled using an abstract time domain, 
+T , that, for example, encodes clock time, the considered location, or computa-
+tional node, and associating a – potentially diﬀerent – distribution D t to each 
+abstract time point t∈T. Concept drift refers to not allD t being equivalent,
+i.e., there ares, t∈Tsuch thatD t =D s [7,19]. 
+In [9], the authors suggested a statistical modelling explicitly including time. 
+This allows for an equivalent formalization of drift as data and time being depen-
+dent, i.e., assuming the sample X was observed at time point T then we have 
+X ∼ D
+T and there is drift if and only ifXandTare not statistically indepen-
+dent. The advantage of this deﬁnition for algorithm development [12,24,27] a n d 
+in particular, drift explanations [11,14], is that it encodes drift as a non-trivial
+relation of data and time [9].
+
+--- PAGE 3 ---
+398 D. Komnick et al.
+Deﬁnition 1. Let T be a time domain, and X = R d be a data sp ace. We say
+that the distribution process [14] (P T , Dt), i.e., a probability measure P T on T 
+together with a Markov kernel D t from T to X , has drift iﬀ one of the following
+equivalent holds [9]: 
+1. observing Dt = Ds with probability larger 0, i.e., P 2 
+T ({(s, t) : D t =D s})>0
+2. data and time are not independent, i.e., for T ∼ P T and X | T = t ∼ D t we 
+have P[X ∈ A, T ∈W] =P[X∈A]P[T∈W]
+We refer to the joint distribution of X and T , i.e., P[X ∈ A, T ∈ W ] = 
+W D t(A)dPT (t), as theholistic distribution.
+In the next section, we discuss the related work on explaining d rift and
+causality in the drifting setup.
+3 Related Work 
+Understanding drift is of major importance in many scenarios as it enables oper-
+ators to perform interventions in the system at hand or to adapt models. Still, 
+research on this topic, especially with regard t o actionable explanations, is still
+limited. Some works focus on detecting and quantifying the drift, while others
+attempt to visualize it [ 14]. Besides, some works provide feature-wise explana-
+tions of concept drift [11,14,19,28]. 
+A particularly versatile framework for drift explanations is mo del-based drift
+explanations[ 11]. This family relies on modelling drift as a relation of data and
+time as introduced in Sect. 2. They employ learning models as surrogates to 
+compute explanations describing the drift. In this framework, a suitable model 
+is trained to predict the time point T based on the sampleX. Afterwards, the
+model is analysed using common, generic explanation methods ranging from
+interpretable models [
+11], over feature relevance [10,12,13,27], to counterfactual 
+explanations [8], and activation vectors [24]. 
+While the model-based explanation framework is very versatile as it works 
+with generic explanation methods, so far, there has been a focus on exploratory
+explanation techniques [20]. These constitute a possibility to get an insight into 
+how the data stream is changing overall. However, in many settings, human 
+users require more actionable explanations. Since it is natural for many people
+to think about the cause and eﬀect of an observation, some kind of causation-
+based explanations would be desirable [4]. 
+Work on causal explanations of drift is very limited. A few publications
+focus on related tasks, e.g., forecasting [ 5] or drift detection [ 29], and only dis-
+cuss explanations in passing. They propose ﬁnding two causal models based on 
+directed acyclic graphs (DAGs), whereby one represents the data collected before 
+the drift and a second one t hat collected after the drift. The causal explanation
+is derived from the diﬀerence between the causal models. While [
+5] extracts the 
+causal structures from in an online fashion, [29] relies on the so-called NOTEARS
+
+--- PAGE 4 ---
+Causal Explanation of Concept Drift – A Truly Actionable Approach 399
+causal discovery algorithm. There are further contributions considering the inter-
+section of drift and causality, e.g., [ 2,25]. However, these are disjoint from our
+research question.
+While some works consider the related ﬁeld of feature relev ance theory for
+explaining drift [12,26], in this work, we aim to extend the model-based drift 
+explanation framework to provide actionable causal explanations of drift. Before
+deriving our methodology (Sect. 5), we will recall the most important a spects
+from computational causality.
+4 Computational Causality 
+Causality as a concept lies at the core of human reasoning. It shapes our p ercep-
+tion, decision making, and how we predict outcomes [4]. Despite its central role 
+in understanding the world, there is no obvious way to formalize or model the 
+intuitive concept of causality, leading to several diﬀerent formalizations. Here,
+we will use the concept of computational causality induced byinterventional
+do-calculus[
+22] due to its model-based nature and resulting similarity to t he
+model-based drift explanation framework.
+The backbone of this approach is given by Bayes networks, a kind of proba-
+bilistic graphical model. Building up on an acyclic directed graph (DAG) G with 
+the set of nodes corresponding to the set of features, i.e., V (G) = F, and the 
+edges indicating the connections between the variables. More precisely, the dis-
+tribution of a feature can be computed solely based on the values of its parents, 
+i.e., P[X] =
+f∈F P[Xf | Xpa(f )]. We will refer to the collection of conditional 
+distributions as P f = P[X f | X pa(f) ], making the whole model (G, P f ). Thus,
+the network can be seen as a computational graph to generate samples from a
+distribution, which we denote asP
+G. We will use this model as a link to explore
+computational causality in the framework of model-based drift explanations.
+The connection of such models to the intuitive notion of causality is given 
+by interpreting the directions of the edges as the direction from cause to eﬀect. 
+Yet, as every order of features induces a DAG by conditioning on all previous 
+features, this is insuﬃcient. This gap is bridged by the do-operator: usually the 
+cause-variable aﬀects the eﬀect-variable but not the other way around – turning
+on the sprinkler will cause the road to be wet; making the road wet will not
+cause the sprinkler to be turned on (see Fig. 1 (A) for an illustration). This 
+idea can be exploited to model a causal structure by linking it to experimental 
+interventions: in an experiment, we force certain variables to tak e on speciﬁc
+values and observe the remaining ones, which can be formalized as follows:
+Deﬁnition 2 (Experiment with Interventions). Let X be a dataspace with 
+features F. An experiment with intervention E is a (collection of) Markov ker-
+nels that takes a manipulation x on features F to an observed experimental 
+outcome on the remaining features, i.e., for allF⊆Fwe have a map
+EF :X F ×Σ XF\F →R
+
+--- PAGE 5 ---
+400 D. Komnick et al.
+Fig. 1. Simple  causal  model  (A)  with  time  ( T) controlled sprinkler (
+ ) which  also  
+switches oﬀ if it rains (
+ ); in both cases the ground will be wet (
+ ). If we manually 
+turn oﬀ the sprinkler (B), i.e., apply a do-operator, all connections to its parents are
+removed in the graphical model
+such that x EF (x, A) is measurable and A EF (x, A) is a probability mea-
+sure for all x and  A, respectively. We call EF (x) the F-manipulation of E to  x 
+and refer to E ∅(∗)as the not-manipulated experiment .( H e r ew es e tX∅ ={∗})
+In Bayes networks, we can simulate this idea by forcing a feature or a group 
+of features into a speciﬁc  state, XF = x, and inferring the values of the remaining 
+features. However, due to the asymmetry of cause and eﬀect, we have to remove 
+the paths leading to the manipulated features – as those relate to causes – while
+still keeping the paths from them – as those relate to eﬀects. We have illustrated
+this in the case of the sprinkler example in Fig.1. This kind of operation is called 
+an intervention or the do-operation on the Bayes network. If the Bayes network 
+coincides with reality for all such manipulations, it is called acausal model. This
+can be formalized as follows:
+Deﬁnition 3. Let  X  be  a dataspace with features F, E be  an experiment with 
+intervention, and  ( G, Pf ) a  Bayes  network.  We  call  ( G, Pf ) a  causal  model  
+(of E) if for any intervention the experimental result and the model prediction 
+coincide, i.e., for all F ⊂  F and E∅(∗)|XF -a.e. x ∈  XF and A ∈  ΣXF\ F it holds 
+PG(A |  do(XF = x)) = EF (x, A )
+whereP G(·| do(XF =x )) := P G is the distribution of the model ( G ,P )
+obtained by applying thedo -operator, i.e.,( G ,P f ) = do((G, P) ,F ,x ).
+It is of utmost importance  not to confuse the do-operator  with usual con-
+ditioning: while  computing  the  distribution  is  equivalent to  computing  a  con-
+ditional, this conditional is computed based on a network with the connection
+towards the manipulated variables removed (see Fig.1 (B)). In other words, the 
+do-operator coincides with usual conditioning only if applied to a set of variables 
+that has no parents, i.e., we have 
+PG(·  | do(XF = x)) = PG(·  | XF =x ).
+Assuming thatP G is the causal model for an experiment with intervention E ,
+we can translate this idea back and deﬁne:
+
+--- PAGE 6 ---
+Causal Explanation of Concept Drift – A Truly Actionable Approach 401
+Deﬁnition 4 (Causeless set of features). Let E be an experiment with inter-
+vention with features F. We say that F ⊂ F is causeless (in E), i f 
+EF (x, A) = E∅(∗, A | XF = x), 
+E∅(∗)|XF -a.s. for all A whereE ∅(∗,A|X F =x)denotes the conditioning of
+E∅(∗,·)onX F .1 
+In this deﬁnition, the conditioning on the right-hand side can be considered 
+as a way to process the data after the experiment was performed. In other words, 
+this deﬁnition entails the idea that we can train a non-causal model to predict
+the value of the remaining features fromx∈X F and still obtain an observation
+that ﬁts the result of an intervention.
+Algorithmically speaking, the objective of computational causality is to 
+recover an underlying causal model from purely observational data. Concretely, 
+given a dataset generated under the non-intervention experiment E∅(∗), we want 
+to infer the complete causal structure over all possible interventions in E. I n 
+practical terms, this approach aims to bypass the need to conduct every inter-
+vention experimentally. Achieving this reconstruction requires imposing assump-
+tions that guarantee 1) the existence of a valid causal model and 2) compu-
+tational tractability of the inference procedure. Typical assumptions are the 
+Markov property, full information, or faithfulness that c onstrain the distribu-
+tion of the observed variables and the considered setup, making it more similar
+to setups covered by those produced by Bayesian networks. A detailed discus-
+sion of these assumptions is beyond the scope of this paper. For our experimental
+evaluation, we focus exclusively on the classical PC algorithm [
+22]. 
+5 Causal Explanations of Concept Drift 
+In this section, we will derive the formal modelling of causal explanations for 
+concept drift. To do so, we will proceed in three steps: 1) we link the formal 
+statistical description of concept drift to the notion of experiments with inter-
+vention, 2) formalize the task we w ant to solve in terms of an intervention,
+and then 3) discuss how this can be realized in a practical application using the
+notion of computational causality.
+5.1 A Causal Model over Time 
+Following the ideas o f [9,11], that is, considering time as a feature with drift the 
+dependency of time and data, allows us to easily model drift in the context of 
+an experiment with intervention by simply extending the dataspace from X to 
+X × T , with the extended feature set F= fT }, wheref T ∈Frepresents
+the speciﬁc time feature and we also writeX fT =Tfor consistency.
+1 This is well-deﬁned as X F and X F\F are standard Borel so that the conditional 
+probabilit y is regular and is uniquely determined.
+
+--- PAGE 7 ---
+402 D. Komnick et al.
+To link drift to experiments with intervention, we assume that the passage of 
+time is independent of our actions. We can formalize this by assuming thatf T
+is a causeless feature. Using this assumption, we can describe drift as follows:
+Theorem 1. Let X be a dataspace with features F, T be a time domain, and 
+(PT , Dt) be a distribution process. Let E be experiment with intervention on 
+X × T that has the holistic distribution of D t as the distribution of the not-
+manipulated experiment, i.e., E∅(∗, A×W ) = W Dt(A)dPT , for which time (fT ) 
+is a causeless feature. Then the distributions D t and the time-manipulations of
+Ecoincide, i.e.,
+Dt =E fT (t,·)
+PT -a.s. In particular, the presence of drift is equivalent to time-interventions
+aﬀecting the data, i.e.,
+Dt has drift⇐⇒E fT is not constant (forPT -a.s.)
+Proof. All proofs are provided as part of the ArXiv version [ 16] 
+Note that we do not claim to perform an intervention on time here; we only 
+state that if we were able to do this, we would observe the stated eﬀect. Hence, 
+it allows us to formalize the type of explanation we want to obtain in terms of
+actionability. This is a signiﬁcant diﬀerence from most explanations for which no
+formal deﬁnition regarding their actual interpretation can be given [
+20]. More 
+precisely, a causal drift explanation is given by the manipulation we ha ve to
+perform to reverse the drift:
+Deﬁnition 5 (Drift-Reversing Intervention). Let X be a dataspace with 
+features F, T be a time domain, and (P T , Dt) be a distribution process with 
+associated experiment with intervention E. Assume time (f T ) is causless. We 
+say that F ⊆ F provides a drift-reversing intervention, i ﬀ 
+B 
+EF (x, A × W )dDt (XF =x)=E fT (t, A×B)P T (W)forP T -a.s.t
+for allA∈Σ XF\F ,B∈Σ XF ,W∈Σ T .
+In other words, a drift-reversing intervention requires that by controlling 
+the values of the features in F only – which might be complicated but is not 
+impossible – we create the same eﬀect as if we change the ﬂow of time – which 
+is practically infeasible. Notice that here, we only need to specify the features
+we are about to alter, as the distribution is already forced upon us to match the
+time point-speciﬁc distribution.
+
+--- PAGE 8 ---
+Causal Explanation of Concept Drift – A Truly Actionable Approach 403
+5.2 First Analysis and Limitations 
+Using ideas from computational causality, we will derive a practical procedure for 
+causal drift explanations. To do so, in the following we will always assume that 
+we consider an experiment with intervention Ethat on the one hand is linked
+to a distribution process (D
+t,P T ) via the holistic distribution as in Theorem 1 
+and Deﬁnition 5 and on the other hand that we have a causal model (G, P f )o f
+E(in the sense of Deﬁnition 3). 
+Using this setup, because (G, P f ) is a causal model of E, performing the 
+intervention on E corresponds to computing the do-operator on (G, P f ). There-
+fore, we can rephrase Deﬁnition 5 in terms of the causal model. However, this 
+time we will invoke the notion of time windows, whic h play a vital role in the
+analysis of stream learning algorithms:
+Lemma 1. Let (P T , Dt) be a distribution process with a corresponding experi-
+ment with intervention E on X × T with f T a causeless feature. Let (G, Pf ) be 
+a causal model of E. T h e n F ⊆ F is a drift-reversing intervention if and only if 
+for all A, B, W and every time window W ⊆ T , i.e., P T (W ) > 0, we have 
+B 
+PG(X R ∈A, T∈W |do(X F =x))dP G(XF =x|T∈W)
+=P T (W )PG(XR ∈A, X F ∈B|do(T∈W)),
+whereR=F\F.
+This again shows that the notion of drift-reversing interventions targets to 
+reverse the drift; in this particular case, by ensuring that the distribution we 
+currently observe is exactly the same as that observed during the time window 
+W . The advantage of this formulation is that the result is more tangible, as
+window mean distributions play an important role in the context of concept
+drift [
+7,9,12,14,19,28]. 
+The great beneﬁt of the additional structure of the causal model is that, by 
+analysing its graphical structure, we can determine a drift-reversing set:
+Theorem 2. Let (P T , Dt) be a distribution process with a corresponding exper-
+iment with intervention E on X × T with f T a causeless feature. L et(G, Pf )be
+a faithful causal model ofE. It holds
+1. The node in G corresponding to time, f T , ha s no parents
+2. The time node has children if and o nly ifD t has drift
+3. Every drift-reversing set F contains all childre n off T
+4. The set of all children of f T and their ancestors (without f T ) are a drift-
+reversing set
+In the next section, we will examine this result more closely and discuss a
+more reﬁned notion of drift-reversing sets.
+
+--- PAGE 9 ---
+404 D. Komnick et al.
+5.3 A Reﬁned Approach 
+Theorem 2 shows that the set of all children of the time node, together with all 
+of their ancestors, forms a drift-reversing set. At ﬁrst glance, this result produces 
+a too large drift-reversing set as it is not to be expected that a far ancestor of a
+child of the time node needs to be contained in the drift-reversing set.
+To make this more explicit, consider the sprinkler example from the beginning
+visualized in Fig.1. As time (T ) is already involved, we can apply our framework 
+directly. We want to know why the street is dry in the evening: it is not raining, 
+and the sprinkler is oﬀ, with the sprinkler being oﬀ because i t is late. This
+suggests that the action we should invoke is to turn the sprinkler on, i.e., the
+sprinkler is the only drift-reverting feature.
+In contrast, according to Theorem 2, we must also include the weather. O n
+closer inspection (see Fig. 1 (B)), this is reasonable, as always turning on the 
+sprinkler independent of whether or not it is raining causes another drift in the 
+correlation of sprinkler and weather. Hence, to avoid this, we have to include
+the weather as stated by the theorem.
+We can get a more natural explanation, i.e., only the sprinkler, if we allow 
+the intervention to depend on other values (the weather). The idea is that there 
+is a causal core set of features given by all of the time node’s children, and the 
+intervention on those is allowed t o depend on the value of their parents. This
+can be made explicit by asking which node distribution needs to be changed to
+ensure the global distribution is time-reversed:
+Theorem 3. In the setup of Theorem 2, the smallest set of features that needs 
+to be altered to ensure that we can obtain every time window distribution is 
+exactly given by the set of all children of f
+T . In other words: for every window 
+W ⊂ T , P T (W ) > 0 there is a graphical model (G W , PW,f ) on X such that 
+PG(X ∈ A | do(T ∈ W )) = P GW (A)andP W,f =P f for allf T paG(f).
+Conversely, for everyf∈Fthat hasf T as a parent, there exist two time windows
+W, W such thatP W,f =P W ,f .
+In other words, if we keep track of the changes induced by the other parents, 
+we only need to alter the direct children of the time node to reve rse the drift.
+Therefore, we get two kinds of explanations: the full intervention (as stated
+by Theorem 2) consisting of the children of T and all their ancestors, and the 
+conditional intervention of the children only, which then has to take the other
+parents into account (as in Theorem
+3). 
+This ﬁnding is very much in line with other ﬁndings from the literature.
+In [10,12], the authors considered model-based drift explanation [ 11] through 
+the lens of feature importance, showing that the resulting features can be seen 
+as a wrapper method for feature selection for drift detectors. Later on, [
+13] 
+extended on these ideas by introducing the notion of drift-inducing and faithfully 
+drifting features, with the former identifying as those that “induce” the drift into 
+the system and the latter “follo wing along.” The authors showed that in both
+cases, the found drifting features relate to relevant features [
+15] when time T 
+is considered as the target of conditional density estimation. This links drifting
+
+--- PAGE 10 ---
+Causal Explanation of Concept Drift – A Truly Actionable Approach 405
+Algorithm 1. Causal Explanation of Drift 
+1: function ExplainDrift(S = ( (X 1, T1), . . . ) d a t a s t r e a m ) 
+2:G ← DetermineDAG(S) Run causal discovery algorithm, e.g., PC 
+3:C ← GetChildren(G, f T ) 
+4:P ← ∪ f ∈C GetParents (G, f)\({fT }∪C)
+5:A←∪ f∈C GetAncesters(G, f)\{f T }
+6:return(C,P,A)
+7:end function
+features closely to graphical models: following the ideas of [ 21] the set of all 
+drifting (or relevant) features corresponds exactly to the connected component 
+of the skeleton containing the time node, while the drift inducing features (or 
+strong relevant) relate to the Markov boundary ofT, i.e., its children and their
+other parents – similar to Theorem 3. 
+This consideration can be seen in two directions: on the one hand, it shows 
+that even simple feature selection methods p rovide nearly causal explanations
+supporting their widespread usage in diﬀerent applications [
+12,27,28], on the 
+other hand, it connects our theoretical considerations to existing literature and 
+methods that already have been successfully applied in a wide spread of real
+world applications, e.g., critical infrastructure like electrical grids [
+27,28] a n d 
+water distribution networks [11,27], as well as land cover analysis [ 28]. 
+The algorithmic solution for both cases, i.e., full drift-reversing intervention 
+and conditional one, is presented in Algorithm 1. In other words, the full inter-
+vention explanation (Deﬁnition 5 and Theorem 2) is given by A, the conditional 
+intervention (Theorem 3) oﬀered by the core set C with the conditional onP.
+As can be seen, the algorithm mainly performs a causal discovery on the 
+timed data points. The later steps only extract features according to their posi-
+tion in the graph. Therefore, the causal discovery dominates the runtime and 
+memory complexity of the approach. Notice that this cannot be signiﬁcantly 
+reduced if we want to compute the full drift-reversing intervention, as in this 
+case, we might have to explore the entire graph. Furthermore, while we will
+make use of the classical PC algorithm in our experiments, using any other
+causal discovery algorithm is also valid.
+6 Empirical Evaluation 
+In the following, we will empirically evaluate our considerations.2 First, we brieﬂy 
+summarize the datasets used and describe the experimental setup. Before pre-
+senting and analyzing the results for the drift explanations in Sect. 6.3, we per-
+form a preliminary stability analysis of the causal discovery of the PC algorithm
+on the selected causal graphs (Sect. 6.2).
+2 See https://github.com/FabianHinder/DRAGON for code and datasets.
+
+--- PAGE 11 ---
+406 D. Komnick et al.
+6.1 Datasets and Experimental Setup 
+For the empirical evaluation, we use semi-synthetic datasets sampled from Bayes 
+nets, which were modiﬁed to create plausible drift scenarios [ 17] . B a s e d o n t h e 
+popular Adult and Portuguese Student Performanc edatasets, the inherent causal
+structure [18] was used to learn conditional probability distributions, which were 
+modiﬁed for the following scenarios:
+– Adult Inﬂation: inﬂation causes increases likelihood of high monetary values
+– Adult Women in STEM : women are more likely to work in STEM jobs; less 
+likely to work in administrative ﬁelds support
+– Student Girls Support: female students are enrolled i n support program
+– Student Boys Support: male students are enrolled i n support program
+Drifting data streams with abrupt concept drift were created by merging data 
+sampled from the unmodiﬁed distributions before the drift with data sampled 
+from a speciﬁc scenario distribution after the drift. For consistency, the drift 
+point was set at 25.000 samples for all streams based on Adult, with a total 
+length of approximately 48.800 samples (diﬀering slightly due to ﬁltered-out
+missing values). For theStudent Performancebased streams, the drift point was
+set after 2.000 samples with a total length of 5.000 samples per stream.
+For each of the described scenarios, we perform 10 experimental runs. We 
+ﬁrst sample a stream and then evaluate the proposed methodology. For the
+PC algorithm, we use the default implementation from thecausal-learnPython
+package [
+31] with the g-square test. We report and analyze the results in the
+remainder of this section.
+6.2 Preliminary Stability Analysis 
+In order to evaluate whether our causal explanations of drift are reasonable, we 
+ﬁrst evaluate the accuracy of the PC algorithm on the unmodiﬁed datasets –
+those without temporal features.
+Comparing the detected edges to the ground truth causal graph [18], we ﬁnd 
+that the PC algorithm is moderately successful in detecting the causal structure
+underlying the unmodiﬁedAdultdataset (Fig.
+2a), where out of 38 edges in the 
+ground truth, 19 (50%) are detected correctly, while nine edges are wrongly 
+oriented and ten were not detected at all. For theStudent Performancedataset
+(Fig.
+2b), meanwhile, the PC algorithm produces less accurate results, as it only 
+detects eight out of 26 edges correctly (30.77%). Additionally, 16 edges were 
+detected but orient ed inversely, while two edges were not detected, and three
+additional false edges were inserted.
+The poor performance on Student Performance can be explained by the com-
+paratively low number of samples in this dataset, combined with a relatively high 
+number of features. While the Adult dataset only contains 13 features, whose 
+connections can be learned from nearly ﬁfty thousand samples, the Student Per-
+formance dataset has 31 features and only 5.000 samples, which means that the
+PC algorithm has insuﬃcient data to work with despite the lower connectivity
+in the causal graph, leading to less reliable independence tests.
+
+--- PAGE 12 ---
+Causal Explanation of Concept Drift – A Truly Actionable Approach 407
+Fig. 2. Performance of the PC Algorithm. Black edges indicate the ground truth, 
+while green edges indicate detections by the PC algorithm; thickness correlates with 
+the number of runs in which an edge was detected (Color ﬁgure online)
+6.3 Experimental Results 
+When analysing the causal structure of our drift scenarios, we can clearly see that 
+our framework for causal explanations works – the temporal feature T is never 
+connected with unrelated features, meaning that no relevant false explanations 
+of drift are produced. And in the vast majority of cases,Tis correctly connected
+to the drifting feature, usually as a parent.
+For our causal explanation, the feature(s) directly connected to T are the 
+most relevant, while other ancestors of children of T – i.e. possible conditional 
+inﬂuences on the drifting feature(s) – are also part of the explanation, though 
+with less direct impact. These features are usually identiﬁed just as well in 
+the drifting streams as on the unmodiﬁed data, which implies that potential
+limitations here lie with the PC algorithm as a causal discovery method, rather
+than with our theoretical framework.
+To illustrate this, we ﬁrst take a look at the A dult Women in STEMdrift
+scenario (Fig.3a), where the drifting feature gets reliably identiﬁed as occupation. 
+The temporal feature T is detected as a parent of occupation in nine out of ten 
+experimental runs, while the other ancestors of the drifting feature are unchanged 
+from the detected causal structure of the unmodiﬁed dataset. While we can see 
+that our drifting stream results in overall more wrongly oriented edges in the
+causal graph, our drift explanation is generally stable and reliable. With the given
+information, a human data scientist would know just which feature’s distribution
+to analyse further in order to fully understand the concept drift.
+
+--- PAGE 13 ---
+408 D. Komnick et al.
+Fig. 3. Case Studies on the Adult dataset. Black edges indicate the ground truth, 
+while green edges indicate detections by the PC algorithm; thickness correlates with 
+the number of runs in which an edge was detected. Children of T are m arked green,
+with the thickness of the border indicating the number of runs that correctly identiﬁed
+this relationship (Color ﬁgure online)
+As the Adult Inﬂationscenario (Fig. 3b) shows, these statements even hold 
+true when there are multiple drifting features present in the stream. In eight out 
+of ten experimental runs, all three drifting features – capital-gain, capital-loss, 
+and income – are correctly identiﬁed as directly connected to T . In the other two 
+runs, only capital-gain is not detected as a direct relation of the time, but this 
+issue can be easily explained by the close r elationship between the three drifting
+features, which leads to some issues with the independence tests employed by
+the PC algorithm. This close connection between the drifting features is also
+why the PC algorithm shows trouble orienting the temporal edge.
+Finally, despite the poor overall performance of the PC algorithm on the 
+Student Performancedataset, our drift scenarioStudent Girls Support(Fig. 4a) 
+shows that our causal explanation framework works reliably even when large 
+parts of the causal graph are poorly recovered. In all ten runs, the drifting feature 
+schoolsup, short for ”school support”, is correctly identiﬁed as the only child of 
+T , and the conditional variable sex is identiﬁed as the only other parent of the 
+drifting feature. This shows that even under less-than-ideal circumstances, which
+cause the PC algorithm to largely fail overall, causal explanations of concept
+drift are reliably extracted by our method. Similar ﬁndings can be seen in the
+Student Boys Supportscenario (Fig.
+4b), where an analogous causal structure 
+may be observed. This implies that in scenarios where concept drift is suﬃciently 
+strong, causal explanations work well despite the high number of features and
+the low number of data points.
+
+--- PAGE 14 ---
+Causal Explanation of Concept Drift – A Truly Actionable Approach 409
+Fig. 4. Case Studies on the Student dataset. Black edges indicate the ground truth, 
+while green edges indicate detections by the PC algorithm; thickness correlates with 
+the number of runs in which an edge was detected. Children of T are m arked green,
+with the thickness of the border indicating the number of runs that correctly identiﬁed
+this relationship (Color ﬁgure online)
+7 Conclusion 
+In this paper, we proposed a method for causally explaining concept drift that 
+directly enables the user to perform drift-reversing interventions on the system 
+at hand. Our methodology is integrated into the model-based drift explanation 
+framework and, thus, leverages the modelling of drift as a dependence of data 
+and time. By incorporating computational causality, we can identify the full set 
+of drift-reversing interventions. Since this may be too extensive for a layperson, 
+we introduced conditional interventions and, thereby, obtained actionable expla-
+nations. We experimentally showed that even though the PC algorithm does not
+always yield a reliable causal graph of the data at hand, our pipeline reliably
+identiﬁes features directly impacted by the drift.
+As mentioned above, related work on incorporating feature relevance theory 
+into model-based drift explanations seems to yield similar explanations. Investi-
+gating the relationship between causal discovery algorithms and feature relevance 
+in this context seems to be an interesting further step. In particular, to reduce 
+the amount of data needed. So far, our considerations assume that the entire 
+dataset can be described by one causal graph. However, in some real-world set-
+tings, the assumption that one causal graph describes the data globally does
+not hold. In these cases, ﬁnding subgroups in the data and providing more local
+explanations for speciﬁc populations would be advantageous.
+
+--- PAGE 15 ---
+410 D. Komnick et al.
+Acknowledgments. Funding in the scope of the BMBF project KI Akademie OWL 
+under grant agreement No 01IS24057A and the ERC Synergy Grant “Water-Futures” 
+No. 951424 is gratefully acknowledged. 
+Disclosure of Interests. The authors ha ve no competing interests to declare that
+are relevant to the content of this article.
+References 
+1. Adadi, A., Berrada, M.: Peeking inside the black-box: a survey on explainable 
+artiﬁcial intelligence (XAI). IEEE Access6, 52138–52160 (2018). https://doi.org/ 
+10.1109/ACCESS.2018.2870052 
+2. Baier, L., K¨ uhl, N., Sch¨ oﬀer, J., Satzger, G.: Utilizing concept drift for measur-
+ing the eﬀectiveness of policy interventions: the case of the COVID-19 pandemic.
+Technical report, Karlsruher Institut f¨ ur Technologie (KIT) (2020)
+3. Barredo Arrieta, A., et al.: Explainable Artiﬁcial Intelligence (XAI): concepts, 
+taxonomies, opportunities and challenges to ward responsible AI. Inf. Fusion58,
+82–115 (2020). https://doi.org/10.1016/j.inﬀus.2019.12.012 
+4. Cheng, P.W.: From covariation to causation: a causal power theory. Psychol. Rev.
+104(2), 367–405 (1997). https://doi.org/10.1037/0033-295X.104.2.367 
+5. Chihara, N., Matsubara, Y., Fujiwara, R., Sakurai, Y.: Modeling time-evolving 
+causality over data streams. In: Proceedings of the 31st ACM SIGKDD Conference 
+on Knowledge D iscovery and Data Mining, vol. 1, pp. 153–164. ACM, Toronto, ON,
+Canada (2025).
+https://doi.org/10.1145/3690624.3709283 
+6. E.C.a.D.G. for Communications Networks and Content and Technology: Proposal 
+for a Regulation laying down harmonised rules on Artiﬁcial I ntelligence (Artiﬁcial
+Intelligence Act) and amending certain Union legislative acts (2021)
+7. Gama, J., ˇZliobait˙ e, I., Bifet, A., Pechenizkiy, M., Bouchachia, A.: A survey on 
+concept drift adaptation. ACM Comput. Surv. (CSUR)46(4), 1–37 (2014)
+8. Hinder, F., Artelt, A., Vaquet, V., Hammer, B.: Contrasting explanation of concept 
+drift. In: 30nd European Symposium on Artiﬁcial Neural Networks, Computational
+Intelligence and Machine Learning, ESANN (2022)
+9. Hinder, F., Artelt, A., Hammer, B.: Towards non-parametric drift detection via 
+dynamic adapting window independence drift detection (dawidd). In: International
+Conference on Machine Learning, pp. 4249–4259. PMLR (2020)
+10. Hinder, F., Hammer, B.: Feature selection for concept drift detection. In: Verleysen, 
+M. (ed.) 31nd European Symposium on Artiﬁcial Neural Networks, Computational
+Intelligence and Machine Learning, ESANN (2023)
+11. Hinder, F., Vaquet, V., Brinkrolf, J., Hammer, B.: Model-based explanations of 
+concept drift. Neurocomputing555, 126640 (2023)
+12. Hinder, F., Vaquet, V., Hammer, B.: Feature-based analyses of concept drift. Neu-
+rocomputing600, 127968 (2024)
+13. Hinder, F., Vaquet, V., Hammer, B.: On the ﬁne-structure of drifting features. In: 
+32nd European Symposium on Artiﬁcial Neural Networks, Computational Intelli-
+gence and Machine Learning, ESANN (2024)
+14. Hinder, F., Vaquet, V., Hammer, B.: One or two things we know about con-
+cept drift—a survey on monitoring in evolving environments. Part B: locating
+and explaining concept drift. Front. Artif. Intell.7, 1330258 (2024)
+
+--- PAGE 16 ---
+Causal Explanation of Concept Drift – A Truly Actionable Approach 411
+15. John, G.H., Kohavi, R., Pﬂeger, K.: Irrelevant features and the subset selection 
+problem. In: Machine Learning Proceedings 1994, pp. 121–129. Elsevier (1994)
+16. Komnick, D., Lammers, K., Hammer, B., Vaquet, V., Hinder, F.: Causal explana-
+tion of concept drift – a truly actionable approach (2025). https://arxiv.org/abs/ 
+2507.23389 
+17. Lammers, K., Vaquet, V., Vaquet, J., Hammer, B.: Realistic benchmarks for fair
+stream learning. Preprint (2025). https://pub.uni-bielefeld.de/record/3004338 
+18. Le Quy, T., Roy, A., Iosiﬁdis, V., Zhang, W., Ntoutsi, E.: A survey on datasets for 
+fairness-aware m achine learning. WIREs Data Min. Knowl. Discov.12(3), e1452
+(2022). https://doi.org/10.1002/widm.1452 
+19. Lu, J., Liu, A., Dong, F., Gu, F., Gama, J., Zhang, G.: Learning under concept 
+drift: a review. IEEE Trans. Knowl. Data Eng.31(12), 2346–2363 (2018)
+20. Molnar, C.: Interpretable M achine Learning (2020)
+21. Nilsson, R., Pena, J.M., Bj¨ orkegren, J., Tegn´ er, J.: Consistent feature selection for 
+pattern recognition in p olynomial time. J. Mach. Learn. Res.8, 589–612 (2007)
+22. Pearl, J.: Causality. Cambridge Unive rsity Press (2009)
+23. Quionero-Candela, J., Sugiyama, M., Schwaighofer, A., Lawrence, N.D.: Dataset 
+Shift in Mach ine Learning. The MIT Press, Cambridge (2009)
+24. Roberts, I., Hinder, F., Vaquet, V., Schulz, A., Hammer, B.: Conceptualizing con-
+cept drift. In: ESANN 2025 Proceedings (2025)
+25. Sch¨ olkopf, B., Janzing, D., Peters, J., Sgouritsa, E., Zhang, K., Mooij, J.: On causal 
+and anticausal learning. In: Proceedings of the 29th International Conference on
+Machine Learning, ICML 2012, pp. 459–466. Omnipress, Madison, WI, USA (2012)
+26. Siirtola, P., R¨ oning, J.: Feature relevance analysis to explain concept drift–a case 
+study in human activity recognition. arXiv preprint arXiv:2301.08453 (2023) 
+27. Vaquet, V., Hinder, F., Vaquet, J., Lammers, K., Quakernack, L., Hammer, B.: 
+Localizing of anomalies in critical infrastructure using model-based drift expla-
+nations. In: 2024 International Joint Conference on Neural Networks (IJCNN),
+pp. 1–8. IEEE (2024)
+28. Webb, G.I., Lee, L.K., Petitjean, F., Goethals, B.: Understanding concept drift.
+arXiv preprint arXiv:1704.00362 (2017) 
+29. Yang, L., Cheng, J., Luo, Y., Zhou, T., Zhang, X.: Detecting and rationalizing 
+concept drift: a feature-level approach for understanding cause–eﬀect relationships
+in dynamic environments. Expert Syst. Appl.260, 125365 (2025).https://doi.org/ 
+10.1016/j.eswa.2024.125365 
+30. Yang, Q., Liu, Y., Cheng, Y., Kang, Y., Chen, T., Yu, H.: Federated Learning. 
+Synthesis Lectures on Artiﬁcial Intelligence and Machine Learning, Springer, Cham
+(2020). https://doi.org/10.1007/978-3-031-01585-4 
+31. Zheng, Y., et al.: Causal-learn: causal discovery in python. J. Mach. Learn. Res.
+25(60), 1–8 (2024)
+
+--- PAGE 17 ---
+412 D. Komnick et al. 
+Open Access This chapter is licensed under the terms of the Creative C ommons 
+Attribution 4.0 International License ( http://creativecommons.org/licenses/ by/4.0/), 
+which permits use, sharing, adaptation, distribution and reproduction in any medium 
+or format, as long as you give appropriate credit to the original author(s) and the 
+source, provide a link to the Creative Commons license and indicate if changes were 
+made. 
+The images or other third party material in this chapter are included in the 
+chapter’s Creative Commons license, unless indicated otherwise in a credit line t o the 
+material. If material is not included in the chapter’s Creative Commons license and 
+your intended use is not permitted by statutory regulation or exceeds the permitted
+use, you will need to obtain permission directly from the copyright holder.

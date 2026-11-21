@@ -1,0 +1,228 @@
+{
+  "checked_on": "2026-11-06",
+  "selection_count": 10,
+  "eligibility_route": "Published conference papers and research chapters; no journal-quartile claim",
+  "papers": [
+    {
+      "id": "P2_01_Benchmark_KDD2026",
+      "publication_url": "https://doi.org/10.1145/3770855.3819070",
+      "full_text_pages": 12,
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "title": "A Framework for Evaluating and Benchmarking Concept Drift Detection Methods",
+      "doi": "10.1145/3770855.3819070",
+      "publisher": "ACM",
+      "publication_year": 2026,
+      "publication_type": "proceedings-article",
+      "venue": [
+        "Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2"
+      ],
+      "pages": "8671-8682"
+    },
+    {
+      "id": "P2_02_WindowDilemma_IDA2026",
+      "publication_url": "https://doi.org/10.1007/978-3-032-23833-7_27",
+      "full_text_pages": 12,
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "title": "The Window Dilemma: Why Concept Drift Detection is Ill-Posed",
+      "doi": "10.1007/978-3-032-23833-7_27",
+      "publisher": "Springer Nature Switzerland",
+      "publication_year": 2026,
+      "publication_type": "book-chapter",
+      "venue": [
+        "Lecture Notes in Computer Science",
+        "Advances in Intelligent Data Analysis XXIV"
+      ],
+      "pages": "371-384"
+    },
+    {
+      "id": "P2_03_PUDD_AAAI2025",
+      "publication_url": "https://doi.org/10.1609/aaai.v39i18.34105",
+      "full_text_pages": 9,
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "title": "Early Concept Drift Detection via Prediction Uncertainty",
+      "doi": "10.1609/aaai.v39i18.34105",
+      "publisher": "Association for the Advancement of Artificial Intelligence (AAAI)",
+      "publication_year": 2025,
+      "publication_type": "journal-article",
+      "venue": [
+        "Proceedings of the AAAI Conference on Artificial Intelligence"
+      ],
+      "pages": "19124-19132"
+    },
+    {
+      "id": "P2_04_Flexible_ICDMW2025",
+      "publication_url": "https://doi.org/10.1109/ICDMW69685.2025.00037",
+      "full_text_pages": 10,
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "title": "Flexible and Efficient Drift Detection Without Labels",
+      "doi": "10.1109/icdmw69685.2025.00037",
+      "publisher": "IEEE",
+      "publication_year": 2025,
+      "publication_type": "proceedings-article",
+      "venue": [
+        "2025 IEEE International Conference on Data Mining Workshops (ICDMW)"
+      ],
+      "pages": "265-274"
+    },
+    {
+      "id": "P2_05_Causal_ECMLPKDD2026",
+      "publication_url": "https://doi.org/10.1007/978-3-032-19105-2_28",
+      "full_text_pages": 17,
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "title": "Causal Explanation of Concept Drift – A Truly Actionable Approach",
+      "doi": "10.1007/978-3-032-19105-2_28",
+      "publisher": "Springer Nature Switzerland",
+      "publication_year": 2026,
+      "publication_type": "book-chapter",
+      "venue": [
+        "Communications in Computer and Information Science",
+        "Machine Learning and Principles and Practice of Knowledge Discovery in Databases"
+      ],
+      "pages": "396-412"
+    },
+    {
+      "id": "P2_06_PRODEM_ECMLPKDD2026",
+      "study": "S6",
+      "key": "prodem",
+      "title": "Proactive Detection of Model Degradation in Financial Fraud Prediction with Delayed Labels",
+      "authors": [
+        "Akshay Sethi",
+        "Priyanshi Gupta",
+        "Sparsh Kansotia",
+        "Kamal Kant",
+        "Nitish Srivasatava"
+      ],
+      "doi": "10.1007/978-3-032-06118-8_16",
+      "publication_url": "https://doi.org/10.1007/978-3-032-06118-8_16",
+      "source_url": "https://ecmlpkdd-storage.s3.eu-central-1.amazonaws.com/preprints/2025/ads/preprint_ecml_pkdd_2025_ads_315.pdf",
+      "publication_year": 2026,
+      "first_online": "2025-09-29",
+      "volume": 16021,
+      "pages": "265-281",
+      "publisher": "Springer Nature Switzerland",
+      "publication_type": "book-chapter",
+      "venue": [
+        "Machine Learning and Knowledge Discovery in Databases. Applied Data Science Track; ECML PKDD 2025"
+      ],
+      "full_text_file": "P2_06_PRODEM_ECMLPKDD2026.pdf",
+      "full_text_pages": 16,
+      "full_text_format": "Official conference-hosted author version; publisher record verifies publication",
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "checked_on": "2026-11-06",
+      "metadata_note": "Springer's recommended citation uses 2026; the first-online date is 29 September 2025. Both meet the allowed period. Author-version equation/table locators are explicitly labelled.",
+      "selection_rationale": "Direct frozen fraud-model monitoring under label delay is closer to the research question than adaptive energy regression."
+    },
+    {
+      "id": "P2_07_Conformal_COPA2025",
+      "publication_url": "https://proceedings.mlr.press/v266/eliades25a.html",
+      "full_text_pages": 19,
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "title": "A Conformal Martingales Approach for Recurrent Concept Drift",
+      "publication_year": 2025,
+      "publication_type": "proceedings-article",
+      "publisher": "PMLR",
+      "venue": [
+        "COPA 2025; Proceedings of Machine Learning Research 266"
+      ],
+      "pages": "706-724"
+    },
+    {
+      "id": "P2_08_RiskViolations_UAI2025",
+      "study": "S8",
+      "key": "timans",
+      "title": "On Continuous Monitoring of Risk Violations under Unknown Shift",
+      "authors": [
+        "Alexander Timans",
+        "Rajeev Verma",
+        "Eric Nalisnick",
+        "Christian A. Naesseth"
+      ],
+      "publication_url": "https://proceedings.mlr.press/v286/timans25a.html",
+      "source_url": "https://raw.githubusercontent.com/mlresearch/v286/main/assets/timans25a/timans25a.pdf",
+      "publication_year": 2025,
+      "volume": 286,
+      "pages": "4204-4226",
+      "publisher": "PMLR",
+      "publication_type": "proceedings-article",
+      "venue": [
+        "Proceedings of the Forty-first Conference on Uncertainty in Artificial Intelligence"
+      ],
+      "full_text_file": "P2_08_RiskViolations_UAI2025.pdf",
+      "full_text_pages": 23,
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "checked_on": "2026-11-06",
+      "metadata_note": "Publisher citation gives PMLR 286, pp.4204-4226; the first PDF footer's volume 244 is inconsistent and is not copied.",
+      "selection_rationale": "Direct bounded-loss risk monitoring is closer to the frozen cohort-harm question than intervention-based performative feedback."
+    },
+    {
+      "id": "P2_09_PPRM_ICML2026",
+      "study": "S9",
+      "key": "pprm",
+      "title": "Prediction-Powered Risk Monitoring of Deployed Models for Detecting Harmful Distribution Shifts",
+      "authors": [
+        "Guangyi Zhang",
+        "Yunlong Cai",
+        "Guanding Yu",
+        "Osvaldo Simeone"
+      ],
+      "publication_url": "https://proceedings.mlr.press/v306/zhang26g.html",
+      "source_url": "https://arxiv.org/html/2602.02229v2",
+      "reviewed_version": "2602.02229v2",
+      "publication_year": 2026,
+      "volume": 306,
+      "pages": "154241-154262",
+      "venue": [
+        "Proceedings of the 43rd International Conference on Machine Learning"
+      ],
+      "publisher": "PMLR",
+      "publication_type": "proceedings-article",
+      "checked_on": "2026-11-05",
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "full_text_file": "P2_09_PPRM_ICML2026_published.pdf",
+      "full_text_format": "publisher-linked published PDF; author version also reviewed",
+      "reviewed_author_file": "P2_09_PPRM_ICML2026.md",
+      "full_text_pages": 22
+    },
+    {
+      "id": "P2_10_Suitability_ICML2025",
+      "study": "S10",
+      "key": "suitability",
+      "title": "Suitability Filter: A Statistical Framework for Classifier Evaluation in Real-World Deployment Settings",
+      "authors": [
+        "Angéline Pouget",
+        "Mohammad Yaghini",
+        "Stephan Rabanser",
+        "Nicolas Papernot"
+      ],
+      "publication_url": "https://proceedings.mlr.press/v267/pouget25a.html",
+      "source_url": "https://arxiv.org/html/2505.22356v1",
+      "reviewed_version": "2505.22356v1",
+      "publication_year": 2025,
+      "volume": 267,
+      "pages": "49603-49627",
+      "venue": [
+        "Proceedings of the 42nd International Conference on Machine Learning"
+      ],
+      "publisher": "PMLR",
+      "publication_type": "proceedings-article",
+      "checked_on": "2026-11-05",
+      "status": "verified",
+      "additional_to_retained_phase1": true,
+      "full_text_file": "P2_10_Suitability_ICML2025_published.pdf",
+      "full_text_format": "publisher-linked published PDF; author version also reviewed",
+      "reviewed_author_file": "P2_10_Suitability_ICML2025.md",
+      "full_text_pages": 25
+    }
+  ],
+  "last_updated": "2026-11-06",
+  "verification_note": "Initial S1-S8 publication review 2026-10-26; publisher-deposited DOI records and the S7 PMLR record rechecked 2026-11-05. S6 publisher volume-citation year 2026 distinguished from first-online 2025. S9-S10 publication records and author full texts reviewed 2026-11-05. S8 replaced on 2026-11-06 by the more directly relevant published UAI 2025 bounded-risk study after full-text review; the former performative paper remains supporting context. S6 replaced on 2026-11-06 by the directly relevant PRODEM conference chapter after publisher and official author-version review; SHAP energy forecasting remains supporting explanation/action context."
+}
