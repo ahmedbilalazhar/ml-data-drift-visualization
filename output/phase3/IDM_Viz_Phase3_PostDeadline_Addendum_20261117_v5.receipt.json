@@ -1,0 +1,41 @@
+{
+  "status": "release_candidate_validated",
+  "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v5.zip",
+  "sha256": "2d1d2e62c942d35cd2c404c62288abce07f54c62cce91c5eec8171dce874e4b6",
+  "size_bytes": 393308275,
+  "zip_members": 1591,
+  "zip_crc": "passed",
+  "overlay_hashes": "passed for all 191 overlay files",
+  "base_package": "IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip",
+  "clean_extraction": {
+    "status": "passed",
+    "tests": "7 passed in 3.14 seconds: test_noaa_weather_contract.py and test_localization_audit_contract.py",
+    "dataset_audit": "passed for Elec2 (45,312), Covertype (83,665), NOAA Weather (18,210); no checksum or load errors",
+    "noaa_reproduction": "preprocessing, frozen-run replay, figures, TeX and PDF build succeeded; processed CSV SHA-256 055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+    "localization_reproduction": "30-seed cluster/pair run and bootstrap figure/TeX summary completed in fresh paths",
+    "temporary_extraction": "deleted automatically after successful verification"
+  },
+  "workspace_validation": {
+    "full_test_suite": "176 passed in 8.37 seconds",
+    "all_dataset_audit": "passed",
+    "rebuild_processed_v2": "already_built_and_verified"
+  },
+  "superseded_candidates": [
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v1.zip",
+      "reason": "clean extraction failed due incomplete source support modules"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v2.zip",
+      "reason": "clean extraction failed because current Phase 3 support modules were incomplete"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v3.zip",
+      "reason": "clean extraction failed because the v3 experiment config was omitted"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v4.zip",
+      "reason": "clean extraction passed after config fix but predates the final requirements registry update"
+    }
+  ]
+}

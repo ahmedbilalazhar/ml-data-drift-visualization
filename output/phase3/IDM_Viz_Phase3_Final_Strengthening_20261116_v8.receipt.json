@@ -1,0 +1,83 @@
+{
+  "status": "passed",
+  "archive": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\output\\phase3\\IDM_Viz_Phase3_Final_Strengthening_20261116_v8.zip",
+  "archive_sha256": "64a3488ed765f830b647ddfd477756b7470077d38c10b07e7a253f20faffbd0f",
+  "bytes": 391967049,
+  "members": 1062,
+  "crc": "passed",
+  "member_hashes": "passed",
+  "clean_extraction": "passed",
+  "fresh_commands": [
+    {
+      "stage": "tests",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "-m",
+        "pytest",
+        "tests/phase3/test_decision_audit_extension.py",
+        "tests/phase3/test_large_seed_robustness.py",
+        "tests/phase3/test_dependence_detector.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": ".......                                                                  [100%]\n7 passed in 2.78s\n",
+      "stderr": ""
+    },
+    {
+      "stage": "audit",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/strengthen_phase3_decisions.py",
+        "--out",
+        "results/audit_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "results\\audit_EXTRACTED\n",
+      "stderr": ""
+    },
+    {
+      "stage": "horizon",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_phase3_horizon_extension.py",
+        "--out",
+        "results/horizon_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "dependence",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_phase3_dependence_extension.py",
+        "--run",
+        "results/phase3/dependence_extension_20261116_final_v2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"rows\": 5040,\n  \"contrasts\": [\n    {\n      \"contrast\": \"C6 onset detection rate difference\",\n      \"mean_difference\": 0.4666666666666667,\n      \"lower\": 0.3,\n      \"upper\": 0.6333333333333333,\n      \"paired_seeds\": 30,\n      \"bootstrap_replicates\": 2000,\n      \"resampling_unit\": \"seed\"\n    },\n    {\n      \"contrast\": \"C0 alarms per 24 batches difference\",\n      \"mean_difference\": 0.8666666666666667,\n      \"lower\": 0.4,\n      \"upper\": 1.3666666666666667,\n      \"paired_seeds\": 30,\n      \"bootstrap_replicates\": 2000,\n      \"resampling_unit\": \"seed\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    }
+  ],
+  "exact_result_csv_comparisons": [
+    "results\\phase3\\decision_strengthening_v2\\localization_per_seed.csv",
+    "results\\phase3\\decision_strengthening_v2\\localization_summary.csv",
+    "results\\phase3\\decision_strengthening_v2\\online_audit_decisions.csv",
+    "results\\phase3\\decision_strengthening_v2\\paired_bootstrap.csv",
+    "results\\phase3\\decision_strengthening_v2\\policy_per_seed.csv",
+    "results\\phase3\\decision_strengthening_v2\\policy_summary.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\corrected_external_history_class_composition.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\horizon_per_seed.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\horizon_summary.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\online_persistence_forecasts.csv",
+    "results\\phase3\\dependence_extension_20261116_final_v2\\validated_per_seed.csv (clean-extraction evaluator passed)",
+    "results\\phase3\\dependence_extension_20261116_final_v2\\validated_summary.csv (clean-extraction evaluator passed)"
+  ],
+  "preserved_hashes": {
+    "docs/23i-2604_23i-2581DAV-phase2.docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "docs/Phase 03 - Implementation.pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "output/phase3/23I-2581_23I-2604_Phase3.zip": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877"
+  },
+  "uploaded": false
+}

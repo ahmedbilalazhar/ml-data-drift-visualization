@@ -1,0 +1,138 @@
+{
+  "status": "passed",
+  "archive": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\output\\phase3\\IDM_Viz_Phase3_Final_Strengthening_20261116_v9.zip",
+  "archive_sha256": "5a5224500d4a336ccc2cf2117b2c07b1f9db77ca5e6c61e5ae3ecddfdd58997c",
+  "bytes": 396430571,
+  "members": 1113,
+  "crc": "passed",
+  "member_hashes": "passed",
+  "clean_extraction": "passed",
+  "fresh_commands": [
+    {
+      "stage": "tests",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "-m",
+        "pytest",
+        "tests/phase3/test_decision_audit_extension.py",
+        "tests/phase3/test_large_seed_robustness.py",
+        "tests/phase3/test_dependence_detector.py",
+        "tests/phase3/test_uci224_exact_interval_extension.py",
+        "tests/phase3/test_uci224_split_model_sensitivity.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "............                                                             [100%]\n12 passed in 5.78s\n",
+      "stderr": ""
+    },
+    {
+      "stage": "audit",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/strengthen_phase3_decisions.py",
+        "--out",
+        "results/audit_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "results\\audit_EXTRACTED\n",
+      "stderr": ""
+    },
+    {
+      "stage": "horizon",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_phase3_horizon_extension.py",
+        "--out",
+        "results/horizon_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "dependence",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_phase3_dependence_extension.py",
+        "--run",
+        "results/phase3/dependence_extension_20261116_final_v2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"rows\": 5040,\n  \"contrasts\": [\n    {\n      \"contrast\": \"C6 onset detection rate difference\",\n      \"mean_difference\": 0.4666666666666667,\n      \"lower\": 0.3,\n      \"upper\": 0.6333333333333333,\n      \"paired_seeds\": 30,\n      \"bootstrap_replicates\": 2000,\n      \"resampling_unit\": \"seed\"\n    },\n    {\n      \"contrast\": \"C0 alarms per 24 batches difference\",\n      \"mean_difference\": 0.8666666666666667,\n      \"lower\": 0.4,\n      \"upper\": 1.3666666666666667,\n      \"paired_seeds\": 30,\n      \"bootstrap_replicates\": 2000,\n      \"resampling_unit\": \"seed\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "exact_interval",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_uci224_exact_interval_extension.py",
+        "--out",
+        "results/exact_interval_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"exploratory_complete\",\n  \"cohorts\": 9,\n  \"cohort_unit_warning\": \"nine sequential cohorts from one dataset are not independent replications\",\n  \"exact_coverage_count\": 0,\n  \"normal_coverage_count\": 0,\n  \"mean_exact_width\": 0.02338211415936944,\n  \"mean_normal_width\": 0.025802992731058707,\n  \"mean_width_difference_exact_minus_normal\": -0.0024208785716892667,\n  \"mean_absolute_endpoint_difference\": 0.001295006379505575,\n  \"calibration_transfer_error_unchanged\": 0.544657889410022,\n  \"source_sha256\": \"91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4\",\n  \"limitations\": [\n    \"plug-in q treated as known\",\n    \"independent correctness assumption\",\n    \"no reference or calibration parameter uncertainty\",\n    \"no arbitrary-shift guarantee\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "delay100",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_phase3_delay100_availability.py",
+        "--out",
+        "results/delay100_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"delay_batches\": 100,\n  \"streams\": 210,\n  \"cohorts\": 5040,\n  \"labels_available_at_input_end\": 0,\n  \"labels_unresolved_at_input_end\": 5040,\n  \"labels_released_after_drain\": 5040,\n  \"drain_final_clock\": 124,\n  \"online_truth_columns_absent\": true,\n  \"online_columns_not_in_evaluator\": [\n    \"n\"\n  ],\n  \"input_hashes\": {\n    \"online_batches.csv\": \"3c830d83a31a2f73ac46f44c23ce631757ea59622639afdd4a070a07be4900e3\",\n    \"evaluator_batches.csv\": \"168c79853fb3a96f96cd8ef5b6e7008c04500be42a1a4b59629552580126bff1\",\n    \"protocol_lock.json\": \"69ff966eb17df12e2459f796ccc07c5113fc767ed6becb6d41a53e04d627488e\"\n  },\n  \"scope\": \"label availability only; no adaptation or performance claim\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "split_model_runner",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/run_uci224_split_model_sensitivity.py",
+        "--out",
+        "results/uci224_sensitivity_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"online_complete_evaluator_pending\",\n  \"protocol\": \"UCI224_SPLIT_MODEL_SENSITIVITY_20261116\",\n  \"source_sha256\": \"91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4\",\n  \"runner_sha256\": \"3045e8c19ac2b39b0615d4f5e006e6ea91e97685bc1af89cec2300f1298ebbee\",\n  \"seeds\": [\n    420001,\n    420002,\n    420003,\n    420004,\n    420005,\n    420006\n  ],\n  \"windows\": {\n    \"batch1\": [\n      1\n    ],\n    \"batch1_2\": [\n      1,\n      2\n    ]\n  },\n  \"models\": [\n    \"logistic\",\n    \"tree_depth6\"\n  ],\n  \"per_window_model_split\": 6,\n  \"online_rows\": 308232,\n  \"online_truth_columns_absent\": true,\n  \"environment\": {\n    \"python\": \"3.13.5\",\n    \"numpy\": \"2.1.3\",\n    \"pandas\": \"2.3.3\",\n    \"sklearn\": \"1.8.0\"\n  },\n  \"elapsed_seconds\": 14.41880040000251\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "split_model_evaluator",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_uci224_split_model_sensitivity.py",
+        "--run",
+        "results/uci224_sensitivity_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"cohort_records\": 204,\n  \"per_class_records\": 1224,\n  \"split_seeds_are_sensitivity_repeats_not_independent_domains\": true,\n  \"all_online_cache_rows_scored\": 308232,\n  \"comparison_batches\": [\n    3,\n    4,\n    5,\n    6,\n    7,\n    8,\n    9,\n    10\n  ],\n  \"batch1_only_includes_batch2_outside_common_comparison\": true,\n  \"common_cohort_mae_batches_3_to_10\": [\n    {\n      \"history_window\": \"batch1\",\n      \"model\": \"logistic\",\n      \"raw_estimate_abs_error\": 0.4277419278618835,\n      \"calibrated_estimate_abs_error\": 0.5533086697038726,\n      \"reference_estimate_abs_error\": 0.5340078131509297\n    },\n    {\n      \"history_window\": \"batch1\",\n      \"model\": \"tree_depth6\",\n      \"raw_estimate_abs_error\": 0.42572179286906625,\n      \"calibrated_estimate_abs_error\": 0.3737475337229392,\n      \"reference_estimate_abs_error\": 0.39889100723924825\n    },\n    {\n      \"history_window\": \"batch1_2\",\n      \"model\": \"logistic\",\n      \"raw_estimate_abs_error\": 0.17264155354177368,\n      \"calibrated_estimate_abs_error\": 0.3415795242865187,\n      \"reference_estimate_abs_error\": 0.3415827457923634\n    },\n    {\n      \"history_window\": \"batch1_2\",\n      \"model\": \"tree_depth6\",\n      \"raw_estimate_abs_error\": 0.3579723225610781,\n      \"calibrated_estimate_abs_error\": 0.40141892015915404,\n      \"reference_estimate_abs_error\": 0.40810474962813464\n    }\n  ],\n  \"batch2_logistic_history1_only\": [\n    {\n      \"model\": \"logistic\",\n      \"raw_estimate_abs_error\": 0.07839723892528942,\n      \"calibrated_estimate_abs_error\": 0.20683273184028125,\n      \"reference_estimate_abs_error\": 0.18763623444970312\n    },\n    {\n      \"model\": \"tree_depth6\",\n      \"raw_estimate_abs_error\": 0.12024449309431291,\n      \"calibrated_estimate_abs_error\": 0.06850881350286613,\n      \"reference_estimate_abs_error\": 0.06598715030648987\n    }\n  ],\n  \"split_seed_sd_is_descriptive_only\": true\n}\n",
+      "stderr": ""
+    }
+  ],
+  "exact_result_csv_comparisons": [
+    "results\\phase3\\decision_strengthening_v2\\localization_per_seed.csv",
+    "results\\phase3\\decision_strengthening_v2\\localization_summary.csv",
+    "results\\phase3\\decision_strengthening_v2\\online_audit_decisions.csv",
+    "results\\phase3\\decision_strengthening_v2\\paired_bootstrap.csv",
+    "results\\phase3\\decision_strengthening_v2\\policy_per_seed.csv",
+    "results\\phase3\\decision_strengthening_v2\\policy_summary.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\corrected_external_history_class_composition.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\horizon_per_seed.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\horizon_summary.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\online_persistence_forecasts.csv",
+    "results\\phase3\\dependence_extension_20261116_final_v2\\validated_per_seed.csv (clean-extraction evaluator passed)",
+    "results\\phase3\\dependence_extension_20261116_final_v2\\validated_summary.csv (clean-extraction evaluator passed)",
+    "results/phase3/external_uci224_exact_interval_20261116_v1/cohort_interval_comparison.csv == clean-extraction rerun",
+    "results/phase3/delay100_availability_20261116_v1/release_schedule.csv == clean-extraction rerun",
+    "results/phase3/uci224_split_model_sensitivity_20261116_v2/evaluation/per_cohort_metrics.csv == clean-extraction rerun",
+    "results/phase3/uci224_split_model_sensitivity_20261116_v2/evaluation/per_class_metrics.csv == clean-extraction rerun",
+    "results/phase3/uci224_split_model_sensitivity_20261116_v2/evaluation/common_cohort_split_sensitivity.csv == clean-extraction rerun"
+  ],
+  "preserved_hashes": {
+    "docs/23i-2604_23i-2581DAV-phase2.docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "docs/Phase 03 - Implementation.pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "output/phase3/23I-2581_23I-2604_Phase3.zip": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877"
+  },
+  "uploaded": false
+}

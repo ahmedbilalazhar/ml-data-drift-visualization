@@ -1,0 +1,89 @@
+{
+  "status": "passed",
+  "archive": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\output\\phase3\\IDM_Viz_UCI224_Delayed_Replay_Addendum_20261116_v1.zip",
+  "archive_sha256": "dea7be74f41398c4184157fbcad39717ecdb9ec180a48f1c4852fb64afaabac5",
+  "bytes": 12735239,
+  "members": 109,
+  "crc": "passed",
+  "member_hashes": "passed",
+  "clean_extraction": "passed",
+  "fresh_commands": [
+    {
+      "stage": "tests",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "-m",
+        "pytest",
+        "tests/phase3/test_uci224_delayed_replay.py",
+        "tests/phase3/test_uci224_metadata_semantics.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": ".....                                                                    [100%]\n5 passed in 7.84s\n",
+      "stderr": ""
+    },
+    {
+      "stage": "metadata_runner",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_uci224_day2.py",
+        "--out",
+        "results/phase3/metadata_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"complete\",\n  \"cohorts\": 10,\n  \"monitoring_rows\": 13465,\n  \"macro_f1\": [\n    0.52226998392136,\n    0.391705441242189,\n    0.34722222222222227,\n    0.24701894041136585,\n    0.23425875610383354,\n    0.28982118684413805,\n    0.1656395969289208,\n    0.18645208085862355,\n    0.22578130079812264\n  ],\n  \"accuracy_estimation_mae\": 0.544657889410022,\n  \"interval_coverage_over_9_cohorts\": 0.0,\n  \"interval_mean_width\": 0.025802992731058707,\n  \"input_alarm_batches\": 9\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "delayed_runner",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/run_uci224_delayed_replay.py",
+        "--source-run",
+        "results/phase3/external_uci224_day2_v2",
+        "--out",
+        "results/phase3/replay_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"study\": \"UCI 224 delayed cohort-label replay\",\n  \"version\": \"uci224-delayed-replay-v1\",\n  \"status\": \"online_forecasts_complete_evaluation_pending\",\n  \"source_run\": \"C:\\\\Users\\\\hp\\\\AppData\\\\Local\\\\Temp\\\\uci224_replay_extract_tzwk_a4d\\\\results\\\\phase3\\\\external_uci224_day2_v2\",\n  \"source_run_lock_sha256\": \"9dad171b8ad5a0461e13970334bf2d8dabd44740585874450ca915e21f5733f1\",\n  \"dataset_archive_sha256\": \"91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4\",\n  \"runner_sha256\": \"dd807014fca8657cce29d2effee8a6b818b10deb4d8b6764a0c990b4c2248532\",\n  \"delays_in_whole_cohort_steps\": [\n    0,\n    1,\n    2\n  ],\n  \"forecast_clock\": \"forecast batch b before release; source j eligible iff j+delay < b\",\n  \"classifier_and_preprocessing_frozen\": true,\n  \"historical_calibration_only_from_batch1\": true,\n  \"updated_component\": \"one-dimensional logistic correctness calibrator only\",\n  \"online_prediction_artifacts_exclude_truth\": true,\n  \"truth_isolated_under\": \"evaluator_truth/\",\n  \"current_future_label_invariance_test\": \"see tests/phase3/test_uci224_delayed_replay.py\",\n  \"caveat\": \"offline simulation of coarse cohort releases, not observed label-arrival timestamps\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "delayed_evaluator",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_uci224_delayed_replay.py",
+        "--run",
+        "results/phase3/replay_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"forecast_rows\": 108,\n  \"target_cohorts\": 9,\n  \"delay_values\": [\n    0,\n    1,\n    2\n  ],\n  \"methods\": [\n    \"cumulative_released_logistic\",\n    \"frozen_calibration\",\n    \"historical_reference_accuracy\",\n    \"raw_average_confidence\"\n  ],\n  \"strict_release_clock_passed\": true,\n  \"online_prediction_cache_has_no_truth\": true,\n  \"same_predictions_across_methods_and_delays\": true,\n  \"interpretation\": \"one observationally ordered dataset sequence; cohort-level release simulation only\",\n  \"summary\": [\n    {\n      \"delay_cohorts\": 0,\n      \"method\": \"cumulative_released_logistic\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.16949507423765475,\n      \"equal_batch_bias\": 0.16949507423765475,\n      \"row_weighted_brier\": 0.2394532077907104,\n      \"equal_batch_ece10\": 0.18830552548219784\n    },\n    {\n      \"delay_cohorts\": 0,\n      \"method\": \"frozen_calibration\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.544657889410022,\n      \"equal_batch_bias\": 0.544657889410022,\n      \"row_weighted_brier\": 0.5518640332349629,\n      \"equal_batch_ece10\": 0.544657889410022\n    },\n    {\n      \"delay_cohorts\": 0,\n      \"method\": \"historical_reference_accuracy\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.5122796696580534,\n      \"equal_batch_bias\": 0.5122796696580534,\n      \"row_weighted_brier\": 0.5174800280133569,\n      \"equal_batch_ece10\": 0.5122796696580534\n    },\n    {\n      \"delay_cohorts\": 0,\n      \"method\": \"raw_average_confidence\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.41091762721702874,\n      \"equal_batch_bias\": 0.41091762721702874,\n      \"row_weighted_brier\": 0.4015992421447588,\n      \"equal_batch_ece10\": 0.4119056177525542\n    },\n    {\n      \"delay_cohorts\": 1,\n      \"method\": \"cumulative_released_logistic\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.2270087933472313,\n      \"equal_batch_bias\": 0.2270087933472313,\n      \"row_weighted_brier\": 0.26871643077300617,\n      \"equal_batch_ece10\": 0.2447948748652561\n    },\n    {\n      \"delay_cohorts\": 1,\n      \"method\": \"frozen_calibration\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.544657889410022,\n      \"equal_batch_bias\": 0.544657889410022,\n      \"row_weighted_brier\": 0.5518640332349629,\n      \"equal_batch_ece10\": 0.544657889410022\n    },\n    {\n      \"delay_cohorts\": 1,\n      \"method\": \"historical_reference_accuracy\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.5122796696580534,\n      \"equal_batch_bias\": 0.5122796696580534,\n      \"row_weighted_brier\": 0.5174800280133569,\n      \"equal_batch_ece10\": 0.5122796696580534\n    },\n    {\n      \"delay_cohorts\": 1,\n      \"method\": \"raw_average_confidence\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.41091762721702874,\n      \"equal_batch_bias\": 0.41091762721702874,\n      \"row_weighted_brier\": 0.4015992421447588,\n      \"equal_batch_ece10\": 0.4119056177525542\n    },\n    {\n      \"delay_cohorts\": 2,\n      \"method\": \"cumulative_released_logistic\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.2834204062296465,\n      \"equal_batch_bias\": 0.2834204062296465,\n      \"row_weighted_brier\": 0.27563019631534363,\n      \"equal_batch_ece10\": 0.29019477625078144\n    },\n    {\n      \"delay_cohorts\": 2,\n      \"method\": \"frozen_calibration\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.544657889410022,\n      \"equal_batch_bias\": 0.544657889410022,\n      \"row_weighted_brier\": 0.5518640332349629,\n      \"equal_batch_ece10\": 0.544657889410022\n    },\n    {\n      \"delay_cohorts\": 2,\n      \"method\": \"historical_reference_accuracy\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.5122796696580534,\n      \"equal_batch_bias\": 0.5122796696580534,\n      \"row_weighted_brier\": 0.5174800280133569,\n      \"equal_batch_ece10\": 0.5122796696580534\n    },\n    {\n      \"delay_cohorts\": 2,\n      \"method\": \"raw_average_confidence\",\n      \"batches\": 9,\n      \"total_rows\": 13465,\n      \"equal_batch_mae\": 0.41091762721702874,\n      \"equal_batch_bias\": 0.41091762721702874,\n      \"row_weighted_brier\": 0.4015992421447588,\n      \"equal_batch_ece10\": 0.4119056177525542\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "report",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/report_uci224_delayed_replay.py",
+        "--run",
+        "results/phase3/replay_EXTRACTED",
+        "--out",
+        "reports/replay_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "C:\\Users\\hp\\AppData\\Local\\Temp\\uci224_replay_extract_tzwk_a4d\\reports\\replay_EXTRACTED\n",
+      "stderr": ""
+    }
+  ],
+  "exact_comparisons": [
+    "corrected external metrics/class composition/lock exact",
+    "delayed replay audits, outcomes, predictions, and metrics exact",
+    "TeX and scientific figure pixels exact after clean report regeneration"
+  ],
+  "preserved_hashes": {
+    "docs/23i-2604_23i-2581DAV-phase2.docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "docs/Phase 03 - Implementation.pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "output/phase3/23I-2581_23I-2604_Phase3.zip": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877"
+  },
+  "uploaded": false
+}

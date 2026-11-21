@@ -1,0 +1,11 @@
+{
+  "status": "validated",
+  "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v2.zip",
+  "sha256": "585d76b5abe103bfff9070238a7353cce88c4865d03ef3e88045e1eb226ef878",
+  "bytes": 393143896,
+  "base_package": "IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip",
+  "overlay_file_count": 161,
+  "zip_members": 1568,
+  "zip_crc": "passed",
+  "overlay_sha256_checks": "passed"
+}

@@ -1,0 +1,115 @@
+{
+  "status": "passed",
+  "archive": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\output\\phase3\\IDM_Viz_Future_Harm_Unseen_Family_Addendum_20261116_v1.zip",
+  "archive_sha256": "285977953af227e924aea91b95a8953eae225c58d6b8241ccc9c43fafd296a50",
+  "bytes": 13194751,
+  "members": 56,
+  "crc": "passed",
+  "member_hashes": "passed",
+  "clean_extraction": "passed",
+  "fresh_commands": [
+    {
+      "stage": "tests",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "-m",
+        "pytest",
+        "tests/phase3/test_future_harm_unseen_family.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "...                                                                      [100%]\n3 passed in 11.46s\n",
+      "stderr": ""
+    },
+    {
+      "stage": "pilot_runner",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/run_future_harm_unseen_family.py",
+        "--onset-policy",
+        "fixed9",
+        "--out",
+        "results/fixed_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "5/30 unseen-family seeds; 7s\n10/30 unseen-family seeds; 16s\n15/30 unseen-family seeds; 25s\n20/30 unseen-family seeds; 32s\n25/30 unseen-family seeds; 39s\n30/30 unseen-family seeds; 47s\n{\n  \"protocol\": \"future_harm_unseen_family_20261116_v1\",\n  \"status\": \"generated_evaluator_pending\",\n  \"source_protocol\": \"future_harm_forecast_20261116_v1\",\n  \"training_seeds\": [\n    950000,\n    950001,\n    950002,\n    950003,\n    950004,\n    950005,\n    950006,\n    950007,\n    950008,\n    950009,\n    950010,\n    950011,\n    950012,\n    950013,\n    950014,\n    950015,\n    950016,\n    950017,\n    950018,\n    950019,\n    950020,\n    950021,\n    950022,\n    950023,\n    950024,\n    950025,\n    950026,\n    950027,\n    950028,\n    950029\n  ],\n  \"evaluation_seeds\": [\n    950100,\n    950101,\n    950102,\n    950103,\n    950104,\n    950105,\n    950106,\n    950107,\n    950108,\n    950109,\n    950110,\n    950111,\n    950112,\n    950113,\n    950114,\n    950115,\n    950116,\n    950117,\n    950118,\n    950119,\n    950120,\n    950121,\n    950122,\n    950123,\n    950124,\n    950125,\n    950126,\n    950127,\n    950128,\n    950129\n  ],\n  \"training_conditions\": [\n    \"C0\",\n    \"C1\",\n    \"C2\",\n    \"C3\",\n    \"C4\",\n    \"C5\",\n    \"C6\"\n  ],\n  \"evaluation_condition\": \"C7_conditional_randomization_eta_0.70\",\n  \"delays\": [\n    0,\n    5,\n    20\n  ],\n  \"future_window\": \"t+1..t+5\",\n  \"forecast_origins\": \"t=1..19\",\n  \"onset_policy\": \"fixed9\",\n  \"onset_batches_by_seed\": {\n    \"950100\": 9,\n    \"950101\": 9,\n    \"950102\": 9,\n    \"950103\": 9,\n    \"950104\": 9,\n    \"950105\": 9,\n    \"950106\": 9,\n    \"950107\": 9,\n    \"950108\": 9,\n    \"950109\": 9,\n    \"950110\": 9,\n    \"950111\": 9,\n    \"950112\": 9,\n    \"950113\": 9,\n    \"950114\": 9,\n    \"950115\": 9,\n    \"950116\": 9,\n    \"950117\": 9,\n    \"950118\": 9,\n    \"950119\": 9,\n    \"950120\": 9,\n    \"950121\": 9,\n    \"950122\": 9,\n    \"950123\": 9,\n    \"950124\": 9,\n    \"950125\": 9,\n    \"950126\": 9,\n    \"950127\": 9,\n    \"950128\": 9,\n    \"950129\": 9\n  },\n  \"eta\": 0.7,\n  \"marginal_invariant\": \"X generated identically before and after onset; only P(y|x) flattened toward 0.5\",\n  \"predictors\": {\n    \"time_only\": [\n      \"time_norm\",\n      \"delay_norm\"\n    ],\n    \"unlabeled_monitor\": [\n      \"time_norm\",\n      \"delay_norm\",\n      \"estimate\",\n      \"alarm_count\",\n      \"min_adjusted_p\",\n      \"input_alarm\",\n      \"concern\"\n    ],\n    \"full_released\": [\n      \"time_norm\",\n      \"delay_norm\",\n      \"estimate\",\n      \"alarm_count\",\n      \"min_adjusted_p\",\n      \"input_alarm\",\n      \"concern\",\n      \"latest_accuracy\",\n      \"rolling_accuracy\",\n      \"released_harm_fraction\",\n      \"released_n\",\n      \"latest_age\"\n    ]\n  },\n  \"availability\": \"monitoring label b may enter only if b+delay < forecast t; current-clock outcomes appended after prediction\",\n  \"training_online_sha256\": \"062ec063eb5fa75410d3779d66e1db63f92c685615f498dcf5691f0ea559e3fd\",\n  \"training_target_sha256\": \"9809847223e9144cd1d3e5a47f81578ead9f5aba3049e3a77ede6fe504cbf3c2\",\n  \"online_output_has_no_outcomes\": true,\n  \"training_only_on_development_seeds\": true,\n  \"generator\": \"core innovations/baseline_x/label_probability with post-onset p=(1-eta)*p_base+eta*0.5\",\n  \"runner_sha256\": \"8b4087fddc202228369b49cdd3fb735491281e3687c1d76eab98d9660086849e\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "pilot_evaluator",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_future_harm_unseen_family.py",
+        "--run",
+        "results/fixed_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"seed_n\": 30,\n  \"target_prevalence\": 0.787719298245614,\n  \"rows_per_model\": 1710,\n  \"condition\": \"C7_conditional_randomization_eta_0.70\",\n  \"metrics_by_model\": {\n    \"current_concern\": {\n      \"n\": 1710,\n      \"prevalence\": 0.787719298245614,\n      \"roc_auc\": 0.5378895249314362,\n      \"average_precision\": 0.8165718410375342,\n      \"brier\": 0.7483373307925022,\n      \"log_loss\": 4.488717350269078\n    },\n    \"development_prevalence\": {\n      \"n\": 1710,\n      \"prevalence\": 0.787719298245614,\n      \"roc_auc\": 0.5,\n      \"average_precision\": 0.787719298245614,\n      \"brier\": 0.3059225130495411,\n      \"log_loss\": 0.8061514454293133\n    },\n    \"full_released\": {\n      \"n\": 1710,\n      \"prevalence\": 0.787719298245614,\n      \"roc_auc\": 0.941357286163927,\n      \"average_precision\": 0.9838409643733431,\n      \"brier\": 0.17560011934356987,\n      \"log_loss\": 0.5271466544389471\n    },\n    \"last_released_harm\": {\n      \"n\": 1710,\n      \"prevalence\": 0.787719298245614,\n      \"roc_auc\": 0.6087612304457819,\n      \"average_precision\": 0.8558933468534106,\n      \"brier\": 0.35297620996503465,\n      \"log_loss\": 4.472226487289859\n    },\n    \"time_only\": {\n      \"n\": 1710,\n      \"prevalence\": 0.787719298245614,\n      \"roc_auc\": 0.9975243424322184,\n      \"average_precision\": 0.9988059886166791,\n      \"brier\": 0.25330113764442314,\n      \"log_loss\": 0.6974960407736642\n    },\n    \"unlabeled_monitor\": {\n      \"n\": 1710,\n      \"prevalence\": 0.787719298245614,\n      \"roc_auc\": 0.9816856559112077,\n      \"average_precision\": 0.9953285594816759,\n      \"brier\": 0.18691767829367756,\n      \"log_loss\": 0.5554953959171393\n    }\n  },\n  \"paired_seed_bootstrap\": [\n    {\n      \"contrast\": \"time_only minus unlabeled_monitor Brier\",\n      \"seed_n\": 30,\n      \"mean\": 0.06638345935074562,\n      \"lower_95\": 0.05799439900131036,\n      \"upper_95\": 0.07511052042012198\n    },\n    {\n      \"contrast\": \"unlabeled_monitor minus full_released Brier\",\n      \"seed_n\": 30,\n      \"mean\": 0.011317558950107658,\n      \"lower_95\": 0.009221109765024538,\n      \"upper_95\": 0.013686364022867355\n    },\n    {\n      \"contrast\": \"time_only minus full_released Brier\",\n      \"seed_n\": 30,\n      \"mean\": 0.07770101830085328,\n      \"lower_95\": 0.06971183759465384,\n      \"upper_95\": 0.08611715623794094\n    },\n    {\n      \"contrast\": \"full_released minus development_prevalence Brier\",\n      \"seed_n\": 30,\n      \"mean\": -0.13032239370597132,\n      \"lower_95\": -0.1380260085909299,\n      \"upper_95\": -0.12292465032702475\n    }\n  ],\n  \"feature_outcome_separation\": true,\n  \"release_clock_strict\": true,\n  \"target_window_verified\": true,\n  \"seed_disjoint\": true,\n  \"scope\": \"one manually designed held-out synthetic conditional-randomization law; not natural-domain or unseen-law generalization\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "balanced_runner",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/run_future_harm_unseen_family.py",
+        "--onset-policy",
+        "balanced_onsets",
+        "--out",
+        "results/balanced_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "5/30 unseen-family seeds; 8s\n10/30 unseen-family seeds; 16s\n15/30 unseen-family seeds; 25s\n20/30 unseen-family seeds; 33s\n25/30 unseen-family seeds; 41s\n30/30 unseen-family seeds; 49s\n{\n  \"protocol\": \"future_harm_unseen_family_20261116_v1\",\n  \"status\": \"generated_evaluator_pending\",\n  \"source_protocol\": \"future_harm_forecast_20261116_v1\",\n  \"training_seeds\": [\n    950000,\n    950001,\n    950002,\n    950003,\n    950004,\n    950005,\n    950006,\n    950007,\n    950008,\n    950009,\n    950010,\n    950011,\n    950012,\n    950013,\n    950014,\n    950015,\n    950016,\n    950017,\n    950018,\n    950019,\n    950020,\n    950021,\n    950022,\n    950023,\n    950024,\n    950025,\n    950026,\n    950027,\n    950028,\n    950029\n  ],\n  \"evaluation_seeds\": [\n    950100,\n    950101,\n    950102,\n    950103,\n    950104,\n    950105,\n    950106,\n    950107,\n    950108,\n    950109,\n    950110,\n    950111,\n    950112,\n    950113,\n    950114,\n    950115,\n    950116,\n    950117,\n    950118,\n    950119,\n    950120,\n    950121,\n    950122,\n    950123,\n    950124,\n    950125,\n    950126,\n    950127,\n    950128,\n    950129\n  ],\n  \"training_conditions\": [\n    \"C0\",\n    \"C1\",\n    \"C2\",\n    \"C3\",\n    \"C4\",\n    \"C5\",\n    \"C6\"\n  ],\n  \"evaluation_condition\": \"C7_conditional_randomization_eta_0.70\",\n  \"delays\": [\n    0,\n    5,\n    20\n  ],\n  \"future_window\": \"t+1..t+5\",\n  \"forecast_origins\": \"t=1..19\",\n  \"onset_policy\": \"balanced_onsets\",\n  \"onset_batches_by_seed\": {\n    \"950100\": 5,\n    \"950101\": 9,\n    \"950102\": 13,\n    \"950103\": 17,\n    \"950104\": 5,\n    \"950105\": 9,\n    \"950106\": 13,\n    \"950107\": 17,\n    \"950108\": 5,\n    \"950109\": 9,\n    \"950110\": 13,\n    \"950111\": 17,\n    \"950112\": 5,\n    \"950113\": 9,\n    \"950114\": 13,\n    \"950115\": 17,\n    \"950116\": 5,\n    \"950117\": 9,\n    \"950118\": 13,\n    \"950119\": 17,\n    \"950120\": 5,\n    \"950121\": 9,\n    \"950122\": 13,\n    \"950123\": 17,\n    \"950124\": 5,\n    \"950125\": 9,\n    \"950126\": 13,\n    \"950127\": 17,\n    \"950128\": 5,\n    \"950129\": 9\n  },\n  \"eta\": 0.7,\n  \"marginal_invariant\": \"X generated identically before and after onset; only P(y|x) flattened toward 0.5\",\n  \"predictors\": {\n    \"time_only\": [\n      \"time_norm\",\n      \"delay_norm\"\n    ],\n    \"unlabeled_monitor\": [\n      \"time_norm\",\n      \"delay_norm\",\n      \"estimate\",\n      \"alarm_count\",\n      \"min_adjusted_p\",\n      \"input_alarm\",\n      \"concern\"\n    ],\n    \"full_released\": [\n      \"time_norm\",\n      \"delay_norm\",\n      \"estimate\",\n      \"alarm_count\",\n      \"min_adjusted_p\",\n      \"input_alarm\",\n      \"concern\",\n      \"latest_accuracy\",\n      \"rolling_accuracy\",\n      \"released_harm_fraction\",\n      \"released_n\",\n      \"latest_age\"\n    ]\n  },\n  \"availability\": \"monitoring label b may enter only if b+delay < forecast t; current-clock outcomes appended after prediction\",\n  \"training_online_sha256\": \"062ec063eb5fa75410d3779d66e1db63f92c685615f498dcf5691f0ea559e3fd\",\n  \"training_target_sha256\": \"9809847223e9144cd1d3e5a47f81578ead9f5aba3049e3a77ede6fe504cbf3c2\",\n  \"online_output_has_no_outcomes\": true,\n  \"training_only_on_development_seeds\": true,\n  \"generator\": \"core innovations/baseline_x/label_probability with post-onset p=(1-eta)*p_base+eta*0.5\",\n  \"runner_sha256\": \"8b4087fddc202228369b49cdd3fb735491281e3687c1d76eab98d9660086849e\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "balanced_evaluator",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_future_harm_unseen_family.py",
+        "--run",
+        "results/balanced_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"seed_n\": 30,\n  \"target_prevalence\": 0.6929824561403509,\n  \"rows_per_model\": 1710,\n  \"condition\": \"C7_conditional_randomization_eta_0.70\",\n  \"metrics_by_model\": {\n    \"current_concern\": {\n      \"n\": 1710,\n      \"prevalence\": 0.6929824561403509,\n      \"roc_auc\": 0.46528752260397827,\n      \"average_precision\": 0.6950835353531957,\n      \"brier\": 0.6595524593187928,\n      \"log_loss\": 4.021981692963927\n    },\n    \"development_prevalence\": {\n      \"n\": 1710,\n      \"prevalence\": 0.6929824561403509,\n      \"roc_auc\": 0.5,\n      \"average_precision\": 0.6929824561403509,\n      \"brier\": 0.2898718601013812,\n      \"log_loss\": 0.7737375897308522\n    },\n    \"full_released\": {\n      \"n\": 1710,\n      \"prevalence\": 0.6929824561403509,\n      \"roc_auc\": 0.8298509142053445,\n      \"average_precision\": 0.9223388957846237,\n      \"brier\": 0.19427057426590172,\n      \"log_loss\": 0.5740511849592\n    },\n    \"last_released_harm\": {\n      \"n\": 1710,\n      \"prevalence\": 0.6929824561403509,\n      \"roc_auc\": 0.6355274261603375,\n      \"average_precision\": 0.7942895796161435,\n      \"brier\": 0.33321393909411456,\n      \"log_loss\": 4.182942027158705\n    },\n    \"time_only\": {\n      \"n\": 1710,\n      \"prevalence\": 0.6929824561403509,\n      \"roc_auc\": 0.8749728752260397,\n      \"average_precision\": 0.9424444899418822,\n      \"brier\": 0.2381850963326568,\n      \"log_loss\": 0.6690551864856591\n    },\n    \"unlabeled_monitor\": {\n      \"n\": 1710,\n      \"prevalence\": 0.6929824561403509,\n      \"roc_auc\": 0.8637685352622062,\n      \"average_precision\": 0.9395197333889815,\n      \"brier\": 0.18760279275620503,\n      \"log_loss\": 0.5610999860496104\n    }\n  },\n  \"paired_seed_bootstrap\": [\n    {\n      \"contrast\": \"time_only minus unlabeled_monitor Brier\",\n      \"seed_n\": 30,\n      \"mean\": 0.05058230357645179,\n      \"lower_95\": 0.04081896221930771,\n      \"upper_95\": 0.06192294631945658\n    },\n    {\n      \"contrast\": \"unlabeled_monitor minus full_released Brier\",\n      \"seed_n\": 30,\n      \"mean\": -0.006667781509696666,\n      \"lower_95\": -0.022852909066820862,\n      \"upper_95\": 0.00855667927490552\n    },\n    {\n      \"contrast\": \"time_only minus full_released Brier\",\n      \"seed_n\": 30,\n      \"mean\": 0.04391452206675512,\n      \"lower_95\": 0.02179958142190973,\n      \"upper_95\": 0.06650387584954359\n    },\n    {\n      \"contrast\": \"full_released minus development_prevalence Brier\",\n      \"seed_n\": 30,\n      \"mean\": -0.0956012858354796,\n      \"lower_95\": -0.10813593506238092,\n      \"upper_95\": -0.08242389868398933\n    }\n  ],\n  \"feature_outcome_separation\": true,\n  \"release_clock_strict\": true,\n  \"target_window_verified\": true,\n  \"seed_disjoint\": true,\n  \"scope\": \"one manually designed held-out synthetic conditional-randomization law; not natural-domain or unseen-law generalization\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "report",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/report_future_harm_unseen_family.py",
+        "--run",
+        "results/balanced_EXTRACTED",
+        "--out",
+        "reports/balanced_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "reports\\balanced_EXTRACTED\n",
+      "stderr": ""
+    }
+  ],
+  "exact_comparisons": [
+    "results\\phase3\\future_harm_unseen_family_20261116_v1\\predictions\\online_features.csv exact",
+    "results\\phase3\\future_harm_unseen_family_20261116_v1\\evaluator_truth\\future_targets.csv exact",
+    "results\\phase3\\future_harm_unseen_family_20261116_v1\\predictions\\heldout_probabilities.csv exact",
+    "results\\phase3\\future_harm_unseen_family_20261116_v1\\metrics_overall_by_delay.csv exact",
+    "results\\phase3\\future_harm_unseen_family_20261116_v1\\paired_seed_bootstrap.csv exact",
+    "results\\phase3\\future_harm_unseen_family_20261116_v1\\validation.json exact",
+    "results\\phase3\\future_harm_unseen_family_balanced_20261116_v1\\predictions\\online_features.csv exact",
+    "results\\phase3\\future_harm_unseen_family_balanced_20261116_v1\\evaluator_truth\\future_targets.csv exact",
+    "results\\phase3\\future_harm_unseen_family_balanced_20261116_v1\\predictions\\heldout_probabilities.csv exact",
+    "results\\phase3\\future_harm_unseen_family_balanced_20261116_v1\\metrics_overall_by_delay.csv exact",
+    "results\\phase3\\future_harm_unseen_family_balanced_20261116_v1\\paired_seed_bootstrap.csv exact",
+    "results\\phase3\\future_harm_unseen_family_balanced_20261116_v1\\validation.json exact",
+    "reports\\phase3\\future_harm_unseen_family_balanced_20261116_v1\\FUTURE_HARM_UNSEEN_FAMILY.tex report exact",
+    "reports\\phase3\\future_harm_unseen_family_balanced_20261116_v1\\unseen_family_metrics.png report exact"
+  ],
+  "preserved_hashes": {
+    "docs/23i-2604_23i-2581DAV-phase2.docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "docs/Phase 03 - Implementation.pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "output/phase3/23I-2581_23I-2604_Phase3.zip": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877",
+    "output/phase3/IDM_Viz_Phase3_Final_Strengthening_20261116_v13.zip": "4010ca6baf3cd67ed7516e16fcffff31558c97e17cfc92409f08ef25e0d33c2f",
+    "output/phase3/IDM_Viz_ELEC2_Calibration_Family_Addendum_20261116_v2.zip": "e9a48f4708fdd932f9e5243a5ed941e1e6b60f0e98bdc47737aea6e47bcfb1fb"
+  },
+  "uploaded": false
+}

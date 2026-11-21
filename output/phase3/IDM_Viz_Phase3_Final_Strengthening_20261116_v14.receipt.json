@@ -1,0 +1,167 @@
+{
+  "status": "passed",
+  "archive": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\output\\phase3\\IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip",
+  "archive_sha256": "24bd91b8686ae972051d1437b9c4f2d39cae531576a63f5ed64ad3ca8dd47725",
+  "bytes": 401347418,
+  "members": 1408,
+  "crc": "passed",
+  "member_hashes": "passed",
+  "clean_extraction": "passed",
+  "fresh_commands": [
+    {
+      "stage": "tests",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "-m",
+        "pytest",
+        "tests/phase3/test_decision_audit_extension.py",
+        "tests/phase3/test_large_seed_robustness.py",
+        "tests/phase3/test_dependence_detector.py",
+        "tests/phase3/test_uci224_exact_interval_extension.py",
+        "tests/phase3/test_uci224_split_model_sensitivity.py",
+        "tests/phase3/test_elec2_temporal_validation.py",
+        "tests/phase3/test_elec2_delayed_recalibration.py",
+        "tests/phase3/test_future_harm_forecast.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "..................                                                       [100%]\n18 passed in 5.63s\n",
+      "stderr": ""
+    },
+    {
+      "stage": "audit",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/strengthen_phase3_decisions.py",
+        "--out",
+        "results/audit_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "results\\audit_EXTRACTED\n",
+      "stderr": ""
+    },
+    {
+      "stage": "horizon",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_phase3_horizon_extension.py",
+        "--out",
+        "results/horizon_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "dependence",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_phase3_dependence_extension.py",
+        "--run",
+        "results/phase3/dependence_extension_20261116_final_v2"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"rows\": 5040,\n  \"contrasts\": [\n    {\n      \"contrast\": \"C6 onset detection rate difference\",\n      \"mean_difference\": 0.4666666666666667,\n      \"lower\": 0.3,\n      \"upper\": 0.6333333333333333,\n      \"paired_seeds\": 30,\n      \"bootstrap_replicates\": 2000,\n      \"resampling_unit\": \"seed\"\n    },\n    {\n      \"contrast\": \"C0 alarms per 24 batches difference\",\n      \"mean_difference\": 0.8666666666666667,\n      \"lower\": 0.4,\n      \"upper\": 1.3666666666666667,\n      \"paired_seeds\": 30,\n      \"bootstrap_replicates\": 2000,\n      \"resampling_unit\": \"seed\"\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "exact_interval",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_uci224_exact_interval_extension.py",
+        "--out",
+        "results/exact_interval_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"exploratory_complete\",\n  \"cohorts\": 9,\n  \"cohort_unit_warning\": \"nine sequential cohorts from one dataset are not independent replications\",\n  \"exact_coverage_count\": 0,\n  \"normal_coverage_count\": 0,\n  \"mean_exact_width\": 0.02338211415936944,\n  \"mean_normal_width\": 0.025802992731058707,\n  \"mean_width_difference_exact_minus_normal\": -0.0024208785716892667,\n  \"mean_absolute_endpoint_difference\": 0.001295006379505575,\n  \"calibration_transfer_error_unchanged\": 0.544657889410022,\n  \"source_sha256\": \"91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4\",\n  \"limitations\": [\n    \"plug-in q treated as known\",\n    \"independent correctness assumption\",\n    \"no reference or calibration parameter uncertainty\",\n    \"no arbitrary-shift guarantee\"\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "delay100",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_phase3_delay100_availability.py",
+        "--out",
+        "results/delay100_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"delay_batches\": 100,\n  \"streams\": 210,\n  \"cohorts\": 5040,\n  \"labels_available_at_input_end\": 0,\n  \"labels_unresolved_at_input_end\": 5040,\n  \"labels_released_after_drain\": 5040,\n  \"drain_final_clock\": 124,\n  \"online_truth_columns_absent\": true,\n  \"online_columns_not_in_evaluator\": [\n    \"n\"\n  ],\n  \"input_hashes\": {\n    \"online_batches.csv\": \"3c830d83a31a2f73ac46f44c23ce631757ea59622639afdd4a070a07be4900e3\",\n    \"evaluator_batches.csv\": \"168c79853fb3a96f96cd8ef5b6e7008c04500be42a1a4b59629552580126bff1\",\n    \"protocol_lock.json\": \"69ff966eb17df12e2459f796ccc07c5113fc767ed6becb6d41a53e04d627488e\"\n  },\n  \"scope\": \"label availability only; no adaptation or performance claim\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "split_model_runner",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/run_uci224_split_model_sensitivity.py",
+        "--out",
+        "results/uci224_sensitivity_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"online_complete_evaluator_pending\",\n  \"protocol\": \"UCI224_SPLIT_MODEL_SENSITIVITY_20261116\",\n  \"source_sha256\": \"91e8f466f202e7a093d657673ce47311c3e90416f7df3057966058961c351fe4\",\n  \"runner_sha256\": \"3045e8c19ac2b39b0615d4f5e006e6ea91e97685bc1af89cec2300f1298ebbee\",\n  \"seeds\": [\n    420001,\n    420002,\n    420003,\n    420004,\n    420005,\n    420006\n  ],\n  \"windows\": {\n    \"batch1\": [\n      1\n    ],\n    \"batch1_2\": [\n      1,\n      2\n    ]\n  },\n  \"models\": [\n    \"logistic\",\n    \"tree_depth6\"\n  ],\n  \"per_window_model_split\": 6,\n  \"online_rows\": 308232,\n  \"online_truth_columns_absent\": true,\n  \"environment\": {\n    \"python\": \"3.13.5\",\n    \"numpy\": \"2.1.3\",\n    \"pandas\": \"2.3.3\",\n    \"sklearn\": \"1.8.0\"\n  },\n  \"elapsed_seconds\": 15.290168899999117\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "split_model_evaluator",
+      "command": [
+        "C:\\Users\\hp\\anaconda3\\python.exe",
+        "scripts/evaluate_uci224_split_model_sensitivity.py",
+        "--run",
+        "results/uci224_sensitivity_EXTRACTED"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"cohort_records\": 204,\n  \"per_class_records\": 1224,\n  \"split_seeds_are_sensitivity_repeats_not_independent_domains\": true,\n  \"all_online_cache_rows_scored\": 308232,\n  \"comparison_batches\": [\n    3,\n    4,\n    5,\n    6,\n    7,\n    8,\n    9,\n    10\n  ],\n  \"batch1_only_includes_batch2_outside_common_comparison\": true,\n  \"common_cohort_mae_batches_3_to_10\": [\n    {\n      \"history_window\": \"batch1\",\n      \"model\": \"logistic\",\n      \"raw_estimate_abs_error\": 0.4277419278618835,\n      \"calibrated_estimate_abs_error\": 0.5533086697038726,\n      \"reference_estimate_abs_error\": 0.5340078131509297\n    },\n    {\n      \"history_window\": \"batch1\",\n      \"model\": \"tree_depth6\",\n      \"raw_estimate_abs_error\": 0.42572179286906625,\n      \"calibrated_estimate_abs_error\": 0.3737475337229392,\n      \"reference_estimate_abs_error\": 0.39889100723924825\n    },\n    {\n      \"history_window\": \"batch1_2\",\n      \"model\": \"logistic\",\n      \"raw_estimate_abs_error\": 0.17264155354177368,\n      \"calibrated_estimate_abs_error\": 0.3415795242865187,\n      \"reference_estimate_abs_error\": 0.3415827457923634\n    },\n    {\n      \"history_window\": \"batch1_2\",\n      \"model\": \"tree_depth6\",\n      \"raw_estimate_abs_error\": 0.3579723225610781,\n      \"calibrated_estimate_abs_error\": 0.40141892015915404,\n      \"reference_estimate_abs_error\": 0.40810474962813464\n    }\n  ],\n  \"batch2_logistic_history1_only\": [\n    {\n      \"model\": \"logistic\",\n      \"raw_estimate_abs_error\": 0.07839723892528942,\n      \"calibrated_estimate_abs_error\": 0.20683273184028125,\n      \"reference_estimate_abs_error\": 0.18763623444970312\n    },\n    {\n      \"model\": \"tree_depth6\",\n      \"raw_estimate_abs_error\": 0.12024449309431291,\n      \"calibrated_estimate_abs_error\": 0.06850881350286613,\n      \"reference_estimate_abs_error\": 0.06598715030648987\n    }\n  ],\n  \"split_seed_sd_is_descriptive_only\": true\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "future_forecast_runner",
+      "command": "python scripts/run_future_harm_forecast.py --out results/future_forecast_EXTRACTED",
+      "exit_code": 0,
+      "stdout": "5/60 seeds complete; 34s\n10/60 seeds complete; 65s\n15/60 seeds complete; 98s\n20/60 seeds complete; 130s\n25/60 seeds complete; 162s\n30/60 seeds complete; 193s\n35/60 seeds complete; 227s\n40/60 seeds complete; 260s\n45/60 seeds complete; 294s\n50/60 seeds complete; 329s\n55/60 seeds complete; 369s\n60/60 seeds complete; 398s\nCompleted in 466.1s: results\\future_forecast_EXTRACTED\n",
+      "stderr": ""
+    },
+    {
+      "stage": "future_forecast_evaluator",
+      "command": "python scripts/evaluate_future_harm_forecast.py results/future_forecast_EXTRACTED",
+      "exit_code": 0,
+      "stdout": "{\n  \"protocol\": \"future_harm_forecast_20261116_v1\",\n  \"heldout_seeds\": [\n    950100,\n    950101,\n    950102,\n    950103,\n    950104,\n    950105,\n    950106,\n    950107,\n    950108,\n    950109,\n    950110,\n    950111,\n    950112,\n    950113,\n    950114,\n    950115,\n    950116,\n    950117,\n    950118,\n    950119,\n    950120,\n    950121,\n    950122,\n    950123,\n    950124,\n    950125,\n    950126,\n    950127,\n    950128,\n    950129\n  ],\n  \"overall\": {\n    \"current_concern\": {\n      \"n\": 11970,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.650219590175809,\n      \"average_precision\": 0.6319072314286869,\n      \"brier\": 0.3267264301045607,\n      \"log_loss\": 1.9601905849606989\n    },\n    \"development_prevalence\": {\n      \"n\": 11970,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.5,\n      \"average_precision\": 0.41779448621553883,\n      \"brier\": 0.24324853487101206,\n      \"log_loss\": 0.6795830565115125\n    },\n    \"full_released\": {\n      \"n\": 11970,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.8649301564568704,\n      \"average_precision\": 0.8178140027358433,\n      \"brier\": 0.14942910484691446,\n      \"log_loss\": 0.44586311568254355\n    },\n    \"last_released_harm\": {\n      \"n\": 11970,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.6391892664658344,\n      \"average_precision\": 0.5726920481266484,\n      \"brier\": 0.25848660391125355,\n      \"log_loss\": 3.1140030229773314\n    },\n    \"time_only\": {\n      \"n\": 11970,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.6402371269181377,\n      \"average_precision\": 0.4825140921840807,\n      \"brier\": 0.23074057269330991,\n      \"log_loss\": 0.6502795437720824\n    },\n    \"unlabeled_monitor\": {\n      \"n\": 11970,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.8376724138598883,\n      \"average_precision\": 0.760334717977622,\n      \"brier\": 0.16634339702082435,\n      \"log_loss\": 0.4840377381046265\n    }\n  },\n  \"prevalence_constant\": 0.41528822055137843,\n  \"bootstrap\": [\n    {\n      \"contrast\": \"time_only minus unlabeled_monitor Brier\",\n      \"seed_count\": 30,\n      \"mean\": 0.06439717567248558,\n      \"lower_95\": 0.06028075803665384,\n      \"upper_95\": 0.06735437461442749\n    },\n    {\n      \"contrast\": \"unlabeled_monitor minus full_released Brier\",\n      \"seed_count\": 30,\n      \"mean\": 0.01691429217390988,\n      \"lower_95\": 0.016021415367795888,\n      \"upper_95\": 0.017878114301787602\n    },\n    {\n      \"contrast\": \"time_only minus full_released Brier\",\n      \"seed_count\": 30,\n      \"mean\": 0.08131146784639548,\n      \"lower_95\": 0.07762259204976353,\n      \"upper_95\": 0.08392886640829475\n    }\n  ],\n  \"by_delay\": [\n    {\n      \"model\": \"current_concern\",\n      \"delay\": 0,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.650219590175809,\n      \"average_precision\": 0.6319072314286869,\n      \"brier\": 0.3267264301045607,\n      \"log_loss\": 1.960190584960699\n    },\n    {\n      \"model\": \"current_concern\",\n      \"delay\": 5,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.650219590175809,\n      \"average_precision\": 0.6319072314286869,\n      \"brier\": 0.3267264301045607,\n      \"log_loss\": 1.960190584960699\n    },\n    {\n      \"model\": \"current_concern\",\n      \"delay\": 20,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.650219590175809,\n      \"average_precision\": 0.6319072314286869,\n      \"brier\": 0.3267264301045607,\n      \"log_loss\": 1.960190584960699\n    },\n    {\n      \"model\": \"development_prevalence\",\n      \"delay\": 0,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.5,\n      \"average_precision\": 0.41779448621553883,\n      \"brier\": 0.24324853487101206,\n      \"log_loss\": 0.6795830565115126\n    },\n    {\n      \"model\": \"development_prevalence\",\n      \"delay\": 5,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.5,\n      \"average_precision\": 0.41779448621553883,\n      \"brier\": 0.24324853487101206,\n      \"log_loss\": 0.6795830565115126\n    },\n    {\n      \"model\": \"development_prevalence\",\n      \"delay\": 20,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.5,\n      \"average_precision\": 0.41779448621553883,\n      \"brier\": 0.24324853487101206,\n      \"log_loss\": 0.6795830565115126\n    },\n    {\n      \"model\": \"full_released\",\n      \"delay\": 0,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.884317152927572,\n      \"average_precision\": 0.8742351503069414,\n      \"brier\": 0.12644980338630132,\n      \"log_loss\": 0.3876825943452228\n    },\n    {\n      \"model\": \"full_released\",\n      \"delay\": 5,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.8595418238780139,\n      \"average_precision\": 0.8002100969631195,\n      \"brier\": 0.15535682088411495,\n      \"log_loss\": 0.4641377169705645\n    },\n    {\n      \"model\": \"full_released\",\n      \"delay\": 20,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.8390875419406001,\n      \"average_precision\": 0.7609098895596094,\n      \"brier\": 0.16648069027032708,\n      \"log_loss\": 0.4857690357318434\n    },\n    {\n      \"model\": \"last_released_harm\",\n      \"delay\": 0,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.773843294190925,\n      \"average_precision\": 0.7272924476114067,\n      \"brier\": 0.1907813257611613,\n      \"log_loss\": 3.3753601953318704\n    },\n    {\n      \"model\": \"last_released_harm\",\n      \"delay\": 5,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.5183859482946287,\n      \"average_precision\": 0.5085186860667802,\n      \"brier\": 0.3414299511015872,\n      \"log_loss\": 5.28706581708861\n    },\n    {\n      \"model\": \"last_released_harm\",\n      \"delay\": 20,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.5,\n      \"average_precision\": 0.41779448621553883,\n      \"brier\": 0.24324853487101206,\n      \"log_loss\": 0.6795830565115126\n    },\n    {\n      \"model\": \"time_only\",\n      \"delay\": 0,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.6402371269181377,\n      \"average_precision\": 0.4834870994816149,\n      \"brier\": 0.23074057269330997,\n      \"log_loss\": 0.6502795437720824\n    },\n    {\n      \"model\": \"time_only\",\n      \"delay\": 5,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.6402371269181377,\n      \"average_precision\": 0.4834870994816149,\n      \"brier\": 0.23074057269330994,\n      \"log_loss\": 0.6502795437720824\n    },\n    {\n      \"model\": \"time_only\",\n      \"delay\": 20,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.6402371269181377,\n      \"average_precision\": 0.4834870994816149,\n      \"brier\": 0.23074057269330994,\n      \"log_loss\": 0.6502795437720824\n    },\n    {\n      \"model\": \"unlabeled_monitor\",\n      \"delay\": 0,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.8376724138598883,\n      \"average_precision\": 0.7601812766843853,\n      \"brier\": 0.16634339702082482,\n      \"log_loss\": 0.48403773810462647\n    },\n    {\n      \"model\": \"unlabeled_monitor\",\n      \"delay\": 5,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.8376724138598883,\n      \"average_precision\": 0.7601812766843853,\n      \"brier\": 0.1663433970208245,\n      \"log_loss\": 0.4840377381046265\n    },\n    {\n      \"model\": \"unlabeled_monitor\",\n      \"delay\": 20,\n      \"n\": 3990,\n      \"prevalence\": 0.41779448621553883,\n      \"roc_auc\": 0.8376724138598883,\n      \"average_precision\": 0.7601812766843853,\n      \"brier\": 0.16634339702082368,\n      \"log_loss\": 0.48403773810462664\n    }\n  ]\n}\n",
+      "stderr": ""
+    },
+    {
+      "stage": "future_forecast_report",
+      "command": "python scripts/report_future_harm_forecast.py --run results/future_forecast_EXTRACTED --out reports/future_forecast_report_EXTRACTED",
+      "exit_code": 0,
+      "stdout": "reports\\future_forecast_report_EXTRACTED\n",
+      "stderr": ""
+    }
+  ],
+  "exact_result_csv_comparisons": [
+    "results\\phase3\\decision_strengthening_v2\\localization_per_seed.csv",
+    "results\\phase3\\decision_strengthening_v2\\localization_summary.csv",
+    "results\\phase3\\decision_strengthening_v2\\online_audit_decisions.csv",
+    "results\\phase3\\decision_strengthening_v2\\paired_bootstrap.csv",
+    "results\\phase3\\decision_strengthening_v2\\policy_per_seed.csv",
+    "results\\phase3\\decision_strengthening_v2\\policy_summary.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\corrected_external_history_class_composition.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\horizon_per_seed.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\horizon_summary.csv",
+    "results\\phase3\\horizon_metadata_strengthening_v2\\online_persistence_forecasts.csv",
+    "results\\phase3\\dependence_extension_20261116_final_v2\\validated_per_seed.csv (clean-extraction evaluator passed)",
+    "results\\phase3\\dependence_extension_20261116_final_v2\\validated_summary.csv (clean-extraction evaluator passed)",
+    "results/phase3/external_uci224_exact_interval_20261116_v1/cohort_interval_comparison.csv == clean-extraction rerun",
+    "results/phase3/delay100_availability_20261116_v1/release_schedule.csv == clean-extraction rerun",
+    "results/phase3/uci224_split_model_sensitivity_20261116_v2/evaluation/per_cohort_metrics.csv == clean-extraction rerun",
+    "results/phase3/uci224_split_model_sensitivity_20261116_v2/evaluation/per_class_metrics.csv == clean-extraction rerun",
+    "results/phase3/uci224_split_model_sensitivity_20261116_v2/evaluation/common_cohort_split_sensitivity.csv == clean-extraction rerun",
+    "results/phase3/future_harm_forecast_20261116_v1/evaluator_truth/future_targets.csv == clean-extraction forecast rerun",
+    "results/phase3/future_harm_forecast_20261116_v1/predictions/heldout_probabilities.csv == clean-extraction forecast rerun",
+    "results/phase3/future_harm_forecast_20261116_v1/predictions/online_features.csv == clean-extraction forecast rerun",
+    "reports/phase3/future_harm_forecast_20261116_v10/FUTURE_HARM_FORECAST.tex == clean-extraction report regeneration",
+    "reports/phase3/future_harm_forecast_20261116_v10/forecast_metrics.png == clean-extraction report regeneration"
+  ],
+  "preserved_hashes": {
+    "docs/23i-2604_23i-2581DAV-phase2.docx": "786d4f23d54d0d09edd5f94740198f43ca3b406eb38626ae754fe04fe26c5ef4",
+    "docs/Phase 03 - Implementation.pdf": "9a94654bdb772b03d5228993f2cc7eaf1b8552f41c462ea84a4649bb0a828115",
+    "output/phase3/23I-2581_23I-2604_Phase3.zip": "279d9867d1c75720a51df12caae2ac0b4d490641b83752e32642dcb87e1c8877"
+  },
+  "uploaded": false
+}

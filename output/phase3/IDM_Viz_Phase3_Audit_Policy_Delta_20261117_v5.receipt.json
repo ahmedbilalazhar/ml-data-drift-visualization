@@ -1,0 +1,13 @@
+{
+  "status": "validated",
+  "package": "IDM_Viz_Phase3_Audit_Policy_Delta_20261117_v5.zip",
+  "sha256": "77b69bb58033331a8792852b1a05ca16057167565344c8c8f8da8b760127e123",
+  "bytes": 6090553,
+  "base_package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v20.zip",
+  "base_package_sha256": "00b4f5a91192c34ac6fa0d807d561d4a1bb86a650dab48378345de18be3975b5",
+  "previous_delta": "IDM_Viz_Phase3_Audit_Policy_Delta_20261117_v4.zip",
+  "previous_delta_sha256": "00930a71cb87066821407bb1a44f86f77dbb555f4d14b5c2458d3326358fb586",
+  "overlay_file_count": 66,
+  "zip_crc": "passed",
+  "overlay_hashes": "passed"
+}

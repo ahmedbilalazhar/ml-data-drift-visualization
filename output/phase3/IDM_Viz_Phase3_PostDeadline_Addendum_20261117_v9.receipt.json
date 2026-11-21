@@ -1,0 +1,58 @@
+{
+  "status": "validated_for_release",
+  "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v9.zip",
+  "sha256": "50e0532460b88da255ccf156b80dafbeda275b554f5cc7920ee087fa46e8cac5",
+  "size_bytes": 393310814,
+  "base_package": "IDM_Viz_Phase3_Final_Strengthening_20261116_v14.zip",
+  "zip_members": 1592,
+  "zip_crc": "passed",
+  "overlay_file_hashes": "passed (192 files)",
+  "clean_extraction": {
+    "status": "passed",
+    "temporary_extraction": "removed after successful verification",
+    "processed_dataset_rebuild": "verified_v2 source/output checksums and read-back passed",
+    "dataset_audit": "passed for Elec2 (45,312), Covertype (83,665), NOAA GSOD (18,210)",
+    "representative_tests": "8 passed in 2.76 seconds (two scientific contract-test files)",
+    "noaa_reproduction": "passed; same processed CSV SHA-256 055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c; scores, figures, TeX and PDF regenerated",
+    "localization_reproduction": "passed; 30-seed pair/region audit, SHA-bound receipts, bootstrap tables, figures and TeX regenerated"
+  },
+  "workspace_validation": {
+    "full_project_suite": "177 passed in 8.43 seconds",
+    "all_dataset_audit": "passed",
+    "processed_v2_rebuild": "already_built_and_verified"
+  },
+  "superseded_candidates": [
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v1.zip",
+      "note": "clean extraction failed due missing current support modules"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v2.zip",
+      "note": "clean extraction failed due missing Phase 3 support modules"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v3.zip",
+      "note": "clean extraction failed because the experiment config was omitted"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v4.zip",
+      "note": "clean extraction passed; before final registry"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v5.zip",
+      "note": "clean extraction passed; predates documentation/hash updates"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v6.zip",
+      "note": "clean extraction passed; stale test-count wording"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v7.zip",
+      "note": "clean extraction passed; predates localization receipts"
+    },
+    {
+      "package": "IDM_Viz_Phase3_PostDeadline_Addendum_20261117_v8.zip",
+      "note": "ZIP valid; predates final 177-test wording and localization receipts"
+    }
+  ]
+}

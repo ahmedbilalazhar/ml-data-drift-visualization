@@ -1,0 +1,28 @@
+{
+  "version": "v1",
+  "created_utc": "2026-11-15T10:07:00.595904+00:00",
+  "created_karachi": "2026-11-15T15:07:00.595904+05:00",
+  "submission_status": "prepared_not_uploaded",
+  "methodological_basis": "submitted Phase 2 DOCX",
+  "legacy_results_used": false,
+  "final_lock_sha256": "69ff966eb17df12e2459f796ccc07c5113fc767ed6becb6d41a53e04d627488e",
+  "preservation": "Archives refuse overwrite. Preserve v1 and use a new version for improvements.",
+  "archives": [
+    {
+      "path": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\output\\phase3\\IDM_Viz_Phase3_v1_submission.zip",
+      "sha256": "ddf91fa89ab9a9d45c20059c1dbea5cfdd966f3eea62a605769a371ae55e0ebd",
+      "bytes": 5138999,
+      "payload_files": 96,
+      "all_member_sha256_checks": "passed",
+      "kind": "submission"
+    },
+    {
+      "path": "C:\\Users\\hp\\Desktop\\University\\2. DAV\\3. Project\\output\\phase3\\IDM_Viz_Phase3_v1_full_reproducibility.zip",
+      "sha256": "0baba912c5f3e48a8a08a606e2a77a303f67e884ddccfef0907046d94dca5519",
+      "bytes": 154857571,
+      "payload_files": 756,
+      "all_member_sha256_checks": "passed",
+      "kind": "full_reproducibility"
+    }
+  ]
+}
