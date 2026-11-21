@@ -1,0 +1,14 @@
+{
+ "template": "S3",
+ "seed": 4,
+ "affected_original_vars": [
+  "x0",
+  "x1"
+ ],
+ "onset_test_row": 2400,
+ "transition_rows": 1500,
+ "mechanism": "recurrent",
+ "n_train": 2000,
+ "n_calib": 2000,
+ "n_test": 6000
+}

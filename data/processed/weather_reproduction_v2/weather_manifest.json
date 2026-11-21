@@ -1,0 +1,365 @@
+{
+  "dataset_id": "noaa-gsod-offutt-weather-1949-1999-v2",
+  "created_utc": "2026-11-17T00:14:03.129043+00:00",
+  "source": {
+    "dataset": "NOAA Global Summary of the Day (GSOD), NCEI DSI 3505 / gov.noaa.ncdc:C00516",
+    "metadata_url": "https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ncdc:C00516/html",
+    "station_id": "72554014949",
+    "station_name": "BELLEVUE OFFUTT AFB, NE US",
+    "coverage": [
+      "1949-01-01",
+      "1999-12-31"
+    ],
+    "station_year_csv_url_template": "https://www.ncei.noaa.gov/data/global-summary-of-the-day/access/{year}/72554014949.csv",
+    "raw_files": [
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1949.csv",
+        "sha256": "9a2d8337a7293dda0450ad065a43c4d37ad6c75df3c7bb5db4cc0af37eebfd1f",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1950.csv",
+        "sha256": "4a74939515e039415164a28e4e16b70315eb8e3e51895b464ea10050d8903b3f",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1951.csv",
+        "sha256": "1ec44832bd851a4f44c5d8e9bd80d40422f6b36fb95bcb33c67083b5219d6f74",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1952.csv",
+        "sha256": "8de81817edfc38db94c66f18c3377ae308a1bd7c2f50e2407921da02fc308aad",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1953.csv",
+        "sha256": "927939467bd7589067b407ac9ab78fe0db388051331607751b137eac92f4383c",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1954.csv",
+        "sha256": "6a2c292bc3204b8e513c7e1f89eff9f6e048a71e791ce5c1c323fed37fb7562c",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1955.csv",
+        "sha256": "a62cff5262c399b9223df03f45e3779cf303066391b88a44299c7f14d866d703",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1956.csv",
+        "sha256": "629fbcb1eb62e40c4c033794b8ff30ab8b99e64f3769c3608a4074fac85d3bce",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1957.csv",
+        "sha256": "0279bcbf277821566de201cd651801bc3ffc6760afc9405dd65f72c9117a242c",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1958.csv",
+        "sha256": "7ff8feb6ac0a9520cefda1166d0276917d4270c30ef1d2bd258db30a3e5f59d4",
+        "rows": 364
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1959.csv",
+        "sha256": "1fbcc8f158039fa19fb91b55d795d2939556f769a51c2c18ce608fdd396b8be2",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1960.csv",
+        "sha256": "aa4bd2ead3640c5f020e5c3a2c6a858c3ae02cf66be84a43120d1ed2273a9a2d",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1961.csv",
+        "sha256": "515c9b5c90b028de4f64382b2eda54c41c02f450a9c7c4338f938fd8af5abcbf",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1962.csv",
+        "sha256": "3084302bf49ce0d76b85e3b1a0a652da060c1986e4778889e1929945283ae15a",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1963.csv",
+        "sha256": "a5df09ee236130112c9026c951128524ca41f63041fe3b56802cf084a87494e0",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1964.csv",
+        "sha256": "4b21d0a7d34bbffde1b3fb30e59cdd1a5048becbefbc93a912723e863f817f64",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1965.csv",
+        "sha256": "30d4830046dc86dc4e52c079ad9fb04b653640649f6cb918d8abc2b91aaa90c4",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1966.csv",
+        "sha256": "3d2b14d16609499cb8fb18605816f3e4ad286112b11d94f3fb5a353bb43f27bf",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1967.csv",
+        "sha256": "06732d1f68831bc7c4a00da4648f55ae63c395c6706c2e2b22fdc9cc6e85ed99",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1968.csv",
+        "sha256": "7bc7dc63bd466eded3d7400d19ae9d77416de4f43dc30d4a3337161078f59061",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1969.csv",
+        "sha256": "8e50b10352344a7bb4681ecc4e487ce5bfb8630b7a270f3a579ac9540f3938b2",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1970.csv",
+        "sha256": "da4162cc9bbdd3037aca8e76931a3f98c5fd12cb04f9916bbdf6ba2275698a70",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1971.csv",
+        "sha256": "1680aac9c87e041e781e3f1b64c7d33833ad8e22f7cd8ecf3cc000efbcc564de",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1972.csv",
+        "sha256": "1a0f66db80b45a312042272e36e9e33201d44c2f530c0661bd9ff97e1958ef7f",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1973.csv",
+        "sha256": "5a23a39940a6f4d66e1b332a169d0848c7c45c3d349038bfa47e136ffa6446b5",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1974.csv",
+        "sha256": "d0fa2f4f8f078dbe92f702531c8fdd41504e66356d63ce15d655cf4a00019b7e",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1975.csv",
+        "sha256": "e293b947dd77d0e28e944d36c78dce892f7c7858bfe87c1a05487752e553e360",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1976.csv",
+        "sha256": "749e60a02e58ee1ddec3028298cb4e5ee29cf62838783e5d844e191ca0cc6d7c",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1977.csv",
+        "sha256": "467941b2d310944c28e0e65d3d3f76c7cf2065000eeba44c4f714225d4ea74fe",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1978.csv",
+        "sha256": "052ef1fc3876b25ee432582a0df6d147affffb905fe08449df62427e44f5027e",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1979.csv",
+        "sha256": "25698835c13c224b60c8981777d40ab05ff30e3768120c25dd2cd518f5907445",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1980.csv",
+        "sha256": "82a3343fb93e906d9ba1181b97296cff54f388a7c9d1efe61d86791303a6018f",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1981.csv",
+        "sha256": "0a83795b838f3fb069e6fea5397b5c03c3f942ba0d768aa4b956cc158b1e57e0",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1982.csv",
+        "sha256": "e11f5510f59cb4144688ef4f204b4f5d61c8d75c72cebec07e696546a9f52a0d",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1983.csv",
+        "sha256": "410681ede4038b41ca896467434926e941e6ef0b83ba375e8523fc42596b3d85",
+        "rows": 304
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1984.csv",
+        "sha256": "56b811d7a2a8c170bda079d5a6cff60dd3e20593b8eb2694b03dd3fc97c6d081",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1985.csv",
+        "sha256": "1e1c6416328d448961ec4690df0f214c0d79299268234412e87c9661863b7876",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1986.csv",
+        "sha256": "8db9693a7534f93981bae36b7a51b8853a325bb4babd22a12428d5f6c66dcb0e",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1987.csv",
+        "sha256": "bb0640956a76bfa18191fe6245b1c9c9f0a7d20412ac8be2e1e429af44939c95",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1988.csv",
+        "sha256": "a990ba03901a0cc292c781059bb13de9672d98cb357491e176860a14895df954",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1989.csv",
+        "sha256": "3c0bd30360d1a5d16cf3c11b0be4c71951c8f6f2ee637ce252cf0372d6d280d6",
+        "rows": 59
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1990.csv",
+        "sha256": "597aa699152428a7cedb4db7ce55aaaa78dc7e9ba0d93205ff5edd1418094d06",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1991.csv",
+        "sha256": "301b36a3f7dca3fa4e4283197b51c7e3a89fffd964bfef76b3e4dc6a5264a3ff",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1992.csv",
+        "sha256": "1df214b623b700512ba5562b28fad6c9a056d4bea4fc743ad3a0de3f7c4e1299",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1993.csv",
+        "sha256": "057a2c680932fdc07f53c63400ec9ccd8fecd6993ebec135dc932c1c5d0587a2",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1994.csv",
+        "sha256": "0981fa10c421564422c82ed1107cabb0ad5cb3c48eb96e2f5ce8ac0795dfec4f",
+        "rows": 325
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1995.csv",
+        "sha256": "6525c2e9260fd4fd366714af5c2c02d49e8fc27b807fe61ac2c88d5695312239",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1996.csv",
+        "sha256": "5ea1cdc0617474b1fd22a2023ea36e2b72cbdc8ef0c40d38716975fd679cc9ab",
+        "rows": 366
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1997.csv",
+        "sha256": "3bee2fa6bf18f83d42cbea803150252e3ca8af8a50caafcd4727861e18ac104b",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1998.csv",
+        "sha256": "5ba1b7ce9484cb6bd44dc23e488c35b7cc84017f27ab597db7657bd9df105932",
+        "rows": 365
+      },
+      {
+        "path": "data/external/noaa_gsod_weather_1949_1999_v1/raw/72554014949-1999.csv",
+        "sha256": "1636827c01dcd53f7e8c28cdd7368ee2af3242c6e57c7b83e45039de49486156",
+        "rows": 364
+      }
+    ],
+    "raw_row_count": 18218,
+    "raw_station_dates_unique": true,
+    "raw_station_dates_monotonic": true
+  },
+  "preprocessing": {
+    "feature_columns": [
+      "TEMP",
+      "DEWP",
+      "SLP",
+      "VISIB",
+      "WDSP",
+      "MXSPD",
+      "MAX",
+      "MIN"
+    ],
+    "feature_units": {
+      "TEMP": "degrees Fahrenheit",
+      "DEWP": "degrees Fahrenheit",
+      "SLP": "millibars",
+      "VISIB": "miles",
+      "WDSP": "knots",
+      "MXSPD": "knots",
+      "MAX": "degrees Fahrenheit",
+      "MIN": "degrees Fahrenheit"
+    },
+    "missing_code": "999.9 or non-finite values in selected numeric predictors; corresponding rows dropped",
+    "target": "second FRSHTT digit (rain or drizzle occurrence on the same GSOD summary date)",
+    "target_source_field": "FRSHTT",
+    "target_flag_fields": [
+      "fog",
+      "rain_or_drizzle",
+      "snow_or_ice_pellets",
+      "hail",
+      "thunder",
+      "tornado_or_funnel_cloud"
+    ],
+    "excluded_predictors": [
+      "PRCP",
+      "SNDP",
+      "FRSHTT",
+      "MAX_ATTRIBUTES",
+      "MIN_ATTRIBUTES"
+    ],
+    "ordering": "ascending NOAA DATE, one station, unique days",
+    "dropped_for_predictor_missingness": 8,
+    "dropped_for_invalid_label_flags": 0,
+    "row_id": "zero-based stable ID assigned after timestamp sorting and row filtering",
+    "interpretation": "same-day retrospective classification benchmark; not a forward rain forecast"
+  },
+  "processed": {
+    "path": "data/processed/weather_reproduction_v2/weather_ordered.csv",
+    "sha256": "055f1e074be1fe76c014b03025d1bd5357317858e8e57ed74082cb05f4132b3c",
+    "row_count": 18210,
+    "positive_count": 5746,
+    "positive_rate": 0.31554091158704006,
+    "timestamp_start": "1949-01-01",
+    "timestamp_end": "1999-12-31",
+    "feature_columns": [
+      "temp",
+      "dewp",
+      "slp",
+      "visib",
+      "wdsp",
+      "mxspd",
+      "max",
+      "min"
+    ]
+  },
+  "legacy_benchmark_comparison": {
+    "available": true,
+    "url": "https://github.com/scikit-multiflow/streaming-datasets/blob/master/weather.csv",
+    "sha256": "3c38f05bdc5c4cb115f122414c66976e3662c875d96d7199d9e47fc46aff150e",
+    "rows": 18159,
+    "columns": [
+      "feat_1",
+      "feat_2",
+      "feat_3",
+      "feat_4",
+      "feat_5",
+      "feat_6",
+      "feat_7",
+      "feat_8",
+      "target"
+    ],
+    "exact_feature_and_label_equivalence": false,
+    "note": "The mirror is retained only as a legacy benchmark reference. The current official GSOD release is timestamped and is authoritative for this processing run; no exact row equivalence is asserted."
+  },
+  "license_and_citation": "NOAA/NCEI GSOD public data; cite NOAA National Centers of Environmental Information, Global Surface Summary of the Day (GSOD), dataset identifier gov.noaa.ncdc:C00516; accessed 2026-11-17.",
+  "claims_not_supported": [
+    "causal drift attribution",
+    "future rainfall forecast",
+    "independent dataset replication from temporal blocks",
+    "general transfer"
+  ]
+}

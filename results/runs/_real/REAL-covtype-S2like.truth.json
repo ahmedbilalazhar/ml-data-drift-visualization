@@ -1,0 +1,11 @@
+{
+ "stream": "covtype_subset",
+ "intervention": "synthetic shift",
+ "affected": [
+  "Elevation",
+  "Aspect",
+  "Slope"
+ ],
+ "onset_test_row": 20079,
+ "note": "intervention truth known; natural drift not claimed"
+}

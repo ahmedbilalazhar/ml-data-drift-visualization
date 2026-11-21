@@ -1,0 +1,13 @@
+{
+ "template": "S1",
+ "seed": 4,
+ "affected_original_vars": [
+  "x11"
+ ],
+ "onset_test_row": 2400,
+ "transition_rows": 0,
+ "mechanism": "abrupt-irrelevant",
+ "n_train": 2000,
+ "n_calib": 2000,
+ "n_test": 6000
+}

@@ -1,0 +1,1597 @@
+Data Analysis and Visualization — Phase 2
+Extended Literature Review and
+Research Methodology Development
+Evidence Reliability in Explainable Data Drift Monitoring
+Saneedullah Ahmed Bilal
+This Phase 2 submission develops a technically justified methodology for evaluating evidence reliability
+in explainable data drift monitoring. It contains four deliverables: an extended review of eight ad-
+ditional 2025–2026 research publications; a refined research gap; a twelve-step proposed methodology;
+and methodology diagrams. Published findings are distinguished from proposed project experiments
+throughout. No model implementation, completed experiment or achieved project result is claimed.
+Continuity with Phase 1 and Scope Refinement
+Phase 1 identified the need to connect drift detection, feature-level explanation and predictive conse-
+quences, while recognising limitations in reference maintenance and delayed-label evidence. Its broad
+direction included image representations, adaptive learning and analyst evaluation. Phase 2 will refine
+that direction into a controlled tabular-classification study of whether available monitoring evidence
+supports a cohort-specific statement of material excess predictive error. This narrower scope preserves
+the central interpretation problem while making independent truth, matched comparisons and repro-
+ducibility feasible. Image-domain transfer, adaptive intervention and human decision benefit will require
+separate subsequent studies; the present protocol will not claim to have evaluated them [1–5].
+The submission first examines the additional literature, then develops the gap synthesis and research
+question, the proposed experiment and its diagrammatic specification. This sequence distinguishes the
+evidence motivating the study from the methods that the project proposes to evaluate [6–8].
+Deliverable 1 — Extended Literature Review
+Additional Paper Selection and Critical Study
+The extended corpus comprises eight original conference papers or research chapters absent from the
+retained Phase 1 bibliography. Publication years below refer to the published proceedings or chapter,
+not an earlier preprint: for example, the causal-explanation paper appeared in the 2026 proceedings
+of ECML PKDD 2025 workshops. These selections use the brief’s conference-paper and book-chapter
+eligibility routes; no journal-quartile claim is used for their inclusion. Older foundations, Phase 1 studies
+and the supporting delayed-label survey will remain contextual references and will not count toward the
+eight additional selections [6–13].
+Selection and eligibility procedure.This is a focused extension of the supplied literature corpus,
+rather than a claim of an exhaustive systematic review. The retained Phase 1 bibliography was compared
+with the additional-paper register to avoid counting the same publication twice. Each selected full text
+was checked for a 2025–2026 publication date, an original research contribution, an allowed publication
+route, a relevant drift-monitoring question, and an identifiable data source, method and evaluation.
+Publishedmetadata establisheligibility; reviewedfull-text versionsestablishthemethodologicalevidence.
+A preprint alone, an editorial, a general webpage or an article without assessable evaluation will not
+count among S1–S8. Foundational references and monitoring guidance will support the methodology
+but remain outside this eight-paper count [6–13].
+Relevance and focal-paper rationale.S1–S4 provide direct evidence about detector evaluation,
+window choice, label dependence and computational budgets. S5–S6 examine what drift explanations or
+explanation-triggered actions can establish; S7 addresses recurrence and label-dependent model reuse; S8
+distinguishes observational monitoring from intervention-based feedback identification. S1–S3 form the
+focal comparison because their complementary evaluation designs isolate the three central issues of this
+proposal: detection truth, reference-window interpretation and access to predictive evidence. Results
+1\nfrom forecasting, causal or adaptive-learning tasks will inform the study design without being pooled as
+if they measured the proposed harm-verdict outcome [6–13].
+2\nTable1: Eightadditional2025–2026researchpublicationsandtheir
+critical contribution.
+ID Research paper Year and eligible
+venue
+Data and identifiable
+method
+Evaluation evidence and critical interpretation
+S1 A Framework for Evaluating and
+Benchmarking Concept Drift Detection
+Methods [6]
+2026; ACM KDD
+conference paper
+Seven USP datasets;
+controlled transformations;
+Monte Carlo trials;
+leave-one-dataset-out
+tuning.
+Timing-aware detection metrics distinguish detector success
+from retraining accuracy. Immediate feedback and shuffled
+source order limit inference about delayed, temporally
+dependent evidence (Sec. 5.3).
+S2 The Window Dilemma: Why Concept
+Drift Detection is Ill-Posed [7]
+2026; IDA; Springer
+LNCS research
+chapter
+Analytic window example
+and eleven USP streams;
+detector, periodic-reset and
+forest comparisons.
+Accuracy and kappa show that learning strategy matters,
+not just drift awareness. Natural event truth remains
+unavailable; this motivates reference-specific truth and
+cautious interpretation (Secs. 3–5).
+S3 Early Concept Drift Detection via
+Prediction Uncertainty [8]
+2025; AAAI
+technical-track paper
+Structured and image
+streams; adaptive PU-index
+histograms and chi-square
+testing.
+Classification and rank comparisons support signal
+sensitivity. The PU-index uses the true-class probability, so
+it requires released labels; its pairwise test level is not a
+stream-wide guarantee (Eqs. 7,12–14).
+S4 Flexible and Efficient Drift Detection
+Without Labels [9]
+2025; IEEE ICDM
+Workshops
+conference paper
+Gaussian mean, variance
+and covariance simulations;
+batched distances, including
+MMD, and paired tests.
+False-positive/negative rates under computational budgets
+favour batching in selected settings. Independence of batch
+triplets is assumed; simulation power does not certify
+predictive harm (Secs. II–III).
+S5 Causal Explanation of Concept
+Drift—A Truly Actionable
+Approach [10]
+2026; ECML PKDD
+workshop
+proceedings; Springer
+CCIS chapter
+Semi-synthetic Adult and
+Portuguese Student
+Performance; modified
+Bayesian networks; PC
+causal discovery with a
+g-square test.
+Ten runs per scenario assess graph orientation and
+identified drift features. Occupation is linked to time in
+9/10 Adult Women in STEM runs. A global causal graph
+and discovery assumptions restrict transfer; marginal
+ranking is a weaker explanation object (Secs. 6–7).
+S6 Detecting Concept Drift with SHapley
+Additive ExPlanations for Intelligent
+Model Retraining in Energy Generation
+Forecasting [11]
+2025; xAI; Springer
+CCIS research
+chapter
+Porto photovoltaic/weather
+data, 2023, at 10-minute
+intervals; 12 inputs;
+XGBoost regression and
+SHAP reference monitoring.
+MSE, RMSE,R 2 and update counts expose a trade-off:
+SHAP RMSE 0.0879 versus fixed-model 0.1089, with 717
+versus zero retrainings. The tuning period overlaps the
+reported evaluation period; independent test interpretation
+is therefore limited. Single-site regression does not establish
+delayed classification-verdict reliability (Table 2;
+Secs. 4.1–4.2).
+Continued on next page
+3\nID Research paper Year and venue Data and method Evidence and interpretation
+S7 A Conformal Martingales Approach for
+Recurrent Concept Drift [12]
+2025; COPA; PMLR
+conference paper
+STAGGER, Electricity and
+Airlines; inductive
+conformal martingales and a
+model pool.
+Accuracy, detection delay, false alarms and model/reuse
+counts assess recurrence. Reuse trades accuracy for reduced
+training. Nonconformity uses observed true labels; natural
+event metrics are withheld where truth is unknown
+(Tables 1–2; Sec. 5).
+S8 Identifying Predictions That Influence
+the Future: Detecting Performative
+Concept Drift in Data Streams [13]
+2025; AAAI
+technical-track paper
+Synthetic feedback streams
+and semi-synthetic Water
+Potability, Loan Status and
+Credit Card data;
+CheckerBoard prediction
+interventions.
+Detection-rate experiments succeed on Water Potability
+and Loan Status in most tested settings but fail on the
+heavily imbalanced Credit Card case. Deliberate prediction
+interventions and self-fulfilling settings limit transfer to
+frozen observational monitoring (Fig. 9; Limitations).
+4\nCross-Corpus Methodological Synthesis
+Evaluation design and reference meaning.S1 evaluates whether detectors recover controlled
+changes, whereas S2 shows that the samples defining a window can change what the detection prob-
+lem means. Together, they motivate a distinction between a detector’s native input-comparison target
+and the classifier’s predictive-risk target. S4 adds a computational perspective: batching can alter the
+power–runtime trade-off, but its simulation results depend on sampling assumptions. The proposed
+study will therefore retain reference-specific input truth, one fixed predictive-risk reference and explicit
+calibration costs [6,7,9].
+Label access and recurrence.S3 supplies a sensitive prediction-uncertainty signal, but its true-class
+score requires observed labels. S7 also uses labels to evaluate nonconformity and the suitability of
+previously trained models. Neither result supports treating a confidence curve as evidence of correctness
+before labels arrive. The present study will record prediction and label-release times separately, and will
+isolate delayed evidence availability while keeping classifiers frozen. Model reuse and adaptation will
+remain distinct research questions [8,12].
+Explanation and intervention.S5 studies causal drift explanations under a structural model, while
+S6 uses explanation shifts to trigger forecasting updates. Their outputs have different evidential status:
+a graph-based explanation depends on causal assumptions, and a reduction in forecasting error combines
+detection with the subsequent learning policy. The proposed marginal feature display will consequently
+be evaluated as distributional screening, not as a causal explanation or proof that retraining would
+help [10,11].
+Feedback and generalization.S8 requires deliberate prediction interventions to distinguish perfor-
+mative feedback from intrinsic change. Its failure under severe imbalance illustrates how a successful
+controlled mechanism may still transfer poorly. Across S1–S8, recurring limitations concern the avail-
+ability of evaluation truth, the sampling and reference assumptions, the distinction between detection
+and action, and the target population represented by the experiment. These patterns justify controlled
+independent experiments accompanied by separately qualified dependent and natural-data analyses; they
+do not justify a universal superiority ranking [6–13].
+5\nCross-Paper Comparison of Three Representative Studies
+The three focal studies are S1–S3: benchmark design, window-dependent interpretation and label-based uncertainty.Amarks an author-stated limitation;Rmarks a
+methodological inference from the reviewed protocol. Published papers establish eligibility; accessible author versions supply the cited section and table locators.
+Table 2: Synthesized comparison of three representative additional stud-
+ies.
+# Paper title Y ear Dataset used Preprocessing Models/techniquesMetrics Results Limitations/gap
+1 A Framework for
+Evaluating and
+Benchmarking Concept
+Drift Detection
+Methods [6]
+2026 Asfault, Electricity,
+Covertype,
+GasSensorArray,
+NOAA, Posture,
+Rialto.
+Shuffle source
+streams; inject
+class-prior,
+label-swap,
+permutation or
+filtering changes;
+abrupt/gradual
+transitions.
+Fourteen detectors;
+Hoeffding-tree core;
+50 trials per
+dataset/type;
+held-out-dataset
+tuning.
+Event precision,
+recall, F1;
+normalized delay;
+alarm/FAR;
+runtime.
+SEED and STEPD
+are competitive
+across mechanisms;
+ABCD offers
+favourable
+false-alarm ranks
+(Tables 1–2;
+Sec. 5.3).
+A:Immediate feedback;
+temporal structure removed;
+four drift types.R:Known
+input events do not establish
+correct excess-risk verdicts
+under delayed labels.
+2 The Window Dilemma:
+Why Concept Drift
+Detection is Ill-Posed [7]
+2026 Eleven
+binary/multiclass
+streams, including
+Electricity,
+Covertype, Insects,
+NOAA and Rialto.
+Time-ordered
+prequential
+evaluation;
+explicit train-
+ing/window/reset
+schedules;
+separate
+warm/cold-start
+analysis.
+DDM, ADWIN,
+D3, IBDD;
+NB/trees; adaptive,
+incremental,
+resetting and static
+forests.
+Mean accuracy;
+kappa; median
+algorithm rank.
+ARF median rank
+2; AMF and
+incremental RF
+rank 3; resetting
+RF rank 4
+(Table 1).
+A:Sampled windows need
+not represent endpoint
+concepts; natural changes
+cannot all be verified.R:
+Classifier/adaptation
+comparisons do not isolate
+matched cohort-risk
+decisions.
+3 Early Concept Drift
+Detection via Prediction
+Uncertainty [8]
+2025 Airline, Electricity,
+PowerSupply; Sine,
+Mixed, SEA
+variants and
+CIFAR-10-CD.
+True-class PU
+scores; adaptive
+his-
+tograms/window
+cuts; Markov
+class-interest
+simulation for
+images.
+PUDD; chi-square
+testing; DNN,
+GNB, VFDT;
+classic and
+adaptive baselines.
+Prediction
+accuracy; average
+ranks; threshold
+and bucketing
+sensitivity.
+First rank in
+17/24 incremental
+classic-detector
+comparisons and
+top three in 20/24
+(Sec. Experi-
+ments).
+A:Manual thresholds;
+guarantees concern individual
+window-pair tests.R:
+1−f yi (xi)requires labels;
+sensitivity is not certification
+that excess risk exceeds a
+material margin.
+6\nThe focal results answer different experimental questions. S1 evaluates the recovery and timing of
+controlled change events; S2 compares the predictive consequences of window and learning strategies;
+S3 evaluates a true-class uncertainty signal through classification and ranking outcomes. Their reported
+ranksandaccuracieswillthereforeremainattachedtotheiroriginaltasks, datasetsandlabelassumptions.
+The research opportunity follows from this difference in evaluation targets, rather than from assuming
+that one reported score is directly better than another [6–8].
+Deliverable 2 — Refined Research Gap
+The gaps concern the joint evidential limits of S1–S3, cross-checked against S4–S8. They do not claim
+that delayed monitoring, window effects or explanation integration are absent from prior research [6–13].
+7\nTable 3: Research gap synthesis matrix based on the three focal
+papers.
+Research gap Evidence from Paper 1 [6] Evidence from Paper 2 [7] Evidence from Paper 3 [8] Proposed research opportunity
+G1 Event detection
+versus material harm
+Event truth and detection
+timing are measured, rather
+than uncertainty-qualified
+excess-risk verdicts.
+Predictive comparisons
+question drift usefulness but
+vary learning strategies.
+PU sensitivity and predictive
+accuracy do not certify a
+material risk margin.
+Hold the classifier and risk target
+fixed; compare proxy and verified
+verdict correctness against
+independent expected-risk truth.
+G2 Reference-specific
+interpretation
+Transformed events support a
+common benchmark, not this
+fixed/rolling harm-proxy
+comparison.
+Window-dependent meaning is
+explicitly established.
+Adaptive windowing changes
+which samples the detector
+compares.
+Define input and feature truth
+relative to the actual population
+reference; retain one common harm
+truth across references.
+G3 Delayed evidence
+and decision coverage
+Immediate post-prediction
+feedback simplifies the
+principal workflow.
+Label-access regimes matter,
+but matched interval gating is
+not isolated.
+The true-class PU score
+depends on released labels.
+Use named cohorts and fixed
+checkpoints; quantify additional
+harm declarations, structural
+unavailability and deferral under
+identical interval rules.
+8\nResearch Gap Refinement and Justification
+What has already been done.Published research has established controlled drift benchmarks, demon-
+strated window-dependent interpretation, developed uncertainty-based monitoring and investigated the
+relationship between explanation, recurrence and model adaptation. Phase 1 reviewed representation-
+based detection, selective feature monitoring and proactive adaptation as complementary foundations.
+These are existing contributions on which the proposed evaluation will build, rather than capabilities
+already implemented by this project [1–3,6–12].
+What approaches currently exist.The literature includes error- or uncertainty-based signals that
+require labels, input-distance methods that can operate without labels, adaptive reference windows,
+recurrent-model selection, SHAP-triggered retraining and causal intervention analysis. Their evidence
+requirements and output targets differ. The proposed study will compare simple distributional signals
+with released-label loss evidence under matched data access; it will not treat the literature’s heteroge-
+neous scores as interchangeable measures of predictive harm [7–12].
+What the limitations are.A detected input difference does not imply a harmful loss change; an
+adaptive learner’s accuracy also reflects its update policy. Window boundaries affect the population
+comparison, and true-class scores cannot be computed before labels arrive. Explanation fidelity, drift
+sensitivity and predictive-harm correctness consequently require distinct evidence. Natural streams
+frequently lack independently certified event truth [5–8,10,12].
+What remains insufficiently investigated.Within the reviewed protocols, no focal experiment
+jointly isolates fixed/rolling input references, one invariant excess-risk target, independently bounded
+harm truth and matched interval-based gated versus nongated cohort decisions at delayed checkpoints.
+S4–S8 address neighbouring questions, but their batching, causal, retraining, model-reuse or feedback
+objectives do not supply this particular contrast. This is a bounded empirical question, not a claim of
+universal algorithmic novelty [6–13].
+Why the gap matters.Acting on an input alarm as though it certifies model harm can produce
+unnecessary investigation or false reassurance. Conversely, presenting old released labels as evidence
+about a newer cohort confuses evidence age with current validity. Measuring correct and wrong addi-
+tional decisions alongside deferral will expose these interpretation failures without assuming that every
+additional verdict is useful or that every alarm warrants retraining [7,8,11,14].
+How the proposed research will address it.The methodology will freeze classifiers, separate in-
+put and label channels, maintain a fixed predictive-risk reference, and compare precisely defined verdict
+policies on the same cohorts. Synthetic mechanisms will supply bounded truth; natural cases will sup-
+port qualified observation. Reference-specific localization, disjoint calibration, seed-level uncertainty,
+ablations and failure analysis will make the contribution testable. The question will permit null find-
+ings, including no reliable additional harm decisions or insufficient precision to support a practically
+informative difference [5–8].
+Refined Research Question and Study Objectives
+For frozen tabular classifiers, how do fixed versus rolling input references affect the relia-
+bility of distributional alarms as proxies for excess predictive risk, and which correct and
+incorrect cohort-specific harm declarations are recovered when delayed loss evidence can
+support them without an input alarm?
+Distributional detection, prediction uncertainty and model adaptation answer related but distinct ques-
+tions. Reference-window choice already affects what change is observable, and a more sensitive signal
+does not by itself establish material excess risk. The proposed contribution will be a controlled com-
+parison of alarm interpretation and matched verdict policies, with independently bounded risk truth,
+explicit deferral and fixed assessment times. It will be an evaluation contribution, rather than a claim
+to invent a new drift detector or to establish intervention benefit [6–8].
+Study objectives.The first objective will be to quantify how reference maintenance changes the
+relationship between an input alarm and fixed-reference excess predictive risk. The second will be to
+9\nestimatethecorrectandincorrectadditionalharmdeclarationsobtainedwhenaninputalarmisnolonger
+required for an otherwise supported harm verdict. The third will be to specify a cohort-aligned display
+of input evidence, label availability and predictive-risk uncertainty, and to characterize its statistical and
+observational failure modes. These objectives will concern evidence validity rather than demonstrated
+analyst benefit [4,7,8].
+Table 4: Traceability from research gaps to the proposed eval-
+uation.
+Gap Proposed design responseMethodology
+steps
+Planned evidence
+G1 Detection
+versus material
+harm
+Frozen classifiers; fixed
+excess-risk target;
+independent synthetic risk
+bounds.
+Steps 1–2, 5–9 All-cohort correct/wrong
+additional-declaration
+bounds and
+absolute/excess error.
+G2 Reference-
+specific
+interpretation
+Fixed and rolling input
+references on the same
+realized stream;
+reference-specific input truth.
+Steps 3–4, 7–11 Paired reference contrasts,
+native input-state scores
+and marginal-screening
+failures.
+G3 Delayed
+evidence and
+coverage
+Prediction–label identity
+joins; declared release times;
+complete-cohort eligibility
+and fixed checkpoints.
+Steps 1–3, 5–12 Coverage, evidence
+unavailability, permanent
+deferral and evidence age.
+10\nDeliverable 3 — Proposed Research Methodology
+The proposed pipeline will progress from auditable observations and frozen representations to parallel
+input- and loss-evidence channels, matched experimental comparisons, and uncertainty-qualified research
+outputs. The independent synthetic experiment will be the primary evidence source because it supplies
+known generating mechanisms and bounded risk truth. Dependent controls will test robustness; natural
+case studies will examine descriptive transfer without inventing population-harm labels. The twelve steps
+below specify proposed work and the assumptions under which its conclusions would be interpretable
+[5–7].
+Step 1 — Define the Research Input
+The input will be an ordered tabular stream, a prediction log and a separately scheduled label-arrival log.
+A logistic classifier and a shallow decision-tree classifier will be fitted before evaluation and frozen. Index
+iwill refer only to test-stream observations: input time will beti =iand label arrival will beri =i+db 0,
+whereb 0 = 1,000is the primary cohort size anddthe delay in primary-cohort units. Each prediction
+will precede release of its label. At test time zero, the historical model-training and risk-reference labels
+will already be fully resolved; the release schedule will apply only to test labels. This fully labelled warm
+start will make the risk reference available for the first cohort, while keeping historical label-collection
+latency outside the experiment. Delays will remain fixed in observation units when the analysis cohort
+size changes [5,14].
+The estimand will be the expected error risk of the distributions generating a named cohortWs, condi-
+tional on the frozen classifierf. It will differ from the realized error count of that finite observed cohort,
+which becomes exactly known when all its labels arrive. In the primary independent design, reference
+observations will be sampled independently of training and test observations from a fixed pre-change
+populationP 0. The proposed target will be
+θs(f) = 1
+|Ws|
+∑︂
+i∈Ws
+E(X,Y)∼Pi[ℓ(f(X),Y)],(1)
+θ0(f) =E (X,Y)∼P0[ℓ(f(X),Y)],(2)
+∆ s =θs−θ0, H s =1{∆s>δ}, ℓ(f(x),y) =1{f(x)̸=y}.(3)
+The primary design margin will beδ= 0.05, meaning five additional expected errors per hundred pre-
+dictions. It will define the scientific benchmark’s material degradation threshold rather than a universal
+deployment tolerance. Margins 0.02 and 0.10 will be prespecified sensitivities, with all conclusions identi-
+fied by margin. Decision coverage will depend on the distance of excess risk from this boundary relative
+to interval width, rather than on the margin’s magnitude alone; the margin will not be equated with a
+macro-F1 change [5,15].
+Here “harm” will mean excess classification error only. A below-margin verdict will mean∆s≤δ; it will
+not establish satisfactory absolute accuracy, equitable subgroup performance, safety or business value.
+Absolute reference and cohort error will therefore accompany every excess-risk display. The benchmark’s
+equal weighting of mechanisms will define an artificial evaluation population, not an estimate of change
+prevalence in an industry deployment [5,16].
+The unit of analysis will be a named prediction cohort, while the independent replication unit will be a
+final synthetic seed. Every monitoring record will distinguish the input observation time, cohort comple-
+tion time, label-release time and assessment time; these four clocks will not be treated as interchangeable.
+At an assessmentq≥es, displayed cohort-evidence age will meanq−es observation units since cohort
+completion; label-release latency will be recorded separately. A locked study specification will record
+the target population, loss, margin, eligible evidence and intended claims before data generation or
+case-study replay [5,16].
+Step 2 — Data Collection
+Controlled synthetic streams will provide event and variable truth. Electricity and the NOAA Weather
+benchmark described in the stream-benchmarking literature will be the planned natural case studies.
+11\nEach will require an auditable chronological order, a documented label definition and an identifiable data
+version before inclusion. Covertype will supply a separate constructed multiclass replay; its source order
+will not be interpreted as deployment time. A data card will record acquisition conditions, checksums,
+class counts, missingness and partition boundaries. These retrospective datasets will support cross-
+domain case comparison, not a claim of representative deployment sampling [5].
+The proposed data contract will assign an immutable prediction identifier, cohort identifier, model and
+preprocessing versions, input time, prediction and label-release time to each record. Labels will join one-
+to-one by prediction identifier, never by row position or nearest timestamp. Exact duplicate identifiers
+will be rejected; equal feature values alone will not identify duplicates. Conflicting labels, unavailable
+timestamps and invalid schemas will have explicit failure codes. Naturally observed labels will not be
+described as error-free population truth. Synthetic labels will follow the declared generator; natural label
+definitions and known annotation limitations will be recorded before analysis [5,17].
+Each final synthetic seed will reserve 10,000 observations for model fitting and a disjoint 10,000-
+observation pre-change risk reference, shared across its six mechanisms and two reference policies. Its
+two classifiers will fit the same model-training observations. Each mechanism will generate 60,000 test
+observations; policies compared within that mechanism will receive exactly the same realized inputs
+and labels. Mechanisms may share exogenous Gaussian innovations and uniform label-noise draws, but
+their interventions will change the resulting observations. An additional independent 10,000-observation
+development sample will fit the common synthetic representation and kernel bandwidth once. Separate
+random-number namespaces will serve model development, score normalization, threshold selection,
+held-out null validation, final streams and oracle evaluation. Five model-development seeds and 30 final
+evaluation seeds will be prespecified. The precision planning in Step 9 will qualify conclusions at that
+fixed budget; no final-test-dependent replication will occur [5,6].
+Independent generator draws, inaccessible to every monitoring policy, will estimate expected reference
+and cohort risks for evaluation truth. Exact risk will be used where analytically available. Otherwise,
+Kg will count every distinct regime–classifier risk, including reference risks, evaluated within one seed.
+A union-bound allocationαg/Kg and accuracyϵg = 0.005will give
+Pr{|ˆ︁θ−θ|>ϵg}≤2e−2Mϵ2
+g, M≥ log(2Kg/αg)
+2ϵ2g
+, αg = 0.01
+30 .(4)
+Repeated distributions will share a regime-level risk estimate. Gradual changes will be mixtures of
+two declared endpoint distributions, so cohort risk will be a known weighted average of endpoint risks.
+Excess-risk bounds[∆ g
+s, ∆
+g
+s]will include uncertainty in both the cohort and reference estimates. The
+latent targetHs in Step 1 will remain binary; its evaluator-only certified label will be
+˜︁Hs =
+⎧
+⎪⎪⎨
+⎪⎪⎩
+1,∆ g
+s >δ,
+0, ∆
+g
+s≤δ,
+?,otherwise.
+(5)
+Thus a boundary-uncertain evaluation label will not be confused with a monitoring policy’s unresolved
+verdict. The union allocation will bound Monte Carlo failure across the prespecified 30-seed indepen-
+dent experiment by 0.01, including all declared regime–classifier risks and the three harm margins. No
+monitoring policy will observe˜︁Hs, use it to determine eligibility or skip a difficult cohort. Oracle failure
+and sampling uncertainty will be accounted for separately in Step 9. Mechanism parameters will not be
+adjusted using final-test harm outcomes [15].
+The collection register will separate source observations from generated evaluation draws and identify
+which partitions can influence fitting, calibration or final scoring. Shared regime estimates will retain
+their algebraic dependence: when cohort and risk reference have exactly the same generating law, their
+expected-risk difference is exactly zero. For the baseline-to-post mixture cohort,∆s = ws(θpost−θ0),
+where ws is the mean declared mixture weight. Oracle bounds will apply this same linear combination,
+rather than adding avoidable uncertainty to a term that cancels. Every source and generated partition
+will have recorded membership and a checksum or reproducible generation specification [5,15].
+12\nStep 3 — Data Preprocessing
+For the synthetic study, imputation, numeric scaling and the kernel representation will be fitted on the
+independent representation-development sample and frozen across all final seeds. Numeric missing values
+will use fitted medians; scaled coordinates will be(xj−medianj)/IQRj, with a unit denominator when
+the fitted interquartile range is zero. Categories will use a fixed one-hot vocabulary with explicit missing
+and other-category levels. Model configurations will be selected on the five disjoint development seeds:
+each classifier will fit the first 80% of its training partition and validate on the final 20%. The selected
+configuration will then fit each final seed’s complete model-training partition. Shared preprocessing
+will therefore be independent of final model selection, risk-reference labels and test outcomes. For each
+natural dataset, candidate preprocessing will fit only the fitting portion of its chronological validation
+split; after selection, it will be refitted on the full training prefix. Predefined missingness flags will be
+retained, and encoded contributions will be mapped back to original variables [5].
+An entirely missing numeric fitting column will receive a fixed zero imputation and unit scale, with
+its missingness indicator retained; no test statistic will supply its fitting value. Nonfinite numeric val-
+ues and schema/type violations will be recorded as data-contract failures rather than silently coerced
+into ordinary measurements. No outlier clipping, target-derived feature, future-based interpolation or
+outcome-dependent row deletion will be used. Repeated records, temporal aggregation and source iden-
+tifiers will be audited before partitioning to prevent an artificial chronological split from concealing
+duplicated observations or future information [5,16].
+The primary cohort will containb=b 0 = 1,000consecutive observations. Cohort sizes 500 and 2,000
+will be sensitivities; every analysis will use nonoverlapping cohorts with strideb. Both input-reference
+policies will use a fixed size of 1,000 observations: the final 1,000 rows of the held-out reference prefix,
+or the immediately preceding 1,000 stream observations. The first rolling reference will therefore also
+come from that prefix. All observations used for a rolling reference will precede the current cohort.
+The held-out 10,000-observation predictive-risk reference will remain fixed for both policies. Incomplete
+cohorts, missing labels and exclusion reasons will be recorded [1,5,18].
+Cohort membership will be fixed asWs ={(s−1)b+ 1,...,sb}, with membership defined before looking
+at losses or alarms. A trailing partial cohort will be excluded identically for every policy and listed with
+its observation count; the core 60,000-observation streams are divisible by every planned cohort size. The
+preprocessing specification will retain the fitted values, category vocabulary, original-to-encoded feature
+map and reference-row identifiers, making both transformation leakage and accidental reference overlap
+auditable [5].
+Step 4 — Feature Engineering / Representation
+Original variables will form the principal explanatory representation. Numeric marginal change will use
+KS distance; Wasserstein distance normalized by the fitted interquartile range will be a comparator.
+Categorical variables will use Jensen–Shannon divergence of empirical frequencies on the fixed category
+vocabulary, with base-2 logarithms and0 log 0 = 0. A training interquartile range of zero will trigger
+a declared unit-scale fallback rather than division by zero. The kernel representation will concatenate
+scaled numeric variables, category indicators and declared missingness indicators [1,2].
+DKS
+j,s = sup
+x
+|ˆ︁Fj,ref(x)−ˆ︁Fj,s(x)|.(6)
+A joint Gaussian-kernel MMD statistic will provide evidence about changes that marginal tests can miss.
+Original variables will be ranked by the normalized marginal scores defined in Step 5, with ties broken by
+a fixed variable order. Prediction frequencies, confidence summaries and missingness will be descriptive
+channels; predicted labels will not substitute for observed correctness. A global joint alarm will not be
+claimed to identify a changed feature pair. Feature ranking will concern changed marginal distributions,
+not causal root causes [1,2,4,19].
+The monitored object will be the frozen representationϕ(X)rather than an implicitly lossless copy of
+every raw measurement. Imputation and the other-category mapping can merge distinct raw values.
+Consequently, equality or non-detection after encoding will not establish raw-data equality. Synthetic
+13\ninputs are complete numeric variables with an invertible fixed affine transform, so their stated marginal
+and joint truth will remain observable in that representation. Natural-data missingness and unknown-
+category rates will be displayed separately from imputed-value distances; marginal rankings there will
+be descriptive rather than certified raw-variable explanations [2,5,19].
+For input-reference policyr, letP X
+s be the pooled input-generating distribution of cohorts, and
+QX
+s,r the pooled generating distribution of its reference observations. The native input target will be
+DX
+s,r =1{PX
+s ̸=QX
+s,r}. Synthetic marginal truth will beGs,r ={j:PX
+s,j̸=QX
+s,r,j}. Generator-defined
+mixture weights will determine these distributions, rather than comparing two noisy empirical samples
+to manufacture evaluation truth. A rolling reference that has assimilated a regime and a fixed reference
+observed after a return to baseline can legitimately have different targets. Both will retain the same
+predictive-harm targetHs [6,7].
+The comparator distances will also have fixed definitions. With fitted scaleaj = IQRj or the declared
+unit fallback, the empirical CDFs will use imputed values in their original numeric units before scaling.
+Normalized Wasserstein distance will beDW
+j,s =a−1
+j
+∫︁
+|ˆ︁Fj,ref(x)−ˆ︁Fj,s(x)|dx. For categorical probability
+vectorsp,q, Jensen–Shannon divergence will beJS(p,q) ={KL2(p∥m) + KL2(q∥m)}/2,m= (p+q)/2,
+omitting zero-probability summands. The feature dictionary will distinguish original variables, encoded
+coordinates and descriptive missingness rates; encoded coordinates will not be counted as independent
+ground-truth variables [2,19].
+Step 5 — Proposed Model / Method
+Themonitorwillmaintaininput-changeevidenceseparatelyfrompredictive-harmevidence. Forreference
+observationsu 1,...,um and cohort observationsv1,...,vn, the proposed joint statistic will use the usual
+squared-MMD U-statistic form [19]:
+ˆ︂MMD
+2
+u =
+∑︁m
+i̸=jk(ui,uj)
+m(m−1) +
+∑︁n
+i̸=jk(vi,vj)
+n(n−1) (7)
+−2∑︁m
+i=1
+∑︁n
+j=1k(ui,vj)
+mn ,
+k(u,v) = exp
+(︄
+−∥u−v∥2
+2σ2
+)︄
+.(8)
+Bandwidth will be the median nonzero pairwise distance on a reproducibly selected 500-row subset
+of the independent representation-development sample and will then be frozen. For a natural dataset
+or Covertype replay, the corresponding subset will come only from its model-training prefix. If no
+positive distance exists, unit bandwidth will be used. To bound computation, MMD will use at most
+200 reproducibly selected observations from each input window; the same relative-window indices will
+be shared across policies. Marginal statistics will use all observations. Negative U-statistic values will
+be retained during calibration, rather than silently clipped [19].
+Unbiasedness for a population squared MMD will be invoked only when observations are i.i.d. within
+each of the two independent samples. Transition cohorts can be independent without being identically
+distributed, and dependent controls violate independence; in those settings the same formula will be a
+descriptive score, not an automatically unbiased estimate with the original test guarantees. The declared
+null calibration will determine its alarm operating point [19].
+Component normalization will use the independent score-normalization bankC. For each componentj,
+including joint scoreJ, define its mediancj, interquartile rangeqj, and positive scale
+cj = medianD∈CjD,(9)
+vj =
+{︄
+qj, q j >0,
+max{10−6,maxD∈Cj|D−cj|}, qj = 0, (10)
+Zj(D) = (D−cj)/vj,(11)
+Ss = max{Z1(D1,s),...,Zp(Dp,s),ZJ(Js)}, As =1{Ss>τ}.(12)
+14\nThe entire maximum will receive a separately selected threshold. These dimensionless component scores
+will not be claimed to be p-values. Unlike an empirical-CDF transformation, the affine normalization
+will not clip all scores above the observed calibration maximum to one; extreme new observations will
+remain distinguishable. The constant-score fallback will be fixed before testing, and ties in feature
+ranking will follow the declared variable order [6,19]. The proposed null banks will contain 2,000
+score-normalization windows, 5,000 threshold-selection windows and 2,000 held-out validation windows
+per reference policy and null process. These will comprise, respectively, 20, 50 and 20 independent
+100-window stationary trajectories, each with its own pre-change input reference. Within-trajectory
+dependence and the reference-update schedule will be preserved. The threshold will be the smallest
+empirical value with no more than 1% of threshold-selection scores strictly above it; ties will make
+the calibration conservative. Validation uncertainty will resample whole trajectories rather than treat
+shared-reference windows as independent. Ten raw alerts per 1,000 windows will be a target averaged
+over reference draws, with achieved rate, uncertainty, per-trajectory burden and calibration cost reported.
+It will not guarantee a 1% conditional rate for every particular frozen reference. Validation will not be
+used to retune a threshold, and these rates will not be called lifetime false-alarm guarantees [6,18].
+Because the synthetic representation and null laws will be fixed, these banks will be generated once per
+reference policy, cohort size and null process and reused across classifiers, label schedules and final seeds.
+Window-size sensitivities and detector ablations will receive their own score normalization and threshold
+selection from the appropriate development bank; they will not reuse a threshold calibrated for a different
+statistic or sample size. Inference will be conditional on this frozen calibration design. Null observations
+will be generated sequentially, retaining statistics and seeds rather than full trajectories. All detector
+families will use the same source trajectories, and label-delay variants will reuse input scores. These
+choices will limit computation without treating reused calibration data as extra test replication [5,6].
+For fully released cohorts, empirical excess loss will be
+ˆ︁∆ s = 1
+|Ws|
+∑︂
+i∈Ws
+ℓ(f(xi),yi)−1
+n0
+∑︂
+i∈W0
+ℓ(f(xi),yi), n 0 = 10,000.(13)
+In the primary independent synthetic design, a pointwise Hoeffding interval will be applied directly to
+the weighted difference of the two means. Conditional onf, independent bounded losses need not have
+equal expectations within a transition cohort. The squared ranges of the weights sum to1/|Ws|+ 1/n0.
+Forα= 0.05, the proposed interval will be
+as =
+√︄
+log(2/α)
+2
+(︃1
+|Ws|+ 1
+n0
+)︃
+,(14)
+[Ls,Us] = [ˆ︁∆ s−as,ˆ︁∆ s +as]∩[−1,1].(15)
+At|Ws|= 1,000andn0 = 10,000, the planned half-width will be approximately 0.045. The rule will
+therefore require empirical excess loss above approximately 0.095 for a primary harm declaration, or
+at most approximately 0.005 for a below-margin declaration; this is a conservative discrimination band
+aroundδ= 0.05, not evidence of high power near that boundary. These are analytical design calculations,
+not experimental results. The rule will return harm-supported ifLs > δ, below-margin ifUs≤δ, and
+unresolved otherwise. Eligibility will require every label in a complete declared cohort. Levels 90% and
+99% will be sensitivities. Each decision will use a predeclared checkpoint; these pointwise intervals will
+not be advertised as anytime-valid certificates or as 95%-accurate statements conditional on having made
+a decision [15,20].
+To make evidence eligibility explicit, letcs(q) =|Ws|−1∑︁
+i∈Ws 1{ri≤q}be released-label coverage. Let
+νs(q)∈ {0,1}indicate record and one-to-one join validity. The monitor will requirecs(q) = 1and
+νs(q) = 1, then apply the interval rule:
+Bs(q) =
+⎧
+⎪⎪⎪⎪⎪⎨
+⎪⎪⎪⎪⎪⎩
+⊥, cs(q)<1orν s(q) = 0,
+1, c s(q) = 1, νs(q) = 1, Ls>δ,
+0, c s(q) = 1, νs(q) = 1, Us≤δ,
+⊥,otherwise.
+(16)
+15\nAn invalid record will raise a pipeline-failure status and invoke the prespecified run-repair procedure; it
+will never be relabelled below-margin or silently omitted from a completed comparison. This rule will
+produce a cohort evidence record containing the input alarm, reference identity, label coverage, interval,
+verdict and evidence age [14,16,17].
+This interval also supplies an analytical reference for interpretation. Under the independent bounded-
+loss assumptions, for a fixed cohort withHs = 0, a wrong positive declaration requiresˆ︁∆ s−∆s > as,
+and hence has probability at mostα/2 = 0.025. Adding the conditionAs = 0cannot increase that
+unconditional probability. Linearity of expectation preserves this bound for the all-cohort mean wrong-
+added-declaration frequency, despite reuse of the historical reference. It is not a bound on the fraction
+wrong among selected positive declarations, the certified subset, or the chance of any error over the
+entire stream. Empirical error analysis will investigate operating behaviour and assumption failures
+rather than claim this existing concentration bound as algorithmic novelty [15].
+Dependent stationary controls will use a separate reference trajectory and an exploratory two-sample
+moving-blockbootstrapwith2,000replicates. Withineachlosssequence, startswillbesampleduniformly
+from all complete overlapping blocks of lengthl; sampled blocks will be concatenated and truncated to
+the original sequence length. Reference and cohort resampling will be independent, preserving their
+separate means and avoiding artificial mixing of different regimes. The 2.5th and 97.5th percentiles of
+replicate mean differences will define the interval. Development controls will selectl∈{5,10,20,50}
+by proximity of empirical coverage to 0.95, breaking ties toward shorter blocks. A separate validation
+bank will use 2,000 independent trajectory pairs, each with a new reference and cohort; reusing one
+reference across these pairs would not supply independent coverage trials. Stationary excess-risk truth
+is exactly zero because the reference and cohort have the same marginal law. Validation will report
+binomial coverage uncertainty and interval width, without selecting another block length. The 93%–
+97% empirical coverage band will be an exploratory diagnostic, not proof of nominal coverage. Failure
+will be reported rather than repaired using final outcomes; stationary validation will not establish validity
+inside nonstationary transitions [21].
+For natural cases, the same separate-segment resampling will provide exploratory uncertainty only, con-
+ditional on local stability within each segment and negligible dependence between the historical reference
+and current cohort. Cross-segment dependence will not be claimed to have been modelled, and resam-
+pling will never concatenate the two regimes into a supposed stationary sequence. Population harm will
+remain unverified; neither these intervals nor the dependent controls will inherit the independent-design
+Hoeffding guarantee [5,21].
+Step 6 — Baseline Methods
+Distributional detector comparators will be marginal KS, normalized Wasserstein and joint MMD fami-
+lies. All will receive independently selected thresholds under the same null-rate target. Neither DriftLens
+nor proactive adaptation will be claimed as exactly reproduced in a frozen tabular-classifier study. Their
+literature findings motivate the comparison but concern different tasks [1–3].
+PUDD will inform the released-label channel because its PU scoreui = 1−fyi(xi)depends on the
+observed true class. It will not be redefined as an unlabeled confidence score. The core comparison will
+isolate verdict gating using the simple detector families above; it will not claim superiority to PUDD,
+conformalmodelreuseorthefourteen-detectorKDDbenchmarkwithoutaseparatefaithfulreproduction.
+Their original adaptive-learning scores will not be imported as comparable harm-verdict results [6,8,12].
+LetB s be the eligible interval verdict from Step 5, taking values 1, 0 or⊥for harm-supported, below-
+margin or unresolved. The primary comparator will gate positive harm declarations only. A below-
+margin verdict will remain available in both policies; an ineligible or inconclusive cohort will remain
+unresolved in both:
+V separated
+s =B s, V gated
+s =
+{︄
+⊥, Bs = 1andA s = 0,
+Bs,otherwise. (17)
+Keeping below-margin verdicts identical will focus the matched comparison on harm recognition. Its
+coverage ordering will remain known by construction; the empirical question will concern the correctness
+16\nand mechanism-specific frequency of additional harm declarations. This comparator will be a declared
+policy experiment, not a claim that all deployed monitoring systems implement such a gate or that
+gating saves label-acquisition cost [14,22].
+The primary question will be estimation-based: how often are these additional harm declarations correct
+or wrong, especially after change onset? No test will treat the known nonnegative coverage ordering as an
+empirical discovery. The proposed comparison will succeed as an evaluation if it produces auditable all-
+cohortbounds, uncertaintyandmechanism-specificfailureevidence; aclaimofpracticalimprovementwill
+additionally require an application-defined benefit/error tolerance that this general benchmark does not
+possess. A null or inconclusive conclusion will be legitimate if additional declarations are absent, wrong-
+decision uncertainty is substantial, or planned precision is not attained. No application-independent
+monetary value will be assigned to this trade-off [7,8,16,20].
+Secondary verdict comparators will include the input-only proxyVs =A s, an eligible point-loss rule
+1{ˆ︁∆ s > δ}, and a point-loss rule requiringAs = 1for a harmful verdict but assigning below-margin
+to other eligible cases. A stricter all-verdict gate,V strict
+s =B s whenA s = 1and⊥otherwise, will
+separately show the effect of withholding below-margin verdicts as well. All label-based rules will defer
+when ineligible. Always-below-margin and always-unresolved controls will expose harm prevalence and
+total-deferral behaviour. Every policy will receive the same classifier, cohort, label schedule and check-
+point; input-only output will be explicitly described as a harm proxy, not the intended native task of a
+distributional detector [14,22].
+The loss-only interval control will use precisely the same harm rule as the proposed evidence-separated
+display. Their verdicts will be required to be identical; this will be an identity check rather than a
+statistical superiority hypothesis. Input evidence will add context without changing that rule. The
+point-loss and point-gated comparisons will be secondary ablations, so changes in uncertainty handling
+will not explain the primary gating contrast [22].
+Baseline roles will remain distinct. The marginal and joint distance families will test the input channel
+under matched stationary alert targets; the two primary verdict policies will differ only in the positive-
+alarm gate applied to the sameBs. Point-loss variants will test the uncertainty component, and constant-
+verdict controls will expose prevalence and deferral. All verdict policies will read one common cohort
+evidencerecordatthesamecheckpoint. Asharednull-alerttargetwillnotbedescribedasequaldetection
+power, equal computation or individual-feature error control [6,20].
+Step 7 — Experimental Design
+The primary design will cross two input references with delaysd∈{0,2,5}and two frozen classifiers
+on identical controlled streams. A logistic model will select regularization from{0.1,1,10}; the tree will
+select depth from{3,5}on the five development seeds. The fitting objective will be mean chronolog-
+ical validation error across those seeds, with ties resolved toward stronger regularization or shallower
+depth. Configurations will then be frozen for all final seeds. The primary synthetic data will use ten
+numeric variables and observations independent across time; autoregressive controls will form a separate
+robustness tier [5,6].
+Before final evaluation, a dated protocol manifest will freeze the development/final seed lists, dataset
+hashes, split indices, event schedules, parameter grids, solver settings, calibration banks, thresholds,
+metric denominators and analysis scripts. No seed, mechanism, classifier or cohort will be removed for
+an unfavourable result. A failed numerical or data-contract check will suspend the affected run, retain
+its failure log and require an outcome-blind correction followed by rerunning the same complete paired
+seed. Checkpoint records will be append-only; corrected or later labels will not retrospectively replace
+the recorded evidence available at an earlier checkpoint [5,16,17].
+The core design will contain six mechanisms, two frozen classifiers and two input references: 24 accuracy
+conditions per seed at the primaryh= 2,d= 0checkpoint. Three label schedules will produce 72
+scheduled condition cells per seed, but will reuse the same six realized input/label streams. Thirty
+final seeds therefore imply 180 mechanism-stream realizations and 10.8 million test observations, not
+2,160 independent experiments. For the primary gradual transition, the exact schedule will bewi =
+17\n(i−20,001)/4,999for20,001≤i≤25,000, with weights zero before and one afterward. A correction to
+a shared routine will invalidate and rerun every affected completed condition using its original seed; it
+will not be applied only to an unfavourable case [5,6].
+Table 5: Planned controlled conditions and evaluation truth.
+Condition Purpose and truth
+Stationary Measure raw null alerts on independent and autoregressive stationary
+controls.
+Irrelevant marginal
+change
+Shift an independently generated nuisance variable; determine actual
+classifier harm from independent risk truth rather than its nuisance
+designation.
+Relevant marginal
+change
+Shift a predictive coordinate while retaining the label rule; include
+abrupt and gradual transitions.
+Recurring correlated
+change
+Record onset, completion and return, separating directly
+manipulated coordinates from all changed marginals.
+Dependence-only change Vary correlation with invariant univariate marginals; score joint
+detection without inventing feature-pair localization output.
+Conditional-only change Alter the label mechanism with invariant input distribution; assess
+delayed harm verdicts without expecting an input alarm.
+IndependentZ 1,Z 2∼N(0,1)will permit the dependence-only construction
+X1 =Z 1, X 2 =ρsZ1 +
+√︂
+1−ρ2sZ2,|ρs|<1.(18)
+Both marginals will stay standard normal. Baseline correlation will beρ= 0.3, and the binary label
+rule will beY∼Bernoulli(sigmoid(X1 +X 2)); the other eight coordinates will be independent standard
+normals. The primary marginal shift will be one standard deviation, applied to coordinate 10 for
+nuisance change or coordinate 1 for predictive change, retaining the sameP(Y|X). Recurrence will
+shift coordinates 1 and 2 by 1 and 0.5 respectively, then return to baseline. Dependence-only change
+will setρ=−0.6, while conditional-only change will negate the label-rule coefficients and preserveX.
+Amplitudes 0.5 and 2 and correlations 0 and 0.6 will be prespecified secondary sensitivities, not selected
+using final harm outcomes. The actual harm state will always come from independent risk truth [4,19].
+Abrupt onset will be at test observation 20,001. The primary predictive marginal-change condition
+will use a gradual mixture through observations 20,001–25,000,Pi = (1−wi)Ppre +w iPpost, withw i
+increasing linearly from zero to one. The nuisance, dependence-only and conditional-only conditions
+will use abrupt onset; recurrence will return at observation 40,001. An abrupt predictive-change variant
+will be secondary. The same observation-index events will apply at every cohort size. A dependent
+stationary control will useXi =aX i−1+εi witha= 0.5. Its covarianceΣ 0 will have unit diagonal,
+entries(1,2)and(2,1)equal to 0.3, and all other off-diagonal entries zero. InitializationX 0∼N(0,Σ0)
+and independent innovationsεi∼N(0,(1−a2)Σ 0)will give the declared stationary marginal law from
+the first observation; label-noise uniforms will be independent over time. Independent stationary controls
+will usea= 0. Generator event truth will remain distinct from classifier harm [5,6].
+For cohort completiones, the primary assessment time will beqs(h) =e s +hb 0 withh= 2;h= 0and
+h= 5will be sensitivities. A verdict will use the cohort’s own stored input alarmAs, not an alarm
+from a later window, and only labels released byqs(h). With complete-label eligibility and fixed delays,
+d>hstructurally prevents an eligible loss-based verdict. This will be reported as evidence unavailability
+rather than an estimated accuracy loss. Later labels will not rewrite earlier checkpoint results. After the
+last input, the clock will continue through the maximum planned checkpoint without generating extra
+test observations. Permanent missingness or selective label acquisition will not be introduced into this
+complete-release experiment [14].
+With a constant delay and complete-cohort eligibility, the first eligible time will be exactlyes +db 0; the
+loss estimate will then be identical at all later checkpoints. This is a controlled availability experiment,
+18\nnot a test of partial-evidence accumulation or a delay-induced change in the classifier. Random or
+feature-dependent delays would require a separate extension. The results will distinguish this structural
+label-waiting time from additional deferral caused by an interval crossing the harm margin or by alarm
+gating [7,8,14].
+Each natural case study will preserve record order, using the first 30% of observations for fitting, the
+next 20% for reference and calibration, and the last 50% for testing. The two historical prefixes will be
+treated as fully labelled archives before the retrospective test clock starts; the artificial release schedule
+will then restrict test labels only. This will not simulate calendar-time acquisition of the historical
+labels. The source will be required to provide at least five complete test cohorts and both classes in
+the training prefix; any exclusion will be recorded before outcome analysis. Model selection will use an
+80/20 chronological split inside the fitting prefix and the same configuration grids and tie rules as the
+synthetic design, followed by refitting on the complete fitting prefix. No source-specific thresholds or
+model choices will be tuned on test data. Score normalization and threshold selection will use successive
+disjoint halves of the reference prefix. Because these halves may provide too few original windows for
+a rare-tail threshold, 2,000 and 5,000 moving-block pseudo-windows will respectively form exploratory
+reference-based calibration banks. Within each half, contiguous blocks of length 20 will be sampled
+with replacement to form pseudo-trajectories containing both the input reference and current window;
+the declared fixed or rolling update rule will then be applied. This block length will be an exploratory
+convention, not a data-driven optimum. Bootstrap blocks will never cross the half-partition boundary.
+They will not count as new independent observations or certify a stationary 1% false-alert rate. Risk
+estimation will use the entire held-out labelled prefix, with its actual size replacingn0 in Step 5 [5,21].
+Natural alert frequency will be labelled alert burden, and realized losses will be observable after release,
+but population-harm truth will not be treated as known. SyntheticI, FR and FH scores will there-
+fore not be assigned to natural data. Electricity and Weather results will be shown separately, without
+pooling them as exchangeable deployments. Covertype will receive one recorded seeded permutation, fol-
+lowed by disjoint 30/20/50 partitions; this replay will illustrate multiclass monitoring under an artificial
+ordering, without certified temporal events or population-harm truth. Multinomial logistic regression
+and a multiclass tree will use the same selection grids, with all source classes required in training. Binary
+logistic predictions will use a 0.5 cutoff, multiclass predictions will use the largest probability, and class
+ties will follow a fixed class order. Logistic regularization will mean an L2 penaltyλ∥β∥2
+2/2added to
+mean log loss; the intercept will be unpenalized. Trees will use Gini impurity, a minimum leaf size of 20
+and the selected depth. Transfer claims will be limited to the tested domains and representations [5].
+Step 8 — Evaluation Metrics
+LetN all denote all complete declared test cohorts, whether or not their oracle truth is certified. The
+latent all-cohort primary quantities can be written directly. WithQs =1{As = 0,Bs = 1},
+gcorrect,all =
+∑︁
+sQsHs
+Nall
+, g wrong,all =
+∑︁
+sQs(1−Hs)
+Nall
+.(19)
+Their sum is the observable added-declaration frequency; the oracle bounds address only how that
+frequency divides into correct and wrong cases. Every result table will identify its denominator, eligibility
+rule, truth source and uncertainty type. Identification width, label-unavailable fraction and monitor
+deferral will be shown separately, so absent truth and absent monitoring evidence cannot improve an
+apparent accuracy score [15,20].
+The primary outcome will be the all-cohort correct and incorrect additional-declaration frequencies,
+reported as identification bounds when truth is uncertain, together with all-cohort coverage and decision
+availability. Certified-subset scores will be secondary diagnostics because selecting only truth far enough
+from the margin can change the difficulty and harm prevalence of the evaluated population. LetE={s:
+˜︁Hs∈{0,1}}andN=|E|. On this common diagnostic set for every policy, letDcount decisive verdicts
+andEcount verdicts differing from ˜︁Hs. The study will report
+I= E
+N, C= D
+N, U= 1−C, E conditional = E
+D (D>0).(20)
+19\nThe always-unresolved rule will haveI= 0,C= 0and undefined conditional error. Low incorrect-
+claim frequency alone will therefore not establish an improvement. Conditional error will be compared
+only at genuinely shared operating points; deterministic proxy output will not be assigned a fictitious
+risk–coverage curve [20].
+For the matched positive-gating contrast, the additional-declaration set will beQ={s∈E:As =
+0, Bs = 1}. Its correct and incorrect counts, conditional error and distribution across mechanisms will
+be reported. The certified-subset diagnostic components will be
+gcorrect = (Cseparated−Iseparated)−(Cgated−Igated),(21)
+gwrong =I separated−Igated, C separated−Cgated =g correct +g wrong.(22)
+Equivalently,g correct =|{s∈Q:˜︁Hs = 1}|/Nandgwrong =|{s∈Q:˜︁Hs = 0}|/N. Both will be
+nonnegative by construction. The study will estimate their magnitude rather than test this ordering
+as a discovery. Conditional error onQwill be undefined when no additional declarations occur. These
+diagnostic quantities will not gain credit for additional below-margin decisions, which occur only in the
+secondary strict-gate comparison. A coverage increase alone will not establish practical benefit [14,20].
+Both all-cohort bounds and certified-subset diagnostics will have mandatory pre-onset/post-onset break-
+downs; certified harmful/below-margin strata will additionally show their counts and uncertain-truth
+frequency. Stationary controls will use the observation-20,001 reporting cut without inventing a drift
+event. These summaries will distinguish recovered post-change harm declarations from incorrect pre-
+change declarations. No favourable mechanism selection or post-hoc prevalence weighting will replace
+the prespecified primary summary [6,7].
+Boundary-uncertain truth will not silently remove difficult cases. LetNall include all complete cohorts,
+Eknown count errors on decisive truth, andDuncertain count decisions on boundary-uncertain truth. All-
+cohort coverage will useDall/Nall, and the logically possible all-cohort error frequency will be bounded
+by
+Eknown
+Nall
+≤Iall ≤Eknown +D uncertain
+Nall
+.(23)
+These are identification bounds conditional on the simultaneous oracle-coverage event, whose failure prob-
+ability is at most 0.01 under the stated generator design. They are not unconditional logical guarantees
+or sampling confidence intervals. Counts and truth-bound widths will accompany the certified subset;
+the monitoring policy will still act on every complete cohort, including those whose evaluation truth is
+uncertain. No mechanism will be excluded because it produces an inconvenient harm prevalence [15,20].
+The same accounting will accompany the primary added-declaration components. Letq 1,q 0 andq ?
+count all additional declarations with certified harmful, certified below-margin and boundary-uncertain
+evaluation labels. On all complete cohorts,
+gcorrect,all∈[q1,q 1 +q ?]
+Nall
+, g wrong,all∈[q0,q 0 +q ?]
+Nall
+.(24)
+Their sum will equal(q1 +q 0 +q ?)/Nall, so the two upper bounds cannot generally hold simultaneously.
+These all-cohort quantities will be the primary estimands. Each of the four endpoints will be retained
+per seed and condition; oracle-uncertain cohorts will keep the same denominator. The certified-subset
+estimates above will not be substituted for them. Monitoring deferral and uncertain evaluation truth
+will remain separate missing-information mechanisms [15].
+False reassurance and unnecessary harm declarations will have explicit truth-based denominators:
+FR =
+∑︁
+s∈E1{˜︁Hs = 1,Vs = 0}
+∑︁
+s∈E1{˜︁Hs = 1}
+,FH =
+∑︁
+s∈E1{˜︁Hs = 0,Vs = 1}
+∑︁
+s∈E1{˜︁Hs = 0}
+.(25)
+Because the primary policies retain identical below-margin verdicts, their false-reassurance counts and
+FR values will be identical whenever defined. This will be an identity check, not a claimed improvement;
+proxy and other secondary policies can differ because they map evidence to verdicts differently [20].
+Here unresolved is neither 0 nor 1; deferral will also be reported separately within each harm stratum. A
+20\nzero denominator will produce an undefined metric with its count displayed. Time to complete eligible
+evidence will follow the known release schedule. For policyp, definetp,⋆
+s as the first decisive time among
+the checkpointsh∈{0,2,5}, measured after cohort completion, andtp,⋆
+s =∞if none is decisive. With
+H= 5,000, the restricted time without a decision and no-decision fraction will be
+Wp
+H = 1
+Nall
+∑︂
+s
+min(tp,⋆
+s ,H), ρ p
+H = 1
+Nall
+∑︂
+s
+1{tp,⋆
+s =∞}.(26)
+The infinite-time cases will be classified by evidence unavailability, inconclusive interval or positive-alarm
+gate. Under the complete-release design,Bs andA s never change after full release, so interval- or gate-
+induced deferral is permanent for that cohort within this protocol. For either primary label-based policy,
+the checkpoint grid contains every declared release delay, implyingWp
+H =db 0(1−ρp
+H) +Hρp
+H. Thus
+this time summary is derived from delay and final decision coverage, not an independent performance
+endpoint. It will not be presented as eventual decision time or analysed using an assumption that all
+cases will later decide. Repeated checkpoint descriptions will not imply simultaneous coverage of the
+monitoring intervals [14,20].
+Native input-state recall and false-positive frequency will first compareAs with reference-specific truth
+DX
+s,r, reporting denominators and undefined cases. This will separate failure to detect a difference from a
+legitimate absence of difference against that reference. For secondary onset-event summaries, matching
+will use the first unused alarm after an onset that creates a nonzero native difference, at most once per
+event. Alarm time will be cohort completion. Abrupt-event tolerance will be 5,000 observations; gradual
+tolerance will include the transition and 5,000 observations after completion. Additional unmatched
+alerts will be event-matching false positives, which need not be false alarms about an existing reference
+difference. Return-to-baseline behaviour will be shown as onset or cessation of native difference, as
+appropriate to the reference, rather than automatically scored as a missed positive alarm. Eligible-event
+counts will be shown per policy, and event F1 values with different target sets will not form a common
+ranking. Tolerances of 1,000 and 3,000 observations will be sensitivities and remain fixed across cohort
+sizes [6,7].
+Pe = TP
+TP+FP , R e = TP
+TP+FN , F1 e = 2TP
+2TP+FP+FN ,
+(27)
+FA1000 = 1000raw alerts in verified stationary windows
+verified stationary windows ,Delay e =ˆ︁te−te.(28)
+Detected-input-event delay will be shown with the miss rate and will be undefined when no event is
+detected. Harm timing will use the cohort-specific decision-time summaries above: a positive verdict
+will count as correct harm recognition only for an evaluator-certified harmful cohort. Incorrect positive
+claims will not earn credit as early recognition, and a verdict about an old cohort will not establish the
+current model’s status. A return to baseline will be an input event but will not automatically count as
+harmful. Conditional-only changes will be excluded from input-event recall and assessed through harm
+outcomes [4,6].
+Marginal localization will use the reference-specific setGs,r defined in Step 4 and top-kranked variables
+Ts, withk= min(3,p)and average precision as a supplement:
+P@k= |Ts∩Gs,r|
+k , R@k= |Ts∩Gs,r|
+|Gs,r|.(29)
+Ranking quality will be evaluated on every cohort with nonemptyGs,r, not only detected cohorts. A
+rank alone will not constitute a claimed change: the displayed screened-feature set will beˆ︁Gs,r =T s∩{j:
+Zj(Dj,s)> τ}. False feature flags per cohort will beN−1
+all
+∑︁
+s|ˆ︁Gs,r\Gs,r|, accompanied by the fraction
+of cohorts with any flag. An MMD-only alarm can therefore have an empty screened-feature set. The
+maximum-score threshold is calibrated under the complete stationary null; it will not be advertised
+as strong family-wise error or false-discovery control for individual variables when other variables have
+changed. Empty marginal truth will have undefined localization recall. Ranking, screening and causal
+21\nexplanation will remain distinct outputs; none will identify a changed feature pair or establish a causal
+root cause [2,10,19].
+Predictive description will include bounded error, class prevalence, per-class recall and fixed-universe
+macro-F1:
+MacroF1 = 1
+K
+K∑︂
+c=1
+2TPc
+2TPc +FP c +FN c
+.(30)
+For a class with zero denominator, its F1 contribution will be defined as zero by a declared reporting
+convention; unsupported-class counts will accompany the fixedK-class average. Runtime and peak
+memory will include preprocessing, detection, uncertainty calculation and explanation, with calibration
+cost and steady-state monitoring reported separately. Active label requests, intervention costs and
+realized retraining benefits will not be outcomes because the core design has fixed label schedules and
+frozen classifiers [3,5].
+Step 9 — Statistical / Comparative Analysis
+Independent synthetic seeds will be replication units, conditional on the common frozen development
+configuration. A seed will retain its entire vector of shared streams, classifiers, input references and oracle
+draws. The primary target will average all-cohort added-declaration frequencies equally over six mech-
+anisms, two classifiers and two input-reference policies ath= 2,d= 0. This fixed 24-condition average
+will characterize the benchmark mixture, not population prevalence in a deployment. All four identi-
+fication endpoints from Step 8 will be averaged using the same weights. Unlike certified-subset ratios,
+these quantities remain defined even if no cohort has decisive evaluation truth. Secondary amplitudes,
+dependent controls, natural cases and window-size variants will not enter this average [5,15].
+To answer the reference-policy part of the question, the report will additionally retain each reference’s
+mechanism-specific all-cohort proxy-error and added-declaration bounds. For a quantity bounded by
+[lF,uF ]under the fixed reference and[l R,uR]under the rolling reference on the same seed, its fixed-
+minus-rolling contrast will lie in[lF−uR,uF−lR]on the oracle-coverage event. These conservative
+contrast bounds will use paired seed resampling for approximate uncertainty; they will not inherit the
+two-component primary simultaneous guarantee. A pooled average alone will never support a conclusion
+that one reference is uniformly preferable across mechanisms [7,15].
+Delayd= 2will reproduce the same eligible accuracy contrast and supply only timing information. Delay
+d= 5,h= 2will be descriptive because every label-based policy is structurally unresolved. A reference-
+by-delay accuracy interaction will not be tested as if identifiable. Reused cohorts, overlapping reference
+observations and repeated checkpoints will never increase the number of independent replications [5,14].
+For seedjand componentk∈{correct,wrong}, letGjk ∈[0,1]denote the latent all-cohort added-
+declaration frequency and[ℓjk,ujk]its condition-averaged identification bounds. The target will beµk =
+E[Gjk|frozen development configuration]. On the simultaneous oracle-coverage event,ℓjk≤Gjk≤ujk
+for every final seed. A conservative finite-sample sampling envelope will use the one-sided bounded-mean
+inequality:
+ηn =
+√︄
+log(4/αs)
+2n , n= 30, α s = 0.04,(31)
+Jk =
+[︂
+max(0,ℓk−ηn),min(1, uk +ηn)
+]︂
+.(32)
+Four one-sided sampling bounds, two per component, will have total failure probability at most 0.04.
+Combined by a union bound with the prespecified 0.01 oracle budget, bothJk will cover their latent seed-
+population means with probability at least 0.95 under the independent synthetic design. This statement
+will be conditional on the frozen configuration and correct generator assumptions; it will not transfer to
+natural or dependent cases. At 30 seeds,ηn≈0.277, so this exact guarantee can be too wide to support a
+practical conclusion. It will remain reported even if a narrower approximate interval appears favourable.
+The independent-design analytical constraintµwrong≤0.025from Step 5 will be shown alongside the
+empirical envelope, clearly labelled assumption-derived rather than measured performance; the difficult
+remaining empirical quantity will be the yield of correct additional declarations [15].
+22\nFor useful precision description, paired seed-level percentile bootstrap resampling with 10,000 replicates
+will also report the mean identification interval and uncertainty in its endpoints. A replicate will retain
+each sampled seed’s complete condition vector. The 1st percentile of the mean lower endpoint and 99th
+percentile of the mean upper endpoint will form an approximate component envelope; four such one-
+sided endpoint tails will target a nominal 0.04 sampling allocation. Finite-sample bootstrap coverage
+will not be asserted, particularly with sparse or boundary outcomes. An all-zero bootstrap distribution
+will be labelled degenerate, not evidence that a population event is impossible; the finite-sample envelope
+above will still apply. Neither interval will treat uncertain oracle labels as known or replace them by a
+midpoint [5,15].
+Secondary reference comparisons will use the observable disagreement frequencyJr =N −1
+all
+∑︁
+s 1{Bs∈
+{0,1},As,r̸=Bs}. Both references will be compared with the same released-label interval verdict on the
+same cohorts; its decisive coverage will also be reported. This measures disagreement, not error against
+population truth, becauseBs itself can be wrong. Six mechanism-specific contrasts will average the two
+classifier results within each seed. Two-sided exact paired sign tests will assess directional consistency
+among nonzero seed differences, not equality of mean effects. Ties will be counted, and an all-tie contrast
+willreceivep= 1. Holmadjustmentatfamilylevel0.05willapplytothesesixtests. Certified-harmproxy
+scoresandreference-specificnativeinput-statescoreswillremaindescriptive, avoidingasignificanceclaim
+that silently compares different truth-selected cohorts or different reference targets. Other sensitivities
+will be exploratory; the identical loss-only control will remain outside hypothesis testing [6,23].
+The final budget will be fixed at 30 seeds. Planning will concern interval width rather than a test
+of the already known nonnegative ordering. Five development seeds will estimate endpoint variability,
+with substantial uncertainty from that small development sample. The normal-approximation planning
+widthz 0.99s/
+√
+30will be about 0.021, 0.042 or 0.085 for endpoint standard deviations 0.05, 0.10 or 0.20,
+respectively. These are design calculations, not experimental precision or power. Oracle identification
+width will add uncertainty that replication alone cannot remove. The conservative finite-sample envelope
+will be much wider than this normal approximation; failure to distinguish useful yield from uncertainty
+will require an inconclusive conclusion. No final-test outcome will trigger extra seeds, a wider harm
+margin, a different mechanism mixture or a changed primary contrast [5,15].
+The statistical report will separate three sources of uncertainty: finite oracle precision, variation across
+independent seeds and Monte Carlo error from bootstrap resampling. Analysis resampling will use
+its own recorded random-number seed and preserve the complete paired seed vector. The widths of the
+identification interval and sampling envelope will be reported separately, together with the exact number
+of independent seeds. A narrow resampling distribution conditional on one frozen configuration will not
+establish robustness to different development sets, deployments or calibration choices [5,15,16].
+Step 10 — Ablation and Component Analysis
+The input-monitor ablation will remove joint MMD and recalibrate the remaining maximum under the
+same stationary alert target. It may affect input alarms, screened-feature sets and gated positive verdicts,
+while leaving the evidence-separated loss verdicts identical. The primary matched interval comparison
+will isolate gating of harm declarations. The strict all-verdict gate will be a separate ablation. Point-loss
+andpoint-gatedcomparisonswillexaminetheeffectsofremovinguncertaintyhandlingandofinterpreting
+absent alarms as below-margin; they will not be presented as additional pure gating contrasts [1,19].
+An uncertainty sensitivity will vary the prespecified interval levels. Window-size, harm-margin and
+reference sensitivities will preserve observation-level data and seeds. Window-size runs will keep delays,
+onset times and assessment deadlines fixed in observation units, rather than inadvertently changing the
+latency treatment by redefining a window. No ablation will infer unavailable labels or introduce adaptive
+retraining [6,14].
+Component experiments will change one defined element while holding the stream, classifier, risk refer-
+ence and assessment schedule fixed. Removing MMD will change input evidence but leave the separated
+loss verdict identical; changing only the harm gate will leave the interval identical; replacing the interval
+by a point rule will intentionally change uncertainty handling. Sensitivities will vary one factor at a
+time around the primary configuration unless an interaction is explicitly part of the core crossed design.
+23\nConfidence, margin, window, amplitude and event-tolerance variants will not automatically form an un-
+affordable full Cartesian product. A component record will specify the changed element, recalibration
+requirement, invariant quantities and intended interpretation before that analysis begins [6,14,19].
+Step 11 — Error / Failure Analysis
+The proposed failure catalogue will distinguish harmless input alarms, missed marginal changes, missed
+dependence changes, false reassurance, unsupported harm declarations, interval overcoverage or under-
+coverage, prolonged deferral and reference assimilation of changed inputs. Each case will retain the
+cohort, input-reference membership, label-arrival times, expected-risk truth interval and realized losses.
+Diagnostics will distinguish deficient evidence from an incorrect decisive statement [1,2,5,14].
+Conditional-only cases will test the limit of input monitoring rather than be used to claim universal
+input detectability. Dependence-only controls will be checked analytically and by univariate distribution
+diagnostics. Natural deterioration will not automatically be assigned a certified drift cause. Selective or
+permanently missing labels, unseen classes, analyst usefulness and optimal retraining action will remain
+outside the core study’s claims [4,5,14].
+Failure analysis will first enumerate every qualifying case and its denominator, then provide the first
+chronological example of each prespecified failure category within each mechanism, classifier and ref-
+erence policy. Additional extreme cases may illustrate severity but will be labelled selected examples
+rather than representative population evidence. Each trace will show current and reference membership,
+released-label fraction, interval position relative to the margin, oracle bounds when available and the
+identified failing rule or assumption, with an explicit unknown diagnosis when the available evidence
+cannot establish one. This will separate a detector’s native-task failure, a wrong harm interpretation,
+legitimate deferral and a data-pipeline fault [5,7,16].
+Step 12 — Final Research Output
+At Phase 2, the submitted outputs will be the extended literature review, refined gap, proposed protocol
+and methodology diagrams. The experiment configurations, comparative result tables and evidence
+display described here will be specifications for subsequent research, not completed software or measured
+project outcomes.
+The planned outputs will be a reproducible protocol, data and configuration manifests, comparative
+tables with uncertainty, a catalogue of interpretation failures and a proposed aligned visualization. The
+display specification will connect each cohort’s input alarm and marginal feature evidence to released-
+label coverage, interval-based harm status and evidence age. An internal consistency criterion will require
+the displayed harm status to match the loss-only identity control [4,5].
+The final conclusions will describe measured differences in incorrect claims, coverage and latency under
+the tested conditions, including null or negative findings. Independent synthetic conclusions, dependent-
+control diagnostics and natural case-study observations will remain separately qualified. No planned
+display will be taken as evidence of improved analyst decisions, and no frozen-classifier comparison will
+establish model-adaptation benefit [3–5].
+The independent synthetic comparison will be the core experiment. Before final evaluation, development
+timing will record the cost of null calibration and oracle sampling in bounded-memory batches; a resource
+manifest will state hardware, library versions and elapsed-time limits. Reused input scores and regime-
+risk estimates will avoid repeating identical calculations for label delays. Secondary sensitivities and
+case studies will be scheduled after the core comparison, with any resource-limited omission declared
+before inspecting that secondary outcome. A pre-evaluation feasibility review will estimate total core
+work from measured development cost and will record a fixed resource allocation before final seeds are
+opened. If the full core is unaffordable, a revised protocol will be documented before evaluation, rather
+than dropping unfavourable conditions afterward. Infrastructure or convergence failure will be reported
+separately from a scientific null. Every core comparison will use the prespecified final-evaluation data
+and frozen configuration [5,6,9].
+The intended industrial relevance will be traceable predictions and labels, versioned baselines, explicit
+24\nevidence availability and documented limits of validity. These choices are consistent with the documen-
+tation and validity principles in NIST AI RMF 1.0, particularly MEASURE 2.1 and 2.5, and with the
+separation of prediction capture and ground-truth evaluation in operational monitoring documentation.
+They will not constitute certification, production validation or a recommendation to deploy a particular
+service. All numerical tolerances in this protocol will be research design choices, not prescribed industry
+thresholds [16,24].
+The proposed research package will link the protocol version, data provenance, split membership, seeds,
+fitted-transform specification, model/calibration settings, analysis definitions and figure-generation
+source. Its reporting templates will reserve separate fields for measured results, analytical guarantees,
+exploratory observations and limitations. A reproducibility review will require every displayed cohort
+verdict and aggregate denominator to be reconstructible from the same versioned evidence records. At
+this phase, these items will remain a research specification; subsequent empirical work will be needed
+to populate results and demonstrate reproducibility in execution [5,16].
+25\nDeliverable 4 — Research Methodology Diagram
+Research-Informed Selection of Diagram Type
+The reviewed studies use different visual forms for different scientific claims. The KDD benchmark’s
+Fig. 2 specifies an execution workflow; PUDD’s Fig. 2 groups the components of its detector; and
+DriftLens’s Fig. 2 separates offline reference/threshold estimation from online comparisons. The causal-
+explanation study uses directed causal graphs, while the forecasting study separates its method workflow
+from its measured heatmaps and time-series results. These forms will inform the proposed figures’
+communication roles, rather than supply interchangeable templates or imply that the project reproduces
+the original algorithms [1,6,8,10,11].
+Table 6: Diagram families observed in the reviewed corpus and
+their role in this proposal.
+Diagram family Reviewed example Selection for the proposed study
+Research/execution
+workflow
+KDD benchmark, Fig. 2; SHAP
+forecasting, Fig. 1 [6,11].
+Use for the twelve-step protocol and its
+analysis dependencies; omit the source studies’
+model-update operations because the proposed
+classifiers are frozen.
+Component/data-
+flow architecture
+PUDD, Fig. 2; DriftLens,
+Fig. 2 [1,8].
+Use labelled evidence lanes, explicit
+inputs/outputs and offline artifacts; show label
+access and assessment truth as different
+information channels.
+Mechanism/window
+illustration
+Window Dilemma, Fig. 1;
+CheckerBoard, Fig. 1 [7,13].
+Use the methodological lesson that comparison
+windows and prediction interventions change
+what is observable; do not add simulated
+distributions or feedback mechanisms to a
+figure that only specifies the protocol.
+Causal graph Causal explanation, Fig. 1 [10]. Do not use causal-edge semantics for the
+proposed monitoring architecture. Its arrows
+will show information dependencies, not
+identified causal effects.
+Results plot or
+coordinated view
+KDD benchmark, Figs. 3–4;
+SHAP forecasting, Figs. 2–3;
+DriftVis, Fig. 2 [4,6,11].
+Reserve numerical plots for subsequent
+measured results; specify the planned
+cohort-aligned display without presenting
+invented scores, curves or analyst benefit.
+A 2025 empirical study of neural-network system diagrams supports consistent flow notation, explicit
+inputs/outputs and meaningful visual encodings. Its scope does not establish a universal notation for
+drift monitoring; the present design will adapt those communication principles to this study. General
+figure-design guidance additionally prioritizes the scientific message and its caption. These presentation
+sources will supplement the eight topic-specific papers without increasing their eligibility count [25,26].
+Proposed Workflow and Evidence Architecture
+Figure 1 is a numbered research workflow, retaining all twelve prescribed stages. The bands identify
+preparation, method specification, complementary analyses and synthesis; they are not a claim that all
+headings execute as a single serial software pipeline. Figure 2 is a swimlane-style data-flow architecture.
+It separates the input channel from the released-label channel, makes frozen reference/calibration depen-
+dencies explicit, and places reporting and synthetic assessment outside the monitoring computation. ID
+validation precedes label-completeness testing. Incomplete labels cause deferral; invalid records suspend
+the affected run for the repair procedure specified in Steps 5 and 7. Synthetic evaluation truth has no
+return path into the monitor [1,6,8,17].
+The shared visual grammar will use rounded rectangles for computations, cylinders for retained records,
+a diamond for label eligibility and one consistent arrow style for information dependencies. Crossing
+26\nedges will not join unless a junction is drawn; a small underpass will preserve this distinction. Lane
+labels and text will carry the semantics as well as colour. A dashed boundary will delimit read-only
+reporting/assessment; it will not denote another treatment or a feedback loop. The symbolsAandB
+denote the input alarm and interval verdict, respectively;fandϕdenote the frozen classifier and feature
+transform,τthe input-score threshold, andW 0 the fixed historical risk reference. These conventions
+are design choices informed by the corpus and diagram research, not a claim of formal UML/BPMN
+conformance or proven reader performance [25].
+Both figures will be supplied as editable SVG and vector PDF with embedded Arial fonts, together with
+300-dpi PNG previews. Main text will be approximately 9–10 points at the intended 180-mm export
+width and remain above 9 points when fitted to the submission’s available text width. PDF will be
+the publication master; PNG will be a preview. This specification follows IEEE’s font/format guidance
+and publisher principles for editable vector artwork. The figures describe proposed work and contain no
+measured project results [27,28].
+Research workflow and experimental design
+Proposed study | cohort-specific evidence reliability
+a  Prepare observations and representations | Steps 1-4
+1 Research input
+Risk target + clocks
+Cohort / seed units
+2 Data collection
+Controlled streams
+Natural case studies
+3 Preprocessing
+Fit before final testing
+Freeze partitions
+4 Representation
+Marginal + joint scores
+Fixed feature map
+b  Specify the method and matched comparison | Steps 5-7
+5 Evidence method
+Input alarm + loss interval
+Eligibility before verdict
+6 Matched baselines
+Harm gate + proxy rules
+Shared evidence access
+7 Experimental design
+2 models; 6 mechanisms
+30 seeds; paired streams
+Paired alternatives: fixed / rolling reference | label delay d = 0, 2, 5
+c  Assess the same experiment records | Steps 8-11
+8 Evaluate
+Correct / wrong yield
+Coverage + availability
+9 Statistics
+Seed uncertainty
+Truth bounds
+10 Ablations
+One change at a time
+Same data + clocks
+11 Failure analysis
+Enumerate all cases
+Versioned traces
+d  Synthesize evidence and limits | Step 12
+12 Final research output
+Comparative evidence + failure catalogue + cohort-aligned report
+Phase 2 specifies future experiments; no results are claimed
+Dependency; a branch denotes complementary analyses
+Proposed protocol
+Figure 1: Proposed research workflow and experimental design. Numbers map to the twelve methodology
+steps. Arrows indicate dependencies, and the branch from Step 8 supplies complementary statistical,
+ablation and failure analyses. The paired reference and delay alternatives are design settings; boxes do
+not indicate completed implementation or measured outcomes.
+27\nProposed framework | cohort-aligned data flow
+Frozen preparation | parallel evidence channels | independent assessment
+Fit and freeze
+Classifier f; transform phi
+Training / development
+Calibrate input scores
+Null trajectories
+Scales + threshold tau
+Fix risk reference W0
+Historical labelled losses
+Same risk target throughout
+Input channel | label-free
+Input reference
+Fixed / rolling
+Earlier inputs
+Score change
+KS / JS + MMD
+Joint + marginal
+Input alarm A
+Threshold score
+Rank marginals
+Test cohort
+x_i, f(x_i)
+ID, t_i, r_i
+Released y_i
+b = 1,000
+Ledger
+A, B
+Label fraction
+Cohort age
+Reference ID
+Validity
+Invalid records suspend the run for repair.
+Loss channel | released labels
+Join labels
+Released y only
+Valid ID join
+All labels
+released?
+Harm verdict B
+Excess-loss CI
+Else unresolved
+Unresolved
+yes
+no
+Reporting and synthetic assessment | read-only
+One shared cohort evidence record
+Aligned evidence display
+Cohort / time / status
+Input + loss evidence
+Compare verdict policies
+Separated vs harm-gated
+Correct / wrong yield
+Independent risk truth
+Generator-only samples
+Synthetic evaluation only
+Never used by monitor
+truth
+Box: computation | cylinder: records | diamond: eligibility | crossings do not join
+Figure 2: Proposed cohort-aligned monitoring architecture. The input lane produces alarmA; a valid
+label join and completeness decision govern the loss lane’s interval verdictB. Hereti andr i are input
+and label-release times. Crossing edges without a junction do not join. The common ledger supplies both
+display and matched-policy assessment. Generator-based risk truth reaches the evaluator only within
+the dashed reporting/assessment boundary; no arrow feeds it into monitoring. Missing labels defer a
+verdict, invalid records invoke repair, and natural-case inference remains exploratory.
+28\nAcademic References
+[1] S. Greco, B. Vacchetti, D. Apiletti, and T. Cerquitelli, “Unsupervised concept drift detection from deep
+learning representations in real-time,”IEEE Trans. Knowl. Data Eng., vol. 37, no. 10, pp. 6232–6245, 2025,
+doi: 10.1109/TKDE.2025.3593123. Reviewed author version: arXiv:2406.17813v2.
+[2] G. Szűcs and M. Németh, “Domino drift effect approach for probability estimation of feature drift in high-
+dimensional data,”Knowl. Inf. Syst., vol. 67, pp. 4597–4621, 2025, doi: 10.1007/s10115-025-02362-0.
+[3] J. V. Guerrero Cano, G. J. Aguiar, and A. Cano, “Anticipating to change: A proactive approach for concept
+drift adaptation in data streams,”Mach. Learn., vol. 115, Art. no. 3, 2026; published online Dec. 14, 2025,
+doi: 10.1007/s10994-025-06945-4.
+[4] W. Yang, Z. Li, M. Liu, Y. Lu, K. Cao, R. Maciejewski, and S. Liu, “Diagnosing concept drift
+with visual analytics,” inProc. IEEE Conf. Visual Analytics Sci. Technol. (VAST), 2020, pp. 12–23,
+doi: 10.1109/VAST50239.2020.00007.
+[5] V. M. A. Souza, D. M. dos Reis, A. G. Maletzke, and G. E. A. P. A. Batista, “Challenges in benchmarking
+stream learning algorithms with real-world data,”Data Min. Knowl. Discov., vol. 34, pp. 1805–1858, 2020,
+doi: 10.1007/s10618-020-00698-5.
+[6] V. Cerqueira, H. M. Gomes, M. Heyden, B. Pfahringer, and A. Bifet, “A framework for evaluating and
+benchmarking concept drift detection methods,” inProc. 32nd ACM SIGKDD Conf. Knowl. Discovery
+Data Mining V.2 (KDD), 2026, pp. 8671–8682, doi: 10.1145/3770855.3819070. Reviewed author version:
+arXiv:2606.07789v1.
+[7] B.Gower-Winter, M.Groen, andG.Krempl, “Thewindowdilemma: Whyconceptdriftdetectionisill-posed,”
+inAdvances in Intelligent Data Analysis XXIV (IDA), Lecture Notes in Computer Science, vol. 16513. Cham,
+Switzerland: Springer, 2026, pp. 371–384, doi: 10.1007/978-3-032-23833-7_27. Reviewed extended author
+version: arXiv:2602.06456v1.
+[8] P. Lu, J. Lu, A. Liu, and G. Zhang, “Early concept drift detection via prediction uncertainty,” inProc. AAAI
+Conf. Artif. Intell., vol. 39, no. 18, 2025, pp. 19124–19132, doi: 10.1609/aaai.v39i18.34105.
+[9] N. Tan, Y.-C. Shih, D. Yang, and A. Salunkhe, “Flexible and efficient drift detection with-
+out labels,” inProc. IEEE Int. Conf. Data Mining Workshops (ICDMW), 2025, pp. 265–274,
+doi: 10.1109/ICDMW69685.2025.00037. Reviewed author version: arXiv:2506.08734v2.
+[10] D. Komnick, K. Lammers, B. Hammer, V. Vaquet, and F. Hinder, “Causal explanation of concept drift—
+A truly actionable approach,” inMachine Learning and Principles and Practice of Knowledge Discovery in
+Databases: ECML PKDD 2025 Workshops, Communications in Computer and Information Science, vol. 2842.
+Cham, Switzerland: Springer, 2026, pp. 396–412, doi: 10.1007/978-3-032-19105-2_28.
+[11] B. Teixeira, T.Pinto, andZ.Vale, “Detectingconcept drift withSHapleyAdditive ExPlanationsforintelligent
+model retraining in energy generation forecasting,” inExplainable Artificial Intelligence (xAI), Communica-
+tions in Computer and Information Science, vol. 2577. Cham, Switzerland: Springer, 2025, pp. 156–168,
+doi: 10.1007/978-3-032-08324-1_7.
+[12] C. Eliades and H. Papadopoulos, “A conformal martingales approach for recurrent concept drift,” inProc.
+14th Symp. Conformal Probabilistic Prediction Appl. (COPA), Proceedings of Machine Learning Research,
+vol. 266, 2025, pp. 706–724. [Online]. Available: https://proceedings.mlr.press/v266/eliades25a.html. [Ac-
+cessed: Oct. 22, 2026].
+[13] B. Gower-Winter, G. Krempl, S. Dragomiretskiy, T. Jelsma, and A. Siebes, “Identifying predictions that
+influence the future: Detecting performative concept drift in data streams,” inProc. AAAI Conf. Artif.
+Intell., vol. 39, no. 11, 2025, pp. 11726–11734, doi: 10.1609/aaai.v39i11.33276.
+[14] B. Alencar, G. Cassales, H. M. Gomes, C. Prazeres, T. Rios, A. Bifet, and R. Rios, “Concept drift detection
+in delayed and partially labeled data streams: An experimental survey,”Digit. Signal Process., vol. 182,
+Art. no. 106325, 2026, doi: 10.1016/j.dsp.2026.106325.
+[15] W. Hoeffding, “Probability inequalities for sums of bounded random variables,”J. Amer. Statist. Assoc.,
+vol. 58, no. 301, pp. 13–30, 1963, doi: 10.1080/01621459.1963.10500830.
+29\n[16] National Institute of Standards and Technology,Artificial Intelligence Risk Management Framework (AI
+RMF 1.0), NIST AI 100-1, Jan. 2023, doi: 10.6028/NIST.AI.100-1. [Online]. Available: https://nvlpubs.nist.
+gov/nistpubs/ai/NIST.AI.100-1.pdf. [Accessed: Oct. 22, 2026].
+[17] Amazon Web Services, “Ingest Ground Truth labels and merge them with predictions,”Amazon
+SageMaker AI Developer Guide. [Online]. Available: https://docs.aws.amazon.com/sagemaker/latest/dg/
+model-monitor-model-quality-merge.html. [Accessed: Oct. 22, 2026].
+[18] D. Lukats, O. Zielinski, A. Hahn, and F. Stahl, “A benchmark and survey of fully unsupervised concept drift
+detectors on real-world data streams,”Int. J. Data Sci. Anal., vol. 19, pp. 1–31, 2025; first published online
+Aug. 27, 2024, doi: 10.1007/s41060-024-00620-y.
+[19] A. Gretton, K. M. Borgwardt, M. J. Rasch, B. Schölkopf, and A. Smola, “A kernel two-sample test,”J. Mach.
+Learn. Res., vol. 13, pp. 723–773, 2012. [Online]. Available: https://www.jmlr.org/papers/v13/gretton12a.
+html.
+[20] R. El-Yaniv and Y. Wiener, “On the foundations of noise-free selective classification,”J. Mach. Learn. Res.,
+vol. 11, pp. 1605–1641, 2010. [Online]. Available: https://www.jmlr.org/papers/v11/el-yaniv10a.html.
+[21] H. R. Künsch, “The jackknife and the bootstrap for general stationary observations,”Ann. Statist., vol. 17,
+no. 3, pp. 1217–1241, 1989, doi: 10.1214/aos/1176347265.
+[22] O. Solozobov, “Evidence sufficiency under delayed ground truth: Proxy monitoring for risk decision systems,”
+arXiv:2604.15740, 2026. [Online]. Available: https://arxiv.org/abs/2604.15740. [Accessed: Oct. 9, 2026].
+[23] S. Holm, “A simple sequentially rejective multiple test procedure,”Scand. J. Statist., vol. 6, no. 2, pp. 65–70,
+1979. [Online]. Available: https://www.jstor.org/stable/4615733.
+[24] Amazon Web Services, “Model quality,”Amazon SageMaker AI Developer Guide. [Online]. Available: https:
+//docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-model-quality.html. [Accessed: Oct. 22, 2026].
+[25] G. Marshall, A. Freitas, and C. Jay, “An evidence-based guidance framework for neural network system
+diagrams,”PLOS ONE, vol. 20, no. 3, Art. no. e0318800, Mar. 2025, doi: 10.1371/journal.pone.0318800.
+[26] N. P. Rougier, M. Droettboom, and P. E. Bourne, “Ten simple rules for better figures,”PLOS Comput. Biol.,
+vol. 10, no. 9, Art. no. e1003833, Sep. 2014, doi: 10.1371/journal.pcbi.1003833.
+[27] IEEE, “File formatting,”IEEE Author Center Journals. [Online]. Available: https://journals.
+ieeeauthorcenter.ieee.org/create-your-ieee-journal-article/create-graphics-for-your-article/file-formatting/.
+[Accessed: Oct. 23, 2026].
+[28] Nature, “Preparing figures—Our specifications,”Nature Research Figure Guide. [Online]. Available: https:
+//research-figure-guide.nature.com/figures/preparing-figures-our-specifications/. [Accessed: Oct. 23, 2026].
+30

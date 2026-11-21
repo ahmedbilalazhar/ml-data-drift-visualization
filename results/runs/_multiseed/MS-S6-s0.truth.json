@@ -1,0 +1,14 @@
+{
+ "template": "S6",
+ "seed": 0,
+ "affected_original_vars": [
+  "x0",
+  "x1 (joint)"
+ ],
+ "onset_test_row": 2400,
+ "transition_rows": 0,
+ "mechanism": "dependence-change",
+ "n_train": 2000,
+ "n_calib": 2000,
+ "n_test": 6000
+}

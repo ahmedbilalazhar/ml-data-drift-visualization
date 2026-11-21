@@ -1,0 +1,14 @@
+{
+ "template": "S0",
+ "seed": 4,
+ "affected_original_vars": [
+  "x0",
+  "x1"
+ ],
+ "onset_test_row": null,
+ "transition_rows": 0,
+ "mechanism": "stationary",
+ "n_train": 2000,
+ "n_calib": 2000,
+ "n_test": 6000
+}

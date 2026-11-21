@@ -1,0 +1,14 @@
+{
+ "template": "S2",
+ "seed": 3,
+ "affected_original_vars": [
+  "x0",
+  "x1"
+ ],
+ "onset_test_row": 2400,
+ "transition_rows": 2000,
+ "mechanism": "gradual-relevant",
+ "n_train": 2000,
+ "n_calib": 2000,
+ "n_test": 6000
+}

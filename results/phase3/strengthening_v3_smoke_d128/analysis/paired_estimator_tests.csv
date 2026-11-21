@@ -1,0 +1,16 @@
+task,mechanism,feature_dimension,phase,contrast,mean_paired_difference,p_raw,seeds
+five_region,M6_dependence_marginals_preserved,128,early_impact_25_40,cal_minus_raw_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,early_impact_25_40,cal_minus_atc_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,early_impact_25_40,cal_minus_constant_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,late_81_96,cal_minus_raw_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,late_81_96,cal_minus_atc_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,late_81_96,cal_minus_constant_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,post_ramp_41_64,cal_minus_raw_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,post_ramp_41_64,cal_minus_atc_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,post_ramp_41_64,cal_minus_constant_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,recurrent_65_80,cal_minus_raw_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,recurrent_65_80,cal_minus_atc_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,recurrent_65_80,cal_minus_constant_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,stationary_1_24,cal_minus_raw_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,stationary_1_24,cal_minus_atc_mae,,,1
+five_region,M6_dependence_marginals_preserved,128,stationary_1_24,cal_minus_constant_mae,,,1

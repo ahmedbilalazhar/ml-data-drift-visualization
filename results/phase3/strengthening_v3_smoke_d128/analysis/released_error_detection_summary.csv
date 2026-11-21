@@ -1,0 +1,5 @@
+task,mechanism,feature_dimension,delay,stationary_false_alarm_rate,mean_stationary_alarm_count,detected_after_drain_rate,detected_during_input_rate,mean_detection_lag_source_batches,seed_count
+five_region,M6_dependence_marginals_preserved,128,0,0.0,0.0,0.0,0.0,,1
+five_region,M6_dependence_marginals_preserved,128,5,0.0,0.0,0.0,0.0,,1
+five_region,M6_dependence_marginals_preserved,128,20,0.0,0.0,0.0,0.0,,1
+five_region,M6_dependence_marginals_preserved,128,100,0.0,0.0,0.0,0.0,,1
