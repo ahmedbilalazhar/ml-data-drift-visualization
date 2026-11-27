@@ -6,3 +6,5 @@
 | [23I-2581_23I-2604_Phase3.receipt.json](23I-2581_23I-2604_Phase3.receipt.json) | Original verification receipt. Its archive field uses the historical path. | `757db32908baa87753cc31a9551c18eef80399b1ed53df5752cf0dd183863d17` |
 
 [Reproduction instructions](../../phase3/23I-2581_23I-2604_Phase3_Reproduction.md).
+
+See the [course brief](../../Phase%2003%20-%20Implementation.pdf) and [historical package retrieval](../../HISTORICAL_ARTIFACTS.md).

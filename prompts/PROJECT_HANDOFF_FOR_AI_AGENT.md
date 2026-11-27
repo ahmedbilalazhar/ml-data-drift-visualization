@@ -1,5 +1,7 @@
 # Authoritative Project Pointer Registry & Location Map for AI Agent / Collaborator
 
+Start with the [Phase 4 demo](../docs/DEMO.md), [four coursework submissions](../docs/submissions/), [editable paper](../paper/), and [Phase 4 evidence map](../EXPERIMENTS.md). The map traces the published claims back to experiment code and evidence. The material below records Phase 3 context and open research work.
+
 **Project Title**: Explainable Visualization and Monitoring of ML Data Drift (IDM-Viz)  
 **Authors**: Ahmed Bilal Azhar (23I-2581) & Umar Behram (23I-2604)  
 **Repository Remote**: `https://github.com/ahmedbilalazhar/ml-data-drift-visualization.git` (`main` branch)  
@@ -55,7 +57,7 @@ All 148+ compiled academic research PDFs, LaTeX sources, and standalone reports 
   - Literature Review: [`reports/literature/deep-research-report.md`](../reports/literature/deep-research-report.md) & [`reports/literature/deep-research-report-phase1.pdf`](../reports/literature/deep-research-report-phase1.pdf)
 - **Phase 2 Research Report & Feedback Review**:
   - Review Notes: [`reports/manuscript/phase2_review_notes.md`](../reports/manuscript/phase2_review_notes.md)
-  - Submission Document: [`docs/submissions/DAV_Phase2_Revised_Report.md`](../docs/submissions/DAV_Phase2_Revised_Report.md) & [`docs/23i-2604_23i-2581DAV-phase2.docx`](../docs/23i-2604_23i-2581DAV-phase2.docx)
+  - Submission Document: [`docs/submissions/phase2/DAV_Phase2_Revised_Report.md`](../docs/submissions/phase2/DAV_Phase2_Revised_Report.md) & [`docs/23i-2604_23i-2581DAV-phase2.docx`](../docs/23i-2604_23i-2581DAV-phase2.docx)
 - **Phase 3 Core Comprehensive Submission Documents**:
   - Core Research Report: [`reports/phase3/v2_archive_extracted/Report.md`](../reports/phase3/v2_archive_extracted/Report.md) & [`reports/phase3/v2_archive_extracted/Report.pdf`](../reports/phase3/v2_archive_extracted/Report.pdf)
   - Adaptation & Retraining Report: [`reports/phase3/v2_archive_extracted/Adaptation.md`](../reports/phase3/v2_archive_extracted/Adaptation.md) & [`reports/phase3/v2_archive_extracted/Adaptation.pdf`](../reports/phase3/v2_archive_extracted/Adaptation.pdf)
@@ -124,22 +126,12 @@ The project's empirical boundaries and investigation logs are cataloged in [`doc
 
 ---
 
-## 6. Official Submission Bundles, Archives & Addenda
+## 6. Coursework submissions and historical packages
 
-- **Official Verified Phase 3 Submission Package**:
-  - File: [`output/phase3/23I-2581_23I-2604_Phase3.zip`](../output/phase3/23I-2581_23I-2604_Phase3.zip) (10.35 MB)
-  - Audit Receipt: [`output/phase3/23I-2581_23I-2604_Phase3.receipt.json`](../output/phase3/23I-2581_23I-2604_Phase3.receipt.json)
-- **Research Complete Submission Package**:
-  - File: [`output/phase3/23I-2581_23I-2604_Phase3_Research_Complete.zip`](../output/phase3/23I-2581_23I-2604_Phase3_Research_Complete.zip) (17.59 MB)
-  - Audit Receipt: [`output/phase3/23I-2581_23I-2604_Phase3_Research_Complete.receipt.json`](../output/phase3/23I-2581_23I-2604_Phase3_Research_Complete.receipt.json)
-- **Day-Wise Validated Packages (Days 1–3)**:
-  - Day 1: [`output/phase3/IDM_Viz_Phase3_Day1_v1.1_Validated.zip`](../output/phase3/IDM_Viz_Phase3_Day1_v1.1_Validated.zip)
-  - Day 2: [`output/phase3/IDM_Viz_Phase3_Day2_External_Evaluation_v1.3_Validated.zip`](../output/phase3/IDM_Viz_Phase3_Day2_External_Evaluation_v1.3_Validated.zip)
-  - Day 3: [`output/phase3/IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.4_Validated.zip`](../output/phase3/IDM_Viz_Phase3_Day3_Final_Research_Improvement_v1.4_Validated.zip)
-- **Addenda Manifests & Status Receipts**:
-  - Addendum Manifest: [`ADDENDUM_FILE_MANIFEST.json`](../ADDENDUM_FILE_MANIFEST.json)
-  - Addendum Readme: [`ADDENDUM_README.md`](../ADDENDUM_README.md)
-  - Status Register: [`output/phase3/IDM_Viz_Phase3_Addendum_Package_Status_20261117.json`](../output/phase3/IDM_Viz_Phase3_Addendum_Package_Status_20261117.json)
+- [All four phases](../docs/submissions/) lists artifacts and submission status.
+- [Phase 3 package and receipt](../docs/submissions/phase3/) includes the reproduction link.
+- [Phase 4 submission](../docs/submissions/phase4/) holds the submitted PDF and source ZIP. Work on the editable copy in [paper](../paper/).
+- [Historical package retrieval](../docs/HISTORICAL_ARTIFACTS.md) covers the packages formerly in output/phase3.
 
 ---
 

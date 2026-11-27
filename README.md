@@ -10,7 +10,7 @@ Start with [experiment results and reproduction](EXPERIMENTS.md). For project co
 
 ```powershell
 pip install -e ".[dev]"
-python scripts\smoke_e0.py
+python scripts\smoke_e0.py --out tmp/phase4-demo
 pytest -q
 ```
 

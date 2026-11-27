@@ -17,7 +17,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.colors import toColor
 
 ROOT = Path(__file__).resolve().parent
-SOURCE = ROOT.parent / 'docs/submissions/DAV_Phase2_Submission.tex'
+SOURCE = ROOT.parent / 'docs/submissions/phase2/DAV_Phase2_Submission.tex'
 FONT_DIR = Path('C:/Windows/Fonts')
 pdfmetrics.registerFont(TTFont('FigureSans', str(FONT_DIR / 'arial.ttf')))
 pdfmetrics.registerFont(TTFont('FigureSansBold', str(FONT_DIR / 'arialbd.ttf')))

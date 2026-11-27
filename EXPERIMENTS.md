@@ -1,4 +1,56 @@
-# Experiment results and reproduction
+# Phase 4 experiment evidence
+
+Start with the [submitted paper](docs/submissions/phase4/), the [demo guide](docs/DEMO.md), or the [agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md).
+
+| Paper topic | Runner or analysis | Retained run | What to examine |
+| --- | --- | --- | --- |
+| Core synthetic and conditional shift | [Code](scripts/run_phase3_v2.py) | [Results](results/phase3/v2_final/) | Detection, localization and calibrated impact. Conditional change can harm accuracy with little input evidence. |
+| Dependence and ablation | [Code](scripts/run_phase3_dependence_extension.py) | [Results](results/phase3/dependence_extension_20261116_final_v2/) | Changes in dependence and comparison with marginal-only detection. |
+| Natural stream: UCI 224 | [Code](scripts/run_uci224_delayed_replay.py) | [Results](results/phase3/uci224_delayed_replay_20261116_v2/) | Cohort differences, delayed verification and exact intervals. |
+| Natural stream: ELEC2 | [Code](scripts/run_elec2_temporal_validation.py) | [Results](results/phase3/elec2_temporal_20261116_v2/) | Chronological replay and calibration sensitivity. |
+| Natural stream: NOAA | [Code](scripts/run_noaa_weather_transfer.py) | [Results](results/phase3/noaa_weather_1949_1999_v1/) | Ordered weather transfer and temporal evaluation. |
+| Prospective harm | [Code](scripts/run_future_harm_forecast.py) | [Results](results/phase3/future_harm_forecast_20261116_v1/) | Time-only, unlabeled and released-label predictors with controlled label availability. |
+| External forecast replay | [Code](scripts/run_external_future_harm_replay.py) | [Results](results/phase3/external_future_harm_replay_20261120/) | Forecast performance on three ordered streams. |
+| Large seed robustness | [Code](scripts/run_phase3_large_seed.py) | [Results](results/phase3/large_seed_robustness_final/) | Uncertainty across paired seeds. |
+| Seasonal stress | [Code](scripts/analyze_seasonal_stress.py) | [Results](results/phase3/seasonal_stress_evaluation_20261118_v1/) | Stress evaluation across seasonal conditions. |
+| Adaptation and schedule | [Code](scripts/run_matched_adaptation_schedule.py) | [Results](results/phase3/matched_adaptation_schedule_20261117_v2/) | Adaptation comparisons and label schedule sensitivity. |
+
+## Paper table and figure inputs
+
+The [evidence ledger](paper/data/ledger_generated.json) records the source and row for reported values. The [table generator](paper/scripts/build_tables.mjs) reads these repository inputs.
+
+- [reports/phase3/adaptation_schedule_audit_20261118_v19/paired_accuracy_differences.csv](reports/phase3/adaptation_schedule_audit_20261118_v19/paired_accuracy_differences.csv)
+- [reports/phase3/v2_final/v1_conditional_failure_diagnostics.csv](reports/phase3/v2_final/v1_conditional_failure_diagnostics.csv)
+- [results/phase3/adaptation_final/paired_bootstrap.csv](results/phase3/adaptation_final/paired_bootstrap.csv)
+- [results/phase3/dependence_extension_20261116_final_v2/online_dependence_scores.csv](results/phase3/dependence_extension_20261116_final_v2/online_dependence_scores.csv)
+- [results/phase3/dependence_extension_20261116_final_v2/paired_contrasts.csv](results/phase3/dependence_extension_20261116_final_v2/paired_contrasts.csv)
+- [results/phase3/dependence_extension_20261116_final_v2/validated_summary.csv](results/phase3/dependence_extension_20261116_final_v2/validated_summary.csv)
+- [results/phase3/elec2_calibration_family_20261116_v1/summary.csv](results/phase3/elec2_calibration_family_20261116_v1/summary.csv)
+- [results/phase3/elec2_temporal_20261116_v2/evaluation/evaluator_batches.csv](results/phase3/elec2_temporal_20261116_v2/evaluation/evaluator_batches.csv)
+- [results/phase3/elec2_temporal_20261116_v2/evaluation/summary.json](results/phase3/elec2_temporal_20261116_v2/evaluation/summary.json)
+- [results/phase3/external_future_harm_replay_20261120/summary.csv](results/phase3/external_future_harm_replay_20261120/summary.csv)
+- [results/phase3/external_uci224_day2_v2/cohort_metrics.csv](results/phase3/external_uci224_day2_v2/cohort_metrics.csv)
+- [results/phase3/external_uci224_exact_interval_20261116_v1/summary.json](results/phase3/external_uci224_exact_interval_20261116_v1/summary.json)
+- [results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json](results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json)
+- [results/phase3/future_harm_forecast_20261116_v1/paired_seed_bootstrap.csv](results/phase3/future_harm_forecast_20261116_v1/paired_seed_bootstrap.csv)
+- [results/phase3/future_harm_unseen_family_balanced_20261116_v1/metrics_overall_by_delay.csv](results/phase3/future_harm_unseen_family_balanced_20261116_v1/metrics_overall_by_delay.csv)
+- [results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv](results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv)
+- [results/phase3/matched_adaptation_schedule_20261117_v2/paired_seed_differences.csv](results/phase3/matched_adaptation_schedule_20261117_v2/paired_seed_differences.csv)
+- [results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv](results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv)
+- [results/phase3/noaa_weather_1949_1999_v1/run_summary.json](results/phase3/noaa_weather_1949_1999_v1/run_summary.json)
+- [results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv](results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv)
+- [results/phase3/uci224_delayed_replay_20261116_v2/evaluation/per_batch_metrics.csv](results/phase3/uci224_delayed_replay_20261116_v2/evaluation/per_batch_metrics.csv)
+- [results/phase3/uci224_delayed_replay_20261116_v2/evaluation/summary.csv](results/phase3/uci224_delayed_replay_20261116_v2/evaluation/summary.csv)
+- [results/phase3/v2_final/harm_counts.csv](results/phase3/v2_final/harm_counts.csv)
+- [results/phase3/v2_final/impact_per_seed.csv](results/phase3/v2_final/impact_per_seed.csv)
+- [results/phase3/v2_final/impact_summary.csv](results/phase3/v2_final/impact_summary.csv)
+- [results/phase3/v2_final/input_detection_summary.csv](results/phase3/v2_final/input_detection_summary.csv)
+- [results/phase3/v2_final/overall_summary.csv](results/phase3/v2_final/overall_summary.csv)
+- [results/phase3/v2_final/paired_estimator_bootstrap.csv](results/phase3/v2_final/paired_estimator_bootstrap.csv)
+- [results/phase3/v2_final/predictions/v1_synthetic_100_C3_logistic_online.csv](results/phase3/v2_final/predictions/v1_synthetic_100_C3_logistic_online.csv)
+- [results/phase3/v2_final/released_verification.csv](results/phase3/v2_final/released_verification.csv)
+
+## Earlier experiments and supporting runs
 
 Start with this page to find an experiment's measured results. The pilot section maps the original course experiments. The Phase 3 section covers the retained evaluation, replication, extension, and audit directories. Use the linked protocol and report to interpret the numbers.
 

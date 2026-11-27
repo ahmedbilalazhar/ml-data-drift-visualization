@@ -7,6 +7,10 @@ Data Analysis and Visualization
 
 The validated scientific environment is `C:\Users\hp\anaconda3\python.exe`. Exact interpreter and package versions are recorded in `environment.json` for each run. Numerical threads are limited to one. No dataset download is needed; both tasks are generated locally.
 
+## Locked source files
+
+The v2 runner hashes the Phase 2 Word input at `docs/23i-2604_23i-2581DAV-phase2.docx` and the brief at `docs/Phase 03 - Implementation.pdf`. Keep those paths for the locked protocol. The v1 bundles must be present as `output/phase3/IDM_Viz_Phase3_v1_submission.zip` (SHA-256 `ddf91fa89ab9a9d45c20059c1dbea5cfdd966f3eea62a605769a371ae55e0ebd`) and `output/phase3/IDM_Viz_Phase3_v1_full_reproducibility.zip` (SHA-256 `0baba912c5f3e48a8a08a606e2a77a303f67e884ddccfef0907046d94dca5519`). The first is tracked. Obtain the full bundle from the author's local copy if needed.
+
 ## Complete reproduction
 
 From the workspace root, choose new, unused output directories and run:
