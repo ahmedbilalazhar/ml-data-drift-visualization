@@ -57,7 +57,7 @@ All 148+ compiled academic research PDFs, LaTeX sources, and standalone reports 
   - Literature Review: [`reports/literature/deep-research-report.md`](../reports/literature/deep-research-report.md) & [`reports/literature/deep-research-report-phase1.pdf`](../reports/literature/deep-research-report-phase1.pdf)
 - **Phase 2 Research Report & Feedback Review**:
   - Review Notes: [`reports/manuscript/phase2_review_notes.md`](../reports/manuscript/phase2_review_notes.md)
-  - Submission Document: [`submissions/phase2/DAV_Phase2_Revised_Report.md`](../submissions/phase2/DAV_Phase2_Revised_Report.md) & [`docs/23i-2604_23i-2581DAV-phase2.docx`](../docs/23i-2604_23i-2581DAV-phase2.docx)
+  - Submission Document: [`docs/submissions/phase2/DAV_Phase2_Revised_Report.md`](../submissions/phase2/DAV_Phase2_Revised_Report.md) & [`docs/23i-2604_23i-2581DAV-phase2.docx`](../docs/23i-2604_23i-2581DAV-phase2.docx)
 - **Phase 3 Core Comprehensive Submission Documents**:
   - Core Research Report: [`reports/phase3/v2_archive_extracted/Report.md`](../reports/phase3/v2_archive_extracted/Report.md) & [`reports/phase3/v2_archive_extracted/Report.pdf`](../reports/phase3/v2_archive_extracted/Report.pdf)
   - Adaptation & Retraining Report: [`reports/phase3/v2_archive_extracted/Adaptation.md`](../reports/phase3/v2_archive_extracted/Adaptation.md) & [`reports/phase3/v2_archive_extracted/Adaptation.pdf`](../reports/phase3/v2_archive_extracted/Adaptation.pdf)
