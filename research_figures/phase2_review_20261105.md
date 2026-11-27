@@ -1,6 +1,6 @@
 # Phase 2 review — 5 November 2026
 
-This record concerns the existing docs/submissions/phase2/DAV_Phase2_Submission.tex.
+This record concerns the existing submissions/phase2/DAV_Phase2_Submission.tex.
 It documents source review, reference verification and mathematical specification
 checks. No proposed model experiment was run and no measured project result was
 added to the submission.

@@ -65,7 +65,7 @@ The built-in `compile_latex_document` tool is not exposed in this session, and D
 
 The complete revised submission is the existing source at:
 
-[DAV Phase 2 submission](<C:/Users/hp/Desktop/University/2. DAV/3. Project/docs/submissions/phase2/DAV_Phase2_Submission.tex>)
+[DAV Phase 2 submission](<C:/Users/hp/Desktop/University/2. DAV/3. Project/submissions/phase2/DAV_Phase2_Submission.tex>)
 
 Its order is: Phase 1 continuity and scope; Deliverable 1 (selection procedure, eight-paper critical review, synthesis and three-paper comparison); Deliverable 2 (three-gap matrix, six-question justification, research question, objectives and traceability); Deliverable 3 (all twelve prescribed methodology steps); Deliverable 4 (methodology overview and framework architecture); and the complete IEEE-style reference list.
 

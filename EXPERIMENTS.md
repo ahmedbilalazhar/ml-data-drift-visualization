@@ -1,6 +1,6 @@
 # Phase 4 experiment evidence
 
-Start with the [submitted paper](docs/submissions/phase4/), the [demo guide](docs/DEMO.md), or the [agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md).
+Start with the [submitted paper](submissions/phase4/), the [demo guide](docs/DEMO.md), or the [agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md).
 
 | Paper topic | Runner or analysis | Retained run | What to examine |
 | --- | --- | --- | --- |

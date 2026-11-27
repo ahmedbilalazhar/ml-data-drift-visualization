@@ -14,7 +14,7 @@
 | `scripts/build_tables.mjs` | Regenerates the tables and plot data from repository results |
 | `data/ledger_generated.json` | Evidence ledger |
 
-The [submitted PDF and original source ZIP](../docs/submissions/phase4/) are the reference copies. See the [evidence map](../EXPERIMENTS.md) for experiment links. The course source ZIP contains the LaTeX inputs and generated assets. Audit notes mentioned in the original source README are absent from that package.
+The [submitted PDF and original source ZIP](../submissions/phase4/) are the reference copies. See the [evidence map](../EXPERIMENTS.md) for experiment links. The course source ZIP contains the LaTeX inputs and generated assets. Audit notes mentioned in the original source README are absent from that package.
 
 ## Packages
 `amsmath`, `amssymb`, `amsfonts`, `graphicx`, `booktabs`, `multirow`, `array`, `tabularx`, `xcolor`, `tikz` (positioning, arrows.meta, fit, backgrounds, shapes.geometric, calc), `pgfplots` 1.18 (groupplots, fillbetween), `algorithm`, `algpseudocode`, `cite`, `url`, `hyperref`; TikZ libraries also include shapes.misc and shadows, and pgfplots uses the colormaps library. All are available on TeX Live and Overleaf.

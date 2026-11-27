@@ -8,3 +8,5 @@
 | [DAV_Phase2_Revised_Report.docx](DAV_Phase2_Revised_Report.docx) | Revised report candidate. Upload status is unverified. | `caf76420b9d4209d2c608c874b3f81fd30408ab4ed341101f46e9c2f7838f325` |
 
 Supporting sources include the [submission LaTeX](DAV_Phase2_Submission.tex) and revised report in [Markdown](DAV_Phase2_Revised_Report.md) and [LaTeX](DAV_Phase2_Revised_Report.tex). The numbered Word file is the locked input for Phase 3 and retains its historical runtime path.
+
+The original numbered Phase 2 DOCX is also retained at its historical path in docs/ because Phase 3 protocol locks hash that file there.

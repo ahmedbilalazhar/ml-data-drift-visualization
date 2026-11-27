@@ -1,6 +1,6 @@
 # Authoritative Project Pointer Registry & Location Map for AI Agent / Collaborator
 
-Start with the [Phase 4 demo](../docs/DEMO.md), [four coursework submissions](../docs/submissions/), [editable paper](../paper/), and [Phase 4 evidence map](../EXPERIMENTS.md). The map traces the published claims back to experiment code and evidence. The material below records Phase 3 context and open research work.
+Start with the [Phase 4 demo](../docs/DEMO.md), [four coursework submissions](../submissions/), [editable paper](../paper/), and [Phase 4 evidence map](../EXPERIMENTS.md). The map traces the published claims back to experiment code and evidence. The material below records Phase 3 context and open research work.
 
 **Project Title**: Explainable Visualization and Monitoring of ML Data Drift (IDM-Viz)  
 **Authors**: Ahmed Bilal Azhar (23I-2581) & Umar Behram (23I-2604)  
@@ -57,7 +57,7 @@ All 148+ compiled academic research PDFs, LaTeX sources, and standalone reports 
   - Literature Review: [`reports/literature/deep-research-report.md`](../reports/literature/deep-research-report.md) & [`reports/literature/deep-research-report-phase1.pdf`](../reports/literature/deep-research-report-phase1.pdf)
 - **Phase 2 Research Report & Feedback Review**:
   - Review Notes: [`reports/manuscript/phase2_review_notes.md`](../reports/manuscript/phase2_review_notes.md)
-  - Submission Document: [`docs/submissions/phase2/DAV_Phase2_Revised_Report.md`](../docs/submissions/phase2/DAV_Phase2_Revised_Report.md) & [`docs/23i-2604_23i-2581DAV-phase2.docx`](../docs/23i-2604_23i-2581DAV-phase2.docx)
+  - Submission Document: [`submissions/phase2/DAV_Phase2_Revised_Report.md`](../submissions/phase2/DAV_Phase2_Revised_Report.md) & [`docs/23i-2604_23i-2581DAV-phase2.docx`](../docs/23i-2604_23i-2581DAV-phase2.docx)
 - **Phase 3 Core Comprehensive Submission Documents**:
   - Core Research Report: [`reports/phase3/v2_archive_extracted/Report.md`](../reports/phase3/v2_archive_extracted/Report.md) & [`reports/phase3/v2_archive_extracted/Report.pdf`](../reports/phase3/v2_archive_extracted/Report.pdf)
   - Adaptation & Retraining Report: [`reports/phase3/v2_archive_extracted/Adaptation.md`](../reports/phase3/v2_archive_extracted/Adaptation.md) & [`reports/phase3/v2_archive_extracted/Adaptation.pdf`](../reports/phase3/v2_archive_extracted/Adaptation.pdf)
@@ -128,9 +128,9 @@ The project's empirical boundaries and investigation logs are cataloged in [`doc
 
 ## 6. Coursework submissions and historical packages
 
-- [All four phases](../docs/submissions/) lists artifacts and submission status.
-- [Phase 3 package and receipt](../docs/submissions/phase3/) includes the reproduction link.
-- [Phase 4 submission](../docs/submissions/phase4/) holds the submitted PDF and source ZIP. Work on the editable copy in [paper](../paper/).
+- [All four phases](../submissions/) lists artifacts and submission status.
+- [Phase 3 package and receipt](../submissions/phase3/) includes the reproduction link.
+- [Phase 4 submission](../submissions/phase4/) holds the submitted PDF and source ZIP. Work on the editable copy in [paper](../paper/).
 - [Historical package retrieval](../docs/HISTORICAL_ARTIFACTS.md) covers the packages formerly in output/phase3.
 
 ---
