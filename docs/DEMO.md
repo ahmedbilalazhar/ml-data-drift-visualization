@@ -1,6 +1,6 @@
 # Phase 4 demo
 
-1. Open the [submitted paper](submissions/phase4/23I-2581_23I-2604_Phase4_Research_Paper.pdf). Use the architecture diagram to introduce input drift detection, accuracy estimation, and delayed label verification.
+1. Open the [submitted paper](../submissions/phase4/23I-2581_23I-2604_Phase4_Research_Paper.pdf). Use the architecture diagram to introduce input drift detection, accuracy estimation, and delayed label verification.
 2. Run the CPU pilot from the repository root in a Python environment with the project installed.
 
    ```powershell

@@ -4,7 +4,7 @@
 
 Explainable drift monitoring, delayed-label evaluation and visualization, with pilot experiments and Phase 3 research extensions.
 
-Start with [experiment results and reproduction](EXPERIMENTS.md). For project context, scientific limits and open work, read the [AI agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md).
+Start with [experiment results and reproduction](EXPERIMENTS.md). For project context, scientific limits and open work, read the [AI agent handoff](docs/PROJECT_HANDOFF.md).
 
 ## Quickstart (Windows, CPU)
 
@@ -31,7 +31,13 @@ and run cells top-to-bottom (uses same `src/` package).
 | [reports/](reports/) | Interpretation, manuscript material, figures and reports |
 | [data/](data/) | Source manifests and selected external inputs |
 | [tests/](tests/) | Unit tests and scientific contracts |
-| [prompts/](prompts/) | Agent handoff and experiment navigation |
+| [docs/](docs/) | Phase guides, project handoff and run index |
+| [submissions/](submissions/) | Official submissions organized by phase |
+| [paper/](paper/) | Editable Phase 4 manuscript source |
+| [output/phase3/](output/phase3/) | Locked Phase 3 reproduction bundle inputs |
+| [artifacts/](artifacts/) | Model, checkpoint and reference artifacts |
+| [studies/](studies/) | Study protocols, tasks and rubrics |
+| [references/](references/) | Research references and literature sources |
 
 For an experiment, follow its protocol to the runner and configuration, then compare its tables under `results/` with its interpretation under `reports/`. Write new run outputs to a new folder so the published evidence stays available.
 

@@ -1,6 +1,6 @@
 # Phase 4 experiment evidence
 
-Start with the [submitted paper](submissions/phase4/), the [demo guide](docs/DEMO.md), or the [agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md).
+Start with the [submitted paper](submissions/phase4/), the [demo guide](docs/DEMO.md), or the [agent handoff](docs/PROJECT_HANDOFF.md).
 
 | Paper topic | Runner or analysis | Retained run | What to examine |
 | --- | --- | --- | --- |
@@ -70,7 +70,7 @@ Protocol cards are in [experiments/protocols/experiment_cards](experiments/proto
 
 ## Phase 3 runs
 
-Use the [agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md) for the scientific questions and headline findings. The [run index](prompts/PHASE3_RUN_INDEX.md) lists preserved artifacts. The [Phase 3 protocols](docs/phase3/) and [Phase 3 reports](reports/phase3/) provide context and scope.
+Use the [agent handoff](docs/PROJECT_HANDOFF.md) for the scientific questions and headline findings. The [run index](docs/phase3/RUN_INDEX.md) lists preserved artifacts. The [Phase 3 protocols](docs/phase3/) and [Phase 3 reports](reports/phase3/) provide context and scope.
 
 ### adaptation_capacity_control_20261118_v2
 
