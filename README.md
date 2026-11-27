@@ -1,5 +1,7 @@
 # Explainable Visualization and Monitoring of ML Data Drift
 
+[Demo](docs/DEMO.md) · [All four submissions](docs/submissions/) · [Phase 4 PDF](docs/submissions/phase4/23I-2581_23I-2604_Phase4_Research_Paper.pdf) · [Paper source](paper/) · [Results and reproduction](EXPERIMENTS.md)
+
 Explainable drift monitoring, delayed-label evaluation and visualization, with pilot experiments and Phase 3 research extensions.
 
 Start with [experiment results and reproduction](EXPERIMENTS.md). For project context, scientific limits and open work, read the [AI agent handoff](prompts/PROJECT_HANDOFF_FOR_AI_AGENT.md).

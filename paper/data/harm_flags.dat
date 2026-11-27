@@ -1,0 +1,9 @@
+% generated from results/phase3/v2_final/harm_counts.csv (regime all, IDM_calibrated_AC)
+idx cond harmLR tpLR harmTree tpTree
+0 C0 11 0 8 0
+1 C1 11 0 9 0
+2 C2 6 0 4 0
+3 C3 485 0 484 0
+4 C4 473 0 468 0
+5 C5 247 0 247 0
+6 C6 414 160 455 9

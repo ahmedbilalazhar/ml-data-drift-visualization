@@ -1,0 +1,214 @@
+% ---------------------------------------------------------------
+\section{Proposed Methodology}
+\label{sec:method}
+
+\subsection{Problem Formulation}
+\label{sec:formulation}
+A binary classifier $f:\mathbb{R}^{M}\rightarrow[0,1]$ on $M$ input features is
+trained once and then frozen. It returns $p(x)=\Pr_f(Y{=}1\mid x)$, the prediction
+$\hat{y}=\mathbb{I}\{p(x)\ge 0.5\}$ and the raw confidence
+$s(x)=\max\{p(x),1-p(x)\}$. Before deployment, three disjoint labelled historical
+partitions are drawn: a training set $\mathcal{D}_{\mathrm{tr}}$, a
+correctness-calibration set $\mathcal{D}_{\mathrm{cal}}$ and a reference set
+$\mathcal{D}_{\mathrm{ref}}$. The historical reference accuracy
+$\Aref$ is the accuracy of $f$ on $\mathcal{D}_{\mathrm{ref}}$.
+After deployment, unlabelled inputs arrive in batches
+$B_t=\{x_{t,1},\dots,x_{t,n}\}$, $t=1,\dots,T$, of size $n$. The realised batch
+accuracy $A_t=\frac{1}{n}\sum_{i}\mathbb{I}\{\hat{y}_{t,i}=y_{t,i}\}$ cannot be
+computed when $B_t$ arrives, because its labels are released only after a delay of
+$d\in\mathbb{N}$ batches. A batch is \emph{harmful} when
+\begin{equation}
+H_t=\mathbb{I}\{A_t<\Aref-\delta\},\qquad \delta=0.05.
+\label{eq:harm}
+\end{equation}
+At every clock $t$ the monitor must report, from $B_t$ and the labels released so
+far, (i) whether the input distribution has changed, (ii) which features carry the
+change, (iii) an estimate $\Ahat_t$ of $A_t$ with an uncertainty statement, and
+(iv) whether $H_t=1$ is likely. Because $P(X)$ can stay fixed while $P(Y\mid X)$
+changes, (i) and (iv) are separate targets. The framework is required to keep them
+separate and to show when (iv) cannot be supported by unlabelled evidence.
+
+\subsection{Architecture Overview}
+Fig.~\ref{fig:arch} shows the \idm{} pipeline. All artefacts are fitted on
+historical data and then frozen. Two evidence channels run in parallel on each
+batch: a label-free \emph{input channel} (detection and localization) and an
+\emph{impact channel} (calibrated accuracy estimation and a harm-concern score).
+A label-release broker is the only component that holds ground truth. It
+reveals labels to a verification ledger strictly according to the delay schedule.
+An aligned evidence view shows both channels and the verified outcomes on one
+shared batch axis. It leaves a cell empty while its label is unreleased and never
+imputes the value. The numbered badges 1--6 in Fig.~\ref{fig:arch} mark the stages
+described below, and Table~\ref{tab:notation} in the appendix lists all symbols.
+
+\begin{figure*}[t]
+\centering
+\resizebox{\textwidth}{!}{\input{figures/fig_architecture}}
+\caption{\idm{} architecture. The classifier, scaler, PCA basis, isotonic
+correctness map and reference sample are fitted on historical partitions and then
+frozen (top). Each unlabelled batch feeds two independent channels. The input
+channel applies per-feature and per-PCA-coordinate Kolmogorov--Smirnov tests with Holm
+correction, an optional pairwise-correlation statistic and a feature ranking. The
+impact channel computes calibrated average confidence, a plug-in Poisson-binomial
+interval and a harm-concern score. Ground-truth labels are held by a release broker
+and the labels of source batch $b$ reach the verification ledger only when
+$b+d\le c$, where $c$ is the current clock. The aligned evidence view
+reads the ledger as of a chosen clock $c$.}
+\label{fig:arch}
+\end{figure*}
+
+\subsection{Input Channel: Detection}
+\label{sec:detection}
+Let $z=\phi(x)$ denote the standardized input. Let
+$u=W^{\top}z\in\mathbb{R}^{3}$ be its projection on the first three principal
+components, which are fitted on $\mathcal{D}_{\mathrm{tr}}$. For every original
+feature and each of the three coordinates $u_1,u_2,u_3$, indexed jointly by
+$j\in\{1,\dots,m\}$ with $m=M+3$, a two-sample
+Kolmogorov--Smirnov (KS) statistic~\cite{massey1951ks} compares $B_t$ with a frozen
+reference sample $R$ of $1{,}000$ historical rows:
+\begin{equation}
+D_{t,j}=\sup_{v}\bigl|\hat{F}_{B_t,j}(v)-\hat{F}_{R,j}(v)\bigr|.
+\end{equation}
+The $m$ resulting $p$-values $\pi_{t,j}$ are adjusted with Holm's step-down
+procedure~\cite{holm1979}: with the $p$-values sorted in ascending order,
+$\tilde{\pi}_{t,(i)}=\min\{1,\max_{l\le i}(m-l+1)\pi_{t,(l)}\}$.
+The input alarm is $a_t=\mathbb{I}\{\min_j\tilde{\pi}_{t,j}\le\alpha\}$ with
+$\alpha=0.05$. The PCA coordinates take the place of the autoencoder latent space
+proposed in Phase~2 (Section~\ref{sec:changes}). They add a small amount of joint
+evidence, but they do not reproduce a learned embedding detector such as
+DriftLens~\cite{greco2025driftlens}.
+
+Marginal tests cannot see a change that alters only feature dependence. An
+optional \emph{dependence statistic} therefore tracks the largest absolute change in
+pairwise Pearson correlation:
+\begin{equation}
+\Delta_t=\max_{i<j}\bigl|\hat{\rho}_{B_t}(i,j)-\hat{\rho}_{R}(i,j)\bigr|,
+\label{eq:dep}
+\end{equation}
+where $\hat{\rho}_{B}(i,j)$ is the sample Pearson correlation of features $i$ and $j$
+in sample $B$, and alarms when $\Delta_t>\tau_\Delta$. The threshold $\tau_\Delta$ is the empirical
+$95$th percentile of $\Delta$ over stationary development batches. The arg-max pair
+is reported as dependence evidence. It is descriptive, not causal.
+
+\subsection{Input Channel: Localization}
+Features are ranked by $D_{t,j}$ in descending order. A feature is \emph{flagged}
+only when $\tilde{\pi}_{t,j}\le\alpha$. When the set $S$ of changed features is known,
+which is the case in synthetic marginal shifts, localization is scored by
+$\mathrm{P@1}=\mathbb{I}\{r_1\in S\}$ and
+$\mathrm{R@3}=|\{r_1,r_2,r_3\}\cap S|/|S|$, where $r_k$ is the $k$-th ranked
+feature. Both scores are undefined when $S=\emptyset$, as under conditional-only or
+dependence-only change. The ranking is a description of distributional change and
+does not identify a cause.
+
+\subsection{Impact Channel: Calibrated Accuracy Estimation}
+\label{sec:impact}
+The impact channel follows the confidence-based performance estimators studied by
+Kivim\"aki et al.~\cite{kivimaki2025confidence} and the average-confidence and ATC
+literature~\cite{garg2022atc,guillory2021predicting}. It does not claim a new
+estimator. Its contribution is to run the estimator behind a release broker and to
+score it against verified harm. The raw confidence $s$ of a classifier is often
+miscalibrated~\cite{guo2017calibration}, so \idm{} fits a monotone correctness map
+$g:[0.5,1]\rightarrow[0,1]$ on $\mathcal{D}_{\mathrm{cal}}$ by isotonic
+regression~\cite{zadrozny2002transforming}:
+\begin{equation}
+g=\arg\min_{\psi\ \text{non-decreasing}}\ \sum_{i\in\mathcal{D}_{\mathrm{cal}}}
+\bigl(\mathbb{I}\{\hat{y}_i=y_i\}-\psi(s_i)\bigr)^{2}.
+\label{eq:iso}
+\end{equation}
+Equation~\eqref{eq:iso} is the only learning objective in the monitor. The frozen
+classifier is not retrained. Each prediction receives a calibrated correctness
+probability $q_{t,i}=g(s_{t,i})$. The batch accuracy estimate is the calibrated
+average confidence (AC)
+\begin{equation}
+\Ahat_t=\frac{1}{n}\sum_{i=1}^{n}q_{t,i}.
+\label{eq:ac}
+\end{equation}
+An estimator is scored by $|\Ahat_t-A_t|$ once $A_t$ has been verified.
+
+\subsection{Impact Channel: Interval and Harm Concern}
+Treating the $q_{t,i}$ as known, independent Bernoulli success probabilities gives
+a plug-in Poisson-binomial model for the number of correct predictions,
+$K_t=\sum_iZ_{t,i}$ with $Z_{t,i}\sim\mathrm{Bernoulli}(q_{t,i})$. Its probability
+mass function is computed exactly by the recursion
+$P_i(k)=(1-q_{t,i})P_{i-1}(k)+q_{t,i}P_{i-1}(k-1)$~\cite{hong2013poibin}.
+With $F_t$ the resulting distribution function, the $95\%$ plug-in interval for
+$A_t$ is $[F_t^{-1}(0.025)/n,\;F_t^{-1}(0.975)/n]$. Harm~\eqref{eq:harm} is
+evaluated in exact rational arithmetic. The largest harmful count is
+$k_{\max}=\lceil n(\Aref-\delta)\rceil-1$, and the \emph{harm-concern score} is
+\begin{equation}
+\concern_t=\Pr\nolimits_{\mathrm{plug\text{-}in}}(K_t\le k_{\max})=F_t(k_{\max}),
+\label{eq:concern}
+\end{equation}
+with a concern flag raised when $\concern_t\ge 0.95$. The interval is a model-based
+prediction interval for realised batch accuracy. It is not a distribution-free
+confidence interval. It ignores uncertainty in $g$ and in $\Aref$, and it gives no
+guarantee under arbitrary shift. The input alarm is \emph{not} required before
+$\Ahat_t$ and $\concern_t$ are computed or displayed.
+
+\subsection{Label-Release Broker and Delayed Verification}
+\label{sec:broker}
+Online feature batches carry no label field. Labels are held by a broker that
+releases the labels of batch $b$ at clock $c$ if and only if
+\begin{equation}
+b+d\le c.
+\label{eq:release}
+\end{equation}
+Each clock has two phases. Predictions and channel outputs for $B_c$ are persisted
+first, and released labels are then joined to the verification ledger. Any
+component that \emph{fits} on released labels at forecast time $t$, such as a
+recalibrator, a forecaster or an adaptive model, uses the stricter rule $b+d<t$.
+Labels from the batch being forecast therefore never enter its own estimate. The
+ledger records verified accuracy, harm and the age of the evidence. Cells that are
+still unreleased are labelled ``unresolved''. They are never zero-filled or
+back-dated.
+
+\subsection{Aligned Evidence View}
+The prototype view, an offline HTML replay, is controlled by task, seed,
+condition, model, delay, as-of clock and batch. It aligns five panels on one batch
+axis: the prospective estimate (calibrated AC with its interval, raw AC, an ATC-style
+estimate~\cite{garg2022atc} and the concern badge); scheduled verification
+(accuracy, macro-F1, verified harm and evidence age); a calibration diagnostic
+available after release; the input evidence (alarms and the minimum Holm-adjusted
+$p$); and a table of the same stream as of the selected clock. Its consistency with
+the release rule was checked automatically (Section~\ref{sec:setup-impl}). No
+analyst study was conducted.
+
+\begin{algorithm}[t]
+\caption{\idm{} monitoring loop for one stream}
+\label{alg:loop}
+\begin{algorithmic}[1]
+\Require frozen $f,\phi,W,g,R,\Aref$; delay $d$; level $\alpha$; margin $\delta$
+\For{$c=1,2,\dots,T+d$}
+  \If{$c\le T$} \Comment{phase 0: unlabelled evidence}
+    \State receive $B_c$; compute $p,\hat{y},s$; $q\gets g(s)$
+    \State $D_{c,\cdot},\pi_{c,\cdot}\gets$ KS tests on $M$ features and 3 PCA coordinates
+    \State $\tilde{\pi}\gets\textsc{Holm}(\pi_{c,\cdot})$; $a_c\gets\mathbb{I}\{\min\tilde{\pi}\le\alpha\}$
+    \State rank features by $D_{c,j}$; flag $j$ if $\tilde{\pi}_{c,j}\le\alpha$
+    \State $\Ahat_c\gets\mathrm{mean}(q)$; $F_c\gets\textsc{PoissonBinomial}(q)$
+    \State $k_{\max}\gets\lceil n(\Aref-\delta)\rceil-1$; $\concern_c\gets F_c(k_{\max})$
+    \State persist $a_c$, ranks, $\Ahat_c$, interval, $\concern_c$
+  \EndIf
+  \For{each $b$ with $b+d=c$} \Comment{phase 1: release}
+    \State broker reveals $y_{b,\cdot}$; ledger stores $A_b$, $H_b$, age $c-b$
+  \EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+Algorithm~\ref{alg:loop} summarizes one monitoring stream. Its cost is dominated by
+the $m$ KS tests, $O(mn\log n)$ per batch, and by the Poisson-binomial recursion,
+which is $O(n^{2})$ per batch for $n=500$.
+
+\subsection{Changes After Phase~2}
+\label{sec:changes}
+No instructor feedback on the Phase~2 proposal was received. The changes below come
+from the authors' own audit of the proposal against what could be identified and
+implemented. (i) The autoencoder latent anchor was replaced by a three-component PCA
+fitted on training inputs. (ii) The proposed causal feature graph was not
+implemented, and the feature evidence is reported as descriptive ranking only.
+(iii) The forecast horizon was reduced to the current batch ($h=0$) in the core
+pipeline. Prospective harm forecasting was moved to a separate study
+(Section~\ref{sec:res-forecast}). (iv) The proposed analyst study was not attempted,
+because no participant pool or ethics route existed within the course period; this
+decision was recorded before any confirmatory outcome was seen. (v) Three additions
+were made to close weaknesses found during implementation: the label-release broker,
+exact rational harm arithmetic, and the dependence statistic~\eqref{eq:dep}.

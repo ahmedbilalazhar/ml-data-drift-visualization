@@ -1,0 +1,8 @@
+% generated from results/phase3/v2_final/harm_counts.csv (v1_synthetic, C6, logistic, regime all)
+x y label pos
+9 38.64734299516908 {Calibrated interval} {west}
+51 92.02898550724638 {Point rule} {north}
+80 99.03381642512078 {ATC-style} {east}
+2 22.22222222222222 {Raw interval} {south west}
+19 12.560386473429952 {KS/PCA alarm} {west}
+15 5.555555555555555 {KS alarm} {north}

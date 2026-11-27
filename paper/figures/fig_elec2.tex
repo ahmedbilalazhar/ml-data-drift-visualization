@@ -1,0 +1,17 @@
+% Data: data/elec2.dat <- results/phase3/elec2_temporal_20261116_v2/evaluation/evaluator_batches.csv (frozen monitor).
+\begin{tikzpicture}
+\begin{axis}[
+  idm, width=\columnwidth, height=4.5cm,
+  xmin=0.5, xmax=55.5, ymin=0.4, ymax=0.95,
+  xlabel={ELEC2 monitoring batch (500 rows; batch 55 has 188)}, ylabel={batch accuracy},
+  legend style={at={(0.99,0.98)}, anchor=north east, legend columns=2},
+]
+\addplot[name path=lo, draw=none, forget plot] table[x=batch, y=lo] {data/elec2.dat};
+\addplot[name path=hi, draw=none, forget plot] table[x=batch, y=hi] {data/elec2.dat};
+\addplot[c1!18, forget plot] fill between[of=lo and hi];
+\addplot[c1, line width=1.5pt] table[x=batch, y=est] {data/elec2.dat};
+\addlegendentry{estimate + 95\% band}
+\addplot[c2, thick, mark=*, mark size=0.9pt] table[x=batch, y=acc] {data/elec2.dat};
+\addlegendentry{realised (after release)}
+\end{axis}
+\end{tikzpicture}

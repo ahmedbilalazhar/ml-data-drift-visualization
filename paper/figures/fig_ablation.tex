@@ -1,0 +1,26 @@
+% Ablation trade-offs.
+% (a) data/ablation_detector.dat <- results/phase3/dependence_extension_20261116_final_v2/{validated_summary,online_dependence_scores}.csv
+% (b) data/ablation_rules.dat    <- results/phase3/v2_final/harm_counts.csv (C6, logistic, all batches)
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=2 by 1, horizontal sep=13mm},
+  idm, width=0.52\columnwidth, height=4.8cm, xmajorgrids,
+  nodes near coords={\pgfplotspointmeta}, point meta=explicit symbolic,
+  visualization depends on={value \thisrow{pos} \as \pos},
+  every node near coord/.append style={font=\scriptsize, text=cink, anchor=\pos, inner sep=2.5pt},
+]
+\nextgroupplot[
+  title={(a) Detectors},
+  xlabel={stationary alarms / 24 batches}, ylabel={C6 onset detected (\%)},
+  xmin=0, xmax=3.2, ymin=35, ymax=115, ytick={40,60,80,100},
+]
+\draw[-{Stealth[length=2mm]}, cgray, thick, shorten >=5pt, shorten <=5pt] (axis cs:0.8333,53.33) -- (axis cs:2.3667,100);
+\addplot[only marks, mark=*, mark size=3pt, c1, fill=c1!70] table[x=x, y=y, meta=label] {data/ablation_detector.dat};
+\nextgroupplot[
+  title={(b) Harm rules on C6},
+  xlabel={false flags (of 306)}, ylabel={harmful batches flagged (\%)},
+  xmin=-6, xmax=100, ymin=-10, ymax=112, ytick={0,25,50,75,100},
+]
+\addplot[only marks, mark=diamond*, mark size=3.2pt, c2, fill=c2!70] table[x=x, y=y, meta=label] {data/ablation_rules.dat};
+\end{groupplot}
+\end{tikzpicture}

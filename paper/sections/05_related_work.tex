@@ -1,0 +1,105 @@
+% ---------------------------------------------------------------
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Unsupervised Drift Detection}
+Two-sample tests are the standard label-free monitor. Univariate KS tests with a
+multiple-testing correction remain strong baselines for tabular shift
+detection~\cite{rabanser2019failing}. Kernel tests such as MMD target multivariate
+differences~\cite{gretton2012kernel}. ADWIN maintains an adaptive window over a
+stream of real values, such as errors, and detects changes in their mean~\cite{bifet2007adwin}.
+ADWIN-U extends adaptive windowing to the unsupervised setting~\cite{assis2025adwinu}.
+DriftLens models deep embeddings per label with Gaussians and measures their Fréchet
+distance from a reference window, which gives real-time detection and drift curves on
+unstructured data~\cite{greco2025driftlens,greco2024driftlensdemo}. Recent benchmarks
+show that unsupervised detectors behave very differently on real streams, where onset
+truth is rarely available~\cite{lukats2025benchmark,souza2020challenges,cerqueira2026framework}.
+Gower-Winter et al.\ argue that window-based detection is ill-posed without
+assumptions~\cite{gowerwinter2026window}. Uncertainty-based, label-free and conformal detectors continue to be
+proposed~\cite{lu2025pudd,tan2025flexible,eliades2025conformal}.
+\emph{Strength:} they need no labels, scale to many features and come with
+calibrated false-alarm control. \emph{Limitation for this setting:} they report
+alarms, and whether an alarm coincides with lost accuracy lies outside their
+evaluation target.
+
+\subsection{Drift Localization and Explanation}
+Hinder et al.\ survey how drift can be located and explained and give model-based
+explanations of drift~\cite{hinder2024surveyA,hinder2024surveyB,hinder2023modelbased}.
+Regional drift detection localizes change in feature space~\cite{liu2017regional}.
+The domino drift effect (DDE) infers drift in unmonitored features from correlated,
+already-drifting monitored features, which saves per-feature detectors in high
+dimension~\cite{szucs2025dde}. Causal explanations of drift aim at actionable
+attribution~\cite{komnick2026causal}. In medical imaging, shift identification is used
+to support root-cause analysis~\cite{roschewitz2026shiftid}.
+\emph{Strength:} they turn an alarm into an inspectable hypothesis and, in the case of
+DDE, cut monitoring cost in high dimension. \emph{Limitation:} explanations describe
+distributional change. They are seldom tested on whether the explained change caused
+the loss of performance, and they cannot address changes that leave $P(X)$ untouched.
+
+\subsection{Performance Estimation without Labels}
+Average confidence, the ATC threshold estimator and difference-of-confidence estimate
+accuracy under shift from unlabelled data~\cite{garg2022atc,guillory2021predicting}.
+Agreement-on-the-line estimates accuracy from the agreement between
+models~\cite{baek2022agreement}. Kivimäki et al.\ study confidence-based estimators for
+model monitoring~\cite{kivimaki2025confidence}. Label-shift correction assumes a fixed
+$P(X\mid Y)$~\cite{lipton2018detecting}. All of these depend on calibration, which
+often degrades under shift~\cite{guo2017calibration,zadrozny2002transforming,platt2000probabilities}.
+Performance-aware detectors~\cite{bayram2022concept} and risk monitors cover the case
+where labels arrive eventually~\cite{timans2025risk,zhang2026pprm,pouget2025suitability}.
+\emph{Strength:} they target accuracy, the quantity operators care about, rather than
+a distance between distributions. \emph{Limitation:} they are usually scored offline
+on a fixed target set, and the time at which labels are released is rarely modelled.
+
+\subsection{Delayed Labels and Adaptation}
+Evaluating stream learners under delayed labels changes their measured
+performance~\cite{grzenda2020delayed}, and some changes are undetectable until labels
+arrive~\cite{zliobaite2010change}. PRODEM targets degradation detection with delayed
+labels in fraud prediction~\cite{sethi2026prodem}. Proactive Hoeffding trees anticipate
+incremental drift so that the model adapts before it degrades~\cite{guerrerocano2026proactive}.
+Adaptation surveys organise reactive and proactive strategies~\cite{gama2014survey,lu2019learning}.
+\emph{Strength:} they measure accuracy directly over time. \emph{Limitation:}
+adaptation studies typically assume immediate (prequential) labels, and they rarely
+compare update policies at matched label and refit budgets.
+
+\subsection{Visual Analytics for Drift}
+DriftVis~\cite{yang2020driftvis} and ConceptExplorer~\cite{wang2020conceptexplorer}
+support interactive diagnosis of concept drift. Coordinated multiple views are an
+established design for linking evidence across panels~\cite{roberts2007cmv}, and visual
+analytics for deep learning has been surveyed~\cite{hohman2019visual}. Drift
+visualization for specific learners has also been proposed~\cite{galmeanu2024svmviz}.
+\emph{Strength:} they make drift legible to analysts. \emph{Limitation:} they are
+evaluated mainly through case studies, and their displays rarely encode which outcomes
+were still unknown at the time of a decision.
+
+\subsection{Positioning}
+Table~\ref{tab:related} summarises representative studies along the dimensions that
+matter here. \idm{} does not propose a new detector. Its novelty lies in the
+\emph{combination}: label-free input evidence and calibrated impact evidence are scored
+against verified harm, under an enforced release delay, on streams where the
+conditional law changes without any input change.
+
+\begin{table*}[t]
+\centering
+\caption{Representative related studies organised by theme. \checkmark: addressed; --: not addressed in the evaluated setting.}
+\label{tab:related}
+\setlength{\tabcolsep}{3pt}
+\footnotesize
+\begin{tabular}{L{3.4cm}L{2.3cm}ccccL{4.3cm}}
+\toprule
+Study & Theme & Label-free & Delay modelled & Harm-linked & Explanation / view & Limitation for delayed-label harm monitoring \\
+\midrule
+Rabanser et al.~\cite{rabanser2019failing} & shift detection & \checkmark & -- & -- & -- & alarms not scored against accuracy loss \\
+Greco et al.\ (DriftLens)~\cite{greco2025driftlens} & embedding drift & \checkmark & -- & -- & \checkmark & deep unstructured data; label-conditioned baselines \\
+Lukats et al.~\cite{lukats2025benchmark} & detector benchmark & \checkmark & -- & -- & -- & real streams lack onset and harm truth \\
+Sz\H{u}cs \& N\'emeth (DDE)~\cite{szucs2025dde} & drift localization & \checkmark & -- & -- & \checkmark & needs co-drifting correlated features \\
+Hinder et al.~\cite{hinder2024surveyB} & drift explanation & \checkmark & -- & -- & \checkmark & descriptive, not causal \\
+Garg et al.\ (ATC)~\cite{garg2022atc} & accuracy estimation & \checkmark & -- & \checkmark & -- & offline target sets; calibration-dependent \\
+Kivim\"aki et al.~\cite{kivimaki2025confidence} & accuracy estimation & \checkmark & -- & \checkmark & -- & assumes calibration transfers under shift \\
+Grzenda et al.~\cite{grzenda2020delayed} & delayed evaluation & -- & \checkmark & \checkmark & -- & evaluation protocol, not a monitor \\
+Guerrero Cano et al.~\cite{guerrerocano2026proactive} & proactive adaptation & -- & -- & \checkmark & -- & prequential labels; incremental drift \\
+Yang et al.\ (DriftVis)~\cite{yang2020driftvis} & visual analytics & \checkmark & -- & -- & \checkmark & case-study evaluation \\
+\midrule
+\textbf{\idm{} (this work)} & monitoring + evaluation & \checkmark & \checkmark & \checkmark & \checkmark & synthetic-heavy; no analyst study \\
+\bottomrule
+\end{tabular}
+\end{table*}

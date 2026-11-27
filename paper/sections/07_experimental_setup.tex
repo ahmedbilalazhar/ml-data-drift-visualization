@@ -1,0 +1,121 @@
+% ---------------------------------------------------------------
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Datasets and Streams}
+Table~\ref{tab:data} lists the streams. In the synthetic tasks the change events and
+the harm are known by construction. The natural streams test whether the pipeline's
+behaviour carries over to real data. Natural streams have no onset truth, so alarm
+recall is not measured on them.
+
+\begin{table}[t]
+\centering
+\caption{Evaluation streams. Hist.: train / calibration / reference rows fitted before monitoring. Batches: monitored batches per stream.}
+\label{tab:data}
+\setlength{\tabcolsep}{3pt}
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.05cm}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.65cm}>{\raggedright\arraybackslash}p{2.2cm}}
+\toprule
+Stream & Size & Hist. & Monitoring \\
+\midrule
+Synthetic core (C0--C6) & 8 features, binary; 30 seeds/cond. & 4,000 / 2,000 / 2,000 & 24 batches $\times$ 500; onset at batch 9 \\
+XOR (X0--X4) & 8 features, binary; 30 seeds/cond. & 4,000 / 2,000 / 2,000 & 24 $\times$ 500 \\
+Large-seed replication & both tasks; 1,500 seeds/task & as above & 24 $\times$ 500 \\
+Extended tasks (linear, XOR, five-region) & 8 features; 30 seeds & 4,000 / 2,000 / 2,000 & 96 $\times$ 500 \\
+UCI gas sensor~\cite{vergara2012chemical,vergara2012dataset} & 13,910 rows, 128 features, 6 classes & 267 / 89 / 89 (cohort 1) & 9 acquisition cohorts (161--3,613 rows) \\
+ELEC2~\cite{openml151,gama2004learning} & 45,312 rows, 6 inputs, binary & 10,800 / 3,662 / 3,662 & 55 batches (last 188 rows) \\
+NOAA weather~\cite{noaa_gsod,elwell2011incremental} & 18,210 days (1949--1999), 8 inputs, rain/no rain & 3,642 / 1,821 / 1,821 & 21 $\times$ 500 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Synthetic core.} Eight independent standard-normal innovations
+$\varepsilon_0,\dots,\varepsilon_7$ generate the inputs, with $x_j=\varepsilon_j$ except
+$x_1=0.3\varepsilon_0+\sqrt{1-0.3^2}\,\varepsilon_1$. The true label law is
+$\eta(x)=P(Y{=}1\mid x)=\sigma(1.2x_0-0.9x_1+0.6x_2)$, where $\sigma(v)=1/(1+e^{-v})$. Each stream has 12,000 monitoring rows,
+and the change begins at row 4,001 (batch 9). The seven conditions are as follows.
+C0 is stationary. C1 is an abrupt $+1.5$ shift of the irrelevant $x_7$. C2 is a gradual
+$+1.5$ shift of the relevant $x_0$ over batches 9--12. C3 reverses the label law
+abruptly ($\eta\rightarrow1-\eta$) and C4 reverses it gradually. C5 reverses it during
+batches 9--16 and then restores it. C6 raises $\mathrm{corr}(x_0,x_1)$ from 0.3 to 0.9
+while keeping every marginal distribution fixed. C3--C5 leave $P(X)$ unchanged
+\emph{by construction}. A second family (X0--X4) uses the concept
+$y=\mathbb{I}\{(x_0>0)\oplus(x_1>0)\}$ with 10\% label noise. Its conditions are an
+irrelevant shift (X1), a relevant shift (X2), a concept complement (X3) and an increase
+in label noise to 35\% (X4). The core run contains 360 streams, 720 model streams,
+17,280 monitored batches and 4.32 million monitoring rows.
+Extension studies use three further 96-batch tasks (linear, XOR and a five-region
+mixture). On these tasks they test seasonality, dependence localization, audit
+policies and adaptation.
+
+\textbf{Natural streams.} For UCI gas sensor array drift (dataset 224), acquisition
+batch~1 is the source. It is split 60/20/20 by stratified sampling, and batches 2--10
+are monitored as whole cohorts. ELEC2 (OpenML 151) is not monotone in its date field.
+Rows were therefore re-ordered by normalized date, then by the source position of each
+(date, weekday) group, then by period. Eleven tied date values make this order
+approximate. NOAA uses the Global Summary of the Day for one station (Offutt AFB,
+Nebraska) from 1949 to 1999. Days with missing predictors are dropped (8 rows), the
+target is same-day rain or drizzle, and the data are split chronologically 20/10/10/60.
+
+\subsection{Preprocessing and Models}
+Scaling, PCA and clustering are fitted on training rows only. The main classifier is
+logistic regression ($C=1$, \texttt{max\_iter} 500 on the synthetic tasks, 1,000 on
+ELEC2 and 2,000 on NOAA and UCI). A fixed shallow tree (Gini, depth 6, minimum leaf 25)
+tests sensitivity to the learner. No hyperparameter search was performed. Correctness
+calibration uses isotonic regression on the calibration partition. On UCI the
+calibration partition has only 89 rows, so a one-dimensional logistic correctness map
+is used instead. The KS family has 11 tests on the synthetic tasks, 9 on ELEC2, 11 on
+NOAA and 131 on UCI (128 features plus 3 PCA coordinates), each Holm-corrected at
+$\alpha=0.05$. The harm margin is $\delta=0.05$, and the concern flag fires at
+$\kappa_t\ge0.95$.
+
+\subsection{Label Delays and Splits}
+Synthetic streams are replayed with delays $d\in\{0,5,20\}$ batches, with an
+availability-only check at $d=100$. ELEC2 uses $\{0,5,20\}$ and UCI
+$\{0,1,2\}$ cohorts. All delay settings share identical cached predictions, so a
+delay changes only when evidence becomes available, never the frozen estimator's
+output. Development seeds, which were used to set thresholds such as $\tau_\Delta$,
+are disjoint from evaluation seeds. The core synthetic evaluation seeds are 100--129
+and 200--229, and the replication uses seeds 1,000--2,499 per task.
+
+\subsection{Baselines}
+All baselines are re-implemented on identical streams and cached predictions:
+(i) raw average confidence without calibration; (ii) an ATC-style threshold
+estimator~\cite{garg2022atc}, with the threshold chosen on the calibration partition;
+(iii) a constant estimator equal to $\Aref$; (iv) a point rule that flags when
+$\Aref-\Ahat_t>\delta$; (v) KS on original features only, without PCA;
+(vi) KS/PCA without the dependence statistic; (vii) the canonical River ADWIN detector
+(confidence parameter $\delta_{\mathrm{A}}=0.002$) on released errors in the label-audit study~\cite{bifet2007adwin};
+(viii) a frozen model versus cumulative and trigger-based refitting; and (ix) time-only,
+prevalence and last-released-harm forecasters. None of these is a reproduction of a
+base paper (Section~\ref{sec:comparison}).
+
+\subsection{Evaluation Metrics and Statistics}
+\emph{Detection:} the onset is matched if any input alarm fires in batches 9--12.
+Stationary burden is reported as null alerts per 1,000 batches.
+\emph{Localization:} P@1 and R@3 (Section~\ref{sec:method}).
+\emph{Estimation:} batch MAE $|\Ahat_t-A_t|$, signed bias, interval coverage and
+width, correctness Brier score and 10-bin ECE.
+\emph{Harm:} TP/FP/FN/TN of the concern flag against $H_t$, recall and the fraction
+of harmful batches left unflagged.
+\emph{Forecasting:} Brier score, ROC AUC and average precision.
+Uncertainty is estimated by a paired seed bootstrap (2,000 replicates unless stated
+otherwise), which resamples complete seed vectors~\cite{efron1993bootstrap}. Batches,
+delays, models and ablation arms are never treated as independent samples. Intervals
+are percentile 95\% intervals. The audit and adaptation studies report simultaneous
+max-$|t|$ intervals over their families of contrasts.
+
+\subsection{Implementation and Environment}
+\label{sec:setup-impl}
+The framework is implemented in Python~3.13.5 with NumPy~2.1.3, SciPy~1.17.0,
+scikit-learn~1.8.0~\cite{pedregosa2011scikit} and pandas~2.3.3, using a single
+thread. ADWIN uses River~0.27.0. Some NOAA uncertainty and selective-label analyses
+ran under Python~3.14.0. The project's implementation plan records the development
+machine as an Intel Core i7-10610U laptop (4 cores, about 32\,GB RAM, no GPU); the run
+environment files do not record the hardware. The core synthetic run took 1,091\,s,
+its clean rerun 1,197\,s, and the 1,500-seed replication 22,273\,s. The clean rerun
+reproduced all 741 scientific CSV files (6,768,744 cells) and all 1,140 compressed array
+files exactly, with timing columns excluded. An automated check confirmed
+that the aligned view showed no outcome before its release clock, over 488,880
+release-boundary comparisons.

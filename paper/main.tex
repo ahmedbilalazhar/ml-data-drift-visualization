@@ -1,0 +1,74 @@
+% IDM-Viz research paper -- main file (IEEEtran journal template)
+\documentclass[journal]{IEEEtran}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,shapes.geometric,shapes.misc,calc,shadows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots,fillbetween,colormaps}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+% ---------------------------------------------------------------- notation
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\Aref}{A_{\mathrm{ref}}}
+\newcommand{\Ahat}{\hat{A}}
+\newcommand{\concern}{\kappa}
+\newcommand{\idm}{IDM-Viz}
+
+% ---------------------------------------------------------------- house style for all figures
+% Okabe--Ito colour-blind-safe palette
+\definecolor{c1}{HTML}{0072B2}   % blue
+\definecolor{c2}{HTML}{D55E00}   % vermillion
+\definecolor{c3}{HTML}{009E73}   % bluish green
+\definecolor{c4}{HTML}{CC79A7}   % reddish purple
+\definecolor{c5}{HTML}{E69F00}   % orange
+\definecolor{c6}{HTML}{56B4E9}   % sky blue
+\definecolor{cgray}{HTML}{6E6E6E}
+\definecolor{cink}{HTML}{1F2933}
+\pgfplotsset{
+  idm/.style={
+    axis lines=left, axis line style={cink!70, line width=0.5pt},
+    tick style={cink!70, line width=0.4pt}, tick align=outside, major tick length=2pt,
+    every tick label/.append style={font=\scriptsize, text=cink},
+    label style={font=\footnotesize, text=cink},
+    title style={font=\footnotesize\bfseries, text=cink, yshift=-2pt},
+    ymajorgrids, grid style={cink!9, line width=0.35pt},
+    legend style={font=\scriptsize, draw=cink!20, fill=white, fill opacity=0.92, text opacity=1, rounded corners=1pt, inner sep=1.5pt},
+    legend cell align=left,
+    every axis plot/.append style={line join=round},
+  },
+}
+
+\begin{document}
+
+\input{sections/01_title}
+\input{sections/02_abstract}
+\input{sections/03_keywords}
+\input{sections/04_introduction}
+\input{sections/05_related_work}
+\input{sections/06_methodology}
+\input{sections/07_experimental_setup}
+\input{sections/08_results}
+\input{sections/09_comparison}
+\input{sections/10_ablation}
+\input{sections/11_discussion}
+\input{sections/12_conclusion}
+\input{sections/13_declarations}
+\input{sections/14_references}
+
+\appendices
+\input{sections/15_appendix}
+
+\end{document}

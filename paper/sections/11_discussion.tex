@@ -1,0 +1,77 @@
+% ---------------------------------------------------------------
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Why the Framework Behaves as It Does}
+The results follow from one identifiability fact. Unlabelled inputs constrain $P(X)$,
+and they constrain accuracy only through assumptions that tie $P(Y\mid X)$ to the
+source law. Calibrated average confidence makes this assumption explicit. Its error
+stays small while the source correctness map holds (C0--C2 and C6), and it fails
+silently when the map breaks, either because the label law changes (C3--C5) or because
+the sensors drift beyond the calibration data (UCI). The input channel fails in the
+opposite way: it alarms on harmless change (C1, seasonality) and saturates on natural
+streams (every ELEC2 and NOAA batch). Keeping the two channels separate and scoring
+both against verified harm exposes these complementary blind spots. Released labels
+are the only evidence that resolves them, and the delay sets how soon they arrive.
+
+\subsection{Practical Implications and Strengths}
+Four recommendations follow. (i) An input alarm should not be presented as evidence
+of harm, and the absence of an alarm should not be read as safety; the view should
+state ``performance unknown'' until labels are released. (ii) Some labels should be
+acquired at random with known inclusion probabilities, which removes the bias of
+confidence-targeted labelling (Appendix~\ref{app:extra}). (iii) Released labels should
+recalibrate the correctness map, and the benefit should be monitored rather than
+assumed, since it held on UCI but not on ELEC2. (iv) Detectors should be tuned for
+their stationary alarm burden as well as their sensitivity. The study's main strength
+is that every channel is scored against verified harm under an enforced release
+clock, with replication at 1,500 seeds, an exact clean rerun, and an internal baseline
+for every component.
+
+\subsection{Limitations and Failure Cases}
+Most evidence comes from designed laws with eight features and two learners; more
+seeds narrow uncertainty within these laws but do not make them representative of
+other domains. Three natural streams with one split protocol each cannot support
+general transfer claims. ELEC2's order is approximate, and UCI's release schedule is
+simulated at the level of whole cohorts. The Poisson-binomial interval treats the
+calibrated probabilities as known and independent; it covered only 9/21 NOAA batches,
+23/55 ELEC2 batches and 0/9 UCI cohorts, so it is not a confidence guarantee. Feature
+rankings and correlation pairs describe change and do not identify its cause, and the
+aligned view was not evaluated with users. The documented failure cases are
+conditional-only change, calibration transfer under sensor drift, ineffective
+recalibration on ELEC2, alarm saturation on natural streams, and a concern score that
+ranks future harm worse than chance on a held-out law (AUC 0.465).
+
+\subsection{Threats to Validity}
+\emph{Internal:} several extension hypotheses were formed after the first synthetic
+results, so those extensions are exploratory, and several studies share seed banks
+and cached predictions. \emph{Construct:} the harm rule uses a fixed margin
+$\delta=0.05$ against a model-specific reference, so harm counts are not comparable
+across learners. \emph{External:} the tabular, low-dimensional setting differs from
+the deep setting of DriftLens and the high-dimensional, correlated setting of DDE.
+\emph{Statistical conclusion:} intervals come from seed bootstraps; batches within a
+stream are serially dependent and are never treated as independent units.
+
+\subsection{Were the Research Gap and Objectives Met?}
+Table~\ref{tab:rq} maps the Phase~2 research questions to the evidence. The
+\emph{empirical} gap was met. The combination of input evidence, feature evidence and
+calibrated impact was evaluated against verified harm under enforced delays, and its
+failure modes were quantified. The \emph{decision-support} part of the gap was not met,
+because no analyst study was run.
+
+\begin{table}[t]
+\centering
+\caption{Status of the Phase~2 research questions.}
+\label{tab:rq}
+\setlength{\tabcolsep}{3pt}
+\footnotesize
+\begin{tabular}{L{3.2cm}L{1.15cm}L{3.6cm}}
+\toprule
+Research question & Status & Evidence and boundary \\
+\midrule
+RQ1: Does calibrated impact anticipate harm better than drift scores under delay? & partial & yes when $P(Y|X)$ is stable; no under conditional-only change or sensor drift; forecasting gains only on known laws \\
+RQ2: Does combined evidence localize changes better? & partial & marginal features P@1 1.0 (C1) and 0.988 (C2); dependence pair 30/30; cluster regions near chance \\
+RQ3: Do coordinated views improve analyst decisions? & not tested & view implemented and leak-checked; no users \\
+RQ4: Do findings transfer across regimes and streams? & partial & two synthetic families, three natural streams; transfer not established \\
+\bottomrule
+\end{tabular}
+\end{table}

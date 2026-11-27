@@ -1,0 +1,27 @@
+% Qualitative example (vector redraw of the evidence-replay view state: seed 100, C3, logistic, delay 5, as-of clock 16).
+% Data: data/case_c3.dat <- results/phase3/v2_final/predictions/v1_synthetic_100_C3_logistic_online.csv
+%       and results/phase3/v2_final/released_verification.csv. Values cross-checked against the HTML replay view.
+\begin{tikzpicture}
+\begin{axis}[
+  idm, width=\columnwidth, height=5.0cm,
+  xmin=0.5, xmax=16.5, ymin=0.15, ymax=0.9,
+  xlabel={batch $b$ (view as of clock $c=16$, delay $d=5$)}, ylabel={batch accuracy},
+  xtick={1,...,16}, unbounded coords=jump,
+  legend style={at={(0.5,-0.34)}, anchor=north, legend columns=2},
+]
+\fill[cink!8] (axis cs:11.5,0.15) rectangle (axis cs:16.5,0.9);
+\node[font=\scriptsize, align=center, text=cink!80] at (axis cs:14,0.45) {labels not yet\\released:\\\textbf{unresolved}};
+\draw[c2!60, dashed, thick] (axis cs:8.5,0.15) -- (axis cs:8.5,0.9);
+\node[font=\scriptsize\bfseries, text=c2, anchor=north west] at (axis cs:8.6,0.89) {onset};
+\addplot[name path=lo, draw=none, forget plot] table[x=batch, y=lo] {data/case_c3.dat};
+\addplot[name path=hi, draw=none, forget plot] table[x=batch, y=hi] {data/case_c3.dat};
+\addplot[c1!18, forget plot] fill between[of=lo and hi];
+\addplot[c1, line width=1.5pt, mark=*, mark size=1pt] table[x=batch, y=est] {data/case_c3.dat};
+\addlegendentry{estimate + 95\% band ($\kappa_t<0.01$)}
+\addplot[c2, thick, mark=square*, mark size=1.3pt] table[x=batch, y=acc] {data/case_c3.dat};
+\addlegendentry{released accuracy ($b+d\le c$)}
+\addplot[only marks, mark=triangle*, mark size=2.6pt, c3] coordinates {(6,0.81)};
+\addlegendentry{input alarm (pre-onset, false)}
+\node[draw=c2, fill=white, rounded corners=1pt, font=\scriptsize, align=left, inner sep=2pt, anchor=south west] at (axis cs:1.2,0.2) {batch 10: est.\ 0.731, released 0.254;\\no input alarm, no concern flag};
+\end{axis}
+\end{tikzpicture}

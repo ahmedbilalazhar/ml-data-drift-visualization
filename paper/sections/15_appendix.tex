@@ -1,0 +1,99 @@
+% ---------------------------------------------------------------
+\section{Notation}
+\begin{table}[h]
+\centering
+\caption{Notation.}
+\label{tab:notation}
+\footnotesize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{2.6cm}p{5.8cm}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$f$, $p(x)$, $\hat y$, $s(x)$ & frozen classifier, class-1 probability, prediction, raw confidence \\
+$B_t$, $n$, $T$ & monitored batch, batch size (500), number of batches \\
+$A_t$, $\Aref$ & realised batch accuracy, historical reference accuracy \\
+$H_t$, $\delta$ & harm indicator, harm margin (0.05) \\
+$g$, $q_{t,i}$, $\Ahat_t$ & isotonic correctness map, calibrated correctness, calibrated AC \\
+$K_t$, $F_t$, $k_{\max}$, $\kappa_t$ & Poisson-binomial count, its CDF, largest harmful count, concern score \\
+$M$, $m$ & number of input features, number of KS tests ($M+3$) \\
+$D_{t,j}$, $\pi_{t,j}$, $\tilde\pi_{t,j}$ & KS statistic, its $p$-value, Holm-adjusted $p$-value \\
+$a_t$, $\alpha$ & input alarm, test level (0.05) \\
+$\phi$, $W$, $u=(u_1,u_2,u_3)$, $R$ & scaler, PCA basis, PCA coordinates, KS reference sample \\
+$\hat\rho_B(i,j)$ & sample Pearson correlation of features $i,j$ in sample $B$ \\
+$\sigma(\cdot)$, $\eta(x)$ & logistic function $1/(1+e^{-v})$; true label law $P(Y{=}1\mid x)$ \\
+$\mathcal{D}_{\mathrm{tr}}$, $\mathcal{D}_{\mathrm{cal}}$, $\mathcal{D}_{\mathrm{ref}}$ & training, correctness-calibration and reference partitions \\
+$Z_{t,i}$ & plug-in Bernoulli correctness indicator of row $i$ in batch $t$ \\
+$S$, $r_k$ & set of changed features, $k$-th ranked feature \\
+$\delta_{\mathrm{A}}$ & ADWIN confidence parameter (0.002) \\
+$\Delta_t$, $\tau_\Delta$ & max correlation change, its threshold \\
+$d$, $b$, $c$ & label delay, source batch, clock \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Reproducibility Details}
+\begin{table}[h]
+\centering
+\caption{Seeds and run scale. Development seeds are disjoint from evaluation seeds.}
+\label{tab:repro}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{2.6cm}p{2.5cm}p{2.7cm}}
+\toprule
+Study & Evaluation seeds & Development seeds / notes \\
+\midrule
+Core synthetic (C0--C6) & 100--129 & 90001--90005 \\
+XOR family (X0--X4) & 200--229 & 190001--190005 \\
+Large-seed replication & 1000--2499 per task & 990001--990005; 22,273\,s \\
+Dependence extension & 930100--930129 & threshold from 930000--930029 \\
+Harm forecast & 950100--950129 (held out) & trained on 950000--950029 \\
+Adaptation (cumulative) & 300--329 & 290001--290005 \\
+Extended 96-batch tasks & 73116201--73116230 & shared by several audits \\
+Capacity confirmation & 73116401--73116410 & independent seed bank \\
+UCI split sensitivity & 420001--420006 & stratified splits of cohort 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Bootstrap intervals use 2,000 paired seed replicates (bootstrap generator seed 7312026)
+unless stated otherwise. The seasonal study used 10,000 replicates, the selective-label
+audit 5,000 and the trigger audit 5,000 with max-$|t|$ adjustment over 18 contrasts.
+Each run directory contains a protocol lock with its inputs, seeds, software versions
+and the SHA-256 checksums of its source data. To regenerate the paper's tables and
+plot data, run \texttt{node scripts/build\_tables.mjs} in \texttt{paper/}.
+
+\section{Additional Results}
+\label{app:extra}
+
+\input{tables/tab_ablation}
+\input{tables/tab_largeseed}
+\input{tables/tab_seasonal}
+\input{tables/tab_extforecast}
+
+Table~\ref{tab:ablation} lists every ablation of Section~\ref{sec:ablation}. Table~\ref{tab:largeseed} gives the 1,500-seed replication and Table~\ref{tab:seasonal}
+the nuisance-seasonality study summarised in Section~\ref{sec:res-robust}.
+Table~\ref{tab:extforecast} complements Section~\ref{sec:res-forecast}. At UCI delay 5
+no released label exists yet, so the released-label methods fall back to the
+historical reference. On NOAA, the historical constant beats the frozen monitor at
+every delay.
+
+\textbf{Selective labels.} When labels are acquired only for the least confident 10\%
+of each NOAA batch, the naive accuracy of the labelled rows is 0.547, against a stream
+accuracy of 0.751 (error $-0.204$). Adding a random audit with known inclusion
+probabilities and a Horvitz--Thompson estimator removes the bias (+0.0015), and its
+95\% interval covers the truth in 95.2\% of 1,000 design replicates. Targeted labels
+alone cannot identify population accuracy.
+
+\textbf{Label-audit policies.} Under an equal label budget, no allocation policy
+(input-driven, concern-driven, their conjunction or disjunction, or
+released-error-driven) reliably verified more harmful episodes than uniform auditing.
+Averaged over conditions, the largest gain over uniform was $+0.011$ [0.000, 0.033]
+episodes per stream, and most contrasts were negative. For example, under a hard cap
+at delay 0 the input-driven policy verified 0.427 [0.394, 0.463] fewer episodes.
+Isolated exceptions occur in single cells: on C6 with a two-cohort budget at delay 0,
+the concern-driven policy gained $+0.200$ [0.067, 0.333]. A canonical ADWIN detector on
+released errors never fired under the hard cap, in 0 of 2,520 policy cells across
+four delays. Its own audits starved it of the errors it needs to detect a change, a
+feedback deadlock. A second scheduled probe broke the deadlock, but at a higher audit
+cost.

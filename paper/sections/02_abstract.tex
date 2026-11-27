@@ -1,0 +1,22 @@
+% ---------------------------------------------------------------
+\begin{abstract}
+Deployed classifiers are usually monitored through input drift tests, while the labels
+that reveal actual harm arrive late. Existing detectors and drift visualizations rarely
+test whether an alarm reflects lost accuracy, or when labels arrive. This paper presents \idm{}, a framework that keeps a
+label-free input channel (Holm-corrected Kolmogorov--Smirnov tests, a correlation-change
+statistic and feature ranking) separate from an impact channel (isotonic-calibrated
+average confidence with a Poisson-binomial interval and a harm-concern score). A broker
+releases ground truth only after a set delay. The framework was evaluated on 360 controlled synthetic
+streams (4.32 million rows), a 1,500-seed replication and three natural streams (UCI
+gas sensor, ELEC2, NOAA weather). Marginal shifts were detected in 30/30 seeds. When
+only $P(Y\mid X)$ changed, none of 1,205 harmful batches received a concern flag, and
+1,140 of them received no input alarm either. After onset, mean estimated accuracy was
+0.723 against a realised 0.370. The correlation statistic detected a dependence-only
+change in 30/30 seeds versus 16/30 for the KS tests (+46.7 points). Combined with KS,
+however, it raised stationary alarms from 0.83 to 2.37 per 24 batches. Recalibration on
+released labels cut gas-sensor estimation error by 68.9\% (MAE 0.545 to 0.169), but did
+not help on ELEC2 (0.059 to 0.063). Monitor features lowered the Brier score of a harm
+forecaster by 27.9\% over a time-only model on known laws. On a held-out law, time alone
+kept the highest AUC. Input drift alarms are therefore not reliable harm signals, and
+until labels are released some harm cannot be detected from unlabelled evidence.
+\end{abstract}

@@ -1,0 +1,77 @@
+% ---------------------------------------------------------------
+\section{Introduction}
+\label{sec:intro}
+
+\IEEEPARstart{M}{achine-learning} models are trained on historical data and then used
+on data that keep changing. When the joint distribution $P(X,Y)$ moves away from the
+training distribution, accuracy can fall without any visible error~\cite{gama2014survey,lu2019learning,webb2016characterizing}.
+Practitioners usually respond by monitoring the model's \emph{inputs}: a
+two-sample test compares a recent window with a reference window, and an alarm is
+raised when the difference is significant~\cite{rabanser2019failing,gretton2012kernel,lukats2025benchmark}.
+Monitoring inputs is attractive because labels are expensive and often arrive days or
+weeks after the prediction is made~\cite{grzenda2020delayed,zliobaite2010change}.
+
+Input monitoring answers a narrower question than the one operators need. A shift in
+an irrelevant feature or a seasonal fluctuation can trigger an alarm while accuracy is
+unchanged. A change confined to the labelling rule $P(Y\mid X)$ can destroy accuracy
+without any change in the inputs. In that case accuracy is not identifiable from
+unlabelled data alone~\cite{bayram2022concept,lipton2018detecting}. Confidence-based
+estimators of accuracy~\cite{garg2022atc,guillory2021predicting,kivimaki2025confidence}
+and drift explainers~\cite{hinder2024surveyB,szucs2025dde} add useful evidence, but
+each is usually evaluated in isolation. Visual-analytics systems for drift~\cite{yang2020driftvis,wang2020conceptexplorer}
+display that evidence but are rarely scored against verified harm. Their displays also
+seldom show which outcomes were still unknown when a decision was made.
+
+\textbf{Research gap.} No study known to the authors evaluates, \emph{in one
+label-safe pipeline}, how input alarms, feature-level evidence and calibrated accuracy
+estimates relate to verified model harm while labels arrive with an explicit delay.
+None also reports where this combination fails. The gap is empirical as well as
+architectural. Most evaluations let the monitor (or the evaluator) see labels
+earlier than a deployed system could, and they report detection rates without
+reporting the harm that went unflagged.
+
+This paper closes that gap with \idm{} (Impact-aware Drift Monitoring with Visual
+explanation) and an evaluation protocol whose settings were locked before each run. The contributions are:
+\begin{itemize}
+  \item A label-safe architecture that separates label-free input evidence from
+  calibrated impact evidence and releases ground truth only through a delay-enforcing
+  broker (Section~\ref{sec:method}).
+  \item A controlled benchmark with known change type and known harm, covering two
+  learners, three delays and a 1,500-seed replication (Sections~\ref{sec:setup}--\ref{sec:results}).
+  \item Quantified failure modes: under conditional-only change none of 1,205 harmful
+  batches is flagged, and closing the dependence blind spot nearly triples false
+  alarms (Sections~\ref{sec:results} and~\ref{sec:ablation}).
+  \item Evidence from three natural streams and a prospective harm forecaster on where
+  delayed labels help and where they do not (Section~\ref{sec:results}).
+  \item An aligned evidence view and a fully traceable, rerun-verified artefact
+  (Sections~\ref{sec:method} and~\ref{sec:decl}).
+\end{itemize}
+
+The remainder of the paper is organised as follows.
+Section~\ref{sec:related} reviews related work by theme. Section~\ref{sec:method}
+formulates the problem and describes \idm{}. Section~\ref{sec:setup} gives the
+experimental setup, and Section~\ref{sec:results} the results. Section~\ref{sec:comparison}
+compares the work with its base papers, and Section~\ref{sec:ablation} reports
+ablations. Section~\ref{sec:discussion} discusses implications and limitations, and
+Section~\ref{sec:conclusion} concludes.\begin{itemize}
+  \item A label-safe architecture that separates label-free input evidence from
+  calibrated impact evidence and releases ground truth only through a delay-enforcing
+  broker (Section~\ref{sec:method}).
+  \item A controlled benchmark with known change type and known harm, covering two
+  learners, three delays and a 1,500-seed replication (Sections~\ref{sec:setup}--\ref{sec:results}).
+  \item Quantified failure modes: under conditional-only change, none of 1,205 harmful
+  batches is flagged, and closing the dependence blind spot nearly triples false
+  alarms (Sections~\ref{sec:results},~\ref{sec:ablation}).
+  \item Evidence from three natural streams and a prospective harm forecaster, which
+  shows where delayed labels help and where they do not (Section~\ref{sec:results}).
+  \item An aligned evidence view and a fully traceable, rerun-verified artefact
+  (Sections~\ref{sec:method},~\ref{sec:decl}).
+\end{itemize}
+
+The remainder of the paper is organised as follows.
+Section~\ref{sec:related} reviews related work by theme. Section~\ref{sec:method}
+formulates the problem and describes \idm{}. Section~\ref{sec:setup} gives the
+experimental setup, and Section~\ref{sec:results} the results. Section~\ref{sec:comparison}
+compares the work with its base papers, and Section~\ref{sec:ablation} reports
+ablations. Section~\ref{sec:discussion} discusses implications and limitations, and
+Section~\ref{sec:conclusion} concludes.

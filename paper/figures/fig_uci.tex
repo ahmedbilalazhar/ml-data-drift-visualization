@@ -1,0 +1,24 @@
+% Data: data/uci_cohorts.dat <- results/phase3/external_uci224_day2_v2/cohort_metrics.csv (accuracy, estimated_accuracy)
+% and results/phase3/uci224_delayed_replay_20261116_v2/evaluation/per_batch_metrics.csv (cumulative_released_logistic).
+\begin{tikzpicture}
+\begin{axis}[
+  idm, width=\columnwidth, height=5.0cm,
+  xmin=1.7, xmax=10.3, ymin=0.1, ymax=1.05,
+  xlabel={UCI gas-sensor acquisition cohort}, ylabel={cohort accuracy},
+  xtick={2,...,10},
+  legend style={at={(0.5,-0.32)}, anchor=north, legend columns=3},
+]
+\addplot[name path=est, c1, line width=1.5pt, dashed] table[x=batch, y=frozen] {data/uci_cohorts.dat};
+\addlegendentry{frozen estimate}
+\addplot[name path=acc, cink, line width=1.6pt, mark=*, mark size=1.5pt] table[x=batch, y=acc] {data/uci_cohorts.dat};
+\addlegendentry{realised accuracy}
+\addplot[c2!12, forget plot] fill between[of=est and acc];
+\addplot[c2, thick, mark=square*, mark size=1.1pt] table[x=batch, y=d0] {data/uci_cohorts.dat};
+\addlegendentry{recalibrated, $d{=}0$}
+\addplot[c3, thick, mark=triangle*, mark size=1.4pt] table[x=batch, y=d1] {data/uci_cohorts.dat};
+\addlegendentry{recalibrated, $d{=}1$}
+\addplot[c4, thick, mark=diamond*, mark size=1.4pt] table[x=batch, y=d2] {data/uci_cohorts.dat};
+\addlegendentry{recalibrated, $d{=}2$}
+\node[font=\scriptsize, text=c2, align=center] at (axis cs:7.2,0.83) {frozen-estimate error\\(MAE 0.545)};
+\end{axis}
+\end{tikzpicture}

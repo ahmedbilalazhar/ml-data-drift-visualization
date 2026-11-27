@@ -1,0 +1,21 @@
+% ---------------------------------------------------------------
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+This paper presented \idm{}, a label-safe monitoring framework that keeps label-free
+input evidence separate from calibrated impact evidence and scores both against harm
+that is verified only after a release delay. Across controlled, replicated and natural
+streams, the framework detected marginal change reliably and estimated accuracy well
+while the source correctness relation held. It also showed where unlabelled monitoring
+cannot work. Conditional-only change caused 1,205 harmful batches that were never
+flagged; nuisance change raised alarms without harm; and calibration failed to
+transfer on drifting sensors. A dependence statistic closed one detection blind spot, but
+combined with KS it nearly tripled the stationary alarm burden. Released labels repaired estimation on one natural stream but
+not on another. Monitoring therefore cannot be judged by its alarms alone. It should be
+judged by verified harm, with the release delay treated as part of the design.
+
+Future work should evaluate the framework on more independent natural streams with
+recorded label-arrival times. It should design label-acquisition policies with known
+inclusion probabilities and quantify their costs, and propagate calibration and
+reference uncertainty into the interval. Detector thresholds should be calibrated with
+the stationary alarm burden as an explicit target, and a pre-registered analyst study
+should test whether the aligned view changes decisions.

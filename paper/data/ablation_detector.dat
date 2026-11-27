@@ -1,0 +1,5 @@
+% generated from results/phase3/dependence_extension_20261116_final_v2/validated_summary.csv and results/phase3/dependence_extension_20261116_final_v2/online_dependence_scores.csv
+x y label pos
+0.8333333333333334 53.333333333333336 {KS/PCA} west
+1.7 100 {Correlation} east
+2.3666666666666667 100 {Combined} west

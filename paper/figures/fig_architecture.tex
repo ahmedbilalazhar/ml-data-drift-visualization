@@ -1,0 +1,70 @@
+% Architecture diagram of IDM-Viz (TikZ; contains no data values).
+\begin{tikzpicture}[
+  font=\footnotesize,
+  >={Stealth[length=2.1mm]},
+  box/.style={draw=#1!80!black, line width=0.6pt, rounded corners=2.5pt, align=center, fill=#1!7, minimum height=10mm, inner sep=3pt, drop shadow={opacity=0.18, shadow xshift=0.5mm, shadow yshift=-0.5mm}},
+  box/.default=c1,
+  lane/.style={draw=#1!70, dashed, line width=0.6pt, rounded corners=5pt, inner sep=5pt, fill=#1!3},
+  arr/.style={->, line width=0.7pt, draw=cink!75},
+  lab/.style={font=\scriptsize\bfseries, text=#1!80!black},
+  badge/.style={circle, fill=#1, text=white, font=\scriptsize\bfseries, inner sep=0.8pt, minimum size=4mm},
+]
+% --- frozen artefacts (top row)
+\node[box=cgray, text width=27mm] (fit) {\textbf{Fit \& freeze}\\$f$, scaler $\phi$, PCA $W$\\on $\mathcal{D}_{\mathrm{tr}}$};
+\node[box=cgray, text width=27mm, right=6mm of fit] (cal) {\textbf{Correctness map}\\isotonic $g$: $s\mapsto q$\\on $\mathcal{D}_{\mathrm{cal}}$};
+\node[box=cgray, text width=27mm, right=6mm of cal] (ref) {\textbf{Reference}\\$\Aref$ on $\mathcal{D}_{\mathrm{ref}}$;\\KS sample $R$};
+\node[box=cgray, text width=27mm, right=6mm of ref] (null) {\textbf{Null calibration}\\threshold $\tau_\Delta$ from\\stationary batches};
+
+% --- stream
+\node[box=c4, text width=22mm, below=13mm of fit.south west, anchor=north west, minimum height=36mm] (batch) {\textbf{Unlabelled}\\\textbf{batch $B_t$}\\[3pt] $n$ rows $x_{t,i}$\\[3pt] predictions\\$p,\ \hat{y},\ s$};
+
+% --- input channel
+\node[box=c3, text width=27mm, right=8mm of batch.north east, anchor=north west] (ks) {\textbf{KS tests}\\$M$ features + 3 PCA\\coords; Holm, $\alpha{=}.05$};
+\node[box=c3, text width=24mm, right=5mm of ks] (alarm) {\textbf{Input alarm} $a_t$\\+ correlation\\statistic $\Delta_t$};
+\node[box=c3, text width=24mm, right=5mm of alarm] (loc) {\textbf{Localization}\\rank by $D_{t,j}$;\\flag if $\tilde\pi_{t,j}\le\alpha$};
+
+% --- impact channel
+\node[box=c1, text width=27mm, right=8mm of batch.south east, anchor=south west] (q) {\textbf{Calibrated AC}\\$q_{t,i}=g(s_{t,i})$\\$\Ahat_t=\frac{1}{n}\sum_i q_{t,i}$};
+\node[box=c1, text width=24mm, right=5mm of q] (pb) {\textbf{Poisson-binomial}\\$F_t$; 95\% plug-in\\interval};
+\node[box=c1, text width=24mm, right=5mm of pb] (kap) {\textbf{Harm concern}\\$\concern_t=F_t(k_{\max})$\\flag if $\concern_t\ge .95$};
+
+% --- lanes
+\begin{scope}[on background layer]
+\node[lane=c3, fit=(ks)(alarm)(loc)] (laneA) {};
+\node[lane=c1, fit=(q)(pb)(kap)] (laneB) {};
+\end{scope}
+\node[lab=c3, anchor=south east] at (laneA.north east) {input channel (label-free)};
+\node[lab=c1, anchor=north east] at (laneB.south east) {impact channel (label-free)};
+
+% --- ledger, broker, verification, view
+\node[box=c5, text width=27mm, right=9mm of loc.east, anchor=west, yshift=-2mm] (ledger) {\textbf{Evidence ledger}\\alarms, ranks, $\Ahat_t$,\\interval, $\concern_t$};
+\node[box=c2, text width=27mm, below=4mm of ledger] (broker) {\textbf{Label broker}\\releases $y_b$ iff\\$b+d\le c$};
+\node[box=c2, text width=27mm, below=4mm of broker] (verif) {\textbf{Verification}\\$A_b$, $H_b$, age $c-b$;\\else \emph{unresolved}};
+\node[box=c4, text width=26mm, right=6mm of broker] (view) {\textbf{Aligned evidence}\\\textbf{view}\\shared batch axis,\\as-of clock $c$};
+
+% --- arrows
+\draw[arr] (fit.south) -- ++(0,-5mm) -| (batch.north);
+\draw[arr] (batch.east |- ks.west) -- (ks.west);
+\draw[arr] (ks) -- (alarm);
+\draw[arr] (alarm) -- (loc);
+\draw[arr] (batch.east |- q.west) -- (q.west);
+\draw[arr] (q) -- (pb);
+\draw[arr] (pb) -- (kap);
+\draw[arr] (ref.south) -- ++(0,-4mm) -| (ks.north);
+\draw[arr] (null.south) -- ++(0,-6mm) -| (alarm.north);
+\draw[arr] (cal.south) -- ++(0,-2.5mm) -| ($(batch.east)+(4mm,0)$) |- ([yshift=2.5mm]q.west);
+\draw[arr] (loc.east) -- (loc.east -| ledger.west);
+\draw[arr] (kap.east) -| ([xshift=-4mm]ledger.south west) -- ([yshift=2mm]ledger.south west);
+\draw[arr] (broker) -- (verif);
+\draw[arr] (ledger.east) -| (view.north);
+\draw[arr] (verif.east) -| (view.south);
+\node[font=\scriptsize\itshape, text=c2!80!black, below=0.8mm of verif, text width=32mm, align=center] {ground truth never reaches the two channels};
+
+% --- stage badges
+\node[badge=cgray] at (fit.north west) {1};
+\node[badge=c4] at (batch.north west) {2};
+\node[badge=c3] at (ks.north west) {3};
+\node[badge=c1] at (q.north west) {4};
+\node[badge=c2] at (broker.north west) {5};
+\node[badge=c4] at (view.north west) {6};
+\end{tikzpicture}

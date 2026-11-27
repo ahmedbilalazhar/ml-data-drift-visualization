@@ -1,0 +1,24 @@
+% Data: data/forecast.dat <- results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json (overall)
+% and results/phase3/future_harm_unseen_family_balanced_20261116_v1/metrics_overall_by_delay.csv (pooled rows).
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=2 by 1, horizontal sep=10mm},
+  idm, width=0.58\columnwidth, height=4.3cm,
+  ybar=0pt, /pgf/bar width=4.6pt, xmin=-0.6, xmax=4.6,
+  xtick={0,...,4}, xticklabels={Prev.,Concern,Time,Monitor,Released},
+  x tick label style={rotate=35, anchor=east, font=\scriptsize},
+  xtick style={draw=none},
+]
+\nextgroupplot[title={Brier score (lower is better)}, ymin=0, ymax=0.7,
+  legend style={legend columns=1, draw=cink!20}, legend to name=fcleg]
+\addplot[fill=c1, draw=c1!80!black] table[x=idx, y=knownBrier] {data/forecast.dat};
+\addlegendentry{known laws (C0--C6), 11,970 forecasts}
+\addplot[fill=c5, draw=c5!80!black] table[x=idx, y=unseenBrier] {data/forecast.dat};
+\addlegendentry{held-out law, balanced onset, 1,710 forecasts}
+\nextgroupplot[title={ROC AUC (higher is better)}, ymin=0.4, ymax=0.95]
+\addplot[fill=c1, draw=c1!80!black] table[x=idx, y=knownAUC] {data/forecast.dat};
+\addplot[fill=c5, draw=c5!80!black] table[x=idx, y=unseenAUC] {data/forecast.dat};
+\draw[cgray, dashed] (axis cs:-0.6,0.5) -- (axis cs:4.6,0.5);
+\end{groupplot}
+\node at ($(group c1r1.south)!0.5!(group c2r1.south)+(0,-16mm)$) {\pgfplotslegendfromname{fcleg}};
+\end{tikzpicture}

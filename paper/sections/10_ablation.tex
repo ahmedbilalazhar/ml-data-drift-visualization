@@ -1,0 +1,61 @@
+% ---------------------------------------------------------------
+\section{Ablation Study}
+\label{sec:ablation}
+
+
+Each ablation removes, replaces or modifies one component and keeps everything else
+fixed on the same seeds and streams; the full results, with intervals, are listed in
+Table~\ref{tab:ablation} (Appendix~\ref{app:extra}). Fig.~\ref{fig:ablation} plots the two central trade-offs. Panel (a)
+shows that every gain in dependence detection costs stationary alarms. Panel (b)
+shows that the harm rules form a recall--cost frontier on C6, and that input alarms
+used as a harm proxy lie below it. The following paragraphs explain what each
+component contributes.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/fig_ablation}}
+\caption{Ablation trade-offs. (a) Detectors on fresh seeds: onset detection of the dependence-only change C6 against the stationary alarm burden (30 seeds each); \emph{Combined} raises an alarm if either detector fires. (b) Harm rules on C6 (logistic monitor, 414 harmful and 306 non-harmful batches): share of harmful batches flagged against false flags. KS-based input alarms used as a harm proxy recover little harm.}
+\label{fig:ablation}
+\end{figure}
+
+\textbf{Correctness calibration.} Removing the isotonic map changes accuracy estimation
+in opposite directions for the two learners. The tree's raw confidence overstates its
+correctness, and calibration lowers its pooled MAE from 0.134 to 0.105. Logistic
+regression is already close to calibrated on the source law, and the map adds a small
+error (0.1142 against 0.1134). Neither version helps under conditional-only change,
+because calibration fitted on the source law cannot transfer to a reversed law.
+
+\textbf{Harm rule, estimator and latent tests.} Fig.~\ref{fig:ablation}(b) shows the
+recall--cost frontier on C6. Replacing the Poisson-binomial concern score with a point
+threshold on $\Aref-\Ahat_t$ raises recall from 0.386 to 0.920 at the cost of 51 rather
+than 9 false flags. The ATC-style estimator reaches 0.990 but also raises 23 false
+flags on the stationary C0, where the calibrated rule raises none. Under C3--C5 neither the
+calibrated nor the point rule fires; the ATC-style rule flags 25 batches in each
+condition, of which at most 16 are harmful. Removing the PCA tests halves C6 onset detection (8/30 to 4/30) and leaves every
+concern flag unchanged, because the impact channel does not depend on the input alarm
+(Algorithm~\ref{alg:loop}).
+
+\textbf{Dependence statistic.} Used on its own, the statistic~\eqref{eq:dep} detects every
+C6 onset in a fresh seed set and selects the programmed pair $(x_0,x_1)$ in 30/30 onset windows. On stationary streams it raises 1.70 alarms per 24 batches, against 0.83 for KS/PCA;
+its own rate of 70.8 alarms per 1,000 batches exceeds the nominal 50. The development-quantile threshold therefore did
+not control the per-batch false-alarm rate. Because the statistic ignores marginal shifts, it cannot replace KS for C1 and C2.
+Running both detectors (alarm if either fires) keeps the 30/30 C6 detection, but raises
+the stationary burden to 2.37 alarms per 24 batches, 2.8 times that of KS alone.
+
+\textbf{Forecast predictors.} In nested forecasters, monitor features account for most
+of the Brier improvement over time alone (0.0644), and released labels add a further
+0.0169. On the held-out law, the released-label increment disappears.
+
+\textbf{Adaptation.} Cumulatively refitting the frozen model on released labels does not
+change post-onset accuracy under C3 at delay 0, the primary outcome ($+0.02$ pp). In
+the late post-onset regime it gains $+2.39$ pp [1.97, 2.87]. A plausible reason is that
+each refit mixes the few released reversed labels with the larger pre-reversal training
+set. A region-local
+trigger appeared to gain 12.45 points over the frozen model. When the update clocks and
+label windows were matched to a global refit on the same seeds, however, the local
+policy was 0.08 points \emph{worse} than the global one. This result is consistent with
+the original global arm having been diluted by pre-reversal training rows; it does not
+support a benefit of localization. A
+capacity-matched pooled model with cluster interactions reproduced the local gains
+almost exactly, including gains on stationary XOR streams. The gain therefore reflects
+model capacity rather than drift-aware adaptation.

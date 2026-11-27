@@ -1,0 +1,177 @@
+% ---------------------------------------------------------------
+\section{Results and Analysis}
+\label{sec:results}
+
+\input{tables/tab_core}
+
+\subsection{Input Evidence Separates from Harm}
+\label{sec:res-core}
+Table~\ref{tab:core} reports the core outcome for the logistic monitor, and
+Fig.~\ref{fig:heatmap} condenses five indicators for all twelve synthetic conditions
+into one evidence map. Marginal changes are found reliably. The irrelevant shift C1
+and the gradual relevant shift C2 were both matched in 30/30 seeds; C2's mean
+first-alarm delay was 0.43 batches (95\% interval 0.27--0.63). On the stationary stream
+the Holm-corrected KS family raised 48.6 alarms per 1,000 batches [29.2, 73.6],
+consistent with its familywise level of 0.05. Detection, however, does not imply harm.
+C1 alters only an unused feature: it raised alarms in every post-onset batch, yet only
+11 of its 720 batches met the harm rule~\eqref{eq:harm}, as many as the stationary C0.
+
+\begin{figure}[t]
+\centering
+\input{figures/fig_heatmap}
+\caption{Evidence map of the controlled benchmark (logistic monitor; 30 seeds $\times$ 24 batches per row). Input alarm: fraction of post-onset batches with an alarm. Harm rate: harmful batches / 720. Concern recall: harmful batches flagged by $\kappa_t\ge0.95$. Coverage: empirical coverage of the nominal 95\% interval. Estimate MAE: mean absolute error of $\hat A_t$ (its shading is scaled by $1/0.35$). The outlined rows (C3--C5) show high harm with input alarms at the false-alarm rate and zero recall.}
+\label{fig:heatmap}
+\end{figure}
+
+The opposite failure is larger, and it stands out in the outlined rows of
+Fig.~\ref{fig:heatmap}. Under C3--C5 the input alarm fired in 5\% of post-onset
+batches, the stationary rate, because the inputs do not change. Accuracy nevertheless
+collapsed: 485, 473 and 247 batches were harmful, and the calibrated concern rule
+flagged none of them, for either learner. The dependence-only change C6 lies between
+the two cases. It was matched at onset in only 8/30 seeds, and the concern flag
+recovered 160 of its 414 harmful batches at the cost of 9 false flags. Across all
+conditions the logistic monitor left on average 92.8\% of each seed's harmful batches
+unflagged (recall 0.072 [0.043, 0.103]; 90.3\% pooled over batches), with a false-flag
+rate of 0.004. The monitor is therefore conservative, but it misses most harm.
+
+Estimation accuracy follows the same split (Table~\ref{tab:core}). When only $P(X)$
+changes (C0--C2 and C6), the calibrated AC tracks batch accuracy to an MAE of
+0.016--0.019 (seed SD about 0.004), and its 95\% interval covers 90--92\% of batches.
+It is significantly more accurate than the ATC-style estimator in every one of these
+conditions, and more accurate than the constant reference wherever accuracy moves (C2,
+C6). Raw confidence is slightly but significantly better on C2 and C6, because the
+logistic model is already close to calibrated. Under C3 the MAE rises to 0.303 and
+coverage falls to 0.31. No unlabelled estimator escapes this failure: the
+differences between estimators on C3 and C4 are not significant.
+
+\subsection{Conditional-Only Change: a Silent Failure}
+\label{sec:res-conditional}
+Fig.~\ref{fig:fail} averages 30 seeds per batch. Before onset, estimate and realised
+accuracy agree. From batch~9 the estimate stays at its pre-onset level, while realised
+accuracy falls to between 0.27 and 0.28 once a reversal is complete. C4 reaches this
+level at batch 13, and accuracy recovers only when C5 restores the law at batch 17.
+Over batches 9--24 of C3--C5 the mean estimate is 0.723 and the mean realised accuracy
+is 0.370. The classifier receives familiar inputs and so reports familiar confidence.
+A calibrator fitted on the source law cannot tell that the law has reversed.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/fig_conditional_failure}}
+\caption{Calibrated accuracy estimate versus realised accuracy under conditional-only change (logistic monitor, mean over 30 seeds per batch). The estimate is identical across C3--C5 because their inputs are identical. The shaded region is post-onset.}
+\label{fig:fail}
+\end{figure}
+
+Fig.~\ref{fig:case} shows the same failure as an analyst would see it in the aligned
+view, for one stream (seed 100, C3, delay 5) at clock 16. For batch 10 the estimate is
+0.731 [0.694, 0.768], the concern score is 0.0006, and the smallest Holm-adjusted
+$p$-value is 0.174, so no alarm fires. The released accuracy of batch 10, available
+from clock 15, is 0.254. Batches 12--16 are still unresolved and are shown as such.
+The only input alarm in this stream occurred at batch 6, before onset, and was false.
+The display exposes the disagreement once labels are released; before then nothing in
+the unlabelled evidence signals concern.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/fig_case}}
+\caption{Qualitative example from the aligned evidence view: one replayed stream (seed 100, C3, logistic monitor, delay 5) as of clock 16. Accuracy appears only for batches whose labels are released ($b+5\le16$). Batches 12--16 are unresolved and are left blank rather than imputed.}
+\label{fig:case}
+\end{figure}
+
+\subsection{Localization}
+When the changed feature is known, the KS ranking localizes it. Over 30 seeds, P@1 and
+R@3 were 1.0 and 1.0 for C1 and 0.988 and 0.994 for C2. On the 96-batch tasks the
+correlation-change pair score alarmed in every active dependence window of the linear
+and XOR tasks and named the programmed pair every time. On the five-region task its
+alarm rate was 0.955 [0.937, 0.970] and its pair accuracy 0.991, with a stationary
+alarm rate of 0.054--0.066 per batch. Frozen clusters did not recover the generating
+regions: with five clusters the adjusted Rand index was 0.088 [0.080, 0.097], and
+recall for the intervened region was 0.216, close to its prevalence of about 20\%.
+
+\subsection{Natural Streams}
+\label{sec:res-natural}
+\input{tables/tab_external}
+
+Table~\ref{tab:external} and Figs.~\ref{fig:uci}--\ref{fig:elec2} report the natural
+streams. The UCI gas sensor stream is the hardest case. The frozen estimate stayed
+between 0.975 and 0.977 for every cohort while realised accuracy ranged from 0.194 to
+0.658; all nine cohorts raised input alarms, and the 95\% interval covered none. The
+exact Poisson-binomial interval was slightly narrower than its normal approximation
+(mean width 0.0234 against 0.0258), so approximation error does not explain the
+failure: calibration did not transfer to the drifted sensors. Recalibrating the
+correctness map on labels released before each forecast reduced MAE from 0.545 to
+0.169, 0.227 and 0.283 at delays of 0, 1 and 2 cohorts. The benefit shrinks with delay
+because each forecast is fitted on older cohorts, and the estimates remain biased
+upward (Fig.~\ref{fig:uci}). Split and learner choices matter as much as delay: over
+six stratified splits, the calibrated MAE on cohorts 3--10 was 0.553 (logistic) and
+0.374 (tree) with cohort~1 as history, and 0.342 and 0.401 with cohorts 1--2.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/fig_uci}}
+\caption{UCI gas sensor stream: realised cohort accuracy, the frozen calibrated estimate (the shaded gap is its error), and estimates recalibrated on labels released at delays of 0, 1 and 2 cohorts.}
+\label{fig:uci}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/fig_elec2}}
+\caption{ELEC2: frozen calibrated estimate with its 95\% plug-in band, and realised batch accuracy, available only after release. Input alarms fired in all 55 batches (not shown).}
+\label{fig:elec2}
+\end{figure}
+
+ELEC2 shows the opposite pattern. Accuracy was 0.628 and the frozen estimate erred by
+0.059 on average. Input alarms fired in all 55 batches, so an alarm carried no
+information about which batches were harmful. Cumulative isotonic and Platt
+recalibration removed most of the signed bias (from $-0.0106$ to between $-0.0005$ and
+$-0.0023$) but \emph{increased} MAE at delays 0 and 5 (isotonic: 0.063 and 0.064) and
+left it essentially unchanged at delay 20 (0.059); ECE did not improve at any delay.
+On NOAA the calibrated estimate (MAE 0.044) matched the constant historical estimate
+(0.044) and improved on raw confidence (0.088) and on the ATC-style estimate (0.067);
+its interval covered only 9/21 batches, and the input alarm fired in every batch.
+Selective-label acquisition on NOAA is analysed in Appendix~\ref{app:extra}.
+
+\subsection{Prospective Harm Forecasting}
+\label{sec:res-forecast}
+A separate study tested whether harm over the next five batches can be predicted.
+Forecasters were trained on development seeds and evaluated on held-out seeds, using
+only labels released strictly before each forecast. On the seven known laws
+(Fig.~\ref{fig:forecast}), unlabelled monitor features lowered the Brier score from
+0.231 (time only) to 0.166, and released labels lowered it further to 0.149; the paired
+gains were 0.0644 [0.0603, 0.0674] and 0.0169 [0.0160, 0.0179]. The released-label gain
+shrinks with delay: Brier was 0.126 at delay 0, 0.155 at delay 5 and 0.166 at delay 20.
+On a held-out conditional law with onsets balanced across four times, time alone still
+gave the highest AUC (0.875). Monitor features improved the Brier score (0.238 to
+0.188), but released labels gave no further gain ($-0.0067$ [$-0.0229$, 0.0086]), and
+the current concern score ranked worse than chance (AUC 0.465). An earlier version of
+this test with a shared onset gave a time-only AUC of 0.998; that design was
+confounded and is reported as such.
+
+\begin{figure}[t]
+\centering
+\resizebox{\columnwidth}{!}{\input{figures/fig_forecast}}
+\caption{Five-batch-ahead harm forecasting on held-out seeds: the seven known synthetic laws versus a held-out conditional law with balanced onset times. Prev.: development prevalence; Concern: current $\kappa_t$; Time: batch index only; Monitor: + unlabelled monitor features; Released: + released-label features. The dashed line marks chance AUC.}
+\label{fig:forecast}
+\end{figure}
+
+On the natural streams, a five-cohort-ahead accuracy replay gave mixed results
+(Table~\ref{tab:extforecast}). On ELEC2 the current monitor estimate (MAE 0.043) beat
+the historical reference (0.094); on NOAA the historical reference (0.033) beat the
+monitor (0.053); on UCI the last released accuracy (0.316 at delay 0) beat the frozen
+monitor (0.585).
+
+\subsection{Robustness}
+\label{sec:res-robust}
+\emph{Scale.} Repeating the core design with 1,500 seeds per task narrows the
+intervals by an order of magnitude and leaves every conclusion unchanged
+(Table~\ref{tab:largeseed}). Under C3 the calibrated MAE is 0.3028 [0.3024, 0.3032],
+coverage is 0.310, and on average 16.08 harmful batches per stream go unflagged; C6
+is matched at onset in 563 of 1,500 seeds (37.5\%). \emph{Learner.} The depth-6 tree
+is less accurate than logistic regression on the linear task ($-0.0323$
+[$-0.0343$, $-0.0301$] on C0) and much more accurate on stationary XOR ($+0.2168$
+[0.1567, 0.2751]). Calibration lowers the tree's pooled MAE from 0.134 to 0.105, yet
+the calibrated tree flags none of the 362 harmful batches under the XOR concept
+complement or the 316 under increased label noise. \emph{Nuisance change.} A sinusoid
+on an irrelevant feature raised the input-alarm rate by 0.744--0.768 across three
+tasks, while every paired change in accuracy had an interval containing zero
+(Table~\ref{tab:seasonal}). An alarm-driven policy would therefore spend most of its
+attention on harmless batches.

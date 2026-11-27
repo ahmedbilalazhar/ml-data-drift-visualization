@@ -1,0 +1,1814 @@
+[
+ {
+  "id": "core.C0.IDM_calibrated_AC.mae",
+  "value": "0.017353656105872382",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 12"
+ },
+ {
+  "id": "core.C0.raw_AC_no_calibration.mae",
+  "value": "0.016286362508240185",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 82"
+ },
+ {
+  "id": "core.C0.ATC_style.mae",
+  "value": "0.023188888888888905",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "core.C0.constant_historical.mae",
+  "value": "0.019326388888888903",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 32"
+ },
+ {
+  "id": "core.C0.IDM_calibrated_AC.coverage",
+  "value": "0.9180555555555556",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 14"
+ },
+ {
+  "id": "core.C0.harm_n",
+  "value": "11",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "core.C0.tp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "core.C0.fp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "core.C0.post_alert_fraction",
+  "value": "0.05",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "core.C0.sd_mae",
+  "value": 0.003986288810622535,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of mae (logistic, regime all, IDM_calibrated_AC)"
+ },
+ {
+  "id": "core.C0.sd_cov",
+  "value": 0.06699214132062702,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of coverage"
+ },
+ {
+  "id": "core.C0.diff_vs_raw_AC_no_calibration",
+  "value": "0.001067293597632201 [-0.00016542453255366914, 0.002472956319599304]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 4"
+ },
+ {
+  "id": "core.C0.diff_vs_ATC_style",
+  "value": "-0.005835232783016516 [-0.0072322233080556455, -0.004425902788284658]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "core.C0.diff_vs_constant_historical",
+  "value": "-0.0019727327830165197 [-0.0044352025913344095, 0.000276542101725905]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "core.C1.IDM_calibrated_AC.mae",
+  "value": "0.017395132984614974",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 552"
+ },
+ {
+  "id": "core.C1.raw_AC_no_calibration.mae",
+  "value": "0.01621196946845597",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 622"
+ },
+ {
+  "id": "core.C1.ATC_style.mae",
+  "value": "0.023177777777777787",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 542"
+ },
+ {
+  "id": "core.C1.constant_historical.mae",
+  "value": "0.019366666666666685",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 572"
+ },
+ {
+  "id": "core.C1.IDM_calibrated_AC.coverage",
+  "value": "0.9222222222222223",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 554"
+ },
+ {
+  "id": "core.C1.harm_n",
+  "value": "11",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 57"
+ },
+ {
+  "id": "core.C1.tp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 57"
+ },
+ {
+  "id": "core.C1.fp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 57"
+ },
+ {
+  "id": "core.C1.detected_seeds",
+  "value": "30/30",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 9 (30*(1-missed_event))"
+ },
+ {
+  "id": "core.C1.post_alert_fraction",
+  "value": "1.0",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 7"
+ },
+ {
+  "id": "core.C1.sd_mae",
+  "value": 0.0040861114646642055,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of mae (logistic, regime all, IDM_calibrated_AC)"
+ },
+ {
+  "id": "core.C1.sd_cov",
+  "value": 0.07793839463881787,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of coverage"
+ },
+ {
+  "id": "core.C1.diff_vs_raw_AC_no_calibration",
+  "value": "0.0011831635161589985 [-5.2165359753804627e-05, 0.00268106026150414]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 10"
+ },
+ {
+  "id": "core.C1.diff_vs_ATC_style",
+  "value": "-0.005782644793162818 [-0.007289437181964538, -0.004373653900469082]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 8"
+ },
+ {
+  "id": "core.C1.diff_vs_constant_historical",
+  "value": "-0.001971533682051712 [-0.004458350196852109, 0.00035353279818140865]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 9"
+ },
+ {
+  "id": "core.C2.IDM_calibrated_AC.mae",
+  "value": "0.016032528625607546",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 1272"
+ },
+ {
+  "id": "core.C2.raw_AC_no_calibration.mae",
+  "value": "0.014799317361952133",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 1342"
+ },
+ {
+  "id": "core.C2.ATC_style.mae",
+  "value": "0.039472222222222235",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 1262"
+ },
+ {
+  "id": "core.C2.constant_historical.mae",
+  "value": "0.06304444444444444",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 1292"
+ },
+ {
+  "id": "core.C2.IDM_calibrated_AC.coverage",
+  "value": "0.9",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 1274"
+ },
+ {
+  "id": "core.C2.harm_n",
+  "value": "6",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 129"
+ },
+ {
+  "id": "core.C2.tp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 129"
+ },
+ {
+  "id": "core.C2.fp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 129"
+ },
+ {
+  "id": "core.C2.detected_seeds",
+  "value": "30/30",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 13 (30*(1-missed_event))"
+ },
+ {
+  "id": "core.C2.post_alert_fraction",
+  "value": "0.9729166666666667",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 11"
+ },
+ {
+  "id": "core.C2.sd_mae",
+  "value": 0.0035286770402873525,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of mae (logistic, regime all, IDM_calibrated_AC)"
+ },
+ {
+  "id": "core.C2.sd_cov",
+  "value": 0.07935926360738556,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of coverage"
+ },
+ {
+  "id": "core.C2.diff_vs_raw_AC_no_calibration",
+  "value": "0.0012332112636554173 [0.00013287091196765186, 0.0024513018830404857]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 16"
+ },
+ {
+  "id": "core.C2.diff_vs_ATC_style",
+  "value": "-0.023439693596614686 [-0.025428329275229623, -0.02133745607772619]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 14"
+ },
+ {
+  "id": "core.C2.diff_vs_constant_historical",
+  "value": "-0.047011915818836895 [-0.05073905033544066, -0.04389650539740947]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 15"
+ },
+ {
+  "id": "core.C3.IDM_calibrated_AC.mae",
+  "value": "0.3029395579351241",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 1992"
+ },
+ {
+  "id": "core.C3.raw_AC_no_calibration.mae",
+  "value": "0.30334170829489265",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 2062"
+ },
+ {
+  "id": "core.C3.ATC_style.mae",
+  "value": "0.30406944444444445",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 1982"
+ },
+ {
+  "id": "core.C3.constant_historical.mae",
+  "value": "0.30310138888888893",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 2012"
+ },
+ {
+  "id": "core.C3.IDM_calibrated_AC.coverage",
+  "value": "0.3055555555555556",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 1994"
+ },
+ {
+  "id": "core.C3.harm_n",
+  "value": "485",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 201"
+ },
+ {
+  "id": "core.C3.tp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 201"
+ },
+ {
+  "id": "core.C3.fp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 201"
+ },
+ {
+  "id": "core.C3.post_alert_fraction",
+  "value": "0.05",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 15"
+ },
+ {
+  "id": "core.C3.sd_mae",
+  "value": 0.006729043198058554,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of mae (logistic, regime all, IDM_calibrated_AC)"
+ },
+ {
+  "id": "core.C3.sd_cov",
+  "value": 0.03517426058808148,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of coverage"
+ },
+ {
+  "id": "core.C3.diff_vs_raw_AC_no_calibration",
+  "value": "-0.0004021503597685087 [-0.0027270649592805217, 0.0021330385195700856]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 22"
+ },
+ {
+  "id": "core.C3.diff_vs_ATC_style",
+  "value": "-0.001129886509320277 [-0.003260476047107095, 0.0009695992375377328]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 20"
+ },
+ {
+  "id": "core.C3.diff_vs_constant_historical",
+  "value": "-0.00016183095376473555 [-0.0036893227672208477, 0.0033798166649588336]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 21"
+ },
+ {
+  "id": "core.C4.IDM_calibrated_AC.mae",
+  "value": "0.2661201134906797",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 2712"
+ },
+ {
+  "id": "core.C4.raw_AC_no_calibration.mae",
+  "value": "0.2665222638504482",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 2782"
+ },
+ {
+  "id": "core.C4.ATC_style.mae",
+  "value": "0.2672722222222222",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 2702"
+ },
+ {
+  "id": "core.C4.constant_historical.mae",
+  "value": "0.2662819444444445",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 2732"
+ },
+ {
+  "id": "core.C4.IDM_calibrated_AC.coverage",
+  "value": "0.3111111111111111",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 2714"
+ },
+ {
+  "id": "core.C4.harm_n",
+  "value": "473",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 273"
+ },
+ {
+  "id": "core.C4.tp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 273"
+ },
+ {
+  "id": "core.C4.fp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 273"
+ },
+ {
+  "id": "core.C4.post_alert_fraction",
+  "value": "0.05",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 19"
+ },
+ {
+  "id": "core.C4.sd_mae",
+  "value": 0.006674904449599569,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of mae (logistic, regime all, IDM_calibrated_AC)"
+ },
+ {
+  "id": "core.C4.sd_cov",
+  "value": 0.03904593358798511,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of coverage"
+ },
+ {
+  "id": "core.C4.diff_vs_raw_AC_no_calibration",
+  "value": "-0.0004021503597685124 [-0.0029257834145438987, 0.002133003775690768]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 28"
+ },
+ {
+  "id": "core.C4.diff_vs_ATC_style",
+  "value": "-0.001152108731542506 [-0.0033275039968354825, 0.0008432804920717712]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 26"
+ },
+ {
+  "id": "core.C4.diff_vs_constant_historical",
+  "value": "-0.00016183095376474667 [-0.0037649924255329487, 0.0033824521714317184]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 27"
+ },
+ {
+  "id": "core.C5.IDM_calibrated_AC.mae",
+  "value": "0.16007470158938128",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 3432"
+ },
+ {
+  "id": "core.C5.raw_AC_no_calibration.mae",
+  "value": "0.15947083114761096",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 3502"
+ },
+ {
+  "id": "core.C5.ATC_style.mae",
+  "value": "0.16397222222222224",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 3422"
+ },
+ {
+  "id": "core.C5.constant_historical.mae",
+  "value": "0.16101527777777774",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 3452"
+ },
+ {
+  "id": "core.C5.IDM_calibrated_AC.coverage",
+  "value": "0.6083333333333335",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 3434"
+ },
+ {
+  "id": "core.C5.harm_n",
+  "value": "247",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 345"
+ },
+ {
+  "id": "core.C5.tp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 345"
+ },
+ {
+  "id": "core.C5.fp",
+  "value": "0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 345"
+ },
+ {
+  "id": "core.C5.post_alert_fraction",
+  "value": "0.05",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 23"
+ },
+ {
+  "id": "core.C5.sd_mae",
+  "value": 0.004525030166252413,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of mae (logistic, regime all, IDM_calibrated_AC)"
+ },
+ {
+  "id": "core.C5.sd_cov",
+  "value": 0.05201863798022788,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of coverage"
+ },
+ {
+  "id": "core.C5.diff_vs_raw_AC_no_calibration",
+  "value": "0.0006038704417703239 [-0.0007287599631428089, 0.0021378616178930787]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 34"
+ },
+ {
+  "id": "core.C5.diff_vs_ATC_style",
+  "value": "-0.0038975206328409643 [-0.0053295313761018166, -0.0024762526278348483]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 32"
+ },
+ {
+  "id": "core.C5.diff_vs_constant_historical",
+  "value": "-0.0009405761883965312 [-0.0028971857853848826, 0.0010826637644204319]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 33"
+ },
+ {
+  "id": "core.C6.IDM_calibrated_AC.mae",
+  "value": "0.01940491893822681",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 4332"
+ },
+ {
+  "id": "core.C6.raw_AC_no_calibration.mae",
+  "value": "0.017074523948891227",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 4402"
+ },
+ {
+  "id": "core.C6.ATC_style.mae",
+  "value": "0.0741",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 4322"
+ },
+ {
+  "id": "core.C6.constant_historical.mae",
+  "value": "0.05665972222222223",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 4352"
+ },
+ {
+  "id": "core.C6.IDM_calibrated_AC.coverage",
+  "value": "0.9013888888888888",
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "line 4334"
+ },
+ {
+  "id": "core.C6.harm_n",
+  "value": "414",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 435"
+ },
+ {
+  "id": "core.C6.tp",
+  "value": "160",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 435"
+ },
+ {
+  "id": "core.C6.fp",
+  "value": "9",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 435"
+ },
+ {
+  "id": "core.C6.detected_seeds",
+  "value": "8/30",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 29 (30*(1-missed_event))"
+ },
+ {
+  "id": "core.C6.post_alert_fraction",
+  "value": "0.125",
+  "source": "results/phase3/v2_final/input_detection_summary.csv",
+  "row": "line 27"
+ },
+ {
+  "id": "core.C6.sd_mae",
+  "value": 0.004387486952036244,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of mae (logistic, regime all, IDM_calibrated_AC)"
+ },
+ {
+  "id": "core.C6.sd_cov",
+  "value": 0.08509863933311382,
+  "source": "results/phase3/v2_final/impact_per_seed.csv",
+  "row": "sample SD over 30 seeds of coverage"
+ },
+ {
+  "id": "core.C6.diff_vs_raw_AC_no_calibration",
+  "value": "0.002330394989335588 [0.0010048459642208348, 0.003926985684451399]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 40"
+ },
+ {
+  "id": "core.C6.diff_vs_ATC_style",
+  "value": "-0.05469508106177319 [-0.05986057241796795, -0.04937435200962182]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 38"
+ },
+ {
+  "id": "core.C6.diff_vs_constant_historical",
+  "value": "-0.03725480328399541 [-0.040261135963994665, -0.03425543137569842]",
+  "source": "results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 39"
+ },
+ {
+  "id": "fail.mean_estimate",
+  "value": 0.7232004346560763,
+  "source": "reports/phase3/v2_final/v1_conditional_failure_diagnostics.csv",
+  "row": "mean over 72 rows"
+ },
+ {
+  "id": "fail.mean_actual",
+  "value": 0.48830833333333323,
+  "source": "reports/phase3/v2_final/v1_conditional_failure_diagnostics.csv",
+  "row": "mean over 72 rows"
+ },
+ {
+  "id": "fail.harm_sum",
+  "value": 1205,
+  "source": "reports/phase3/v2_final/v1_conditional_failure_diagnostics.csv",
+  "row": "sum harm_count over 72 rows"
+ },
+ {
+  "id": "noaa.mae.cal",
+  "value": 0.04431957018650259,
+  "source": "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv",
+  "row": "mean |calibrated_accuracy_estimate-accuracy| over 21 rows"
+ },
+ {
+  "id": "noaa.mae.raw",
+  "value": 0.08813732080182854,
+  "source": "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv",
+  "row": "mean |raw_average_confidence_estimate-accuracy|"
+ },
+ {
+  "id": "noaa.mae.atc",
+  "value": 0.06657142857142856,
+  "source": "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv",
+  "row": "mean |atc_estimate-accuracy|"
+ },
+ {
+  "id": "noaa.mae.const",
+  "value": 0.043521612928532204,
+  "source": "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv",
+  "row": "mean |historical_constant_estimate-accuracy|"
+ },
+ {
+  "id": "noaa.coverage",
+  "value": "9/21",
+  "source": "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv",
+  "row": "count plug_in_interval_covers==True"
+ },
+ {
+  "id": "noaa.mean_acc",
+  "value": 0.7505714285714286,
+  "source": "results/phase3/noaa_weather_1949_1999_v1/run_summary.json",
+  "row": "primary_holdout_summary.mean_batch_accuracy"
+ },
+ {
+  "id": "uci.uf.mae",
+  "value": "0.544657889410022",
+  "source": "results/phase3/uci224_delayed_replay_20261116_v2/evaluation/summary.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "uci.ur.mae",
+  "value": "0.41091762721702874",
+  "source": "results/phase3/uci224_delayed_replay_20261116_v2/evaluation/summary.csv",
+  "row": "line 5"
+ },
+ {
+  "id": "uci.uh.mae",
+  "value": "0.5122796696580534",
+  "source": "results/phase3/uci224_delayed_replay_20261116_v2/evaluation/summary.csv",
+  "row": "line 4"
+ },
+ {
+  "id": "uci.u0.mae",
+  "value": "0.16949507423765475",
+  "source": "results/phase3/uci224_delayed_replay_20261116_v2/evaluation/summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "uci.u1.mae",
+  "value": "0.2270087933472313",
+  "source": "results/phase3/uci224_delayed_replay_20261116_v2/evaluation/summary.csv",
+  "row": "line 6"
+ },
+ {
+  "id": "uci.u2.mae",
+  "value": "0.2834204062296465",
+  "source": "results/phase3/uci224_delayed_replay_20261116_v2/evaluation/summary.csv",
+  "row": "line 10"
+ },
+ {
+  "id": "elec2.ei.mae",
+  "value": "0.05857105713432565",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 4"
+ },
+ {
+  "id": "elec2.ei.ece",
+  "value": "0.08012058456847297",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 4"
+ },
+ {
+  "id": "elec2.ei.bias",
+  "value": "-0.010621648781345108",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 4"
+ },
+ {
+  "id": "elec2.ei.cov",
+  "value": "23",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 4"
+ },
+ {
+  "id": "elec2.e0.mae",
+  "value": "0.06280957943733192",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "elec2.e0.ece",
+  "value": "0.08636628794226363",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "elec2.e0.bias",
+  "value": "-0.00047451096548550034",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "elec2.e0.cov",
+  "value": "18",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "elec2.e5.mae",
+  "value": "0.06371927288661858",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 5"
+ },
+ {
+  "id": "elec2.e5.ece",
+  "value": "0.08917879015188264",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 5"
+ },
+ {
+  "id": "elec2.e5.bias",
+  "value": "-0.0022709826143123848",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 5"
+ },
+ {
+  "id": "elec2.e5.cov",
+  "value": "21",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 5"
+ },
+ {
+  "id": "elec2.e20.mae",
+  "value": "0.059131341696359425",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 8"
+ },
+ {
+  "id": "elec2.e20.ece",
+  "value": "0.08194149011231842",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 8"
+ },
+ {
+  "id": "elec2.e20.bias",
+  "value": "-0.0018162681993267094",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 8"
+ },
+ {
+  "id": "elec2.e20.cov",
+  "value": "24",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 8"
+ },
+ {
+  "id": "elec2.p0.mae",
+  "value": "0.0652664546609156",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "elec2.p0.ece",
+  "value": "0.10225677878239009",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "elec2.p0.bias",
+  "value": "-0.00147248846534",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "elec2.p0.cov",
+  "value": "21",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "elec2.p5.mae",
+  "value": "0.06663940272830159",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 6"
+ },
+ {
+  "id": "elec2.p5.ece",
+  "value": "0.10504637148284188",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 6"
+ },
+ {
+  "id": "elec2.p5.bias",
+  "value": "-0.0021282211764640604",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 6"
+ },
+ {
+  "id": "elec2.p5.cov",
+  "value": "21",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 6"
+ },
+ {
+  "id": "elec2.p20.mae",
+  "value": "0.06154468504362838",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 9"
+ },
+ {
+  "id": "elec2.p20.ece",
+  "value": "0.10342867389096305",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 9"
+ },
+ {
+  "id": "elec2.p20.bias",
+  "value": "-0.0009290136927958618",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 9"
+ },
+ {
+  "id": "elec2.p20.cov",
+  "value": "24",
+  "source": "results/phase3/elec2_calibration_family_20261116_v1/summary.csv",
+  "row": "line 9"
+ },
+ {
+  "id": "elec2.acc",
+  "value": 0.6278873032220097,
+  "source": "results/phase3/elec2_temporal_20261116_v2/evaluation/summary.json",
+  "row": "row_weighted_accuracy"
+ },
+ {
+  "id": "elec2.alarms",
+  "value": 55,
+  "source": "results/phase3/elec2_temporal_20261116_v2/evaluation/summary.json",
+  "row": "input_alarm_batches"
+ },
+ {
+  "id": "uci.exact_width",
+  "value": 0.02338211415936944,
+  "source": "results/phase3/external_uci224_exact_interval_20261116_v1/summary.json",
+  "row": "mean_exact_width"
+ },
+ {
+  "id": "uci.normal_width",
+  "value": 0.025802992731058707,
+  "source": "results/phase3/external_uci224_exact_interval_20261116_v1/summary.json",
+  "row": "mean_normal_width"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.logistic.accuracy",
+  "value": "0.723001111111111",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.logistic.cal_mae",
+  "value": "0.01693731681349425",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 100"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.logistic.cal_coverage",
+  "value": "0.9269722222222223",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 394"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.logistic.harm_n",
+  "value": "0.30133333333333334",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 786"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.logistic.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 884"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.shallow_tree.accuracy",
+  "value": "0.6937661666666666",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.shallow_tree.cal_mae",
+  "value": "0.01783482260291525",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 101"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.shallow_tree.cal_coverage",
+  "value": "0.9251111111111111",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 395"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.shallow_tree.harm_n",
+  "value": "0.3473333333333333",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 787"
+ },
+ {
+  "id": "ls.v1_synthetic.C0.shallow_tree.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 885"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.logistic.accuracy",
+  "value": "0.4257168333333333",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 26"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.logistic.cal_mae",
+  "value": "0.3028019750493612",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 124"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.logistic.cal_coverage",
+  "value": "0.31025",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 418"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.logistic.harm_n",
+  "value": "16.084",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 810"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.logistic.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 908"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.shallow_tree.accuracy",
+  "value": "0.43564244444444444",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 27"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.shallow_tree.cal_mae",
+  "value": "0.2640935054100845",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 125"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.shallow_tree.cal_coverage",
+  "value": "0.30852777777777773",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 419"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.shallow_tree.harm_n",
+  "value": "16.118666666666666",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 811"
+ },
+ {
+  "id": "ls.v1_synthetic.C3.shallow_tree.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 909"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.logistic.accuracy",
+  "value": "0.574397111111111",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 42"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.logistic.cal_mae",
+  "value": "0.15990234944853032",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 140"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.logistic.cal_coverage",
+  "value": "0.6182777777777778",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 434"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.logistic.harm_n",
+  "value": "8.187333333333333",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 826"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.logistic.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 924"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.shallow_tree.accuracy",
+  "value": "0.5647326111111111",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 43"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.shallow_tree.cal_mae",
+  "value": "0.14094985480268435",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 141"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.shallow_tree.cal_coverage",
+  "value": "0.6175833333333334",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 435"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.shallow_tree.harm_n",
+  "value": "8.226",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 827"
+ },
+ {
+  "id": "ls.v1_synthetic.C5.shallow_tree.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 925"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.logistic.accuracy",
+  "value": "0.6722349444444445",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 52"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.logistic.cal_mae",
+  "value": "0.01864879016104451",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 150"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.logistic.cal_coverage",
+  "value": "0.916388888888889",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 444"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.logistic.harm_n",
+  "value": "13.847333333333333",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 836"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.logistic.cal_tp",
+  "value": "5.179333333333333",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 934"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.shallow_tree.accuracy",
+  "value": "0.6363355555555555",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 53"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.shallow_tree.cal_mae",
+  "value": "0.0326331372950153",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 151"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.shallow_tree.cal_coverage",
+  "value": "0.6788611111111111",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 445"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.shallow_tree.harm_n",
+  "value": "14.899333333333333",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 837"
+ },
+ {
+  "id": "ls.v1_synthetic.C6.shallow_tree.cal_tp",
+  "value": "0.266",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 935"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.logistic.accuracy",
+  "value": "0.500386",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 60"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.logistic.cal_mae",
+  "value": "0.01978881022026608",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 158"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.logistic.cal_coverage",
+  "value": "0.9292222222222222",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 452"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.logistic.harm_n",
+  "value": "0.5153333333333333",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 844"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.logistic.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 942"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.shallow_tree.accuracy",
+  "value": "0.702173611111111",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 61"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.shallow_tree.cal_mae",
+  "value": "0.016214250265068272",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 159"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.shallow_tree.cal_coverage",
+  "value": "0.927888888888889",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 453"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.shallow_tree.harm_n",
+  "value": "0.29933333333333334",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 845"
+ },
+ {
+  "id": "ls.xor_synthetic.X0.shallow_tree.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 943"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.logistic.accuracy",
+  "value": "0.4996655555555555",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 84"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.logistic.cal_mae",
+  "value": "0.02254539044043961",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 182"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.logistic.cal_coverage",
+  "value": "0.8879722222222223",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 476"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.logistic.harm_n",
+  "value": "1.0526666666666666",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 868"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.logistic.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 966"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.shallow_tree.accuracy",
+  "value": "0.4326679444444444",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 85"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.shallow_tree.cal_mae",
+  "value": "0.27705399963286315",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 183"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.shallow_tree.cal_coverage",
+  "value": "0.45666666666666667",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 477"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.shallow_tree.harm_n",
+  "value": "12.297333333333333",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 869"
+ },
+ {
+  "id": "ls.xor_synthetic.X3.shallow_tree.cal_tp",
+  "value": "0.0",
+  "source": "results/phase3/large_seed_robustness_final/seed_bootstrap_summary.csv",
+  "row": "line 967"
+ },
+ {
+  "id": "abl.C6.IDM_calibrated_AC",
+  "value": "TP 160 FP 9 FN 254",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 435"
+ },
+ {
+  "id": "abl.C6.point_rule_no_interval",
+  "value": "TP 381 FP 51 FN 33",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 441"
+ },
+ {
+  "id": "abl.C6.ATC_style",
+  "value": "TP 410 FP 80 FN 4",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 434"
+ },
+ {
+  "id": "abl.C6.raw_AC_no_calibration",
+  "value": "TP 92 FP 2 FN 322",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 442"
+ },
+ {
+  "id": "abl.C6.no_latent_same_impact",
+  "value": "TP 160 FP 9 FN 254",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 439"
+ },
+ {
+  "id": "abl.C0.ATC_style",
+  "value": "TP 2 FP 23 FN 9",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "abl.pooled.v1_synthetic.logistic.IDM_calibrated_AC.mae",
+  "value": 0.11418865852421527,
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "mean of regime-all mae over C0,C1,C2,C3,C4,C5,C6"
+ },
+ {
+  "id": "abl.pooled.v1_synthetic.logistic.raw_AC_no_calibration.mae",
+  "value": 0.11338671094007018,
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "mean of regime-all mae over C0,C1,C2,C3,C4,C5,C6"
+ },
+ {
+  "id": "abl.pooled.v1_synthetic.shallow_tree.IDM_calibrated_AC.mae",
+  "value": 0.1050311771423306,
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "mean of regime-all mae over C0,C1,C2,C3,C4,C5,C6"
+ },
+ {
+  "id": "abl.pooled.v1_synthetic.shallow_tree.raw_AC_no_calibration.mae",
+  "value": 0.13393336908363493,
+  "source": "results/phase3/v2_final/impact_summary.csv",
+  "row": "mean of regime-all mae over C0,C1,C2,C3,C4,C5,C6"
+ },
+ {
+  "id": "abl.dep.C6.max_abs_correlation_change",
+  "value": "1.0 / 16.5",
+  "source": "results/phase3/dependence_extension_20261116_final_v2/validated_summary.csv",
+  "row": "line 14"
+ },
+ {
+  "id": "abl.dep.C6.marginal_plus_PCA_KS",
+  "value": "0.5333333333333333 / 2.4",
+  "source": "results/phase3/dependence_extension_20261116_final_v2/validated_summary.csv",
+  "row": "line 15"
+ },
+ {
+  "id": "abl.dep.C0.max_abs_correlation_change",
+  "value": "0.4 / 1.7",
+  "source": "results/phase3/dependence_extension_20261116_final_v2/validated_summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "abl.dep.C0.marginal_plus_PCA_KS",
+  "value": "0.13333333333333333 / 0.8333333333333334",
+  "source": "results/phase3/dependence_extension_20261116_final_v2/validated_summary.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "abl.dep.union.C0_alarms_per24",
+  "value": 2.3666666666666667,
+  "source": "results/phase3/dependence_extension_20261116_final_v2/online_dependence_scores.csv",
+  "row": "count(ks_pca_alarm OR alarm)/30 seeds, C0"
+ },
+ {
+  "id": "abl.dep.union.C6_onset_seeds",
+  "value": 30,
+  "source": "results/phase3/dependence_extension_20261116_final_v2/online_dependence_scores.csv",
+  "row": "seeds with any union alarm in batches 9-12"
+ },
+ {
+  "id": "abl.dep.c6diff",
+  "value": "0.4666666666666667 [0.3, 0.6333333333333333]",
+  "source": "results/phase3/dependence_extension_20261116_final_v2/paired_contrasts.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "abl.dep.c0diff",
+  "value": "0.8666666666666667 [0.4, 1.3666666666666667]",
+  "source": "results/phase3/dependence_extension_20261116_final_v2/paired_contrasts.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "abl.fc.brier",
+  "value": "0.23074057269330991/0.16634339702082435/0.14942910484691446",
+  "source": "results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json",
+  "row": "overall.*.brier"
+ },
+ {
+  "id": "abl.fc.tm",
+  "value": "0.06439717567248558 [0.06028075803665384, 0.06735437461442749]",
+  "source": "results/phase3/future_harm_forecast_20261116_v1/paired_seed_bootstrap.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "abl.fc.uf",
+  "value": "0.01691429217390988 [0.016021415367795888, 0.017878114301787602]",
+  "source": "results/phase3/future_harm_forecast_20261116_v1/paired_seed_bootstrap.csv",
+  "row": "line 3"
+ },
+ {
+  "id": "abl.adapt.c3d0",
+  "value": "0.00019166666666666556 [-0.0006752083333333341, 0.0010749999999999967]",
+  "source": "results/phase3/adaptation_final/paired_bootstrap.csv",
+  "row": "line 10"
+ },
+ {
+  "id": "abl.adapt.loc",
+  "value": "0.12453194444444447 [0.10946963713623309, 0.13959425175265586]",
+  "source": "reports/phase3/adaptation_schedule_audit_20261118_v19/paired_accuracy_differences.csv",
+  "row": "line 17"
+ },
+ {
+  "id": "abl.adapt.glo",
+  "value": "0.0037166666666666737 [0.00288074075228266, 0.004552592581050688]",
+  "source": "reports/phase3/adaptation_schedule_audit_20261118_v19/paired_accuracy_differences.csv",
+  "row": "line 11"
+ },
+ {
+  "id": "abl.adapt.mlg",
+  "value": "-0.0008159722222222128 [-0.0011486284722222084, -0.00047777777777777315]",
+  "source": "results/phase3/matched_adaptation_schedule_20261117_v2/paired_seed_differences.csv",
+  "row": "line 62"
+ },
+ {
+  "id": "seasonal.linear_probabilistic.alarm_delta",
+  "value": "0.7444444444444444 [0.7260416666666668, 0.7611111111111112]",
+  "source": "results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv",
+  "row": "line 13"
+ },
+ {
+  "id": "seasonal.linear_probabilistic.acc_delta",
+  "value": "-2.4999999999999784e-05 [-9.791666666666637e-05, 4.9999999999999636e-05]",
+  "source": "results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv",
+  "row": "line 11"
+ },
+ {
+  "id": "seasonal.xor_nonlinear.alarm_delta",
+  "value": "0.7680555555555556 [0.7590277777777779, 0.776388888888889]",
+  "source": "results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv",
+  "row": "line 22"
+ },
+ {
+  "id": "seasonal.xor_nonlinear.acc_delta",
+  "value": "1.3888888888886943e-06 [-4.654513888888933e-05, 4.1666666666666476e-05]",
+  "source": "results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv",
+  "row": "line 20"
+ },
+ {
+  "id": "seasonal.five_region.alarm_delta",
+  "value": "0.7642361111111112 [0.7461805555555556, 0.779861111111111]",
+  "source": "results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv",
+  "row": "line 4"
+ },
+ {
+  "id": "seasonal.five_region.acc_delta",
+  "value": "-8.333333333333435e-06 [-0.00016249999999999997, 0.00013682291666666674]",
+  "source": "results/phase3/seasonal_stress_evaluation_20261118_v1/analysis/seasonal_summary.csv",
+  "row": "line 2"
+ },
+ {
+  "id": "fc.development_prevalence",
+  "value": "known Brier 0.24324853487101206 AUC 0.5; unseen Brier 0.2898718601013812 AUC 0.5",
+  "source": "results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json | results/phase3/future_harm_unseen_family_balanced_20261116_v1/metrics_overall_by_delay.csv",
+  "row": "overall / line 3"
+ },
+ {
+  "id": "fc.current_concern",
+  "value": "known Brier 0.3267264301045607 AUC 0.650219590175809; unseen Brier 0.6595524593187928 AUC 0.46528752260397827",
+  "source": "results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json | results/phase3/future_harm_unseen_family_balanced_20261116_v1/metrics_overall_by_delay.csv",
+  "row": "overall / line 2"
+ },
+ {
+  "id": "fc.time_only",
+  "value": "known Brier 0.23074057269330991 AUC 0.6402371269181377; unseen Brier 0.2381850963326568 AUC 0.8749728752260397",
+  "source": "results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json | results/phase3/future_harm_unseen_family_balanced_20261116_v1/metrics_overall_by_delay.csv",
+  "row": "overall / line 6"
+ },
+ {
+  "id": "fc.unlabeled_monitor",
+  "value": "known Brier 0.16634339702082435 AUC 0.8376724138598883; unseen Brier 0.18760279275620503 AUC 0.8637685352622062",
+  "source": "results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json | results/phase3/future_harm_unseen_family_balanced_20261116_v1/metrics_overall_by_delay.csv",
+  "row": "overall / line 7"
+ },
+ {
+  "id": "fc.full_released",
+  "value": "known Brier 0.14942910484691446 AUC 0.8649301564568704; unseen Brier 0.19427057426590172 AUC 0.8298509142053445",
+  "source": "results/phase3/future_harm_forecast_20261116_v1/evaluation_summary.json | results/phase3/future_harm_unseen_family_balanced_20261116_v1/metrics_overall_by_delay.csv",
+  "row": "overall / line 4"
+ },
+ {
+  "id": "elec2.batches",
+  "value": 55,
+  "source": "results/phase3/elec2_temporal_20261116_v2/evaluation/evaluator_batches.csv",
+  "row": "row count"
+ },
+ {
+  "id": "elec2.acc_range",
+  "value": "0.454 to 0.8",
+  "source": "results/phase3/elec2_temporal_20261116_v2/evaluation/evaluator_batches.csv",
+  "row": "min/max accuracy"
+ },
+ {
+  "id": "elec2.est_range",
+  "value": "0.5922872359503051 to 0.6682518035331334",
+  "source": "results/phase3/elec2_temporal_20261116_v2/evaluation/evaluator_batches.csv",
+  "row": "min/max estimate"
+ },
+ {
+  "id": "case.b10",
+  "value": "est 0.7311595227714186 [0.694, 0.768] concern 0.0006037066244051026 minp 0.1742981814194307 acc 0.254 avail 15",
+  "source": "results/phase3/v2_final/predictions/v1_synthetic_100_C3_logistic_online.csv | results/phase3/v2_final/released_verification.csv",
+  "row": "line 11 | line 467"
+ },
+ {
+  "id": "harmbar.C0",
+  "value": "11/0; tree 8/0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "lines 3,12"
+ },
+ {
+  "id": "harmbar.C1",
+  "value": "11/0; tree 9/0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "lines 57,66"
+ },
+ {
+  "id": "harmbar.C2",
+  "value": "6/0; tree 4/0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "lines 129,138"
+ },
+ {
+  "id": "harmbar.C3",
+  "value": "485/0; tree 484/0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "lines 201,210"
+ },
+ {
+  "id": "harmbar.C4",
+  "value": "473/0; tree 468/0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "lines 273,282"
+ },
+ {
+  "id": "harmbar.C5",
+  "value": "247/0; tree 247/0",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "lines 345,354"
+ },
+ {
+  "id": "harmbar.C6",
+  "value": "414/160; tree 455/9",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "lines 435,444"
+ },
+ {
+  "id": "extfc.ELEC2.0.historical",
+  "value": "0.0942518675761414",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 26"
+ },
+ {
+  "id": "extfc.ELEC2.0.current_monitor",
+  "value": "0.043455795690387045",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 28"
+ },
+ {
+  "id": "extfc.ELEC2.0.last_released",
+  "value": "0.059924046713224946",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 30"
+ },
+ {
+  "id": "extfc.ELEC2.0.mean3_released",
+  "value": "0.06138804671322494",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 32"
+ },
+ {
+  "id": "extfc.ELEC2.5.historical",
+  "value": "0.0942518675761414",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 42"
+ },
+ {
+  "id": "extfc.ELEC2.5.current_monitor",
+  "value": "0.043455795690387045",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 44"
+ },
+ {
+  "id": "extfc.ELEC2.5.last_released",
+  "value": "0.07883211006658378",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 46"
+ },
+ {
+  "id": "extfc.ELEC2.5.mean3_released",
+  "value": "0.07569077673325043",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 48"
+ },
+ {
+  "id": "extfc.NOAA.0.historical",
+  "value": "0.03293897583745194",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 74"
+ },
+ {
+  "id": "extfc.NOAA.0.current_monitor",
+  "value": "0.05269767549839749",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 76"
+ },
+ {
+  "id": "extfc.NOAA.0.last_released",
+  "value": "0.041008141131246546",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 78"
+ },
+ {
+  "id": "extfc.NOAA.0.mean3_released",
+  "value": "0.03371230779791321",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 80"
+ },
+ {
+  "id": "extfc.NOAA.5.historical",
+  "value": "0.03293897583745194",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 90"
+ },
+ {
+  "id": "extfc.NOAA.5.current_monitor",
+  "value": "0.05269767549839749",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 92"
+ },
+ {
+  "id": "extfc.NOAA.5.last_released",
+  "value": "0.02393256452498626",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 94"
+ },
+ {
+  "id": "extfc.NOAA.5.mean3_released",
+  "value": "0.021578397858319588",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 96"
+ },
+ {
+  "id": "extfc.UCI224.0.historical",
+  "value": "0.5529295137608794",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 122"
+ },
+ {
+  "id": "extfc.UCI224.0.current_monitor",
+  "value": "0.5854108205944628",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 124"
+ },
+ {
+  "id": "extfc.UCI224.0.last_released",
+  "value": "0.3161217961003222",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 126"
+ },
+ {
+  "id": "extfc.UCI224.0.mean3_released",
+  "value": "0.3060375569767083",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 128"
+ },
+ {
+  "id": "extfc.UCI224.5.historical",
+  "value": "0.5529295137608794",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 138"
+ },
+ {
+  "id": "extfc.UCI224.5.current_monitor",
+  "value": "0.5854108205944628",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 140"
+ },
+ {
+  "id": "extfc.UCI224.5.last_released",
+  "value": "0.5529295137608794",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 142"
+ },
+ {
+  "id": "extfc.UCI224.5.mean3_released",
+  "value": "0.5529295137608794",
+  "source": "results/phase3/external_future_harm_replay_20261120/summary.csv",
+  "row": "line 144"
+ },
+ {
+  "id": "heat.C0",
+  "value": "0.0500 / 0.0153 / 0.0000 / 0.9181 / 0.0174",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 3, 3, 14, 12; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.C1",
+  "value": "1.0000 / 0.0153 / 0.0000 / 0.9222 / 0.0174",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 7, 57, 554, 552; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.C2",
+  "value": "0.9729 / 0.0083 / 0.0000 / 0.9000 / 0.0160",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 11, 129, 1274, 1272; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.C3",
+  "value": "0.0500 / 0.6736 / 0.0000 / 0.3056 / 0.3029",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 15, 201, 1994, 1992; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.C4",
+  "value": "0.0500 / 0.6569 / 0.0000 / 0.3111 / 0.2661",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 19, 273, 2714, 2712; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.C5",
+  "value": "0.0500 / 0.3431 / 0.0000 / 0.6083 / 0.1601",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 23, 345, 3434, 3432; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.C6",
+  "value": "0.1250 / 0.5750 / 0.3865 / 0.9014 / 0.0194",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 27, 435, 4334, 4332; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.X0",
+  "value": "0.0458 / 0.0097 / 0.0000 / 0.9222 / 0.0199",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 31, 507, 5054, 5052; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.X1",
+  "value": "1.0000 / 0.0292 / 0.0000 / 0.8931 / 0.0221",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 35, 561, 5594, 5592; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.X2",
+  "value": "1.0000 / 0.1083 / 0.0000 / 0.7403 / 0.0332",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 39, 633, 6314, 6312; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.X3",
+  "value": "0.0458 / 0.0222 / 0.0000 / 0.9069 / 0.0205",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 43, 705, 7034, 7032; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "heat.X4",
+  "value": "0.0458 / 0.0181 / 0.0000 / 0.9208 / 0.0200",
+  "source": "results/phase3/v2_final/input_detection_summary.csv | results/phase3/v2_final/harm_counts.csv | results/phase3/v2_final/impact_summary.csv",
+  "row": "lines 47, 777, 7754, 7752; harm rate = harm_n/n; recall = tp/harm_n"
+ },
+ {
+  "id": "abl.fig.IDM_calibrated_AC",
+  "value": "FP 9 recall 0.3865",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 435"
+ },
+ {
+  "id": "abl.fig.point_rule_no_interval",
+  "value": "FP 51 recall 0.9203",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 441"
+ },
+ {
+  "id": "abl.fig.ATC_style",
+  "value": "FP 80 recall 0.9903",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 434"
+ },
+ {
+  "id": "abl.fig.raw_AC_no_calibration",
+  "value": "FP 2 recall 0.2222",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 442"
+ },
+ {
+  "id": "abl.fig.full_KS_PCA_harm_proxy",
+  "value": "FP 19 recall 0.1256",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 438"
+ },
+ {
+  "id": "abl.fig.original_KS_harm_proxy",
+  "value": "FP 15 recall 0.0556",
+  "source": "results/phase3/v2_final/harm_counts.csv",
+  "row": "line 440"
+ },
+ {
+  "id": "imp.driftlens",
+  "value": "KS/PCA C6 0.5333333333333333, combined 1; C0 alarms 0.8333333333333334 -> 2.3666666666666667",
+  "source": "results/phase3/dependence_extension_20261116_final_v2/validated_summary.csv | results/phase3/dependence_extension_20261116_final_v2/online_dependence_scores.csv",
+  "row": "validated_summary rows C0/C6 marginal_plus_PCA_KS; union computed from online scores"
+ },
+ {
+  "id": "imp.atc.c3",
+  "value": "0.30406944444444445 -> 0.3029395579351241; diff -0.001129886509320277 [-0.003260476047107095, 0.0009695992375377328]",
+  "source": "results/phase3/v2_final/impact_summary.csv | results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 20"
+ },
+ {
+  "id": "imp.atc.c6",
+  "value": "0.0741 -> 0.01940491893822681; diff -0.05469508106177319 [-0.05986057241796795, -0.04937435200962182]",
+  "source": "results/phase3/v2_final/impact_summary.csv | results/phase3/v2_final/paired_estimator_bootstrap.csv",
+  "row": "line 38"
+ },
+ {
+  "id": "imp.atc.noaa",
+  "value": "0.06657142857142856 -> 0.04431957018650259",
+  "source": "results/phase3/noaa_weather_1949_1999_v1/evaluator/batch_metrics.csv",
+  "row": "mean abs error over 21 batches"
+ },
+ {
+  "id": "imp.pht",
+  "value": "frozen 0.27838333333333326; delta 0.00019166666666666556 [-0.0006752083333333341, 0.0010749999999999967]",
+  "source": "results/phase3/adaptation_final/paired_bootstrap.csv",
+  "row": "lines 8, 10"
+ }
+]

@@ -1,0 +1,92 @@
+% ---------------------------------------------------------------
+\section{Comparison with Base Papers and State of the Art}
+\label{sec:comparison}
+
+The research problem was framed in Phase~1 around three base papers.
+DriftLens~\cite{greco2025driftlens} motivated the latent-space detection layer, the
+domino drift effect (DDE)~\cite{szucs2025dde} motivated feature localization, and
+proactive Hoeffding trees~\cite{guerrerocano2026proactive} motivated the adaptation
+experiments. Average-confidence and ATC estimators~\cite{garg2022atc,kivimaki2025confidence}
+supply the impact baselines.
+
+\subsection{Summary of the Base Papers}
+Table~\ref{tab:basepapers} summarises each base paper. Its ``Reported results'' column
+is quoted from the original papers and marked with an asterisk.
+
+\begin{table*}[t]
+\centering
+\caption{Base papers. Numbers marked * are quoted from the original publications and were not reproduced in this work.}
+\label{tab:basepapers}
+\setlength{\tabcolsep}{3pt}
+\footnotesize
+\begin{tabular}{L{2.0cm}L{2.3cm}L{2.7cm}L{2.4cm}L{1.9cm}L{2.8cm}L{2.3cm}}
+\toprule
+Base paper & Problem & Method & Data & Metrics & Reported results* & Key limitation \\
+\midrule
+Greco et al., 2025~\cite{greco2025driftlens} (DriftLens) & real-time unsupervised drift detection for deep classifiers & per-label Gaussian models of PCA-reduced embeddings; Fréchet drift distance; offline thresholds & 17 use cases on text, image and audio (e.g.\ AG News, STL-10, Common Voice) & detection accuracy, harmonic drift detection, runtime, Spearman correlation & better detection in 15/17 use cases*; at least $5\times$ faster*; Spearman 0.88 / 0.99 / 0.85 for sudden / incremental / recurrent drift* & Gaussian, first two moments; unbounded distance; balanced labels; no link to accuracy loss \\
+Sz\H{u}cs \& N\'emeth, 2025~\cite{szucs2025dde} (DDE) & localizing feature drift in high dimension without monitoring every feature & drift-probability curve over correlation thresholds; unmonitored features scored from correlated drifting ones & CICIDS, Covertype, Insects, Heartbeats & recall, precision, F1, AUC, runtime vs monitored fraction & Heartbeats F1 0.8808 (all 280 features monitored) and 0.4373 (8 monitored)*; Covertype F1 1.0000 with 16 features* & needs an initial drift and correlated co-drift; flat lift when shifts are induced independently \\
+Guerrero Cano et al., 2026~\cite{guerrerocano2026proactive} (PHT) & anticipating incremental concept drift & four proactive Hoeffding-tree variants that move decision boundaries ahead of drift & synthetic RBF streams; 7 real streams incl.\ Electricity and NOAA Weather & prequential accuracy, degradation, recovery time, memory & PHT-MC 0.9574 vs VFDT 0.9406 prequential accuracy on synthetic streams*; advantage ``significantly diminished'' on real streams* & assumes predictable trajectories; prequential (immediate) labels; incremental drift only \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Quantitative Comparison}
+\input{tables/tab_improvement}
+No base paper addresses the target of this study: verified harm of a frozen tabular
+model under delayed labels. A same-dataset, same-metric comparison with their
+published numbers is therefore not possible. Table~\ref{tab:improvement} keeps the two
+kinds of evidence apart. The \emph{Published*} column quotes each base paper on its own
+data. The remaining columns compare a re-implemented, style-level counterpart of each
+base method with \idm{} on identical streams, seeds and partitions. Every number
+without * was measured in this work.
+
+\subsection{Methodological Comparison}
+\idm{} differs from the base papers in its objective, its timing model and its
+evaluation target. DriftLens and DDE score the \emph{input} distribution and are
+evaluated on detecting or localizing injected drift. \idm{} adds an impact channel that
+estimates batch accuracy and a harm-concern score. It scores every channel against
+verified harm, and it enforces that the evaluator's truth reaches the monitor only
+after the release delay. This makes visible a failure that input-only evaluations
+cannot detect: a change in $P(Y\mid X)$ with an unchanged $P(X)$ (Section~\ref{sec:res-conditional}).
+PHT adapts a learner with immediate labels. \idm{} keeps the model frozen and treats
+adaptation as a separate, budget-matched decision. This separation exposed a confound
+in which an apparent advantage of about 12 points for local over global refitting (12.45
+versus 0.37 points over the frozen model) disappeared once the update clocks and label windows were matched (Section~\ref{sec:ablation}). Unlike DriftLens's
+embedding model, the latent test in \idm{} is a three-component PCA, because the
+autoencoder proposed in Phase~2 was not implemented.
+
+\subsection{Improvement Analysis}
+The right-hand columns of Table~\ref{tab:improvement} give the absolute and relative
+change against each base method's re-implemented counterpart.
+\emph{DriftLens-style latent detection.} Adding the correlation statistic raised C6
+onset detection from 53.3\% to 100\% of seeds (+46.7 points [30.0, 63.3], +87.5\%).
+The gain comes from dependence evidence that marginal and PCA-coordinate tests cannot
+see, and it costs 1.53 additional stationary alarms per 24 batches (+184\%).
+\emph{ATC/AC estimators.} Calibrated average confidence lowered estimation error by
+73.8\% relative to the ATC-style estimator on C6 ($-0.0547$ [$-0.0599$, $-0.0494$]) and
+by 33.4\% on NOAA. The gain comes from using every calibrated probability rather than
+a single confidence threshold. Under conditional-only change (C3) the two estimators
+fail equally, and the difference is not significant. \emph{DDE.} No improvement is
+claimed. DDE infers drift in features that are \emph{not} monitored, whereas \idm{}
+tests every feature. A style-level co-drift proxy on nearly uncorrelated synthetic
+features scored close to random (AP 0.12--0.30), but this reflects the absence of
+co-drift in those streams rather than a weakness of DDE.
+\emph{PHT-style adaptation.} Refitting on released labels did not change post-onset
+accuracy ($\pm$0.1 points, not significant), so the frozen monitor neither gains nor
+loses against an adaptive learner here. Two further internal gains complete the
+picture. Delayed recalibration on UCI cut MAE by 68.9\% at delay 0 (48.0\% at a
+two-cohort delay). Monitor features cut the forecaster's Brier score by 27.9\%
+relative to time alone.
+
+\subsection{Fairness and Limitations of the Comparison}
+Four limitations bound this comparison. First, DriftLens and DDE were not reproduced:
+the latent test and the co-drift proxy are simplified ``style'' components, and
+labelling them as the original methods would be incorrect. Second, the base papers
+use different data (deep unstructured inputs, high-dimensional correlated features,
+synthetic incremental streams), different preprocessing and immediate labels.
+Third, the ELEC2 and NOAA streams used here are re-ordered or re-derived from their
+sources and are not the benchmark files used by PHT. Fourth, the methods in this work
+do \emph{not} outperform the alternatives in several settings: the dependence statistic
+nearly triples stationary alarms when combined with KS, delayed recalibration did not help on ELEC2, and the
+concern rule has lower recall than the point rule and the ATC-style estimator on C6
+(Section~\ref{sec:ablation}).
